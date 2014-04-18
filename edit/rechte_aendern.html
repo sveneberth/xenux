@@ -1,0 +1,76 @@
+<?php
+if($login['role'] < 2) {
+	echo '<p>Du bist nicht berechtigt, diese Seite zu öffnen!</p></div></div></body></html>';
+	exit;
+}
+
+$rechte = array(
+				'0' => 'Standartadministrator (darf Seiten/News bearbeiten & Menü anzeigen)',
+				'1' => 'erweiterteter Administrator (darf Seiten/News/Menü bearbeiten)',
+				'2' => 'voller Admin (darf Seiten/News/Menü bearbeiten & Rechte ändern)',
+				'3' => 'Hauptadministrator (rechte über alles)'
+				);				
+
+if(!empty($_GET['username'])) {
+	$username = mysql_real_escape_string($_GET['username']);
+	if(isset($_POST['sub'])) {
+		$role_new = mysql_real_escape_string($_POST['role']);
+		$sql = "UPDATE XENUX_users Set role = '".$role_new."' WHERE username = '".$_GET['username']."'";
+		$erg = mysql_query($sql);
+		echo 'Die Rechte wurden geändert!<br />';
+		echo '<a href="?site=rechte_aendern">Weitere Rechte ändern</a>';
+		exit;
+	}else {
+		if($_GET['username'] == $_SESSION["user"]['username']) {
+			echo '<p>Du kannst nicht deine eigenen Rechte bearbeiten!<br />';
+			echo '<a href="?site=rechte_aendern">Weitere Rechte ändern</a>';
+			exit;
+		}else {
+			$sql = "SELECT * FROM XENUX_users WHERE username = '".$_GET['username']."'";
+			$erg = mysql_query($sql);
+			$row1 = mysql_fetch_object($erg);
+			$username	= $row1->username;
+			$vorname	= $row1->vorname;
+			$nachname	= $row1->nachname;
+			$role1		= $row1->role;
+			if($role1 >= $_SESSION['user']['role']) {
+				echo '<p>Du kannst nicht bei Benutzern, die die gleichen oder höhere Rchte haben als du, die Rechte ändern!<br />';
+				echo '<a href="?site=rechte_aendern">Weitere Rechte ändern</a>';
+			}else {
+				echo 'Du bearbeitest gerade die Rechte für '.$username.' ('.$vorname.' '.$nachname.')!';
+				?>
+				<form action="" method="post">
+				Recht:<br />
+				<select name="role" size="1" style="width: 500px">
+				<option value="0"<?php if($role1==0) echo 'selected="selected"'; ?>>Standartadministrator (darf Seiten/News bearbeiten & Menü anzeigen)</option>
+				<option value="1"<?php if($role1==1) echo 'selected="selected"'; ?>>erweiterteter Administrator (darf Seiten/News/Menü bearbeiten)</option>
+				<?php
+				if($_SESSION['user']['role'] == '3'){
+					echo '<option value="2"';
+					if($role1==2) echo 'selected="selected"';
+					echo '>voller Admin (darf Seiten/News/Menü bearbeiten & Rechte ändern)</option>';
+				}
+				?>
+				</select><br /><br />
+				<input type="submit" name="sub" value="Rolle ändern">
+				</form>
+				<?php
+				exit;
+			}
+		}
+	}
+}
+?>
+<p>Hier kannst du die Benutzerrechte  ändern.</p>
+<br />
+Bitte wähle einen Nutzer aus:<br />
+<table id="table1">
+	<tr><th>Benutzername</th><th>Bürgerlicher Name</th><th>Recht</th><th></th></tr>
+	<?php
+	$sql = "SELECT * FROM XENUX_users";
+	$erg = mysql_query($sql);
+	while($row = mysql_fetch_object($erg)) {
+		echo '<tr><td><a href="./?site=rechte_aendern&username='.$row->username.'">'.$row->username.'</a></td><td>'.$row->vorname.' '.$row->nachname.'</td><td>'.$rechte[$row->role].'</td><td><a id="edit_href" style="font-size: 1em;" href="?site=mail&username='.$row->username.'">Mail senden</a></td></tr>';
+	}
+	?>
+</table>

@@ -1,0 +1,36 @@
+<?php
+$shortname="";
+$fullname="";
+if(!empty($_POST)) {
+	$shortname = mysql_real_escape_string(strtolower($_POST["shortname"]));
+	$fullname = mysql_real_escape_string($_POST["fullname"]);
+	if(!empty($shortname) and !empty($fullname)) {
+		$sql = "SELECT COUNT(filename) AS anzahl FROM XENUX_pages WHERE filename = '".$shortname."'";
+		$erg = mysql_query($sql);
+		$var = mysql_fetch_object($erg);
+		if($var->anzahl >= 1) {
+			echo '<p style="color:red;">Es existiert bereits eine Seite mit dem Kurzname <i>'.$shortname.'</i> Duplikate sind nicht erlaubt!</p>';
+		} else{
+			$content= 'Hier der Inhalt von '.$fullname;
+			$file = '../core/pages/'.$shortname.'.php';
+			$datei = fopen($file, "w");
+			fwrite($datei, $content);
+			fclose($datei);
+			$sql = "INSERT INTO `XENUX_pages`(`id`, `filename`, `fullname`) VALUES (NULL, '".$shortname."','".$fullname."')";
+			$erg = mysql_query($sql) 
+				or die("Fehlgeschlagen: " . mysql_error($link));
+			echo 'Die Seite wurde erfolgreich hinzugefügt!';
+		}
+	}else {
+		echo '<p style="color:red;">Bitte füllen sie alle Felder aus!</p>';
+	}
+}
+?>
+<p>Hier kannst du eine neue Seite erstellen!</p>
+<form action="" method="post">
+	<span <?php if (empty($shortname) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Seitenkurzname (Bsp.: <i>Die Geschichte von uns</i> => <i>geschichte</i>):</span><br />
+	<input type="text" name="shortname" maxlength="15" size="70" value="<?php echo $shortname; ?>"><br /><br />
+	<span <?php if (empty($fullname) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Seitentitel (Überschrift):</span><br />
+	<input type="text" name="fullname" size="70" value="<?php echo $fullname; ?>"><br /><br />
+	<input type="submit" name="submit" value="Seite hinzufügen">
+</form>

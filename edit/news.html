@@ -1,0 +1,58 @@
+<?php
+$form = false;
+if(!empty($_GET['newspoint'])) {
+$newspoint = mysql_real_escape_string($_GET['newspoint']);
+	if(isset($_POST['sub2'])) {
+		$title = mysql_real_escape_string($_POST['title']);
+		$text = mysql_real_escape_string($_POST['text']);
+			$sql = "UPDATE XENUX_news Set title = '$title', text = '$text' WHERE id = '$newspoint'";
+			$erg = mysql_query($sql);
+			echo "Die News wurde gespeichert!<br />";
+			echo "<a href='../?site=news&id=$newspoint'>News anzeigen</a><br />";
+			echo "<a href='./?site=news'>Weiteren News bearbeiten</a><br />";
+			echo "<a href='javascript:history.go(-2)'>Zurück</a><br /><br />";
+			echo "Vorschau:<br />";
+			echo "<div id='vorschau'>";
+			$sql = "SELECT * FROM XENUX_news WHERE id = '$newspoint'";
+			$erg = mysql_query($sql);
+			$row = mysql_fetch_object($erg);
+			echo "<strong>$row->title</strong><br />$row->text";
+			exit;
+	}else {
+		echo 'Du bearbeitest gerade die News '.$newspoint.'!';
+		$sql = "SELECT * FROM XENUX_news WHERE id = '".$newspoint."'";
+		$erg = mysql_query($sql);
+		$row = mysql_fetch_array($erg);
+		$title = $row['title'];
+		$text = $row['text'];
+		$form = true;
+	}
+		if($form){
+		?>
+		<form action="" method="post">
+			<span <?php if (empty($title) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Titel:</span><br />
+			<input type="text" name="title" size="70" value="<?php echo $title; ?>" /><br /><br />
+			<span <?php if (empty($text) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Text:</span><br />
+			<textarea type="text" name="text" cols="90" rows="13"><?php echo $text; ?></textarea><br /><br />
+			<input type="submit" name="sub2" value="speichern">
+		</form>
+		<?php
+		exit;
+		}
+}
+?>
+<p>Hier kannst du die News bearbeiten.</p>
+<br />
+<form action="" method="get">
+	<input type="hidden" name="site" value="<?php echo $site; ?>" />
+	Wähle eine Newsnummer aus (v. oben):<br />
+	<select name="newspoint" size="1">
+		<option>1</option>
+		<option>2</option>
+		<option>3</option>
+		<option>4</option>
+		<option>5</option>
+		<option>6</option>
+	</select><br /><br />
+	<input type="submit" value="Bearbeiten">
+</form>

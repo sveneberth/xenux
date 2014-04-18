@@ -1,0 +1,136 @@
+html, body {
+    background-color: #ddd;
+    font-family: Arial;
+    font-size: 17px;
+	margin: 0;
+	padding: 0;
+}
+
+.clear {
+    clear: both;
+}
+
+h2 {
+    font-size: 20px;
+    color: #666666;
+    border-bottom: 1px solid #DADADA;
+    padding: 0 0 7px 0;
+}
+
+#main {
+    margin: 30px 5px 5px;
+}
+
+#content {
+    width: 900px;
+    margin: auto;
+    background: #FFFFFF;
+    border: 1px solid #947D24;
+    border-radius: 8px;
+    font-size: 90%;
+    line-height: 1.5em;
+    padding: 10px;
+}
+
+#header {
+	height: 80px;
+	padding: 0px;
+	width: 100%
+}
+
+.topic {
+	font-family: Comic Sans MS;
+	font-size: 50px;
+	color: #744520;
+	position: relative;
+	left: 0px;
+	top: 20px;
+}
+
+.motto {
+	font-family: Comic Sans MS;
+	font-size: 15px;
+	color: #8F2525;
+	position: relative;
+	left: 40px;
+	top: 15px;
+}
+
+
+#steps {
+    float: left;
+    margin-left: -10px;
+    width: 20%;
+    list-style-type: decimal;
+}
+
+#install {
+    width: 75%;
+    float: right;
+}
+
+.lastStep {
+    color: #008000;
+}
+
+.actStep {
+    font-weight: bold;
+}
+
+.nextStep {
+    color: #FFA864;
+}
+
+input, textarea {
+	font-family: Arial;
+    font-size: 100%;
+    border: #AAAAAA 1px solid;
+    color: #3A2B16;
+    padding: 2px 3px;
+	resize: none;
+}
+
+.error {
+    color: red;
+    font-size: 100%;
+    font-weight: bold;
+    border: 2px solid #FF0000;
+    width: 600px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.next {
+	text-decoration: none;
+	color: #707070;
+	font-size: 130%;
+	float: right;
+	margin: 15px 30px 10px 0;
+	background: #BBBBBB;
+	border: 1px solid #888;
+	border-radius: 3px;
+	padding: 3px 5px;
+	cursor: pointer;
+}
+
+.last {
+	text-decoration: none;
+	color: #707070;
+	font-size: 130%;
+	float: left;
+	margin: 15px 0 10px 0;
+	background: #BBBBBB;
+	border: 1px solid #888;
+	border-radius: 3px;
+	padding: 3px 5px;
+	cursor: pointer;
+}
+.last:hover,
+.next:hover {
+	background: #ddd;
+}
+
+
+.notfill {
+	background: #FFA3A3;
+}

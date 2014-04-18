@@ -1,0 +1,34 @@
+<p>Hallo <?php echo $login['vorname']; ?>!<br />Hier kannst du die Homepage bearbeiten!<br />Es könnte sein, das noch nicht alles 100%ig funktioniert, das meiste sind auch nur "Testinhalte".<br />Weitere Bearbeitungs-Tools/-Möglichkeiten folgen in Kürze.<br />Es ist noch alles im Entwicklungstatus!</p>
+
+<div id="editroom">
+	<ul id="editroom_left">
+		<h4>Seiten</h4>
+		<li><a href="?site=neue_seite">Seite erstellen</a></li>
+		<li><a href="?site=seiten_tools">Seitentools</a></li>
+	</ul>
+	<ul id="editroom_middle">
+		<h4>Menü</h4>
+		<li><a href="?site=zeige_menu">Menü anzeigen</a></li>
+		<?php
+		if($login['role'] >= '1') {
+			echo '<li><a href="?site=menu_bearbeiten">Menü bearbeiten</a></li>';
+		}
+		?>
+	</ul>
+	<ul id="editroom_right">
+		<h4>Sonstiges</h4>
+		<li><a href="?site=news">News bearbeiten</a></li>
+		<li><a href="?site=daten_aendern">Persönlich Daten ändern</a></li>
+		<li><a href="?site=passwort_aendern">Passwort ändern</a></li>
+		<li><a href="?site=rechte_anzeigen">Meine Rechte</a></li>
+		<?php
+		if($login['role'] >= '2') {
+			echo '<li><a href="?site=rechte_aendern">Rechte ändern</a></li>';
+			echo '<li><a href="?site=mail">Mail senden</a></li>';
+		}
+		?>
+		<li><a href="?site=datei_hochladen">Datei hochladen</a></li>
+		<li><a href="?site=dateitools">Dateitools</a></li>
+	</ul>
+	<div class="clear"></div>
+</div>
