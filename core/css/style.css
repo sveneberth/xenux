@@ -65,7 +65,7 @@ a:active{color:#000000;}
 }
 
 .topic {
-	font-family: Comic Sans MS;
+	font-family: "Comic Sans MS";
 	font-size: 50px;
 	color: #C91212;
 	position: relative;
@@ -74,7 +74,7 @@ a:active{color:#000000;}
 }
 
 .motto {
-	font-family: Comic Sans MS;
+	font-family: "Comic Sans MS";
 	font-size: 15px;
 	color: #FFFFFF;
 	position: relative;
@@ -459,8 +459,8 @@ ul#topnavi1 li :hover {
 	background: transparent;
 	border-radius: 0;
 	margin: 0;
-	width: 20x;
-	height: 20x;
+	width: 20px;
+	height: 20px;
 }
 
 #vorschau {

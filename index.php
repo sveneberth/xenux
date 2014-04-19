@@ -52,17 +52,17 @@ if(isset($_POST["username"])) {
 	}
 
 ?>
-<!DOYTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
 	<title><?php if(!empty($HP_Prefix)){echo $HP_Prefix." | ";}; echo $fullname; if(!empty($HP_Sufix)){echo " | ".$HP_Sufix;}; ?></title>
-	<meta charset="UTF-8" >
-	<meta name="description" content="<?php echo $HP_Beschreibung; ?>"/>
-	<meta name="keywords" content="<?php echo $HP_Keywords; ?>"/>
-	<meta name="generator" content="Xenux - das kostenlose CMS">
+	<meta charset="UTF-8" />
+	<meta name="description" content="<?php echo $HP_Beschreibung; ?>" />
+	<meta name="keywords" content="<?php echo $HP_Keywords; ?>" />
+	<meta name="generator" content="Xenux - das kostenlose CMS" />
 	<meta name="robots" content="index, follow" />
-	<link rel="icon" href="core/favicon.ico" type="image/x-icon"/>
-	<link rel="shortcut icon" href="core/favicon.ico" type="image/x-icon"/>
+	<link rel="icon" href="core/favicon.ico" type="image/x-icon" />
+	<link rel="shortcut icon" href="core/favicon.ico" type="image/x-icon" />
 	<link rel="stylesheet" type="text/css" href="core/css/style.css" media="all"/>
 </head>
 <body>
