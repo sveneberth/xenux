@@ -10,7 +10,7 @@
 	<div id="main">
 		<div id="content">
 			<div id="header">
-				<span class="topic">Xenux</span></a><br/>
+				<span class="topic">Xenux</span></a><br />
 				<span class="motto">das kostenlose CMS</span>
 			</div>
 			<ul id="steps">
@@ -33,13 +33,13 @@
 				$dbname = $_POST['dbname'];
 				if($submit=='Weiter') {
 					if(empty($host) and empty($username) and empty($password) and empty($dbname)){
-						echo 'Sie müssen alle Felder ausfüllen!<br/><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>';
+						echo 'Sie müssen alle Felder ausfüllen!<br /><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>';
 					} else {
 						$link = mysql_connect($host, $username, $password);
 						$db_selected = mysql_select_db($dbname, $link);
 						if(!$db_selected){
 							echo "Es ist keine Verbindung zu Datenbank möglich, bitte überprüfen sie ihre angaben!";
-							echo '<br/><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>';
+							echo '<br /><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>';
 						}else{
 							echo 'Verbindung erfolgreich!';
 							$dates_correct = 'true';
@@ -70,7 +70,7 @@ $MYSQL_DATENBANK	= "'.$dbname.'"; # Datenbankname
 								`role` varchar(100) NOT NULL
 								)";
 						$db_erg = mysql_query($sql)
-						or die('<br/>Fehler! Es konnte die Tabelle "XENUX_users" nicht erstellt werden!<br/><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>');
+						or die('<br />Fehler! Es konnte die Tabelle "XENUX_users" nicht erstellt werden!<br /><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>');
 						//
 						$sql = "CREATE TABLE IF NOT EXISTS `XENUX_pages` (
 								`id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -78,14 +78,14 @@ $MYSQL_DATENBANK	= "'.$dbname.'"; # Datenbankname
 								`fullname` VARCHAR(300) NOT NULL
 								)";
 						$db_erg = mysql_query($sql)
-						or die('<br/>Fehler! Es konnte die Tabelle "XENUX_pages" nicht erstellt werden!<br/><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>');
+						or die('<br />Fehler! Es konnte die Tabelle "XENUX_pages" nicht erstellt werden!<br /><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>');
 						$sql = "INSERT INTO `XENUX_pages`(`filename`, `fullname`) VALUES
 								('news', 'News'),
 								('home','Home'),
 								('kontakt', 'Konatkt'),
 								('impressum', 'Impressum')";
 						$db_erg = mysql_query($sql)
-						or die('<br/>Fehler! Es konnten keine Daten in die Tabelle "XENUX_pages" eingetragen werden!<br/><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>');
+						or die('<br />Fehler! Es konnten keine Daten in die Tabelle "XENUX_pages" eingetragen werden!<br /><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>');
 						//
 						$sql = "CREATE TABLE IF NOT EXISTS `XENUX_menu` (
 								`menupoint` VARCHAR(10) NOT NULL ,
@@ -94,7 +94,7 @@ $MYSQL_DATENBANK	= "'.$dbname.'"; # Datenbankname
 								`name` VARCHAR(300)
 								)";
 						$db_erg = mysql_query($sql)
-						or die('<br/>Fehler! Es konnte die Tabelle "XENUX_menu" nicht erstellt werden!<br/><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>');
+						or die('<br />Fehler! Es konnte die Tabelle "XENUX_menu" nicht erstellt werden!<br /><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>');
 						//
 						$Menupoint = "1";
 						while($Menupoint <= "8") {
@@ -103,7 +103,7 @@ $MYSQL_DATENBANK	= "'.$dbname.'"; # Datenbankname
 								$Wert = $Menupoint."_".$Menuunder;
 								$sql = "INSERT INTO `XENUX_menu`(`menupoint`, `menuunder`, `href`, `name`)VALUES('".$Menupoint."', '".$Menuunder."', '', '');";
 								$db_erg = mysql_query($sql)
-								or die('<br/>Fehler! Es konnten keine Daten in die Tabelle "XENUX_menu" eingetragen werden!<br/><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>');
+								or die('<br />Fehler! Es konnten keine Daten in die Tabelle "XENUX_menu" eingetragen werden!<br /><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>');
 								$Menuunder++;
 							};
 							$Menupoint++;
@@ -115,7 +115,7 @@ $MYSQL_DATENBANK	= "'.$dbname.'"; # Datenbankname
 								`text` text NOT NULL
 								)";
 						$db_erg = mysql_query($sql)
-						or die('<br/>Fehler! Es konnte die Tabelle "XENUX_news" nicht erstellt werden!<br/><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>');
+						or die('<br />Fehler! Es konnte die Tabelle "XENUX_news" nicht erstellt werden!<br /><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>');
 						$sql = "INSERT INTO `XENUX_news` (`id`, `title`, `text`) VALUES
 								('1', '', ''),
 								('2', '', ''),
@@ -124,7 +124,7 @@ $MYSQL_DATENBANK	= "'.$dbname.'"; # Datenbankname
 								('5', '', ''),
 								('6', '', '');";
 						$db_erg = mysql_query($sql)
-						or die('<br/>Fehler! Es konnten keine Daten in die Tabelle "XENUX_pages" eingetragen werden!<br/><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>');
+						or die('<br />Fehler! Es konnten keine Daten in die Tabelle "XENUX_pages" eingetragen werden!<br /><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>');
 						//
 						
 						
@@ -132,7 +132,7 @@ $MYSQL_DATENBANK	= "'.$dbname.'"; # Datenbankname
 						mysql_close($link);
 					}
 				} else {
-				echo 'Sie müssen schon die Installation von vorne beginnen!<br/><a href="./" class="last">Zum Anfang</a><style>.next{display:none;}</style>';
+				echo 'Sie müssen schon die Installation von vorne beginnen!<br /><a href="./" class="last">Zum Anfang</a><style>.next{display:none;}</style>';
 				}
 				?>
 				</p>

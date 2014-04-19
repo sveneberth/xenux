@@ -14,7 +14,8 @@ if(isset($_GET['sub1'])) {
 			$sql = "UPDATE XENUX_menu Set href = '".$href."', name = '".$name."' WHERE menupoint = '".$menupoint."' AND menuunder = '".$undermenupoint."'";
 			$db_erg = mysql_query($sql);
 			echo 'Der Menüpunkt wurde gespeichert!<br />';
-			echo '<a href="./?site=menu_bearbeiten">Weiteren Punkt bearbeiten</a>';
+			echo '<a href="./?site=menu_bearbeiten">Weiteren Punkt bearbeiten</a><br />';
+			echo "<a href=\"./?site=zeige_menu\">Menü auflisten</a><br />";
 			exit;
 		}else {
 			echo '<p>Du bearbeitest gerade den Menüpunkt '.$menupoint.'-'.$undermenupoint.'</p>';

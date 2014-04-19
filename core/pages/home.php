@@ -1,1 +1,1 @@
-<p>Die Insatllation hat geklappt!<br />Ich wünsche ihnen viel Spaß bei der nutzung mit Xenux</p>
+<p>Die Installation hat geklappt!<br />Ich wünsche ihnen viel Spaß bei der Nutzung von Xenux</p>

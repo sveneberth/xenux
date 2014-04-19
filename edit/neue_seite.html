@@ -19,7 +19,8 @@ if(!empty($_POST)) {
 			$sql = "INSERT INTO `XENUX_pages`(`id`, `filename`, `fullname`) VALUES (NULL, '".$shortname."','".$fullname."')";
 			$erg = mysql_query($sql) 
 				or die("Fehlgeschlagen: " . mysql_error($link));
-			echo 'Die Seite wurde erfolgreich hinzugefügt!';
+			echo 'Die Seite wurde erfolgreich hinzugefügt!<br />';
+			echo "Die Seite <i>$fullname</i> <a href=\"./?site=seiten_tools&pagename=$shortname\">bearbeiten</a><br />";
 		}
 	}else {
 		echo '<p style="color:red;">Bitte füllen sie alle Felder aus!</p>';

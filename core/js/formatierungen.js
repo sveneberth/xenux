@@ -87,7 +87,7 @@ function lauftext() {
 	}
 }
 function newline() {
-	atext("<br/>");
+	atext("<br />");
 }
 function hr() {
 	atext("<hr/>");

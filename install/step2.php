@@ -9,7 +9,7 @@
 <div id="main">
 	<div id="content">
 		<div id="header">
-			<span class="topic">Xenux</span></a><br/>
+			<span class="topic">Xenux</span></a><br />
 			<span class="motto">das kostenlose CMS</span>
 		</div>
 		<ul id="steps">

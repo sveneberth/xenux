@@ -18,7 +18,7 @@ include('../config.php')
 	<div id="main">
 		<div id="content">
 			<div id="header">
-				<span class="topic">Xenux</span></a><br/>
+				<span class="topic">Xenux</span></a><br />
 				<span class="motto">das kostenlose CMS</span>
 			</div>
 			<ul id="steps">
@@ -84,7 +84,7 @@ include('../config.php')
 							$sql = "INSERT INTO `XENUX_users` (`id`, `nachname`, `vorname`, `email`, `username`, `pw`, `admin`, `role`) VALUES (NULL, '".$LastName."', '".$FirstName."', '".$eMail."', '".$username."', 'xkanf".md5($password)."v4sf5w', 'yes', '3');";
 							$db_erg = mysql_query($sql) 
 								or die("Anfrage fehlgeschlagen.");
-							echo '<br/>Sie wurden erfolgreich registriert!';
+							echo '<br />Sie wurden erfolgreich registriert!';
 							nextpage();
 						}
 						mysql_close($link);
@@ -92,26 +92,26 @@ include('../config.php')
 				}
 				?>
 				<form action="" method="post">
-					<span <?php if (empty($FirstName) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Vorname</span><br/>
-					<input type="text" name="FirstName" size="70" value="<?php echo $FirstName; ?>" /><br/><br/>
-					<span <?php if (empty($LastName) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Nachname</span><br/>
-					<input type="text" name="LastName" size="70" value="<?php echo $LastName; ?>" /><br/><br/>
-					<span <?php if (empty($eMail) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>E-Mail</span><br/>
-					<input type="email" name="eMail" size="70" value="<?php echo $eMail; ?>" /><br/>
+					<span <?php if (empty($FirstName) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Vorname</span><br />
+					<input type="text" name="FirstName" size="70" value="<?php echo $FirstName; ?>" /><br /><br />
+					<span <?php if (empty($LastName) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Nachname</span><br />
+					<input type="text" name="LastName" size="70" value="<?php echo $LastName; ?>" /><br /><br />
+					<span <?php if (empty($eMail) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>E-Mail</span><br />
+					<input type="email" name="eMail" size="70" value="<?php echo $eMail; ?>" /><br />
 					<?php
-					if($email_exist){echo 'Ein Account mit dieser E-Mail-Adresse existiert schon, zwei Accounts über eine E-Mail Adresse sind nicht zulässig!<br/>';}
-					?><br/>
-					<span <?php if (empty($username) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Benutzername</span><br/>
-					<input type="text" name="username" size="70" value="<?php echo $username; ?>" /><br/>
+					if($email_exist){echo 'Ein Account mit dieser E-Mail-Adresse existiert schon, zwei Accounts über eine E-Mail Adresse sind nicht zulässig!<br />';}
+					?><br />
+					<span <?php if (empty($username) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Benutzername</span><br />
+					<input type="text" name="username" size="70" value="<?php echo $username; ?>" /><br />
 					<?php
-					if($username_exist){echo 'Der Benutzername ist schon vergeben, bitte wähle einen anderen!<br/>';}
-					?><br/>
-					<span <?php if (empty($password) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Passwort</span><br/>
-					<input type="password" name="password" size="70" value="<?php echo $password; ?>" /><br/><br/>
-					<span <?php if (empty($password1) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Passwort bestätigen</span><br/>
-					<input type="password" name="password1" size="70" value="<?php echo $password1; ?>" /><br/>
+					if($username_exist){echo 'Der Benutzername ist schon vergeben, bitte wähle einen anderen!<br />';}
+					?><br />
+					<span <?php if (empty($password) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Passwort</span><br />
+					<input type="password" name="password" size="70" value="<?php echo $password; ?>" /><br /><br />
+					<span <?php if (empty($password1) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Passwort bestätigen</span><br />
+					<input type="password" name="password1" size="70" value="<?php echo $password1; ?>" /><br />
 					<?php
-					if(!$pw_stimmt){echo 'Die angegebenen Passwörter stimmen nicht überein!<br/>';}
+					if(!$pw_stimmt){echo 'Die angegebenen Passwörter stimmen nicht überein!<br />';}
 					?>
 					<input type="submit" name="submit" class="next" value="Weiter"/>
 				</form>
