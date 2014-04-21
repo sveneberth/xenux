@@ -21,7 +21,7 @@ if(!empty($_GET['username'])) {
 		echo '<a href="?site=rechte_aendern">Weitere Rechte ändern</a>';
 		exit;
 	}else {
-		if($_GET['username'] == $_SESSION["user"]['username']) {
+		if($_GET['username'] == $login['username']) {
 			echo '<p>Du kannst nicht deine eigenen Rechte bearbeiten!<br />';
 			echo '<a href="?site=rechte_aendern">Weitere Rechte ändern</a>';
 			exit;

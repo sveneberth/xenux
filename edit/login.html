@@ -5,10 +5,11 @@ if (!empty($_POST["submit"])) {
 	$sql = "SELECT * FROM XENUX_users WHERE username='".$username."' AND pw='xkanf".md5($password)."v4sf5w' AND admin = 'yes' LIMIT 1";
 	$res = mysql_query($sql);
 	$anzahl = mysql_num_rows($res);
+	$erg = mysql_fetch_array($res);
 		if ($anzahl > 0) {
 			echo "Der Login war erfolgreich.<br />";
 			$_SESSION["login"] = 1;
-			$_SESSION["user"] = mysql_fetch_array($res, MYSQL_ASSOC);
+			$_SESSION["user"]['username'] = $erg['username'];
 		} else{
 			echo "Deine Logindaten sind nicht korrekt, oder du wurdest noch nicht freigeschaltet.<br />";
 		}
@@ -27,6 +28,6 @@ if ($_SESSION["login"] == 0) {
 <?php
 }
 if($_SESSION['login'] == 1) {
-echo "<p>Hallo ".$_SESSION['user']['vorname'].", du bist erfolgreich eingeloggt!<br />";
+echo "<p>Hallo ".$login['vorname'].", du bist erfolgreich eingeloggt!<br />";
 echo "Beginne nun die Homepage über den <a href=\"?site=editroom\">Editroom</a> zu bearbeiten!</p>";
 }
