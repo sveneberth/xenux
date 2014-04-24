@@ -239,6 +239,9 @@ a:active{color:#000000;}
 
 #login-right input{
 	margin: 3px 0;
+}
+#login_right input[type="text"],
+#login_right input[type="password"] {
 	width: 192px;
 }
 

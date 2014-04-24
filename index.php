@@ -126,7 +126,7 @@ if ($_SESSION['login'] == 1) {
 				echo '<a href="edit/?site=forgotpassword">Passwort vergessen?</a><br />';
 				echo $result1;
 				echo '<input type="submit" name="submit" value="Einloggen"><br />';
-				echo '<a href="edit/registrieren.php">Registrieren</a>';
+				echo '<a href="edit/?site=registrieren">Registrieren</a>';
 				echo '</form>';
 				}else {
 					$sql = "SELECT * FROM XENUX_users WHERE username='".$_SESSION["user"]['username']."'";
