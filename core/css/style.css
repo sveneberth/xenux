@@ -209,6 +209,16 @@ a:active{color:#000000;}
 	padding: 2px;
 	clear: right;
 }
+#footer a:link,
+#footer a:visited,
+#footer a:active {
+	color: #808080;
+	text-decoration: none;
+}
+#footer a:hover {
+	color: #111;
+	font-weight: bold
+}
 
 #rightbox {
 	float: right;

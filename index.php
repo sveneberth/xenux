@@ -198,7 +198,7 @@ if ($_SESSION['login'] == 1) {
 		?>
 	</div>
 	<div id="footer">
-	This Side was made with Xenux
+	This Side was made with <a href="http://xenux.sven-eberth.bplaced.net/">Xenux</a>
 	</div>
 </div>
 </body>
