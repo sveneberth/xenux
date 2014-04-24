@@ -120,9 +120,9 @@ if ($_SESSION['login'] == 1) {
 			}
 			if ($_SESSION["login"] == 0) {
 				echo '<form action="" method="POST">';
-				echo '<input type="text" name="username" style="width:100%;" placeholder="Benutzername"><br />';
+				echo '<input type="text" name="username" placeholder="Benutzername"><br />';
 				echo '<a href="edit/?site=forgotusername">Benutzernamen vergessen?</a><br />';
-				echo '<input type="password" name="password" style="width:100%;" placeholder="Passwort"><br />';
+				echo '<input type="password" name="password" placeholder="Passwort"><br />';
 				echo '<a href="edit/?site=forgotpassword">Passwort vergessen?</a><br />';
 				echo $result1;
 				echo '<input type="submit" name="submit" value="Einloggen"><br />';
