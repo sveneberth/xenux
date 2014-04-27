@@ -117,7 +117,7 @@ $MYSQL_DATENBANK	= "'.$dbname.'"; # Datenbankname
 						$db_erg = mysql_query($sql)
 						or die('<br />Fehler! Es konnte die Tabelle "XENUX_news" nicht erstellt werden!<br /><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>');
 						$sql = "INSERT INTO `XENUX_news` (`id`, `title`, `text`) VALUES
-								('1', 'Xenux Installation', 'Xenux wurde erfolgreich installiert!')";
+								(NULL, 'Xenux Installation', 'Xenux wurde erfolgreich installiert!')";
 						$db_erg = mysql_query($sql)
 						or die('<br />Fehler! Es konnten keine Daten in die Tabelle "XENUX_news" eingetragen werden!<br /><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>');
 						//
