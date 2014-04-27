@@ -4,35 +4,59 @@ if($login['role'] == '0') {
 	exit;
 }
 $form = false;
-if(isset($_GET['sub1'])) {
-	$menupoint = mysql_real_escape_string($_GET['menupoint']);
-	$undermenupoint = mysql_real_escape_string($_GET['undermenupoint']);
-	if(!empty($menupoint) and $undermenupoint!='') {
-		if(isset($_POST['sub2'])) {
-			$href = mysql_real_escape_string($_POST['href']);
-			$name = mysql_real_escape_string($_POST['name']);
-			$sql = "UPDATE XENUX_menu Set href = '".$href."', name = '".$name."' WHERE menupoint = '".$menupoint."' AND menuunder = '".$undermenupoint."'";
-			$db_erg = mysql_query($sql);
-			echo 'Der Menüpunkt wurde gespeichert!<br />';
-			echo '<a href="./?site=menu_bearbeiten">Weiteren Punkt bearbeiten</a><br />';
-			echo "<a href=\"./?site=zeige_menu\">Menü auflisten</a><br />";
-			exit;
-		}else {
-			echo '<p>Du bearbeitest gerade den Menüpunkt '.$menupoint.'-'.$undermenupoint.'</p>';
-			$sql = "SELECT * FROM XENUX_menu WHERE menupoint = '".$menupoint."' AND menuunder = '".$undermenupoint."'";
-			$erg = mysql_query($sql);
-			$row = mysql_fetch_array($erg);
-			$href = $row['href'];
-			$name = $row['name'];
-			$form = true;
-		}
+$menupoint = mysql_real_escape_string($_GET['menupoint']);
+$undermenupoint = mysql_real_escape_string($_GET['undermenupoint']);
+if(!empty($menupoint) and $undermenupoint!='') {
+	if(isset($_POST['sub2'])) {
+		$href = mysql_real_escape_string($_POST['href']);
+		$name = mysql_real_escape_string($_POST['name']);
+		$sql = "UPDATE XENUX_menu Set href = '".$href."', name = '".$name."' WHERE menupoint = '".$menupoint."' AND menuunder = '".$undermenupoint."'";
+		$db_erg = mysql_query($sql);
+		echo 'Der Menüpunkt wurde gespeichert!<br />';
+		echo '<a href="./?site=zeige_menu">Weiteren Punkt anzeigen/bearbeiten</a><br />';
+		exit;
+	}else {
+		echo '<p>Du bearbeitest gerade den Menüpunkt '.$menupoint.'-'.$undermenupoint.'</p>';
+		$sql = "SELECT * FROM XENUX_menu WHERE menupoint = '".$menupoint."' AND menuunder = '".$undermenupoint."'";
+		$erg = mysql_query($sql);
+		$row = mysql_fetch_array($erg);
+		$href = $row['href'];
+		$name = $row['name'];
+		$form = true;
 	}
 }
 if($form){
 ?>
-<form action="" method="post">
+<script>
+function open() {
+	document.getElementById("popup").style.display = "block";
+	document.getElementById("transparent").style.display = "block";
+};
+function close(site) {
+	document.getElementById("popup").style.display = "none";
+	document.getElementById("transparent").style.display = "none";
+	document.form.href.value = site;
+};
+function closewithoutcontent() {
+	document.getElementById("popup").style.display = "none";
+	document.getElementById("transparent").style.display = "none";
+}
+</script>
+<div id="transparent"></div>
+<div id="popup">
+<div class="close" id="close"><a href="javascript:closewithoutcontent()">&times;</a></div>
+<h3>Seiten</h3>
+<?php
+$sql = "SELECT * FROM XENUX_pages ORDER by filename";
+$erg = mysql_query($sql);
+while($row = mysql_fetch_assoc($erg)) {
+	echo "<a href=\"javascript:close('".$row['filename']."')\">".$row['fullname']."</a>";
+}
+?>
+</div>
+<form action="" name="form" method="post">
 	<span <?php if (empty($href) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Link (Seitenkurzname):</span><br />
-	<input type="text" name="href" size="70" value="<?php echo $href; ?>" /><br /><br />
+	<input type="text" name="href" size="70" value="<?php echo $href; ?>" />&nbsp;<a href="javascript:open()">Seite auswählen</a><br /><br />
 	<span <?php if (empty($name) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Angezeigter Name:</span><br />
 	<input type="text" name="name" size="70" maxlength="25" value="<?php echo $name; ?>" /><br /><br />
 	<input type="submit" name="sub2" value="speichern">
@@ -41,33 +65,3 @@ if($form){
 exit;
 }
 ?>
-<p>Hier kannst du das Menü bearbeiten.<br />
-Der Menüpunkt ist in der Reihe, also horizontal.<br />
-Der Unter-Menüpunkt ist untereinander, also vertikal.<br />
-0 steht für die Katergorie<br />
-Die unter-Menüpunkt wird nur angezeigt, wenn eine Kategorie definiert ist.</p>
-<br />
-<form action="" method="get">
-	<input type="hidden" name="site" value="<?php echo $site; ?>" />
-	Wähle eine Menüpunkt aus (v. links):<br />
-	<select name="menupoint" size="1">
-		<option>1</option>
-		<option>2</option>
-		<option>3</option>
-		<option>4</option>
-		<option>5</option>
-		<option>6</option>
-		<option>7</option>
-		<option>8</option>
-	</select><br /><br />
-	Wähle eine Unter-Menüpunkt aus (v. oben):<br />
-	<select name="undermenupoint" size="1">
-		<option>0</option>
-		<option>1</option>
-		<option>2</option>
-		<option>3</option>
-		<option>4</option>
-		<option>5</option>
-	</select><br /><br />
-	<input name="sub1" type="submit" value="Bearbeiten">
-</form>

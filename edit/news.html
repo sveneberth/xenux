@@ -1,5 +1,16 @@
 <?php
 $form = false;
+if(isset($_GET['newnews'])) {
+	if($_GET['newnews'] == "yes") {
+		$sql = "INSERT INTO `XENUX_news`(`id`, `title`, `text`) VALUES (NULL, 'Titel','Text')";
+		$erg = mysql_query($sql);
+	}
+}
+if(!empty($_GET['delnews'])) {
+	$sql = "DELETE FROM XENUX_news WHERE id = '".$_GET['delnews']."'";
+	$erg = mysql_query($sql);
+	echo 'Die News wurde soeben erfolgreich gelöscht!<br />';
+}
 if(!empty($_GET['newspoint'])) {
 $newspoint = mysql_real_escape_string($_GET['newspoint']);
 	if(isset($_POST['sub2'])) {
@@ -10,7 +21,6 @@ $newspoint = mysql_real_escape_string($_GET['newspoint']);
 			echo "Die News wurde gespeichert!<br />";
 			echo "<a href='../?site=news&id=$newspoint'>News anzeigen</a><br />";
 			echo "<a href='./?site=news'>Weiteren News bearbeiten</a><br />";
-			echo "<a href='javascript:history.go(-2)'>Zurück</a><br /><br />";
 			echo "Vorschau:<br />";
 			echo "<div id='vorschau'>";
 			$sql = "SELECT * FROM XENUX_news WHERE id = '$newspoint'";
@@ -43,16 +53,22 @@ $newspoint = mysql_real_escape_string($_GET['newspoint']);
 ?>
 <p>Hier kannst du die News bearbeiten.</p>
 <br />
-<form action="" method="get">
-	<input type="hidden" name="site" value="<?php echo $site; ?>" />
-	Wähle eine Newsnummer aus (v. oben):<br />
-	<select name="newspoint" size="1">
-		<option>1</option>
-		<option>2</option>
-		<option>3</option>
-		<option>4</option>
-		<option>5</option>
-		<option>6</option>
-	</select><br /><br />
-	<input type="submit" value="Bearbeiten">
-</form>
+<table id="table1">
+<tr><th>News-Nummer</th><th>Titel</th><th>Text</th><th></th><th></th></tr>
+<?php
+$sql = "SELECT * FROM XENUX_news";
+$erg = mysql_query($sql);
+while($row = mysql_fetch_array($erg)) {
+	echo "<tr>";
+	echo "<td>".$row['id']."</td>";
+	echo "<td>".$row['title']."</td>";
+	echo "<td>".$row['text']."</td>";
+	echo "<td><a id=\"edit_href\" style=\"font-size: 0.9em;\" href=\"./?site=news&newspoint=".$row['id']."\">Bearbeiten</a></td>";
+	echo "<td><a id=\"edit_href\" style=\"font-size: 0.9em;\" href=\"./?site=news&delnews=".$row['id']."\">löschen</a></td>";
+	echo "</tr>";
+}
+?>
+</table>
+<br />
+<br />
+<a id="edit_href" style="font-size: 1em;" href="./?site=news&newnews=yes">neue News</a>

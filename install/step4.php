@@ -110,24 +110,18 @@ $MYSQL_DATENBANK	= "'.$dbname.'"; # Datenbankname
 						}
 						//
 						$sql = "CREATE TABLE IF NOT EXISTS `XENUX_news` (
-								`id` text NOT NULL,
+								`id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 								`title` text NOT NULL,
 								`text` text NOT NULL
 								)";
 						$db_erg = mysql_query($sql)
 						or die('<br />Fehler! Es konnte die Tabelle "XENUX_news" nicht erstellt werden!<br /><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>');
 						$sql = "INSERT INTO `XENUX_news` (`id`, `title`, `text`) VALUES
-								('1', '', ''),
-								('2', '', ''),
-								('3', '', ''),
-								('4', '', ''),
-								('5', '', ''),
-								('6', '', '');";
+								('1', 'Xenux Instalation', 'Xenux wurde erfolgreich installiert!')";
 						$db_erg = mysql_query($sql)
-						or die('<br />Fehler! Es konnten keine Daten in die Tabelle "XENUX_pages" eingetragen werden!<br /><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>');
+						or die('<br />Fehler! Es konnten keine Daten in die Tabelle "XENUX_news" eingetragen werden!<br /><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>');
 						//
-						
-						
+												
 						echo '<p>Es wurden alle Tabellen erstellt!</p>';
 						mysql_close($link);
 					}

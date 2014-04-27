@@ -9,12 +9,8 @@ Hier kannst du die Homepage bearbeiten und verwalten!</p>
 	</ul>
 	<ul id="editroom_middle">
 		<h4>Menü</h4>
-		<li><a href="?site=zeige_menu">Menü anzeigen</a></li>
-		<?php
-		if($login['role'] >= '1') {
-			echo '<li><a href="?site=menu_bearbeiten">Menü bearbeiten</a></li>';
-		}
-		?>
+		<li><a href="?site=zeige_menu">Menü anzeigen<?php if($login['role'] >= '1') {echo '/bearbeiten';} ?></a></li>
+		
 	</ul>
 	<ul id="editroom_right">
 		<h4>Sonstiges</h4>

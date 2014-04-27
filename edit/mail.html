@@ -8,11 +8,12 @@ $subject = "";
 $text = "";
 if(isset($_POST['to'])){
 	$to = mysql_real_escape_string($_POST['to']);
+	$subject = $_POST['subject'];
+	$text = $_POST['text'];
+}else {
 	if(isset($_GET['username']) and !empty($_GET['username'])) {
 		$to = $_GET['username'];
 	};
-	$subject = $_POST['subject'];
-	$text = $_POST['text'];
 }
 if(!empty($_POST['to']) and !empty($_POST['subject']) and !empty($_POST['text'])) {
 	$nachricht = '<html></head><title>'.$subject.'</title></head><body>'.nl2br($text).'<br /><br /><span style="font-family:Verdana;color:#777;border-top: 1px #777 solid;">Die Mail wurde mit Xenux erstellt</span></body></html>';
@@ -46,11 +47,38 @@ if(!empty($_POST['to']) and !empty($_POST['subject']) and !empty($_POST['text'])
 	exit;
 }
 ?>
+<script>
+function open() {
+	document.getElementById("popup").style.display = "block";
+	document.getElementById("transparent").style.display = "block";
+};
+function close(user) {
+	document.getElementById("popup").style.display = "none";
+	document.getElementById("transparent").style.display = "none";
+	document.form.to.value = user;
+};
+function closewithoutcontent() {
+	document.getElementById("popup").style.display = "none";
+	document.getElementById("transparent").style.display = "none";
+}
+</script>
+<div id="transparent"></div>
+<div id="popup">
+<div class="close" id="close"><a href="javascript:closewithoutcontent()">&times;</a></div>
+<h3>Seiten</h3>
+<?php
+$sql = "SELECT * FROM XENUX_users ORDER by vorname";
+$erg = mysql_query($sql);
+while($row = mysql_fetch_assoc($erg)) {
+	echo "<a href=\"javascript:close('".$row['username']."')\">".$row['vorname']." ".$row['nachname']."</a>";
+}
+?>
+</div>
 <p>Hier kannst du eine Mail senden.</p>
 <br />
-<form action="" method="post">
+<form action="" method="post" name="form">
 	<span <?php if (empty($to) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Bitte wähle einen Empfänger (Benutzername) aus<br /> oder %alle% um eine Mail an alle zu senden:</span><br />
-	<input type="text" name="to" size="70" value="<?php echo $to; ?>" /><br /><br />
+	<input type="text" name="to" size="70" value="<?php echo $to; ?>" />&nbsp;<a href="javascript:open()">Nutzer auswählen</a><br /><br />
 	<span <?php if (empty($subject) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Betreff:</span><br />
 	<input type="text" name="subject" size="70" value="<?php echo $subject; ?>" /><br /><br />
 	<span <?php if (empty($text) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Text</span><br />

@@ -1,5 +1,5 @@
 function atext(txt) {
-	document.getElementById('text').innerHTML += txt;
+	document.form.text.value += txt;
 }
 var texto = false;
 var fetto = false;

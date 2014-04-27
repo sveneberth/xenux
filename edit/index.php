@@ -60,6 +60,7 @@ $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-14);
 	<meta name="generator" content="Xenux - das kostenlose CMS">
 	<meta name="robots" content="index, follow" />
 	<link rel="stylesheet" type="text/css" href="../core/css/style.css" media="all"/>
+	<script src="../core/js/formatierungen.js"></script>
 </head>
 <body>
 <div id="wrapper1">
