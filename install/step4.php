@@ -82,7 +82,7 @@ $MYSQL_DATENBANK	= "'.$dbname.'"; # Datenbankname
 						$sql = "INSERT INTO `XENUX_pages`(`filename`, `fullname`) VALUES
 								('news', 'News'),
 								('home','Home'),
-								('kontakt', 'Konatkt'),
+								('kontakt', 'Kontakt'),
 								('impressum', 'Impressum')";
 						$db_erg = mysql_query($sql)
 						or die('<br />Fehler! Es konnten keine Daten in die Tabelle "XENUX_pages" eingetragen werden!<br /><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>');

@@ -74,9 +74,9 @@ $HP_Email			= "'.$email.'"; # E-Mail-Adresse (diese wird u.A. benötigt um Accou
 					<input type="text" name="hpname" size="70" value="<?php if(empty($hpname)){echo 'Meine Homepage"';}else{echo $hpname;} ?>" /><br />
 					<span <?php if (empty($hpslogan) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Slogan(Schriftzug unter dem Name im Kopf)</span><br />
 					<input type="text" name="hpslogan" size="70" value="<?php echo $hpslogan; ?>" /><br /><br />
-					<span <?php if (empty($titleprefix) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Title Prefix (Optional)</span><br />
+					Title Prefix (Optional)<br />
 					<input type="text" name="titleprefix" size="70" value="<?php echo $titleprefix; ?>" /><br />
-					<span <?php if (empty($titlesufix) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Title Sufix (Optional)</span><br />
+					Title Sufix (Optional)<br />
 					<input type="text" name="titlesufix" size="70" value="<?php echo $titlesufix; ?>" 
 					/><br /><br />
 					Möchten sie auf der Seite "Kontakt" ein Kontaktformular? Falls sie ein Kontaktformular wünschen, müssen sie hier ihre E-Mail-Adresse angeben, das die Nachricht an sie geschickt werden kann. Falls sie kein Kontaktformular wünschen lassen sie diese Feld einfach leer.<br />
