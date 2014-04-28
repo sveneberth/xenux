@@ -26,7 +26,7 @@ $newspoint = mysql_real_escape_string($_GET['newspoint']);
 			$sql = "SELECT * FROM XENUX_news WHERE id = '$newspoint'";
 			$erg = mysql_query($sql);
 			$row = mysql_fetch_object($erg);
-			echo "<strong>$row->title</strong><br />$row->text";
+			echo "<strong>$row->title</strong><br />$row->text</div>";
 			exit;
 	}else {
 		echo 'Du bearbeitest gerade die News '.$newspoint.'!';

@@ -33,7 +33,7 @@ $all_sites = array(
 					"registrieren" => "Registrieren",
 					"forgotusername" => "Benutzername vergessen",
 					"forgotpassword" => "Passwort vergessen",
-					"neue_seite" => "Neue Seite erstellen",
+					"seite_neu" => "Neue Seite erstellen",
 					"seiten_tools" => "Seiten Tools",
 					"menu_anzeigen" => "Menü anzeigen",
 					"menu_bearbeiten" => "Menü bearbeiten",
@@ -43,9 +43,10 @@ $all_sites = array(
 					"rechte_anzeigen" => "Meine Rechte anzeigen",
 					"rechte_aendern" => "Rechte ändern",
 					"mail" => "Mail senden",
-					"datei_hochladen" => "Datei Hochladen",
+					"datei_hochladen" => "Datei hochladen",
 					"dateitools" => "Datei Tools",
-					"freigabe" => "Freigabe"
+					"freigabe" => "Freigabe",
+					"ansprechpartner" => "Ansprechpartner",
 					);
 if (!array_key_exists($site, $all_sites)) {
 	$site = "editroom";

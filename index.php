@@ -192,6 +192,9 @@ if ($_SESSION['login'] == 1) {
 		</h1>
 		<?php
 		include('core/pages/'.$filename.'.php');
+		if($filename == 'kontakt') {
+			include('core/ansprechpartner.php');
+		}
 		if($filename == 'kontakt' and !empty($HP_Kontaktemail)) {
 			include ('core/kontakt_formular.php');
 		}
