@@ -28,8 +28,10 @@
 <?php
 $sql = "SELECT * FROM XENUX_ansprechpartner";
 $erg = mysql_query($sql);
-if(!mysql_fetch_array) {
+if(mysql_fetch_array($erg)) {
 	echo "<h3>Ansprechpartner</h3>";
+	$sql = "SELECT * FROM XENUX_ansprechpartner";
+	$erg = mysql_query($sql);
 	while($row = mysql_fetch_array($erg)) {
 		echo '<div id="box_contact">
 		<div class="name">'.$row['name'].'</div>

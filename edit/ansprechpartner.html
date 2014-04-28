@@ -17,7 +17,7 @@ $id = mysql_real_escape_string($_GET['id']);
 		$name = mysql_real_escape_string(htmlentities($_POST['name']));
 		$email = mysql_real_escape_string(htmlentities($_POST['email']));
 		$text = mysql_real_escape_string(nl2br(htmlentities($_POST['text'])));
-			$sql = "UPDATE XENUX_Ansprechpartner Set name = '$name', email = '$email', text = '$text' WHERE id = '$id'";
+			$sql = "UPDATE XENUX_ansprechpartner Set name = '$name', email = '$email', text = '$text' WHERE id = '$id'";
 			$erg = mysql_query($sql);
 			echo "Der Ansprechpartner wurde gespeichert!<br />";
 			echo "<a href='./?site=ansprechpartner'>Weitere Ansprechpartner bearbeiten</a><br />";
@@ -53,7 +53,7 @@ $id = mysql_real_escape_string($_GET['id']);
 <table id="table1">
 <tr><th>Name</th><th>E-Mail</th><th>Beschreibung</th><th></th><th></th></tr>
 <?php
-$sql = "SELECT * FROM XENUX_Ansprechpartner";
+$sql = "SELECT * FROM XENUX_ansprechpartner";
 $erg = mysql_query($sql);
 while($row = mysql_fetch_array($erg)) {
 	echo "<tr>";
