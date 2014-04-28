@@ -13,7 +13,7 @@ if(!empty($menupoint) and $undermenupoint!='') {
 		$sql = "UPDATE XENUX_menu Set href = '".$href."', name = '".$name."' WHERE menupoint = '".$menupoint."' AND menuunder = '".$undermenupoint."'";
 		$db_erg = mysql_query($sql);
 		echo 'Der Menüpunkt wurde gespeichert!<br />';
-		echo '<a href="./?site=zeige_menu">Weiteren Punkt anzeigen/bearbeiten</a><br />';
+		echo '<a href="./?site=menu_anzeigen">Weiteren Punkt anzeigen/bearbeiten</a><br />';
 		exit;
 	}else {
 		echo '<p>Du bearbeitest gerade den Menüpunkt '.$menupoint.'-'.$undermenupoint.'</p>';
