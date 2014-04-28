@@ -25,16 +25,18 @@
 	color: #999;
 }
 </style>
-<h3>Ansprechpartner</h3>
 <?php
 $sql = "SELECT * FROM XENUX_ansprechpartner";
 $erg = mysql_query($sql);
-while($row = mysql_fetch_array($erg)) {
-	echo '<div id="box_contact">
-	<div class="name">'.$row['name'].'</div>
-	<div class="desc">'.$row['text'].'</div>
-	<div class="email"><a href="mailto:'.$row['email'].'">'.$row['email'].'</a></div>
-	</div>';
+if(!mysql_fetch_array) {
+	echo "<h3>Ansprechpartner</h3>";
+	while($row = mysql_fetch_array($erg)) {
+		echo '<div id="box_contact">
+		<div class="name">'.$row['name'].'</div>
+		<div class="desc">'.$row['text'].'</div>
+		<div class="email"><a href="mailto:'.$row['email'].'">'.$row['email'].'</a></div>
+		</div>';
+	}
+	echo '<div style="clear:left;"></div>';
 }
 ?>
-<div style="clear:left;"></div>
