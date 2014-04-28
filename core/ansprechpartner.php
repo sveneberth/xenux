@@ -2,7 +2,7 @@
 #box_contact {
 	border: 1px solid #aaa;
 	padding: 5px 10px;
-	height: 200px;
+	height: 210px;
 	width: 350px;
 	margin: 0 10px 20px 0;
 	float:left;
@@ -10,7 +10,11 @@
 #box_contact > .name {
 	font-size: 150%;
 	font-weight: 200;
-	margin-bottom: 10px;
+	margin-bottom: 5px;
+}
+#box_contact > .position {
+	margin-bottom: 2px;
+	font-size: 110%;
 }
 #box_contact > .desc {
 	margin-bottom: 2px;
@@ -35,6 +39,7 @@ if(mysql_fetch_array($erg)) {
 	while($row = mysql_fetch_array($erg)) {
 		echo '<div id="box_contact">
 		<div class="name">'.$row['name'].'</div>
+		<div class="position">'.$row['position'].'</div>
 		<div class="desc">'.$row['text'].'</div>
 		<div class="email"><a href="mailto:'.$row['email'].'">'.$row['email'].'</a></div>
 		</div>';

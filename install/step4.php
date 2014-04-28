@@ -75,7 +75,8 @@ $MYSQL_DATENBANK	= "'.$dbname.'"; # Datenbankname
 						$sql = "CREATE TABLE IF NOT EXISTS `XENUX_pages` (
 								`id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 								`filename` VARCHAR(150) NOT NULL ,
-								`fullname` VARCHAR(300) NOT NULL
+								`fullname` VARCHAR(300) NOT NULL,
+								`ansprechpartner` VARCHAR(150) NULL
 								)";
 						$db_erg = mysql_query($sql)
 						or die('<br />Fehler! Es konnte die Tabelle "XENUX_pages" nicht erstellt werden!<br /><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>');
@@ -124,11 +125,21 @@ $MYSQL_DATENBANK	= "'.$dbname.'"; # Datenbankname
 						$sql = "CREATE TABLE IF NOT EXISTS `ansprechpartner` (
 								`id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 								`name` varchar(150) NOT NULL,
+								`position` varchar(150) NOT NULL,
 								`email` varchar(150) NOT NULL,
 								`text` text NOT NULL
-								)";
+								);";
 						$db_erg = mysql_query($sql)
 						or die('<br />Fehler! Es konnte die Tabelle "XENUX_ansprechpartner" nicht erstellt werden!<br /><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>');
+						//
+						$sql = "CREATE TABLE IF NOT EXISTS `xenux_dates` (
+								`id` int(10) NOT NULL AUTO_INCREMENT  PRIMARY KEY,
+								`name` varchar(150) NOT NULL,
+								`text` text NOT NULL,
+								`date` timestamp NOT NULL
+								);";
+						$db_erg = mysql_query($sql)
+						or die('<br />Fehler! Es konnte die Tabelle "XENUX_dates" nicht erstellt werden!<br /><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>');
 						//
 												
 						echo '<p>Es wurden alle Tabellen erstellt!</p>';

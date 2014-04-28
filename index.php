@@ -155,7 +155,7 @@ if ($_SESSION['login'] == 1) {
 		<ul id="news-right">
 			<span class="news-right_topic">News:</span>
 			<?php
-			$sql = "SELECT * FROM XENUX_news";
+			$sql = "SELECT * FROM XENUX_news LIMIT 5";
 			$erg = mysql_query($sql);
 			while ($zeile = mysql_fetch_array($erg)) {
 				$id = $zeile['id'];
@@ -178,6 +178,41 @@ if ($_SESSION['login'] == 1) {
 			mysql_free_result($erg);
 			?>
 		</ul>
+		<?php
+		$sql = "SELECT * FROM XENUX_dates";
+		$erg = mysql_query($sql);
+		$anzahl = mysql_num_rows($erg);
+		if($anzahl > 0) {
+			echo '<ul id="news-right"><span class="news-right_topic">anstehende Termine:</span>';
+			$sql1 = "SELECT *, DATE_FORMAT(date,'%d.%m.%Y %H:%i') as dat FROM XENUX_dates ORDER by date";
+			$erg1 = mysql_query($sql1);
+			$i = 5;
+			while($row1 = mysql_fetch_array($erg1) and $i > 0) {
+				if(strtotime($row1['date']) > strtotime(date('Y-m-d H:i'))) {
+					echo '<li><span class="news-right_title">'.$row1['name'].'</span>';
+					echo $row1['dat'].'<br/>'.$row1['text'].'</a></li>';
+					$i--;
+				}
+			}
+			echo '<a href="?site=termine">alle Termine anzeigen</a></ul>';
+		}
+		
+		$sql = "SELECT * FROM XENUX_pages WHERE filename = '$filename'";
+		$erg = mysql_query($sql);
+		$row = mysql_fetch_array($erg);
+		if(!empty($row['ansprechpartner'])) {
+			echo '<ul id="news-right"><span class="news-right_topic">Ansprechpartner:</span>';
+			$zerlegen = explode("|", $row['ansprechpartner']);
+			for($i=1;isset($zerlegen[$i]);$i++) {
+				$sql1 = "SELECT * FROM XENUX_ansprechpartner WHERE id = '$zerlegen[$i]'";
+				$erg1 = mysql_query($sql1);
+				$row1 = mysql_fetch_array($erg1);
+				echo '<li><span class="news-right_title">'.$row1['name'].'</span>';
+				echo $row1['position'].'<br/><a href="mailto:'.$row1['email'].'">'.$row1['email'].'</a></li>';
+			};
+			echo '</ul>';
+		}
+		?>
 	</div>
 	<div id="content">
 		<h1>

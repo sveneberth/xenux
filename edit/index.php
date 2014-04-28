@@ -47,6 +47,7 @@ $all_sites = array(
 					"dateitools" => "Datei Tools",
 					"freigabe" => "Freigabe",
 					"ansprechpartner" => "Ansprechpartner",
+					"termine" => "Termine",
 					);
 if (!array_key_exists($site, $all_sites)) {
 	$site = "editroom";

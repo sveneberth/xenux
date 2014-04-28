@@ -21,13 +21,22 @@ if($pagename!=''){
 			fputs($fp, str_replace($a, $b, stripslashes(strip_tags($_POST['text'], $tags))));
 			fclose($fp);
 			$fullname = $_POST['fullname'];
-			$sql = "UPDATE XENUX_pages Set fullname = '$fullname' WHERE filename = '$pagename'";
+			$contact = "";
+			$sql = "SELECT * FROM XENUX_ansprechpartner";
 			$erg = mysql_query($sql);
-			$result = 'Das Passwort wurde geändert!';
+			$anzahl = mysql_num_rows($erg);
+			while($anzahl > 0) {
+				if(isset($_POST['contact_'.$anzahl])) {
+					$contact .= "|".$anzahl;
+				}
+				$anzahl--;
+			};
+			$sql = "UPDATE XENUX_pages Set fullname = '$fullname', ansprechpartner = '$contact' WHERE filename = '$pagename'";
+			$erg = mysql_query($sql);
 			echo "Seite wurde gespeichert.<br />";
 			echo "<a href='../?site=$pagename'>Seite anzeigen</a><br />";
 			echo "<a href='./?site=seiten_tools'>Weitere Seiten bearbeiten</a><br />";
-			echo "<a href='javascript:history.go(-2)'>Zurück</a><br /><br />";
+			echo "<a href='javascript:history.go(-1)'>Zurück</a><br /><br />";
 			echo "Vorschau:<br />";
 			echo "<div id='vorschau'>";
 			include('../core/pages/'.$pagename.'.php');
@@ -49,6 +58,7 @@ if($pagename!=''){
 			$erg = mysql_query($sql);
 			$row = mysql_fetch_array($erg);
 			$fullname = $row['fullname'];
+			$zerlegen = explode("|", $row['ansprechpartner']);
 			?>
 			<p>Du bearbeitest gerade die Seite <i><?php echo $pagename; ?></i><br />
 			Es werden alle gängigen HTML-Befehle unterstützt.<br />
@@ -74,7 +84,24 @@ if($pagename!=''){
 			<textarea name="text" id="text"><?php echo $text ?></textarea><br />
 			<input type="submit" name="sub2" value="Seite speichern">
 			</div>
+			<strong>Ansprechpartner</strong><br />
+			<?php
+			$sql = "SELECT * FROM XENUX_ansprechpartner";
+			$erg = mysql_query($sql);
+			while($row = mysql_fetch_array($erg)) {
+				echo '<input ';
+				for($i=1;isset($zerlegen[$i]);$i++) {
+					if($zerlegen[$i] == $row['id']) {
+						echo "checked";
+					}
+				}
+				echo ' type="checkbox" name="contact_'.$row['id'].'" value="yes">'.$row['name'].'<br />';
+			}
+			?>
 			</form>
+			<br />
+			<br />
+			<br />
 			</div></div></body></html>
 			<?php
 			exit;
