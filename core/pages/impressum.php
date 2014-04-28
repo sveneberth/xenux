@@ -1,2 +1,2 @@
 <p>Eine gute Seite zum erstellen eines Impressum: <a href="http://www.e-recht24.de/impressum-generator.html">www.e-recht24.de</a></p>
-<iframe style="width:75%;height:600x;border:none;" src="http://www.e-recht24.de/impressum-generator.html"></iframe>
+<iframe style="width:75%;height:600px;border:none;" src="http://www.e-recht24.de/impressum-generator.html"></iframe>
