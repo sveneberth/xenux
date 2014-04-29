@@ -68,8 +68,8 @@ if ($_SESSION['login'] == 1) {
 	<meta name="keywords" content="<?php echo $HP_Keywords; ?>" />
 	<meta name="generator" content="Xenux - das kostenlose CMS" />
 	<meta name="robots" content="index, follow" />
-	<link rel="icon" href="core/favicon.ico" type="image/x-icon" />
-	<link rel="shortcut icon" href="core/favicon.ico" type="image/x-icon" />
+	<link rel="icon" href="core/logo.ico" type="image/x-icon" />
+	<link rel="shortcut icon" href="core/logo.ico" type="image/x-icon" />
 	<link rel="stylesheet" type="text/css" href="core/css/style.css" media="all"/>
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>

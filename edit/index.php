@@ -63,8 +63,8 @@ $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-14);
 	<meta name="generator" content="Xenux - das kostenlose CMS">
 	<meta name="robots" content="index, follow" />
 	<link rel="stylesheet" type="text/css" href="../core/css/style.css" media="all"/>
-	<link rel="icon" href="../core/favicon.ico" type="image/x-icon" />
-	<link rel="shortcut icon" href="../core/favicon.ico" type="image/x-icon" />
+	<link rel="icon" href="../core/logo.ico" type="image/x-icon" />
+	<link rel="shortcut icon" href="../core/logo.ico" type="image/x-icon" />
 	<script src="../core/js/formatierungen.js"></script>
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
