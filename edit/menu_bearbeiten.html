@@ -13,7 +13,7 @@ if(!empty($menupoint) and $undermenupoint!='') {
 		$sql = "UPDATE XENUX_menu Set href = '".$href."', name = '".$name."' WHERE menupoint = '".$menupoint."' AND menuunder = '".$undermenupoint."'";
 		$db_erg = mysql_query($sql);
 		echo 'Der Menüpunkt wurde gespeichert!<br />';
-		echo '<a href="./?site=menu_anzeigen">Weiteren Punkt anzeigen/bearbeiten</a><br />';
+		include('menu_anzeigen.html');
 		exit;
 	}else {
 		echo '<p>Du bearbeitest gerade den Menüpunkt '.$menupoint.'-'.$undermenupoint.'</p>';
@@ -32,10 +32,11 @@ function open() {
 	document.getElementById("popup").style.display = "block";
 	document.getElementById("transparent").style.display = "block";
 };
-function close(site) {
+function close(site,name) {
 	document.getElementById("popup").style.display = "none";
 	document.getElementById("transparent").style.display = "none";
 	document.form.href.value = site;
+	document.form.name.value = name;
 };
 function closewithoutcontent() {
 	document.getElementById("popup").style.display = "none";
@@ -46,11 +47,12 @@ function closewithoutcontent() {
 <div id="popup">
 <div class="close" id="close"><a href="javascript:closewithoutcontent()">&times;</a></div>
 <h3>Seiten</h3>
+<a href="javascript:close('','')">--- kein Link ---</a>
 <?php
 $sql = "SELECT * FROM XENUX_pages ORDER by filename";
 $erg = mysql_query($sql);
 while($row = mysql_fetch_assoc($erg)) {
-	echo "<a href=\"javascript:close('".$row['filename']."')\">".$row['fullname']."</a>";
+	echo "<a href=\"javascript:close('".$row['filename']."','".$row['fullname']."')\">".$row['fullname']."</a>";
 }
 ?>
 </div>

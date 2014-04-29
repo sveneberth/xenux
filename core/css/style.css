@@ -525,6 +525,7 @@ ul#topnavi1 li :hover {
 	background: #0B0B57;
 	margin: 0 10px 10px 0;
 	display: table;
+	text-decoration: none;
 }
 #popup > a:hover {
 	background: #181892;

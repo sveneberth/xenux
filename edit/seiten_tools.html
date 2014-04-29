@@ -24,13 +24,11 @@ if($pagename!=''){
 			$contact = "";
 			$sql = "SELECT * FROM XENUX_ansprechpartner";
 			$erg = mysql_query($sql);
-			$anzahl = mysql_num_rows($erg);
-			while($anzahl > 0) {
-				if(isset($_POST['contact_'.$anzahl])) {
-					$contact .= "|".$anzahl;
-				}
-				$anzahl--;
-			};
+			while($row = mysql_fetch_array($erg)) {
+				if(isset($_POST['contact_'.$row['id']])) {
+						$contact .= "|".$row['id'];
+					}
+			}
 			$sql = "UPDATE XENUX_pages Set fullname = '$fullname', ansprechpartner = '$contact' WHERE filename = '$pagename'";
 			$erg = mysql_query($sql);
 			echo "Seite wurde gespeichert.<br />";
@@ -123,7 +121,7 @@ else {
 $sql = "SELECT * FROM XENUX_pages";
 $erg = mysql_query($sql);
 while ($zeile = mysql_fetch_array($erg)) {
-	if($zeile['filename'] != 'news' and $zeile['filename'] != 'error') {
+	if($zeile['filename'] != 'news' and $zeile['filename'] != 'error' and $zeile['filename'] != 'termine') {
 		echo "<tr>";
 		echo "<td>".$zeile['filename']."</td>";
 		echo "<td><a href=\"../?site=".$zeile['filename']."\" title=\"Klicken, um die Seite anzuzeigen\">".$zeile['fullname']."</a></td>";

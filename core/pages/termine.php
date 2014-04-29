@@ -23,10 +23,34 @@
 }
 
 }</style>
+<script>
+	function sort() {
+		location.href="?site=termine&order="+$('#sortselector').val();
+	}
+</script>
+<select style="width:150px;" onchange="sort()" id="sortselector">
+	<option>Sortierung</option>
+	<option value="name ASC">Name aufsteigend</option>
+	<option value="name DESC">Name absteigend</option>
+	<option value="date ASC">Datum aufsteigend</option>
+	<option value="date DESC">Datum absteigend</option>
+	<option value="text ASC">Text aufsteigend</option>
+	<option value="text DESC">Text absteigend</option>
+</select>
 <table id="dates">
 <?php
 # Hier bitte nichts ändern!
-$sql = "SELECT *, DATE_FORMAT(date,'%d.%m.%Y %H:%i') as dat FROM XENUX_dates ORDER by date";
+$variants = array("date", "date DESC",  "date ASC", "name", "name DESC",  "name ASC", "text", "text DESC",  "text ASC");
+if(!isset($_GET['order'])) {
+	$order = 'date';
+} elseif(empty($_GET['order'])) {
+	$order = 'date';
+} elseif(in_array($_GET['order'], $variants)) {
+	$order = $_GET['order'];
+} else {
+	$order = 'date';
+}
+$sql = "SELECT *, DATE_FORMAT(date,'%d.%m.%Y %H:%i') as dat FROM XENUX_dates ORDER by $order";
 $erg = mysql_query($sql);
 while($row = mysql_fetch_array($erg)) {
 	echo	'<tr>

@@ -2,7 +2,7 @@
 $shortname="";
 $fullname="";
 if(!empty($_POST)) {
-	$shortname = mysql_real_escape_string(strtolower($_POST["shortname"]));
+	$shortname = mysql_real_escape_string(strtolower(preg_replace("/[^a-zA-Z0-9_]/" , "" , $_POST["shortname"])));
 	$fullname = mysql_real_escape_string($_POST["fullname"]);
 	if(!empty($shortname) and !empty($fullname)) {
 		$sql = "SELECT COUNT(filename) AS anzahl FROM XENUX_pages WHERE filename = '".$shortname."'";
