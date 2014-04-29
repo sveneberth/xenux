@@ -5,7 +5,7 @@ if($login['role'] < 2) {
 }
 
 $rechte = array(
-				'0' => 'Standartadministrator (darf Seiten/News bearbeiten & Menü anzeigen)',
+				'0' => 'Standartadministrator (darf Seiten/News/Termine bearbeiten & Menü anzeigen)',
 				'1' => 'erweiterteter Administrator (darf Seiten/News/Menü bearbeiten)',
 				'2' => 'voller Admin (darf Seiten/News/Menü bearbeiten & Rechte ändern)',
 				'3' => 'Hauptadministrator (rechte über alles)'
@@ -23,8 +23,6 @@ if(!empty($_GET['username'])) {
 	}else {
 		if($_GET['username'] == $login['username']) {
 			echo '<p>Du kannst nicht deine eigenen Rechte bearbeiten!<br />';
-			echo '<a href="?site=rechte_aendern">Weitere Rechte ändern</a>';
-			exit;
 		}else {
 			$sql = "SELECT * FROM XENUX_users WHERE username = '".$_GET['username']."'";
 			$erg = mysql_query($sql);
@@ -33,9 +31,8 @@ if(!empty($_GET['username'])) {
 			$vorname	= $row1->vorname;
 			$nachname	= $row1->nachname;
 			$role1		= $row1->role;
-			if($role1 >= $_SESSION['user']['role']) {
-				echo '<p>Du kannst nicht bei Benutzern, die die gleichen oder höhere Rchte haben als du, die Rechte ändern!<br />';
-				echo '<a href="?site=rechte_aendern">Weitere Rechte ändern</a>';
+			if($role1 >= $login['role']) {
+				echo '<p>Du kannst nicht bei Benutzern, die die gleichen oder höhere Rechte haben als du, die Rechte ändern!<br />';
 			}else {
 				echo 'Du bearbeitest gerade die Rechte für '.$username.' ('.$vorname.' '.$nachname.')!';
 				?>
@@ -45,7 +42,7 @@ if(!empty($_GET['username'])) {
 				<option value="0"<?php if($role1==0) echo 'selected="selected"'; ?>>Standartadministrator (darf Seiten/News bearbeiten & Menü anzeigen)</option>
 				<option value="1"<?php if($role1==1) echo 'selected="selected"'; ?>>erweiterteter Administrator (darf Seiten/News/Menü bearbeiten)</option>
 				<?php
-				if($_SESSION['user']['role'] == '3'){
+				if($login['role'] == '3'){
 					echo '<option value="2"';
 					if($role1==2) echo 'selected="selected"';
 					echo '>voller Admin (darf Seiten/News/Menü bearbeiten & Rechte ändern)</option>';
@@ -61,9 +58,8 @@ if(!empty($_GET['username'])) {
 	}
 }
 ?>
-<p>Hier kannst du die Benutzerrechte  ändern.</p>
+<p>Hier kannst du die Benutzerrechte ändern.</p>
 <br />
-Bitte wähle einen Nutzer aus:<br />
 <table id="table1">
 	<tr><th>Benutzername</th><th>Bürgerlicher Name</th><th>Recht</th><th></th></tr>
 	<?php

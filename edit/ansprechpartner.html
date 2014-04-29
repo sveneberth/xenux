@@ -1,4 +1,8 @@
 <?php
+if($login['role'] == '0') {
+	echo '<p>Du bist nicht berechtigt, diese Seite zu öffnen!</p></div></div></body></html>';
+	exit;
+}
 $form = false;
 if(isset($_GET['newAnsprechpartner'])) {
 	if($_GET['newAnsprechpartner'] == "yes") {
