@@ -29,23 +29,26 @@ topic {
 input, textarea {
 	font-family: Arial;
     font-size: 100%;
-    border: #AAAAAA 1px solid;
+    border: #aaaaaa 1px solid;
     color: #3A2B16;
     padding: 2px 3px;
 	resize: none;
+	background: #fff;
 }
-input[type="submit"] {
-	background: #ccc;
+input[type="submit"],
+input[type="reset"] {
+	background: #ddd;
 }
-input[type="submit"]:hover {
-	background: #eee;
+input[type="submit"]:hover,
+input[type="reset"]:hover {
+	background: #f6f6f6;
 }
 
-a:link{color:#0000FF;}
-a:visited{color:#C70101;}
-a:focus{color:#000000;}
-a:hover{color:#000000;}
-a:active{color:#000000;}
+a:link{color:#38315F;text-decoration:none;}
+a:visited{color:#38315F;text-decoration:none}
+a:focus{color:#38315F;}
+a:hover{color:#1B0A7A;text-decoration:underline;}
+a:active{color:#38315F;}
 
 #wrapper {
 	width: 1000px;
@@ -255,9 +258,6 @@ ul#pages-right li{
 	list-style: none;
 	margin: 1px 0;
 }
-#pages-right a{
-	color: #333333;
-}
 .pages-right_topic {
 	text-align: center;
 	font-weight: bold;
@@ -312,6 +312,7 @@ ul#news-right li{
 	border: 1px solid;
 	text-decoration: none;
 	border-radius: 2px;
+	padding: .03em 0.2em;
 }
 #edit_href:hover {
 	background: #EEE;
@@ -381,11 +382,11 @@ ul#topnavi1 li :hover {
 	list-style: none;
 }
 
-#editroom > ul > li > a:link{color:#000000;}
-#editroom > ul > li > a:visited{color:#000000;}
-#editroom > ul > li > a:focus{color:#000000;}
-#editroom > ul > li > a:hover{color:#6BB922;}
-#editroom > ul > li > a:active{color:#FFFF00;}
+#editroom > ul > li > a:link{color:#111;}
+#editroom > ul > li > a:visited{color:#111;}
+#editroom > ul > li > a:focus{color:#090D6F;}
+#editroom > ul > li > a:hover{color:#090D6F;}
+#editroom > ul > li > a:active{color:#090D6F;}
 
 #editroom_middle {
 	float: left;

@@ -22,7 +22,8 @@ if(!isset($_GET['site'])) {
 	$filename = $_GET['site'];
 }
 include('config.php');
-include('core/colortext.php');
+include('core/macros/colortext.php');
+include('core/macros/escape_mail.php');
 $link = mysql_connect($MYSQL_HOST, $MYSQL_BENUTZER, $MYSQL_KENNWORT);
 $db_selected = mysql_select_db($MYSQL_DATENBANK, $link);
 if(!$db_selected) {
@@ -209,7 +210,9 @@ if ($_SESSION['login'] == 1) {
 				$erg1 = mysql_query($sql1);
 				$row1 = mysql_fetch_array($erg1);
 				echo '<li><span class="news-right_title">'.$row1['name'].'</span>';
-				echo $row1['position'].'<br/><a href="mailto:'.$row1['email'].'">'.$row1['email'].'</a></li>';
+				echo $row1['position'].'<br/>';
+				escapemail($row1['email']);
+				echo '</a></li>';
 			};
 			echo '</ul>';
 		}
@@ -229,10 +232,10 @@ if ($_SESSION['login'] == 1) {
 		<?php
 		include('core/pages/'.$filename.'.php');
 		if($filename == 'kontakt') {
-			include('core/ansprechpartner.php');
+			include('core/macros/ansprechpartner.php');
 		}
 		if($filename == 'kontakt' and !empty($HP_Kontaktemail)) {
-			include ('core/kontakt_formular.php');
+			include ('core/macros/kontakt_formular.php');
 		}
 		?>
 	</div>

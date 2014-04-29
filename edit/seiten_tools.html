@@ -118,7 +118,7 @@ else {
 <table id="table1">
 <tr><th>Kurzname</th><th>Seitentitel</th><th></th><th></th></tr>
 <?php
-$sql = "SELECT * FROM XENUX_pages";
+$sql = "SELECT * FROM XENUX_pages order by filename";
 $erg = mysql_query($sql);
 while ($zeile = mysql_fetch_array($erg)) {
 	if($zeile['filename'] != 'news' and $zeile['filename'] != 'error' and $zeile['filename'] != 'termine') {

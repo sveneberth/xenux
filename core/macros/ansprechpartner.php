@@ -41,7 +41,9 @@ if(mysql_fetch_array($erg)) {
 		<div class="name">'.$row['name'].'</div>
 		<div class="position">'.$row['position'].'</div>
 		<div class="desc">'.$row['text'].'</div>
-		<div class="email"><a href="mailto:'.$row['email'].'">'.$row['email'].'</a></div>
+		<div class="email">';
+		escapemail($row['email']);
+		echo '</div>
 		</div>';
 	}
 	echo '<div style="clear:left;"></div>';
