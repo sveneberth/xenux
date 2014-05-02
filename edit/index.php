@@ -12,7 +12,7 @@ if(!$db_selected){
 	echo 'Es ist keine Verbindung zur Datenbank möglich!';
 	exit;
 }
-if ($_SESSION['login'] == 1) {
+if (@$_SESSION['login'] == 1) {
 	$sql = "SELECT * FROM XENUX_users WHERE username='".$_SESSION["user"]['username']."'";
 	$erg = mysql_query($sql);
 	$login = mysql_fetch_array($erg);
@@ -71,7 +71,7 @@ $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-14);
 <body>
 <div id="wrapper1">
 	<div id="header">
-		<?php if($_SESSION["login"] == 1 and $site!='logout') {echo '<a class="green" href="./?site=logout">Logout</a>';} ?>
+		<?php if(@$_SESSION["login"] == 1 and $site!='logout') {echo '<a class="green" href="./?site=logout">Logout</a>';} ?>
 		<a class="yellow" href="./">Editroom</a>
 		<a href="../"><span class="topic"><?php echo $HP_Name; ?></span></a><br />
 		<span class="motto"><?php echo $HP_Slogan; ?></span>
@@ -79,7 +79,7 @@ $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-14);
 	<div id="content1">
 		<h1><?php echo $all_sites[$site]; ?></h1>
 		<?php
-			if($_SESSION['login'] == 1 or $site == "forgotusername" or $site == "forgotpassword" or $site == "registrieren" or $site == "freigabe") {
+			if(@$_SESSION['login'] == 1 or $site == "forgotusername" or $site == "forgotpassword" or $site == "registrieren" or $site == "freigabe") {
 				include($site.".html");
 			} else {
 				include("login.html");

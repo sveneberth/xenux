@@ -1,6 +1,6 @@
 <?php
 SESSION_START();
-if($_SESSION["login"] == 1 and !empty($_POST['session_delete'])) {
+if(@$_SESSION["login"] == 1 and !empty($_POST['session_delete'])) {
 	$_SESSION = array();
 	if (ini_get("session.use_cookies")) {
 		$params = session_get_cookie_params();
@@ -52,7 +52,7 @@ if(isset($_POST["username"])) {
 		$result1 = "Deine Logindaten sind nicht korrekt, oder du wurdest noch nicht freigeschaltet.<br />";
 	}
 }
-if ($_SESSION['login'] == 1) {
+if (@$_SESSION['login'] == 1) {
 	$sql = "SELECT * FROM XENUX_users WHERE username='".$_SESSION["user"]['username']."'";
 	$erg = mysql_query($sql);
 	$login = mysql_fetch_array($erg);
@@ -78,7 +78,7 @@ if ($_SESSION['login'] == 1) {
 	<div id="header">
 		<a class="green" href="./?site=impressum">Impressum</a>
 		<a class="yellow" href="./?site=kontakt">Kontakt</a>
-		<?php if ($_SESSION["login"] == 1){echo '<a class="red" href="./edit/">Editroom</a>';} ?>
+		<?php if (@$_SESSION["login"] == 1){echo '<a class="red" href="./edit/">Editroom</a>';} ?>
 		<a href="./"><span class="topic"><?php echo $HP_Name; ?></span></a><br />
 		<span class="motto"><?php echo $HP_Slogan; ?></span>
 	</div>
@@ -120,7 +120,7 @@ if ($_SESSION['login'] == 1) {
 			if(isset($del)){
 				echo $del;
 			}
-			if ($_SESSION["login"] == 0) {
+			if (@$_SESSION["login"] == 0) {
 				echo '<form action="" method="POST">';
 				echo '<input type="text" name="username" placeholder="Benutzername"><br />';
 				echo '<a href="edit/?site=forgotusername">Benutzernamen vergessen?</a><br />';
@@ -165,7 +165,7 @@ if ($_SESSION['login'] == 1) {
 				$text = $zeile['text'];
 				if($title != '' and $text != '') {
 					echo '<li><span class="news-right_title">'.$title;
-					if ($_SESSION["login"] == 1) {
+					if (@$_SESSION["login"] == 1) {
 						echo '<a id="edit_href" href="edit/?site=news&newspoint='.$id.'">Bearbeiten</a>';
 					}
 					echo '</span>';
@@ -222,7 +222,7 @@ if ($_SESSION['login'] == 1) {
 		<h1>
 			<?php
 			echo $fullname;
-			if ($_SESSION["login"] == 1) {
+			if (@$_SESSION["login"] == 1) {
 				if($filename!='news' and $filename!='error') {
 					echo '<a id="edit_href" href="edit/?site=seiten_tools&pagename='.$filename.'">Bearbeiten</a>';
 				}
