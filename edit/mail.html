@@ -84,15 +84,16 @@ while($row = mysql_fetch_assoc($erg)) {
 	<span <?php if (empty($text) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Text</span><br />
 	<div id="page_edit">
 		<div id="formatierungen">
+			<a id='textb' href='javascript:text()'>farbiger Text</a>
 			<a id='linkb' href='javascript:link()'>Link</a>
 			<div id="group">
-				<strong><a id='fettb' href='javascript:fett()'><b>F</b></a>
-				<a id='kursivb' href='javascript:kursiv()'><i>K</i></a>
-				<a id='unterstrichenb' href='javascript:unterstrichen()'><u>U</u></a></strong>
+				<strong><a id='fettb' href='javascript:insert("<b>","</b>")'><b>F</b></a>
+				<a id='kursivb' href='javascript:insert("<i>","</i></7a>")'><i>K</i></a>
+				<a id='unterstrichenb' href='javascript:insert("<u>","</u>")'><u>U</u></a></strong>
 			</div>
 			<a href='javascript:bild()'>Bild</a>
-			<a href='javascript:newline()'>Zeilenumbruch</a>
-		<a href='javascript:hr()'>horizontale Linie</a>
+			<a href='javascript:insert("<br />","")'>Zeilenumbruch</a>
+			<a href='javascript:insert("<hr />","")'>horizontale Linie</a>
 		</div>
 		<textarea name="text" id="text"><?php echo $text ?></textarea><br />
 		<input type="submit" value="senden">

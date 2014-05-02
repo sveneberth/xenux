@@ -65,22 +65,22 @@ if($pagename!=''){
 			<form action="" method="post" name="form">
 			Seitenname: <input type="text" name="fullname" size="70" value="<?php echo $fullname; ?>"><br /><br />
 			<div id="page_edit">
-			<div id="formatierungen">
-			<a id='textb' href='javascript:text()'>farbiger Text</a>
-			<a id='linkb' href='javascript:link()'>Link</a>
-			<div id="group">
-			<strong><a id='fettb' href='javascript:fett()'><b>F</b></a>
-			<a id='kursivb' href='javascript:kursiv()'><i>K</i></a>
-			<a id='unterstrichenb' href='javascript:unterstrichen()'><u>U</u></a></strong>
-			</div>
-			<a href='javascript:bild()'>Bild</a>
-			<a id='lauftextb' href='javascript:lauftext()'>Lauftext</a>
-			<a href='javascript:newline()'>Zeilenumbruch</a>
-			<a href='javascript:hr()'>horizontale Linie</a>
-			<a id="bunt" href='javascript:bunt()'>bunter Text</a>
-			</div>
-			<textarea name="text" id="text"><?php echo $text ?></textarea><br />
-			<input type="submit" name="sub2" value="Seite speichern">
+				<div id="formatierungen">
+					<a id='textb' href='javascript:text()'>farbiger Text</a>
+					<a id='linkb' href='javascript:link()'>Link</a>
+					<div id="group">
+						<strong><a id='fettb' href='javascript:insert("<b>","</b>")'><b>F</b></a>
+						<a id='kursivb' href='javascript:insert("<i>","</i></7a>")'><i>K</i></a>
+						<a id='unterstrichenb' href='javascript:insert("<u>","</u>")'><u>U</u></a></strong>
+					</div>
+					<a href='javascript:bild()'>Bild</a>
+					<a id='lauftextb' href='javascript:insert("<marquee>","</marquee>")'>Lauftext</a>
+					<a href='javascript:insert("<br />","")'>Zeilenumbruch</a>
+					<a href='javascript:insert("<hr />","")'>horizontale Linie</a>
+					<a id="bunt" href='javascript:insert("[bunt]","[/bunt]")'>bunter Text</a>
+				</div>
+				<textarea name="text" id="text"><?php echo $text ?></textarea><br />
+				<input type="submit" name="sub2" value="Seite speichern">
 			</div>
 			<strong>Ansprechpartner</strong><br />
 			<?php
