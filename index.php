@@ -82,7 +82,6 @@ if (@$_SESSION['login'] == 1) {
 		<a href="./"><span class="topic"><?php echo $HP_Name; ?></span></a><br />
 		<span class="motto"><?php echo $HP_Slogan; ?></span>
 	</div>
-
 	<ul id='topmenu'>
 		<li><a href='./'>Home</a></li>
 		<?php
