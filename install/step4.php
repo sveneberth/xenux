@@ -123,7 +123,7 @@ $MYSQL_DATENBANK	= "'.$dbname.'"; # Datenbankname
 						$db_erg = mysql_query($sql)
 						or die('<br />Fehler! Es konnten keine Daten in die Tabelle "XENUX_news" eingetragen werden!<br /><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>');
 						//
-						$sql = "CREATE TABLE IF NOT EXISTS `ansprechpartner` (
+						$sql = "CREATE TABLE IF NOT EXISTS `XENUX_ansprechpartner` (
 								`id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 								`name` varchar(150) NOT NULL,
 								`position` varchar(150) NOT NULL,
