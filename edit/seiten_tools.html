@@ -121,7 +121,7 @@ else {
 $sql = "SELECT * FROM XENUX_pages order by filename";
 $erg = mysql_query($sql);
 while ($zeile = mysql_fetch_array($erg)) {
-	if($zeile['filename'] != 'news' and $zeile['filename'] != 'error' and $zeile['filename'] != 'termine') {
+	if($zeile['filename'] != 'news' and $zeile['filename'] != 'error' and $zeile['filename'] != 'termine' and $zeile['filename'] != 'terminview') {
 		echo "<tr>";
 		echo "<td>".$zeile['filename']."</td>";
 		echo "<td><a href=\"../?site=".$zeile['filename']."\" title=\"Klicken, um die Seite anzuzeigen\">".$zeile['fullname']."</a></td>";
