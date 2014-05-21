@@ -83,6 +83,7 @@ $MYSQL_DATENBANK	= "'.$dbname.'"; # Datenbankname
 						$sql = "INSERT INTO `XENUX_pages`(`filename`, `fullname`) VALUES
 								('news', 'News'),
 								('termine', 'Termine'),
+								('terminview', 'Termin'),
 								('home','Home'),
 								('kontakt', 'Kontakt'),
 								('impressum', 'Impressum')";
