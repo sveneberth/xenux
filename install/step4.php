@@ -142,6 +142,11 @@ $MYSQL_DATENBANK	= "'.$dbname.'"; # Datenbankname
 						$db_erg = mysql_query($sql)
 						or die('<br />Fehler! Es konnte die Tabelle "XENUX_dates" nicht erstellt werden!<br /><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>');
 						//
+						$sql = "INSERT INTO XENUX_dates(name, text, timestamp) VALUES
+								('Installation von Xenux', 'Xenux ist ab sofort installiert und kann jetzt genutzt werden.', '".date("Y-m-d H:i:s", time())."')";
+						$db_erg = mysql_query($sql)
+						or die('<br />Fehler! Es konnten keine Daten in die Tabelle "XENUX_dates" eingetragen werden!<br /><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>');
+						//
 												
 						echo '<p>Es wurden alle Tabellen erstellt!</p>';
 						mysql_close($link);

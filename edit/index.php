@@ -69,6 +69,35 @@ $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-14);
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 <body>
+<script>
+$(window).bind('keydown', function(event) {
+	if (event.ctrlKey || event.metaKey) {
+		switch (String.fromCharCode(event.which).toLowerCase()) {
+		case 's':
+			event.preventDefault();
+			document.forms[0].submit();
+			break;
+		}
+	}
+});
+function popupopen() {
+	$( "#popup" ).css( "display", "block" );
+	$( "#field" ).css( "display", "block" );
+	console.log('opened Popup');
+};
+function popupclose(field1, field2) {
+	$( "#popup" ).css( "display", "none" );
+	$( "#transparent" ).css( "display", "none" );
+	$( "#field1" ).val( field1 )
+	$( "#field2" ).val( field2 )
+	console.log('closed Popup with content');
+};
+function popupclosewithoutcontent() {
+	$( "#popup" ).css( "display", "none" );
+	$( "#transparent" ).css( "display", "none" );
+	console.log('closed Popup without content');
+}
+</script>
 <div id="wrapper1">
 	<div id="header">
 		<?php if(@$_SESSION["login"] == 1 and $site!='logout') {echo '<a class="green" href="./?site=logout">Logout</a>';} ?>

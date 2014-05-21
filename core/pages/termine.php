@@ -1,41 +1,21 @@
-<style>
-#dates {
-	border-collapse: collapse;
-	border: 2px solid #333;
-	width: 750px;
-}
-#dates tr:nth-child(odd) {background: #eee; }
-#dates tr:nth-child(even) {background: #e7e7e7; }
-#dates th, #dates td {
-	vertical-align: top;
-	text-align: left;
-	padding: 3px 5px;
-}
-#dates tr:nth-child(2n-1) > td:nth-child(1) {
-}
-#dates tr:nth-child(2n-1) > td:nth-child(2) {
-	text-align: right;
-}
-#dates tr:nth-child(2n+0) {
-	border-top: 1px solid #999;
-	border-bottom: 2px solid #333;
-	margin-bottom: 10px;
-}
-
-}</style>
+<?php
+	include_once('core/macros/calender.php');
+?>
+<br />
+<br />
 <script>
 	function sort() {
-		location.href="?site=termine&order="+$('#sortselector').val();
+		location.href="?site=termine&timestamp=<?php echo @$_GET['timestamp']; ?>&order="+$('#sortselector').val();
 	}
 </script>
 <select style="width:150px;" onchange="sort()" id="sortselector">
 	<option>Sortierung</option>
-	<option value="name ASC">Name aufsteigend</option>
-	<option value="name DESC">Name absteigend</option>
-	<option value="date ASC">Datum aufsteigend</option>
-	<option value="date DESC">Datum absteigend</option>
-	<option value="text ASC">Text aufsteigend</option>
-	<option value="text DESC">Text absteigend</option>
+	<option <?php if(@$_GET['order']=="name ASC") echo "selected" ?> value="name ASC">Name aufsteigend</option>
+	<option <?php if(@$_GET['order']=="name DESC") echo "selected" ?> value="name DESC">Name absteigend</option>
+	<option <?php if(@$_GET['order']=="date ASC") echo "selected" ?> value="date ASC">Datum aufsteigend</option>
+	<option <?php if(@$_GET['order']=="date DESC") echo "selected" ?> value="date DESC">Datum absteigend</option>
+	<option <?php if(@$_GET['order']=="text ASC") echo "selected" ?> value="text ASC">Text aufsteigend</option>
+	<option <?php if(@$_GET['order']=="text DESC") echo "selected" ?> value="text DESC">Text absteigend</option>
 </select>
 <table id="dates">
 <?php

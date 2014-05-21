@@ -27,40 +27,24 @@ if(!empty($menupoint) and $undermenupoint!='') {
 }
 if($form){
 ?>
-<script>
-function open() {
-	document.getElementById("popup").style.display = "block";
-	document.getElementById("transparent").style.display = "block";
-};
-function close(site,name) {
-	document.getElementById("popup").style.display = "none";
-	document.getElementById("transparent").style.display = "none";
-	document.form.href.value = site;
-	document.form.name.value = name;
-};
-function closewithoutcontent() {
-	document.getElementById("popup").style.display = "none";
-	document.getElementById("transparent").style.display = "none";
-}
-</script>
 <div id="transparent"></div>
 <div id="popup">
-<div class="close" id="close"><a href="javascript:closewithoutcontent()">&times;</a></div>
+<div class="close" id="close"><a href="javascript:popupclosewithoutcontent()">&times;</a></div>
 <h3>Seiten</h3>
-<a href="javascript:close('','')">--- kein Link ---</a>
+<a href="javascript:popupclose('','')">--- kein Link ---</a>
 <?php
 $sql = "SELECT * FROM XENUX_pages ORDER by filename";
 $erg = mysql_query($sql);
 while($row = mysql_fetch_assoc($erg)) {
-	echo "<a href=\"javascript:close('".$row['filename']."','".$row['fullname']."')\">".$row['fullname']."</a>";
+	echo "<a href=\"javascript:popupclose('".$row['filename']."','".$row['fullname']."')\">".$row['fullname']."</a>";
 }
 ?>
 </div>
 <form action="" name="form" method="post">
 	<span <?php if (empty($href) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Link (Seitenkurzname):</span><br />
-	<input type="text" name="href" size="70" value="<?php echo $href; ?>" />&nbsp;<a href="javascript:open()">Seite auswählen</a><br /><br />
+	<input type="text" id="field1"  name="href" size="70" value="<?php echo $href; ?>" />&nbsp;<a href="javascript:popupopen()">Seite auswählen</a><br /><br />
 	<span <?php if (empty($name) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Angezeigter Name:</span><br />
-	<input type="text" name="name" size="70" maxlength="25" value="<?php echo $name; ?>" /><br /><br />
+	<input type="text" id="field2"  name="name" size="70" maxlength="25" value="<?php echo $name; ?>" /><br /><br />
 	<input type="submit" name="sub2" value="speichern">
 </form>
 <?php
