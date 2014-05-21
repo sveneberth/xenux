@@ -570,7 +570,6 @@ ul#topnavi1 li :hover {
 }
 .calender div.after,
 .calender div.before {
-#	color: #aaa;
 	opacity: .5;
 }
 .calender .day {
@@ -587,7 +586,6 @@ ul#topnavi1 li :hover {
 }
 .calender .day.current {
 	font-weight: bold;
-#	font-size: 120%;
 	background: #eee
 }
 .calender .pagination {
