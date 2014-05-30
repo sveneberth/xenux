@@ -9,6 +9,9 @@ $Fehlercodes = array(
 						4 => "Es wurde keine Datei hochgeladen",
 						6 => "Es fehlt ein temporären Ordner"
 ); 
+if(!file_exists("../files/")) {
+	mkdir("../files/");
+}
 if(!empty($_POST['submit'])) {
 	$uploaddir = substr($_SERVER['SCRIPT_FILENAME'],	0,strrpos($_SERVER['SCRIPT_FILENAME'],"/"));
 	$uploaddir = substr($uploaddir,					0,strrpos($uploaddir,"/") + 1 );
