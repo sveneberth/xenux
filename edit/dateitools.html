@@ -8,24 +8,28 @@ if(!empty($_GET['delfile']) and file_exists('../files/'.$_GET['delfile'])) {
 <table id="table1">
 	<tr><th>Dateiname</th><th>Type</th><th>Größe</th><th></th></tr>
 	<?php
-	$handle=opendir ("../files/");
-	while ($datei = readdir ($handle)) {
-		$type = pathinfo('../files/'.$datei, PATHINFO_EXTENSION);
-		$size = filesize('../files/'.$datei);
-		if($size < 1048576) {
-			$size = round($size/1024, 2).' KB';
-		} else {
-			$size = round($size/1048576, 2).' MB';
+	if(file_exists("../files/")) {
+		$handle=opendir ("../files/");
+		while ($datei = readdir ($handle)) {
+			$type = pathinfo('../files/'.$datei, PATHINFO_EXTENSION);
+			$size = filesize('../files/'.$datei);
+			if($size < 1048576) {
+				$size = round($size/1024, 2).' KB';
+			} else {
+				$size = round($size/1048576, 2).' MB';
+			}
+			if($datei != '.' and $datei != '..') {
+				echo "<tr>";
+				echo "<td><a href=\"javascript:window.open ('../files/$datei','Datei zeigen','width=700,height=500,location=0,menubar=0,scrollbars=0,status=0,toolbar=0,resizable=0')\">$datei</a></td>";
+				echo "<td>$type</td>";
+				echo "<td>$size</td>";
+				echo "<td><a id=\"edit_href\" style=\"font-size: 0.9em;\" href=\"?site=dateitools&delfile=$datei\">löschen</a></td>";
+				echo "</tr>";
+			}
 		}
-		if($datei != '.' and $datei != '..') {
-			echo "<tr>";
-			echo "<td><a href=\"javascript:window.open ('../files/$datei','Datei zeigen','width=700,height=500,location=0,menubar=0,scrollbars=0,status=0,toolbar=0,resizable=0')\">$datei</a></td>";
-			echo "<td>$type</td>";
-			echo "<td>$size</td>";
-			echo "<td><a id=\"edit_href\" style=\"font-size: 0.9em;\" href=\"?site=dateitools&delfile=$datei\">löschen</a></td>";
-			echo "</tr>";
-		}
+		closedir($handle);
+	} else {
+		echo "Verzeichnis existiert nicht!";
 	}
-	closedir($handle);
 	?>
 </table>
