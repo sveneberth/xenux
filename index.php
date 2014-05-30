@@ -27,7 +27,7 @@ include('core/macros/escape_mail.php');
 $link = mysql_connect($MYSQL_HOST, $MYSQL_BENUTZER, $MYSQL_KENNWORT);
 $db_selected = mysql_select_db($MYSQL_DATENBANK, $link);
 if(!$db_selected) {
-	echo 'Es ist keine Verbindung zur Datenbank möglich!';
+	die('Es ist keine Verbindung zur Datenbank möglich!');
 }
 $sql = "SELECT * FROM XENUX_pages WHERE filename = '".mysql_real_escape_string($filename)."'";
 $erg = mysql_query($sql);
@@ -46,7 +46,7 @@ if(isset($_POST["username"])) {
 	$anzahl = mysql_num_rows($res);
 	$erg = mysql_fetch_array($res);
 	if ($anzahl > 0) {
-		$_SESSION["login"] = 1;
+		$_SESSION["login"] = 1; //%FIXIT% only id should save in session
 		$_SESSION["user"]['username'] = $erg['username'];
 	} else{
 		$result1 = "Deine Logindaten sind nicht korrekt, oder du wurdest noch nicht freigeschaltet.<br />";
@@ -85,7 +85,7 @@ if (@$_SESSION['login'] == 1) {
 	<ul id='topmenu'>
 		<li><a href='./'>Home</a></li>
 		<?php
-		$Menupoint = "1";
+		$Menupoint = "1"; //%FIXIT% menu should build automatically
 		while($Menupoint <= "8") {
 			$Menuunder = "1";
 			$query = "SELECT * FROM `XENUX_menu` WHERE `menupoint` = '".$Menupoint."' AND `menuunder` = '0'";

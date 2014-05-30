@@ -27,7 +27,7 @@ if(!isset($_GET['site'])) {
 if(!isset($_GET['site']) or !file_exists($_GET['site'].".html") or empty($_GET['site'])){
 	$_GET['site'] = "editroom";
 }
-$all_sites = array(
+$all_sites = array(		//%FIXIT% rewrite filenames, change types from *.html to *.php, if the files are opened directly , exit they
 					"editroom" => "Editroom",
 					"login" => "Login",
 					"logout" => "Logout",
@@ -44,8 +44,8 @@ $all_sites = array(
 					"rechte_anzeigen" => "Meine Rechte anzeigen",
 					"rechte_aendern" => "Rechte ändern",
 					"mail" => "Mail senden",
-					"datei_hochladen" => "Datei hochladen",
-					"dateitools" => "Datei Tools",
+					"datei_hochladen" => "Dateien hochladen",
+					"dateitools" => "Datein ansehen",
 					"freigabe" => "Freigabe",
 					"ansprechpartner" => "Ansprechpartner",
 					"termine" => "Termine",
@@ -54,6 +54,9 @@ if (!array_key_exists($site, $all_sites)) {
 	$site = "editroom";
 }
 $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-14);
+//%FIXIT% you can change on one site the main setting like background, font color or font size, favicon from xenux sites
+//%FIXIT% make one site, where you can generate a form for things like order
+//%FIXIT% include JQuery from (google apis or ) local for offline work, add jQuery UI and migrate
 ?>
 <!Doctype html>
 <html lang="de">
@@ -70,6 +73,7 @@ $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-14);
 </head>
 <body>
 <script>
+//%FIXIT% extract script in externel *.js file
 $(window).bind('keydown', function(event) {
 	if (event.ctrlKey || event.metaKey) {
 		switch (String.fromCharCode(event.which).toLowerCase()) {
@@ -81,20 +85,20 @@ $(window).bind('keydown', function(event) {
 	}
 });
 function popupopen() {
-	$( "#popup" ).css( "display", "block" );
-	$( "#field" ).css( "display", "block" );
+	$( "#popup" ).show();
+	$( "#field" .show();
 	console.log('opened Popup');
 };
 function popupclose(field1, field2) {
-	$( "#popup" ).css( "display", "none" );
-	$( "#transparent" ).css( "display", "none" );
+	$( "#popup" ).hide();
+	$( "#transparent" ).hide();
 	$( "#field1" ).val( field1 )
 	$( "#field2" ).val( field2 )
 	console.log('closed Popup with content');
 };
 function popupclosewithoutcontent() {
-	$( "#popup" ).css( "display", "none" );
-	$( "#transparent" ).css( "display", "none" );
+	$( "#popup" ).hide();
+	$( "#transparent" ).hide();
 	console.log('closed Popup without content');
 }
 </script>
