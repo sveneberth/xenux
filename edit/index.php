@@ -12,6 +12,7 @@ if(!$db_selected){
 	echo 'Es ist keine Verbindung zur Datenbank möglich!';
 	exit;
 }
+mysql_query('SET NAMES "utf8"');
 if(@$_SESSION['login'] == 1) {
 	$sql = "SELECT * FROM XENUX_users WHERE id = '".$_SESSION["userid"]."'";
 	$erg = mysql_query($sql);
@@ -39,6 +40,7 @@ $all_sites = array(
 										"dates_edit" => "Termine bearbeiten",
 										"files" => "Dateien",
 										"contact" => "Ansprechpartner",
+										"form" => "Formular",
 										),
 					"Account" => array (
 										"personal_data_change" => "Persönliche Daten ändern",

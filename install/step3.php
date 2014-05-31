@@ -96,8 +96,7 @@ $MYSQL_DATENBANK	= "'.$dbname.'"; # Datenbankname
 			$erg = mysql_query($sql) or die("<p>Fehler! Es konnte die Tabelle \"XENUX_dates\" nicht erstellt werden!</p>");
 			$sql = "INSERT INTO XENUX_dates(name, text, date) VALUES
 					('Installation von Xenux', 'Xenux ist ab sofort installiert und kann jetzt genutzt werden.', '".date("Y-m-d H:i:s", time())."')";
-			$erg = mysql_query($sql)
-			or die("<p>Fehler! Es konnten keine Daten in die Tabelle \"XENUX_dates\" eingetragen werden!</p>");
+			$erg = mysql_query($sql) or die("<p>Fehler! Es konnten keine Daten in die Tabelle \"XENUX_dates\" eingetragen werden!</p>");
 			//-----------------------------------------------------------------------------------------
 			$sql = "CREATE TABLE IF NOT EXISTS `XENUX_main` (
 					`id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -116,8 +115,12 @@ $MYSQL_DATENBANK	= "'.$dbname.'"; # Datenbankname
 					('contact_form_email', 'mail@me.com', 'email', 'E-Mail Adresse (für das Kontaktformular)'),
 					('favicon_src', 'logo.ico', 'text', 'Link zum Favicon'),
 					('logo_src', 'logo.png', 'text', 'Link zum Logo');";
-			$erg = mysql_query($sql)
-			or die("<p>Fehler! Es konnten keine Daten in die Tabelle \"XENUX_main\" eingetragen werden!</p>");
+			$erg = mysql_query($sql) or die("<p>Fehler! Es konnten keine Daten in die Tabelle \"XENUX_main\" eingetragen werden!</p>");//-----------------------------------------------------------------------------------------
+			$sql = "CREATE TABLE IF NOT EXISTS `XENUX_form` (
+					`id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+					`type` varchar(150) NOT NULL,
+					`label` text NOT NULL);";
+			$erg = mysql_query($sql) or die("<p>Fehler! Es konnte die Tabelle \"XENUX_form\" nicht erstellt werden!</p>");
 			
 			echo '<p>Es wurden alle Tabellen erstellt!</p>';
 			mysql_close($link);

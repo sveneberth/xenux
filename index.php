@@ -29,6 +29,7 @@ $db_selected = mysql_select_db($MYSQL_DATENBANK, $link);
 if(!$db_selected) {
 	die('Es ist keine Verbindung zur Datenbank möglich!');
 }
+mysql_query('SET NAMES "utf8"');
 $sql = "SELECT * FROM XENUX_pages WHERE filename = '".mysql_real_escape_string($filename)."'";
 $erg = mysql_query($sql);
 $row = mysql_fetch_assoc($erg);

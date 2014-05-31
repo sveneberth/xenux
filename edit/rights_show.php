@@ -19,8 +19,9 @@ if(!isset($site)) die("You can not open this file individually/Sie k&ouml;nnen d
 	if($login['role'] >= '2') {
 		echo '<li>Rechte ändern</li>';
 		echo '<li>Homepage Einstellungen ändern</li>';
+		echo '<li>Formulare ändern</li>';
 	}
-	if($login['role'] >= '2') {
+	if($login['role'] == '3') {
 		echo '<li>alle Root-Rechte</li>';
 	}
 	?>
