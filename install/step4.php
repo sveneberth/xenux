@@ -143,7 +143,7 @@ $MYSQL_DATENBANK	= "'.$dbname.'"; # Datenbankname
 								('hp_name', 'Meine Homepage', 'text', 'Homepagename'),
 								('meta_desc', 'Hier die Beschreibung der Homepage, die in den Meta-Tags angezeigt wird', 'textarea', 'Beschreibung der Homepage(Meta-Tag)'),
 								('meta_keys', 'Schlüsselwörter der Homepage, die in den Meta-Tags angezeigt werden', 'textarea', 'Schlüsselwörter Homepage (Meta-Tag)'),
-								('contact_form_email', 'mail@me.com', 'email', 'E-Mail Adresse (für das Kontaktformular)'),
+								('contact_form_email', 'mail@me.com', 'email', 'E-Mail Adresse (für das Kontaktformular)')
 								;";
 						$db_erg = mysql_query($sql)
 						or die('<br />Fehler! Es konnten keine Daten in die Tabelle "XENUX_main" eingetragen werden!<br /><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>');
