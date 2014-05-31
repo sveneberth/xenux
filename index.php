@@ -33,6 +33,7 @@ $sql = "SELECT * FROM XENUX_pages WHERE filename = '".mysql_real_escape_string($
 $erg = mysql_query($sql);
 $row = mysql_fetch_assoc($erg);
 $fullname = $row['fullname'];
+$siteid = $row['id'];
 mysql_free_result($erg);
 if($fullname == '') {
 	$filename = 'error';
@@ -45,15 +46,15 @@ if(isset($_POST["username"])) {
 	$res = mysql_query($sql);
 	$anzahl = mysql_num_rows($res);
 	$erg = mysql_fetch_array($res);
-	if ($anzahl > 0) {
-		$_SESSION["login"] = 1; //%FIXIT% only id should save in session
-		$_SESSION["user"]['username'] = $erg['username'];
+	if($anzahl > 0) {
+		$_SESSION["login"] = 1;
+		$_SESSION["userid"] = $erg['id'];
 	} else{
 		$result1 = "Deine Logindaten sind nicht korrekt, oder du wurdest noch nicht freigeschaltet.<br />";
 	}
 }
 if (@$_SESSION['login'] == 1) {
-	$sql = "SELECT * FROM XENUX_users WHERE username='".$_SESSION["user"]['username']."'";
+	$sql = "SELECT * FROM XENUX_users WHERE id = '".$_SESSION["userid"]."'";
 	$erg = mysql_query($sql);
 	$login = mysql_fetch_array($erg);
 }
@@ -71,90 +72,85 @@ if (@$_SESSION['login'] == 1) {
 	<link rel="icon" href="core/logo.ico" type="image/x-icon" />
 	<link rel="shortcut icon" href="core/logo.ico" type="image/x-icon" />
 	<link rel="stylesheet" type="text/css" href="core/css/style.css" media="all"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+	<script src="core/js/main.js"></script>
 </head>
 <body>
-<div id="wrapper">
-	<div id="header">
-		<a class="green" href="./?site=impressum">Impressum</a>
-		<a class="yellow" href="./?site=kontakt">Kontakt</a>
-		<?php if (@$_SESSION["login"] == 1){echo '<a class="red" href="./edit/">Editroom</a>';} ?>
-		<a href="./"><span class="topic"><?php echo $HP_Name; ?></span></a><br />
-		<span class="motto"><?php echo $HP_Slogan; ?></span>
-	</div>
-	<ul id='topmenu'>
-		<li><a href='./'>Home</a></li>
-		<?php
-		$Menupoint = "1"; //%FIXIT% menu should build automatically
-		while($Menupoint <= "8") {
-			$Menuunder = "1";
-			$query = "SELECT * FROM `XENUX_menu` WHERE `menupoint` = '".$Menupoint."' AND `menuunder` = '0'";
-			$result = mysql_query($query);
-			$row = mysql_fetch_assoc($result);
-			$name = $row['name'];
-			$href = $row['href'];
-			if($name !='' and $href !='') {
-				echo "<li><a href='./?site=".$href."'>".$name."</a><ul>";
-				while($Menuunder <= "5") {
-					$query = "SELECT * FROM `XENUX_menu` WHERE `menupoint` = '".$Menupoint."' AND `menuunder` = '".$Menuunder."'";
-					$result = mysql_query($query);
-					$row = mysql_fetch_assoc($result);
-					$name = $row['name'];
-					$href = $row['href'];
-					if($name !='' and $href !='') {
-					echo "<li><a href='./?site=".$href."'>".$name."</a></li>";}
-					$Menuunder++;
-				};
-				echo "</ul></li>";
-			};
-			$Menupoint++;
-		}
-		?>
-	</ul>
-	<div id="rightbox">
-		<div id="login-right">
-			<h3>Login:</h3>
-			<?php
-			$result1 = "";
-			if(isset($del)){
-				echo $del;
-			}
-			if (@$_SESSION["login"] == 0) {
-				echo '<form action="" method="POST">';
-				echo '<input type="text" name="username" placeholder="Benutzername"><br />';
-				echo '<a href="edit/?site=forgotusername">Benutzernamen vergessen?</a><br />';
-				echo '<input type="password" name="password" placeholder="Passwort"><br />';
-				echo '<a href="edit/?site=forgotpassword">Passwort vergessen?</a><br />';
-				echo $result1;
-				echo '<input type="submit" name="submit" value="Einloggen"><br />';
-				echo '<a href="edit/?site=registrieren">Registrieren</a>';
-				echo '</form>';
-				}else {
-					$sql = "SELECT * FROM XENUX_users WHERE username='".$_SESSION["user"]['username']."'";
+	<div id="headWrapper">
+		<div id="head"> 
+			<div class="logo">
+				<a href="./">
+					<img src="core/logo.png" />
+				</a>
+			</div>
+			<ul id="topmenu" class="mobilemenu">
+				<li><a href="javascript:openmobilemenu()">Menu</a></li>
+				<li><a href="?site=newslist">News</a></li>
+				<li><a href="?site=termine">Termine</a></li>
+				<li><a href="./edit?site=login">Login</a></li>
+			</ul>
+			<ul id="topmenu" class="mainmenu">
+				<li><a href='./'>Home</a></li>
+				<?php
+					$unallowedsites = array	(
+												"impressum",
+												"kontakt",
+												"home",
+												"news",
+												"termine",
+												"terminview",
+											);
+					$read_category = array();
+					$sql = "SELECT * from XENUX_pages ORDER by category";
 					$erg = mysql_query($sql);
-					$login = mysql_fetch_object($erg);
-					echo "Hallo $login->vorname, du bist erfolgreich eingeloggt!<br />";
-					echo '<form action="" method="POST">';
-					echo '<input type="submit" name="session_delete" value="Logout"><br />';
-					echo '</form>';
-				}
-			?>
+					while($row = mysql_fetch_array($erg)) {
+						foreach($row as $key => $val) {
+							$a = "menu_$key";
+							$$a = $val;
+						}
+						if(!empty($menu_category) and !in_array($menu_category, $read_category)) {
+							$read_category[] = $menu_category;
+						}
+					}
+					foreach($read_category as $val) {
+						echo "<li><img src=\"core/images/right.png\" class=\"".strtolower(preg_replace("/[^a-zA-Z0-9_]/" , "" , $val))." openpoints\" onclick=\"javascript:openmenupoints('".strtolower(preg_replace("/[^a-zA-Z0-9_]/" , "" , $val))."')\"><a";
+						if(file_exists("core/pages/$val.php")) {
+							echo " href=\"?site=$val\"";
+						}
+						echo ">$val</a><ul id=\"".strtolower(preg_replace("/[^a-zA-Z0-9_]/" , "" , $val))."\">";
+						$sql = "SELECT * from XENUX_pages WHERE category = '$val' ORDER by fullname";
+						$erg = mysql_query($sql);
+						while($row = mysql_fetch_array($erg)) {
+							foreach($row as $key => $val) {
+								$a = "menu_$key";
+								$$a = $val;
+							}
+							echo "<li><a href=\"?site=$menu_filename\">$menu_fullname</a></li>";
+						}
+						echo "</ul></li>";
+					}
+					$sql = "SELECT * from XENUX_pages WHERE category = '' ORDER by fullname";
+					$erg = mysql_query($sql);
+					while($row = mysql_fetch_array($erg)) {
+						foreach($row as $key => $val) {
+							$a = "menu_$key";
+							$$a = $val;
+						}
+						if(!in_array($menu_filename, $unallowedsites)) {
+							echo "<li><a href=\"?site=$menu_filename\">$menu_fullname</a></li>";
+						}
+					}
+				?>
+			</ul>
 		</div>
-		<ul id="pages-right">
-			<span class="pages-right_topic">Neuste Seiten:</span>
-			<?php
-			$sql = "SELECT * FROM XENUX_pages ORDER BY id DESC LIMIT 5";
-			$erg = mysql_query($sql);
-			while ($zeile = mysql_fetch_array($erg)) {
-				if($zeile['filename'] != 'news') {
-					echo '<li><a href="?site='.$zeile['filename'].'">'.$zeile['fullname'].'</a></li>';
-				}
-			}
-			mysql_free_result($erg);
-			?>
-		</ul>
-		<ul id="news-right">
-			<span class="news-right_topic">News:</span>
+	</div>
+<div id="wrapper">
+	<div id="leftboxes">
+		<ul id="news-left">
+			<span class="topic">News:</span>
 			<?php
 			$sql = "SELECT * FROM XENUX_news LIMIT 5";
 			$erg = mysql_query($sql);
@@ -163,9 +159,9 @@ if (@$_SESSION['login'] == 1) {
 				$title = $zeile['title'];
 				$text = $zeile['text'];
 				if($title != '' and $text != '') {
-					echo '<li><span class="news-right_title">'.$title;
+					echo '<li><span class="title">'.$title;
 					if (@$_SESSION["login"] == 1) {
-						echo '<a id="edit_href" href="edit/?site=news&newspoint='.$id.'">Bearbeiten</a>';
+						echo '<a id="edit_href" href="edit/?site=news_edit&newspoint='.$id.'">Bearbeiten</a>';
 					}
 					echo '</span>';
 					if(strlen($text) > 70) {
@@ -173,7 +169,7 @@ if (@$_SESSION['login'] == 1) {
 					}else {
 						echo $text;
 					}
-					echo '... <a href="?site=news&id='.$id.'">weiterlesen</a></li>';
+					echo '...<br /><a href="?site=news&id='.$id.'">&raquo;weiterlesen</a></li>';
 				}
 			}
 			mysql_free_result($erg);
@@ -184,13 +180,13 @@ if (@$_SESSION['login'] == 1) {
 		$erg = mysql_query($sql);
 		$anzahl = mysql_num_rows($erg);
 		if($anzahl > 0) {
-			echo '<ul id="news-right"><span class="news-right_topic">anstehende Termine:</span>';
+			echo '<ul class="dates" id="news-left"><span class="topic">anstehende Termine:</span>';
 			$sql1 = "SELECT *, DATE_FORMAT(date,'%d.%m.%Y %H:%i') as dat FROM XENUX_dates ORDER by date";
 			$erg1 = mysql_query($sql1);
 			$i = 5;
 			while($row1 = mysql_fetch_array($erg1) and $i > 0) {
 				if(strtotime($row1['date']) > strtotime(date('Y-m-d H:i'))) {
-					echo '<li><span class="news-right_title">'.$row1['name'].'</span>';
+					echo '<li><span class="title">'.$row1['name'].'</span>';
 					echo $row1['dat'].'<br/>'.$row1['text'].'</a></li>';
 					$i--;
 				}
@@ -202,13 +198,13 @@ if (@$_SESSION['login'] == 1) {
 		$erg = mysql_query($sql);
 		$row = mysql_fetch_array($erg);
 		if(!empty($row['ansprechpartner'])) {
-			echo '<ul id="news-right"><span class="news-right_topic">Ansprechpartner:</span>';
+			echo '<ul id="news-left"><span class="topic">Ansprechpartner:</span>';
 			$zerlegen = explode("|", $row['ansprechpartner']);
 			for($i=1;isset($zerlegen[$i]);$i++) {
 				$sql1 = "SELECT * FROM XENUX_ansprechpartner WHERE id = '$zerlegen[$i]'";
 				$erg1 = mysql_query($sql1);
 				$row1 = mysql_fetch_array($erg1);
-				echo '<li><span class="news-right_title">'.$row1['name'].'</span>';
+				echo '<li><span class="title">'.$row1['name'].'</span>';
 				echo $row1['position'].'<br/>';
 				escapemail($row1['email']);
 				echo '</a></li>';
@@ -216,6 +212,34 @@ if (@$_SESSION['login'] == 1) {
 			echo '</ul>';
 		}
 		?>
+		<div id="login-left">
+			<h3>Login:</h3>
+			<?php
+			if(isset($del)){
+				echo $del;
+			}
+			if (@$_SESSION["login"] == 0) {
+				?>
+				<form action="" method="POST">
+				<input style="width: calc(100% - 8px);" type="text" name="username" placeholder="Benutzername"><br />
+				<a href="edit/?site=forgotusername">Benutzernamen vergessen?</a><br />
+				<input style="width: calc(100% - 8px);" type="password" name="password" placeholder="Passwort"><br />
+				<a href="edit/?site=forgotpassword">Passwort vergessen?</a><br />
+				<?php echo @$result1; ?>
+				<input type="submit" name="submit" value="Einloggen"><br />
+				<a href="edit/?site=registrieren">Registrieren</a>
+				</form>
+				<?php
+			} else {
+				?>
+				Hallo <?php echo $login['vorname']; ?>, du bist erfolgreich eingeloggt!<br />
+				<form action="" method="POST">
+					<input type="submit" name="session_delete" value="Logout">
+				</form>	
+				<?php
+			}
+			?>
+		</div>
 	</div>
 	<div id="content">
 		<h1>
@@ -223,7 +247,7 @@ if (@$_SESSION['login'] == 1) {
 			echo $fullname;
 			if (@$_SESSION["login"] == 1) {
 				if($filename!='news' and $filename!='error') {
-					echo '<a id="edit_href" href="edit/?site=seiten_tools&pagename='.$filename.'">Bearbeiten</a>';
+					echo '<a id="edit_href" href="edit/?site=site_edit&id='.$siteid.'">Bearbeiten</a>';
 				}
 			}
 			?>
@@ -239,7 +263,12 @@ if (@$_SESSION['login'] == 1) {
 		?>
 	</div>
 	<div id="footer">
-	This Side was made with <a href="http://xenux.sven-eberth.bplaced.net/">Xenux</a>
+		This Side was made with <a href="http://xenux.sven-eberth.bplaced.net/">Xenux</a>
+		<div class="href">
+			<a href="./edit/">Editroom</a>
+			<a href="./?site=kontakt">Kontakt</a>
+			<a href="./?site=impressum">Impressum</a>
+		</div>
 	</div>
 </div>
 </body>

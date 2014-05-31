@@ -1,4 +1,5 @@
 <?php
+if(!isset($site)) die("You can not open this file individually/Sie k&ouml;nnen diese Datei nicht einzeln &ouml;ffnen!");
 if(!empty($_POST['submit'])) {
 	$email = mysql_real_escape_string($_POST['email']);
 	if($email == '')	{$email_fill='n';}

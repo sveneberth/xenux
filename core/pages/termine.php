@@ -1,6 +1,7 @@
 <?php
 	include_once('core/macros/calender.php');
 ?>
+<!--
 <br />
 <br />
 <script>
@@ -43,3 +44,4 @@ while($row = mysql_fetch_array($erg)) {
 }
 ?>
 </table>
+-->

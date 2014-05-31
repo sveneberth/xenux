@@ -1,4 +1,5 @@
 <?php
+if(!isset($site)) die("You can not open this file individually/Sie k&ouml;nnen diese Datei nicht einzeln &ouml;ffnen!");
 $form = false;
 if(isset($_GET['newnews'])) {
 	if($_GET['newnews'] == "yes") {
@@ -19,16 +20,16 @@ $newspoint = mysql_real_escape_string($_GET['newspoint']);
 			$sql = "UPDATE XENUX_news Set title = '$title', text = '$text' WHERE id = '$newspoint'";
 			$erg = mysql_query($sql);
 			echo "Die News wurde gespeichert!<br />";
-			echo "<a href='../?site=news&id=$newspoint'>News anzeigen</a><br />";
-			echo "<a href='./?site=news'>Weiteren News bearbeiten</a><br />";
+			echo "<a href='../?site=$site&id=$newspoint'>News anzeigen</a><br />";
+			echo "<a href='./?site=$site'>Weiteren News bearbeiten</a><br />";
 			echo "Vorschau:<br />";
 			echo "<div id='vorschau'>";
 			$sql = "SELECT * FROM XENUX_news WHERE id = '$newspoint'";
 			$erg = mysql_query($sql);
 			$row = mysql_fetch_object($erg);
 			echo "<strong>$row->title</strong><br />$row->text</div>";
-			exit;
-	}else {
+			return;
+	} else {
 		echo 'Du bearbeitest gerade die News '.$newspoint.'!';
 		$sql = "SELECT * FROM XENUX_news WHERE id = '".$newspoint."'";
 		$erg = mysql_query($sql);
@@ -47,7 +48,7 @@ $newspoint = mysql_real_escape_string($_GET['newspoint']);
 			<input type="submit" name="sub2" value="speichern">
 		</form>
 		<?php
-		exit;
+		return;
 		}
 }
 ?>
@@ -63,12 +64,12 @@ while($row = mysql_fetch_array($erg)) {
 	echo "<td>".$row['id']."</td>";
 	echo "<td>".$row['title']."</td>";
 	echo "<td>".$row['text']."</td>";
-	echo "<td><a id=\"edit_href\" style=\"font-size: 0.9em;\" href=\"./?site=news&newspoint=".$row['id']."\">Bearbeiten</a></td>";
-	echo "<td><a id=\"edit_href\" style=\"font-size: 0.9em;\" href=\"./?site=news&delnews=".$row['id']."\">löschen</a></td>";
+	echo "<td><a id=\"edit_href\" style=\"font-size: 0.9em;\" href=\"./?site=$site&newspoint=".$row['id']."\">Bearbeiten</a></td>";
+	echo "<td><a id=\"edit_href\" style=\"font-size: 0.9em;\" href=\"./?site=$site&delnews=".$row['id']."\">löschen</a></td>";
 	echo "</tr>";
 }
 ?>
 </table>
 <br />
 <br />
-<a id="edit_href" style="font-size: 1em;" href="./?site=news&newnews=yes">neue News</a>
+<a id="edit_href" style="font-size: 1em;" href="./?site=<?php echo $site; ?>&newnews=yes">neue News</a>

@@ -1,3 +1,6 @@
+<?php
+if(!isset($site)) die("You can not open this file individually/Sie k&ouml;nnen diese Datei nicht einzeln &ouml;ffnen!");
+?>
 <p>Du bist bereigtigt zu ...</p>
 <ul style="list-style-type:circle;">
 	<?php

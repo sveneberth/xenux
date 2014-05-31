@@ -34,10 +34,12 @@ input, textarea {
     padding: 2px 3px;
 	resize: none;
 	background: #fff;
+	width: 400px;
 }
 input[type="submit"],
 input[type="reset"] {
 	background: #ddd;
+	width: auto;
 }
 input[type="submit"]:hover,
 input[type="reset"]:hover {
@@ -51,166 +53,140 @@ a:hover{color:#1B0A7A;text-decoration:underline;}
 a:active{color:#38315F;}
 
 #wrapper {
-	width: 1000px;
-	height: 100%;
+	width: 80%;
 	background: none;
 	margin: 0 auto;
+	margin-top: 10px
 }
 
-#header {
-	height: 90px;
-	background: #0000FF;
-	padding: 0px;
+#headWrapper {
+	width: 100%;
+	height: 50px;
+	left: 0;
+	top: 0;
+	margin: 0;
+	padding: 0;
+	background: #333333;
 }
-#header a {
-	text-decoration: none;
-	color: #000000;
+#head {
+	width: 80%;
+	margin: 0 auto;
 }
-
-.topic {
-	font-family: "Comic Sans MS";
-	font-size: 50px;
-	color: #C91212;
-	position: relative;
-	left: 15px;
-	top: 0px;
+#head .logo  img {
+	height: 50px;
+	max-width: 100px;
+	float: left;
+	margin: 0 10px 0 0;
+} 
+#head:after {
+	display: block;
+	content: '';
+	clear: both;
 }
-
-.motto {
-	font-family: "Comic Sans MS";
-	font-size: 15px;
-	color: #FFFFFF;
-	position: relative;
-	left: 40px;
-	top: -10px;
-}
-
-.red {
+.mobilemenu {
+	display: none;
 	float: right;
-	width: 100px;
-	height: 20px;
-	background: #FF0000;
-	text-align: center;
-	padding: 2px 0 1px 0;
 }
-.red:hover {
-	background: #F06363;
+.openpoints {
+	display: none;
 }
-
-.yellow {
-	float: right;
-	width: 100px;
-	height: 20px;
-	background: #FFFF00;
-	text-align: center;
-	padding: 2px 0 1px 0;
-}
-.yellow:hover {
-	background: #FBFB82;
-}
-
-.green {
-	float: right;
-	width: 100px;
-	height: 20px;
-	background: #00FF00;
-	text-align: center;
-	padding: 2px 0 1px 0;
-}
-.green:hover {
-	background: #76FF76;
-}
-
 #topmenu {
-  font: 67.5% 'Lucida Sans Unicode', 'Bitstream Vera Sans', 'Trebuchet Unicode MS', 'Lucida Grande', Verdana, Helvetica, sans-serif;
-  font-size: 14px;
-  width: auto;
-  margin: 0;
-  padding: 0;
-  background: #333333;
-  height: 35px;
-  list-style: none;
+	font-size: 14px;
+	padding: 0;
+	margin: 0;
+/*	background: #333333; */
+	height: 50px;
+	list-style: none;
 }
 #topmenu li {
-  float: left;
-  padding: 0px;
+	float: left;
+	padding: 0px;
 }
 #topmenu li a {
 	background: #333333;
 	display: block;
-	line-height: 35px;
+	line-height: 50px;
 	margin: 0px;
 	padding: 0px 15px;
 	text-align: center;
 	text-decoration: none;
 	color: #cccccc;
-	border-right: #3C3C3C 1px solid;
-}
-#topmenu li > a:hover,
-#topmenu li:hover > a {
-	background: #2580a2;
-	color: #FFFFFF;
-	text-decoration: none;
+	border-left: #3C3C3C 1px solid;
 }
 #topmenu li ul {
 	background: #333333;
-	display: none;
-	height: auto;
+	display: block;
 	padding: 0px;
 	margin: 0px;
 	position: absolute;
-	width: 225px;
 	z-index: 200;
-}
-#topmenu li:hover ul {
-  display: block;
+	opacity: 0;
+	height: 0;
+	overflow: hidden;
+	transition: .7s opacity ease;
 }
 #topmenu li li {
-  display: block;
-  float: none;
-  margin: 0px;
-  padding: 0px;
-  width: 225px;
+	float: none;
+	display: block;
+	margin: 0px;
+	padding: 0px;
 	border-bottom: #3C3C3C 1px solid;
 }
-#topmenu li:hover li a {
-  background: none;
-}
 #topmenu li ul a {
-  display: block;
-  height: 35px;
-  font-size: 12px;
-  font-style: normal;
-  margin: 0px;
-  padding: 0px 10px 0px 15px;
-  text-align: left;
-}
-#topmenu li ul a:hover,
-#topmenu li ul li:hover > a {
-  background: #2580a2;
-  border: 0px;
-  color: #ffffff;
-  text-decoration: none;
+	display: block;
+	font-size: 90%;
+	padding: 0px 10px 0px 10px;
+	text-align: left;
+	line-height: 30px;
+	height: 30px;
 }
 
+@media only screen and (min-width: 600px) {
+	#topmenu li:hover > a {
+		background: #2580a2;
+		color: #FFFFFF;
+		text-decoration: none;
+	}
+	#topmenu li:hover ul {
+		display: block;
+		opacity: 1;
+		height: auto;
+	}
+	#topmenu li ul a:hover,
+	#topmenu li ul li:hover > a {
+		background: #2580a2;
+		border: 0px;
+		color: #ffffff;
+		text-decoration: none;
+	}
+}
 #content {
-	width: 996px;
-	margin-top: 10px;
-	background: none;
+	background: #fff;
 	font-family: Verdana;
-	padding: 2px;
+	padding: 0 5px;
 	color: #333333;
+	float: right;
+	width: 75%;
+}
+#content:after {
+	display: block;
+	content: '';
+	clear: both;
 }
 
 #footer {
-	width: 996px;
-	margin-top: 10px;
+	width: 100%;
 	background: none;
-	font-family: Verdana;
+	font-size: 14px;
 	color: #808080;
 	border-top: 1px #808080 solid;
 	padding: 2px;
-	clear: right;
+	clear: both;
+	margin-top: 30px;
+	display: inline-table;
+}
+#footer > .href {
+	float: right;
 }
 #footer a:link,
 #footer a:visited,
@@ -223,71 +199,60 @@ a:active{color:#38315F;}
 	font-weight: bold
 }
 
-#rightbox {
-	float: right;
+#leftboxes {
+	float: left;
 	font-size: 90%;
-	margin-top: 20px;
-}
-
-#login-right {
+	width: 20%;
 	border: 2px solid #BBBBBB;
-	width: 200px;
-	padding: 2px;
-	margin: 0px 0px 10px 10px;
-}
-#login-right h3{
-	margin: 0 0 5px 0;
-	text-align: center;
 }
 
-#login-right input{
-	margin: 3px 0;
+#pages-left {
+	padding: 2px 2px 5px 2px;
+	margin: 0px 0px 5px 0;
+	width: calc(100% - 4px);
+	border-bottom: 2px solid #BBBBBB;
 }
-#login_right input[type="text"],
-#login_right input[type="password"] {
-	width: 192px;
-}
-
-#pages-right {
-	border: 2px solid #BBBBBB;
-	width: 200px;
-	padding: 2px;
-	margin: 0px 0px 10px 10px;
-}
-ul#pages-right li{
+ul#pages-left li{
 	list-style: none;
 	margin: 1px 0;
 }
-.pages-right_topic {
-	text-align: center;
+#pages-left  .topic {
 	font-weight: bold;
 	display: block;
 	font-size: 110%;
 }
 
-#news-right {
-	border: 2px solid #BBBBBB;
-	width: 200px;
-	padding: 2px;
-	margin: 0px 0px 10px 10px;
+#news-left {
+	padding: 2px 2px 5px 2px;
+	margin: 0px 0px 5px 0;
+	width: calc(100% - 4px);
+	border-bottom: 2px solid #BBBBBB;
 }
-ul#news-right li{
+ul#news-left li{
 	list-style: none;
 	display: block;
-	border: 1px #BCBCBC solid;
-	margin: 7px 0;
-	padding: 1px;
+	border-top: 1px #BCBCBC solid;
+	margin: 0;
+	padding: 5px 0;
 }
-.news-right_topic {
-	text-align: center;
+#news-left  .topic {
 	font-weight: bold;
 	display: block;
 	font-size: 110%;
 }
-.news-right_title {
+#news-left  .title {
 	font-weight: bold;
 	display: block;
 	margin-bottom: 2px;
+}
+
+#login-left {
+	padding: 2px 2px 5px 2px;
+	margin: 0px 0px 5px 0;
+	width: calc(100% - 4px);
+}
+#login-left h3{
+	margin: 0 0 5px 0;
 }
 
 .notfill {
@@ -318,44 +283,6 @@ ul#news-right li{
 	background: #EEE;
 }
 
-#wrapper1 {
-	width: 1200px;
-	height: 100%;
-	background: none;
-	margin: 0 auto;
-}
-
-#topnavi1 {
-	width: 90%;
-	background: #BBBBBB;
-	padding: 7px;
-	margin: auto;
-}
-ul#topnavi1 li {
-	list-style: none;
-	display: inline;
-	margin: 0 1em;
-	font-family: Arial;
-}
-ul#topnavi1 a {
-	color: #000000;
-	text-decoration: none;
-	background: #AAAAAA;
-	padding: 1.5px 3px;
-}
-ul#topnavi1 li :hover {
-	background: #CCCCCC;
-}
-
-#content1 {
-	width: 1196px;
-	margin-top: 10px;
-	background: none;
-	font-family: Verdana;
-	padding: 2px;
-	color: #333333;
-}
-
 #editroom {
 	width: 100%;
 	margin: 10px 0;
@@ -370,9 +297,9 @@ ul#topnavi1 li :hover {
 	background: #CED3DF;
 }
 
-#editroom_left {
+#editroombox {
 	float: left;
-	width: 32%;
+	width: 31%;
 	margin: 0 .1em;
 	padding: 5px;
 	border: 1px solid #EEEEEE;
@@ -387,22 +314,6 @@ ul#topnavi1 li :hover {
 #editroom > ul > li > a:focus{color:#090D6F;}
 #editroom > ul > li > a:hover{color:#090D6F;}
 #editroom > ul > li > a:active{color:#090D6F;}
-
-#editroom_middle {
-	float: left;
-	width: 32%;
-	margin: 0 .1em;
-	padding: 5px;
-	border: 1px solid #EEEEEE;
-}
-
-#editroom_right {
-	float: left;
-	width: 32%;
-	margin: 0 .1em;
-	padding: 5px;
-	border: 1px solid #EEEEEE;
-}
 
 #table1 {
 	border: 2px solid #000000;
@@ -566,7 +477,7 @@ ul#topnavi1 li :hover {
 .calender {
 	border: 1px solid black;
 	display: inline-block;
-	width: 760px;
+	width: 100%;
 }
 .calender div.after,
 .calender div.before {
@@ -661,4 +572,153 @@ ul#topnavi1 li :hover {
 	border-top: 1px solid #999;
 	border-bottom: 2px solid #333;
 	margin-bottom: 10px;
+}
+
+#box_contact {
+	border: 1px solid #aaa;
+	padding: .5% 1%;
+	width: 45%;
+	margin: 0 2% 2% 0;
+	float: left;
+}
+#box_contact > .name {
+	font-size: 150%;
+	font-weight: 200;
+	margin-bottom: 5px;
+}
+#box_contact > .position {
+	margin-bottom: 2px;
+	font-size: 110%;
+}
+#box_contact > .desc {
+	margin-bottom: 2px;
+}
+#box_contact > .email > a:link,
+#box_contact > .email > a:visited,
+#box_contact > .email > a:active {
+	color: #333;
+	text-decoration: none;
+}
+#box_contact > .email > a:hover {
+	color: #999;
+}
+
+.alowedhtmltags {
+	position: absolute;
+	top: 20%;
+	left: 30%;
+	width: 40%;
+	height: 20%;
+	background: #fff;
+	border: 1px solid #555;
+	box-shadow: 0 0 10px 2px #333;
+	padding: 5px;
+}
+
+.newslistbox {
+	border: 1px solid #ccc;
+	margin: 0 0 10px 0;
+	padding: 3px 5px;
+}
+.newslistbox h3 {
+	margin: 0 0 5px 0;
+}
+
+@media only screen and (max-width: 600px) {
+	#wrapper {
+		width: 100%;
+		margin-top: 60px;
+	}
+	#headWrapper {
+		position: fixed;
+	}
+	#head {
+		width: 100%;
+	}
+	.mainmenu {
+		display: none;
+	}
+	#topmenu.mainmenu  {
+		height: auto;
+		position: absolute;
+		top: 60px;
+		left: 0;
+		width: 90%;
+		background: #333333;
+	}
+	#topmenu.mainmenu  li {
+		float: none;
+		display: block;
+		padding: 0px;
+	}
+	#topmenu.mainmenu  li a {
+		display: block;
+		line-height: 40px;
+		margin: 0px 0 0 50px; 
+		padding: 0 3px;
+		text-align: left;
+		border-left: none;
+	}
+	#topmenu.mainmenu  li ul {
+		display: none;
+		padding: 0px;
+		margin: 0px;
+		position: relative;
+		z-index: 200;
+		height: auto;
+		overflow: hidden;
+		transition: none;
+		opacity: 1;
+	}
+	#topmenu.mainmenu  li li {
+		float: none;
+		display: block;
+		margin: 0px;
+		padding: 0px;
+		border-bottom: #3C3C3C 1px solid;
+	}
+	#topmenu.mainmenu  li ul a {
+		padding: 0px 0 0px 20px;
+		text-align: left;
+		line-height: 40px;
+		height: 40px;
+	}
+	.mobilemenu {
+		display: block;
+	}
+	.openpoints {
+		float: left;
+		height: 40px;
+		width: 50px;
+		display: block;
+		margin: 0;
+	}
+	#content {
+		float: left;
+		width: 100%;
+	}
+	#leftboxes {
+		float: none;
+		width: 100%;
+		display: none;
+	}
+	#leftboxes .dates {
+		display: none;
+	}
+	#footer > .href {
+		float: none;
+		display: block;
+	}
+	#login-left {
+		display: none;
+	}
+
+	#editroombox {
+		float: none;
+		width: 100%;
+		margin: 1em 0;
+		padding: 5px;
+		border: 1px solid #EEEEEE;
+	}
+
 }

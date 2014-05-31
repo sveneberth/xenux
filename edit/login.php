@@ -6,16 +6,21 @@ if (!empty($_POST["submit"])) {
 	$res = mysql_query($sql);
 	$anzahl = mysql_num_rows($res);
 	$erg = mysql_fetch_array($res);
-		if ($anzahl > 0) {
-			echo "Der Login war erfolgreich.<br />";
-			$_SESSION["login"] = 1;
-			$_SESSION["user"]['username'] = $erg['username'];
-		} else{
-			echo "Deine Logindaten sind nicht korrekt, oder du wurdest noch nicht freigeschaltet.<br />";
-		}
+	if($anzahl > 0) {
+		echo "Der Login war erfolgreich.<br />";
+		$_SESSION["login"] = 1;
+		$_SESSION["userid"] = $erg['id'];
+	} else {
+		echo "Deine Logindaten sind nicht korrekt, oder du wurdest noch nicht freigeschaltet.<br />";
 	}
+	if (@$_SESSION['login'] == 1) {
+		$sql = "SELECT * FROM XENUX_users WHERE id = '".$_SESSION['userid']."'";
+		$erg = mysql_query($sql);
+		$login = mysql_fetch_array($erg);
+	}
+}
 
-if ($_SESSION["login"] == 0) {
+if(@$_SESSION["login"] == 0) {
 ?>
 	<p>Um die Homepage zu bearbeiten, musst du dich zuerst anmelden!<br />
 	Falls du noch keine Account hast kannst du dich <a href="./?site=registrieren">hier Registrieren</a>, dieser Account musst jedoch erst vom Homepage-Administrator bestätigt werden!</p>
@@ -26,9 +31,8 @@ if ($_SESSION["login"] == 0) {
 	<a href="./?site=forgotpassword">Passwort vergessen?</a><br /><br />
 	<input type="submit" name="submit" value="Einloggen"></form>
 <?php
-}
-if($_SESSION['login'] == 1) {
-echo "<p>Hallo ".$login['vorname'].", du bist erfolgreich eingeloggt!<br />";
-echo "Beginne nun die Homepage über den <a href=\"?site=editroom\">Editroom</a> zu bearbeiten!</p>";
+} elseif($_SESSION['login'] == 1) {
+	echo "<p>Hallo ".$login['vorname'].", du bist erfolgreich eingeloggt!<br />";
+	echo "Beginne nun die Homepage über den <a href=\"?site=editroom\">Editroom</a> zu bearbeiten!</p>";
 }
 ?>

@@ -76,7 +76,8 @@ $MYSQL_DATENBANK	= "'.$dbname.'"; # Datenbankname
 								`id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 								`filename` VARCHAR(150) NOT NULL ,
 								`fullname` VARCHAR(300) NOT NULL,
-								`ansprechpartner` VARCHAR(150) NULL
+								`ansprechpartner` VARCHAR(150) NULL,
+								`category` VARCHAR(150) NULL
 								)";
 						$db_erg = mysql_query($sql)
 						or die('<br />Fehler! Es konnte die Tabelle "XENUX_pages" nicht erstellt werden!<br /><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>');
@@ -89,28 +90,6 @@ $MYSQL_DATENBANK	= "'.$dbname.'"; # Datenbankname
 								('impressum', 'Impressum')";
 						$db_erg = mysql_query($sql)
 						or die('<br />Fehler! Es konnten keine Daten in die Tabelle "XENUX_pages" eingetragen werden!<br /><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>');
-						//
-						$sql = "CREATE TABLE IF NOT EXISTS `XENUX_menu` (
-								`menupoint` VARCHAR(10) NOT NULL ,
-								`menuunder` VARCHAR(10) NOT NULL ,
-								`href` VARCHAR(150),
-								`name` VARCHAR(300)
-								)";
-						$db_erg = mysql_query($sql)
-						or die('<br />Fehler! Es konnte die Tabelle "XENUX_menu" nicht erstellt werden!<br /><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>');
-						//
-						$Menupoint = "1";
-						while($Menupoint <= "8") {
-							$Menuunder = "0";
-							while($Menuunder <= "5") {
-								$Wert = $Menupoint."_".$Menuunder;
-								$sql = "INSERT INTO `XENUX_menu`(`menupoint`, `menuunder`, `href`, `name`)VALUES('".$Menupoint."', '".$Menuunder."', '', '');";
-								$db_erg = mysql_query($sql)
-								or die('<br />Fehler! Es konnten keine Daten in die Tabelle "XENUX_menu" eingetragen werden!<br /><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>');
-								$Menuunder++;
-							};
-							$Menupoint++;
-						}
 						//
 						$sql = "CREATE TABLE IF NOT EXISTS `XENUX_news` (
 								`id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,

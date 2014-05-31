@@ -14,4 +14,6 @@ echo "<h3 style=\"margin: 20px 0 5px 0;\">$name</h3>";
 echo "<strong>$dat</strong><br />";
 echo "$text";
 ?>
-<h>
+<br />
+<br />
+<a href="?site=termine">&raquo;zur Übersicht</a>

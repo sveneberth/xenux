@@ -1,4 +1,5 @@
 <?php
+if(!isset($site)) die("You can not open this file individually/Sie k&ouml;nnen diese Datei nicht einzeln &ouml;ffnen!");
 $random_pw = substr(md5(uniqid(rand())), 0, 10);
 if(!empty($_POST['submit'])) {
 	$username = mysql_real_escape_string($_POST['username']);

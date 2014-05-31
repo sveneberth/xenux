@@ -1,4 +1,5 @@
 <?php
+if(!isset($site)) die("You can not open this file individually/Sie k&ouml;nnen diese Datei nicht einzeln &ouml;ffnen!");
 $form = false;
 if(isset($_GET['newdate'])) {
 	if($_GET['newdate'] == "yes") {
@@ -21,9 +22,9 @@ $id = mysql_real_escape_string($_GET['id']);
 			$sql = "UPDATE XENUX_dates Set name = '$name', date = '$dat $time', text = '$text' WHERE id = '$id'";
 			$erg = mysql_query($sql);
 			echo "Der Termin wurde gespeichert!<br />";
-			echo "<a href='../?site=termine'>Termine anzeigen</a><br />";
-			echo "<a href='./?site=termine'>Weitere Termine bearbeiten</a><br />";
-			exit;
+			echo "<a href='../?site=$site'>Termine anzeigen</a><br />";
+			echo "<a href='./?site=$site'>Weitere Termine bearbeiten</a><br />";
+			return;
 	}else {
 		echo 'Du bearbeitest gerade den Termin '.$id.'!';
 		$sql = "SELECT *, DATE_FORMAT(date,'%Y-%m-%d') as dat, DATE_FORMAT(date,'%H:%i:%s') as time FROM XENUX_dates WHERE id = '".$id."'";
@@ -49,7 +50,7 @@ $id = mysql_real_escape_string($_GET['id']);
 			<input type="submit" name="sub2" value="speichern">
 		</form>
 		<?php
-		exit;
+		return;
 		}
 }
 ?>
@@ -65,12 +66,12 @@ while($row = mysql_fetch_array($erg)) {
 	echo "<td>".$row['name']."</td>";
 	echo "<td>".$row['text']."</td>";
 	echo "<td>".$row['dat']."</td>";
-	echo "<td><a id=\"edit_href\" style=\"font-size: 0.9em;\" href=\"./?site=termine&id=".$row['id']."\">Bearbeiten</a></td>";
-	echo "<td><a id=\"edit_href\" style=\"font-size: 0.9em;\" href=\"./?site=termine&deldate=".$row['id']."\">löschen</a></td>";
+	echo "<td><a id=\"edit_href\" style=\"font-size: 0.9em;\" href=\"./?site=$site&id=".$row['id']."\">Bearbeiten</a></td>";
+	echo "<td><a id=\"edit_href\" style=\"font-size: 0.9em;\" href=\"./?site=$site&deldate=".$row['id']."\">löschen</a></td>";
 	echo "</tr>";
 }
 ?>
 </table>
 <br />
 <br />
-<a id="edit_href" style="font-size: 1em;" href="./?site=termine&newdate=yes">neuer Termin</a>
+<a id="edit_href" style="font-size: 1em;" href="./?site=<?php echo $site; ?>&newdate=yes">neuer Termin</a>

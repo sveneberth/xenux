@@ -14,3 +14,6 @@ if ($_SESSION["login"] == 1) {
 echo '</topic>';
 echo $row->text;
 ?>
+<br />
+<br />
+<a href="?site=newslist">&raquo;zur Übersicht</a>

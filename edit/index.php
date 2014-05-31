@@ -1,6 +1,6 @@
 <?php
 SESSION_START();
-function consolelog($value) {
+function logger($value) {
 	echo "<script>console.log('".$value."');</script>";
 };
 include('../config.php');
@@ -12,8 +12,8 @@ if(!$db_selected){
 	echo 'Es ist keine Verbindung zur Datenbank möglich!';
 	exit;
 }
-if (@$_SESSION['login'] == 1) {
-	$sql = "SELECT * FROM XENUX_users WHERE username='".$_SESSION["user"]['username']."'";
+if(@$_SESSION['login'] == 1) {
+	$sql = "SELECT * FROM XENUX_users WHERE id = '".$_SESSION["userid"]."'";
 	$erg = mysql_query($sql);
 	$login = mysql_fetch_array($erg);
 }
@@ -24,44 +24,60 @@ if(!isset($_GET['site'])) {
 }else {
 	$site = $_GET['site'];
 }
-if(!isset($_GET['site']) or !file_exists($_GET['site'].".html") or empty($_GET['site'])){
+if(!isset($_GET['site']) or !file_exists($_GET['site'].".php") or empty($_GET['site'])){
 	$_GET['site'] = "editroom";
 }
-$all_sites = array(		//%FIXIT% rewrite filenames, change types from *.html to *.php, if the files are opened directly , exit they
+$all_sites = array(
 					"editroom" => "Editroom",
-					"login" => "Login",
-					"logout" => "Logout",
-					"registrieren" => "Registrieren",
-					"forgotusername" => "Benutzername vergessen",
-					"forgotpassword" => "Passwort vergessen",
-					"seite_neu" => "Neue Seite erstellen",
-					"seiten_tools" => "Seiten Tools",
+					"Seiten" => array (
+										"site_new" => "Neue Seite erstellen",
+										"site_edit" => "Seiten bearbeiten",
+										),
+					"Sonstiges" => array (
+										"news_edit" => "News bearbeiten",
+										"dates_edit" => "Termine bearbeiten",
+										"files" => "Dateien",
+										"contact" => "Ansprechpartner",
+										),
+					"Account" => array (
+										"personal_data_change" => "Persönliche Daten ändern",
+										"password_change" => "Passwort ändern",
+										"rights_show" => "Meine Rechte anzeigen",
+										"rights_edit" => "Rechte ändern",
+										"mail" => "Mail senden",
+										"logout" => "Logout",
+										),
 					"menu_anzeigen" => "Menü anzeigen",
 					"menu_bearbeiten" => "Menü bearbeiten",
-					"news" => "News bearbeiten",
-					"daten_aendern" => "Persönliche Daten ändern",
-					"passwort_aendern" => "Passwort ändern",
-					"rechte_anzeigen" => "Meine Rechte anzeigen",
-					"rechte_aendern" => "Rechte ändern",
-					"mail" => "Mail senden",
-					"datei_hochladen" => "Dateien hochladen",
-					"dateitools" => "Datein ansehen",
-					"freigabe" => "Freigabe",
-					"ansprechpartner" => "Ansprechpartner",
-					"termine" => "Termine",
+					/* Login etc */
+						"login" => "Login",
+						"registrieren" => "Registrieren",
+						"forgotusername" => "Benutzername vergessen",
+						"forgotpassword" => "Passwort vergessen",
+						"freigabe" => "Freigabe",
+					/* Login etc */
 					);
-if (!array_key_exists($site, $all_sites)) {
+$sites = array();
+foreach($all_sites as $key => $val) {
+	if(is_array($val)) {
+		foreach($val as $key => $val) {
+			$sites[$key] = $val;
+		}
+	} else {
+		$sites[$key] = $val;
+	}
+}
+if (!array_key_exists($site, $sites)) {
 	$site = "editroom";
 }
 $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-14);
 //%FIXIT% you can change on one site the main setting like background, font color or font size, favicon from xenux sites
 //%FIXIT% make one site, where you can generate a form for things like order
-//%FIXIT% include JQuery from (google apis or ) local for offline work, add jQuery UI and migrate
 ?>
 <!Doctype html>
 <html lang="de">
 <head>
-	<title><?php if(!empty($HP_Prefix)){echo $HP_Prefix." | ";}; echo $all_sites[$site]; if(!empty($HP_Sufix)){echo " | ".$HP_Sufix;}; ?></title>
+	<title><?php if(!empty($HP_Prefix)){echo $HP_Prefix." | ";}; echo $sites[$site]; if(!empty($HP_Sufix)){echo " | ".$HP_Sufix;}; ?></title>
 	<meta charset="UTF-8" >
 	<meta name="generator" content="Xenux - das kostenlose CMS">
 	<meta name="robots" content="index, follow" />
@@ -69,11 +85,14 @@ $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-14);
 	<link rel="icon" href="../core/logo.ico" type="image/x-icon" />
 	<link rel="shortcut icon" href="../core/logo.ico" type="image/x-icon" />
 	<script src="../core/js/formatierungen.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+	<script src="../core/js/main.js"></script>
 </head>
 <body>
 <script>
-//%FIXIT% extract script in externel *.js file
 $(window).bind('keydown', function(event) {
 	if (event.ctrlKey || event.metaKey) {
 		switch (String.fromCharCode(event.which).toLowerCase()) {
@@ -84,40 +103,63 @@ $(window).bind('keydown', function(event) {
 		}
 	}
 });
-function popupopen() {
-	$( "#popup" ).show();
-	$( "#field" .show();
-	console.log('opened Popup');
-};
-function popupclose(field1, field2) {
-	$( "#popup" ).hide();
-	$( "#transparent" ).hide();
-	$( "#field1" ).val( field1 )
-	$( "#field2" ).val( field2 )
-	console.log('closed Popup with content');
-};
-function popupclosewithoutcontent() {
-	$( "#popup" ).hide();
-	$( "#transparent" ).hide();
-	console.log('closed Popup without content');
-}
 </script>
-<div id="wrapper1">
-	<div id="header">
-		<?php if(@$_SESSION["login"] == 1 and $site!='logout') {echo '<a class="green" href="./?site=logout">Logout</a>';} ?>
-		<a class="yellow" href="./">Editroom</a>
-		<a href="../"><span class="topic"><?php echo $HP_Name; ?></span></a><br />
-		<span class="motto"><?php echo $HP_Slogan; ?></span>
+<div id="headWrapper">
+		<div id="head"> 
+			<div class="logo">
+				<a href="../">
+					<img src="../core/logo.png" />
+				</a>
+			</div>
+			<ul id="topmenu" class="mobilemenu">
+				<li><a href="javascript:openmobilemenu()">Menu</a></li>
+				<?php
+				if(@$_SESSION['login'] == 1) {
+				?>
+					<li><a href="?site=logout">Logout</a></li>
+				<?php
+				} else {
+				?>
+				<li><a href="?site=login">Login</a></li>
+				<?php
+				}
+				?>
+			</ul>
+			<ul id="topmenu" class="mainmenu">
+				<li><a href="./">Editroom</a></li>
+				<?php
+				foreach($all_sites as $key => $val) {
+					if(is_array($val)) {
+						echo "<li><img src=\"../core/images/right.png\" class=\"".strtolower(preg_replace("/[^a-zA-Z0-9_]/" , "" , $key))." openpoints\" onclick=\"javascript:openmenupoints('".strtolower(preg_replace("/[^a-zA-Z0-9_]/" , "" , $key))."')\"><a>$key</a><ul id=\"".strtolower(preg_replace("/[^a-zA-Z0-9_]/" , "" , $key))."\">";
+						foreach($val as $key => $val) {
+							echo "<li><a href=\"./?site=$key\">$val</a></li>";
+						}
+						echo "</ul></li>";
+					};
+				}
+				?>
+			</ul>
+		</div>
 	</div>
-	<div id="content1">
-		<h1><?php echo $all_sites[$site]; ?></h1>
+<div id="wrapper">
+	<div id="content" style="width: calc(100% - 10px);float:none;">
+		<h1><?php echo $sites[$site]; ?></h1>
 		<?php
 			if(@$_SESSION['login'] == 1 or $site == "forgotusername" or $site == "forgotpassword" or $site == "registrieren" or $site == "freigabe") {
-				include($site.".html");
+				include($site.".php");
 			} else {
-				include("login.html");
+				include("login.php");
 			}
 		?>
+	</div>
+	
+	<div id="footer">
+		This Side was made with <a href="http://xenux.sven-eberth.bplaced.net/">Xenux</a>
+		<div class="href">
+			<a href="../">Homepage</a>
+			<a href="../?site=kontakt">Kontakt</a>
+			<a href="../?site=impressum">Impressum</a>
+		</div>
 	</div>
 </div>
 </body>

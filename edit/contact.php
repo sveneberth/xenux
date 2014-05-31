@@ -1,7 +1,8 @@
 <?php
+if(!isset($site)) echo("You can not open this file individually/Sie k&ouml;nnen diese Datei nicht einzeln &ouml;ffnen!");
 if($login['role'] == '0') {
-	echo '<p>Du bist nicht berechtigt, diese Seite zu öffnen!</p></div></div></body></html>';
-	exit;
+	echo '<p>Du bist nicht berechtigt, diese Seite zu öffnen!</p>';
+	return;
 }
 $form = false;
 if(isset($_GET['newAnsprechpartner'])) {
@@ -25,8 +26,8 @@ $id = mysql_real_escape_string($_GET['id']);
 			$sql = "UPDATE XENUX_ansprechpartner Set name = '$name',position = '$position', email = '$email', text = '$text' WHERE id = '$id'";
 			$erg = mysql_query($sql);
 			echo "Der Ansprechpartner wurde gespeichert!<br />";
-			echo "<a href='./?site=ansprechpartner'>Weitere Ansprechpartner bearbeiten</a><br />";
-			exit;
+			echo "<a href='./?site=$site'>Weitere Ansprechpartner bearbeiten</a><br />";
+			return;
 	}else {
 		echo 'Du bearbeitest gerade den Ansprechpartner '.$id.'!';
 		$sql = "SELECT * FROM XENUX_ansprechpartner WHERE id = '".$id."'";
@@ -52,7 +53,7 @@ $id = mysql_real_escape_string($_GET['id']);
 			<input type="submit" name="sub2" value="speichern">
 		</form>
 		<?php
-		exit;
+		return;
 		}
 }
 ?>
@@ -69,12 +70,12 @@ while($row = mysql_fetch_array($erg)) {
 	echo "<td>".$row['position']."</td>";
 	echo "<td>".$row['email']."</td>";
 	echo "<td>".$row['text']."</td>";
-	echo "<td><a id=\"edit_href\" style=\"font-size: 0.9em;\" href=\"./?site=ansprechpartner&id=".$row['id']."\">Bearbeiten</a></td>";
-	echo "<td><a id=\"edit_href\" style=\"font-size: 0.9em;\" href=\"./?site=ansprechpartner&delid=".$row['id']."\">löschen</a></td>";
+	echo "<td><a id=\"edit_href\" style=\"font-size: 0.9em;\" href=\"./?site=$site&id=".$row['id']."\">Bearbeiten</a></td>";
+	echo "<td><a id=\"edit_href\" style=\"font-size: 0.9em;\" href=\"./?site=$site&delid=".$row['id']."\">löschen</a></td>";
 	echo "</tr>";
 }
 ?>
 </table>
 <br />
 <br />
-<a id="edit_href" style="font-size: 1em;" href="./?site=ansprechpartner&newAnsprechpartner=yes">neue Ansprechpartner</a>
+<a id="edit_href" style="font-size: 1em;" href="./?site=<?php echo $site; ?>&newAnsprechpartner=yes">neue Ansprechpartner</a>
