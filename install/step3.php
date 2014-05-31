@@ -62,6 +62,7 @@ $MYSQL_DATENBANK	= "'.$dbname.'"; # Datenbankname
 			$erg = mysql_query($sql) or die("<p>Fehler! Es konnte die Tabelle \"XENUX_pages\" nicht erstellt werden!</p>");
 			$sql = "INSERT INTO `XENUX_pages`(`filename`, `fullname`) VALUES
 					('news', 'News'),
+					('newslist', 'News'),
 					('termine', 'Termine'),
 					('terminview', 'Termin'),
 					('home','Home'),
@@ -106,8 +107,8 @@ $MYSQL_DATENBANK	= "'.$dbname.'"; # Datenbankname
 					`label` varchar(200) NOT NULL);";
 			$erg = mysql_query($sql) or die("<p>Fehler! Es konnte die Tabelle \"XENUX_main\" nicht erstellt werden!</p>");
 			$sql = "INSERT INTO `xenux_main` (`name`, `value`, `type`, `label`) VALUES
-					('bgcolor', '#ddd', 'color', 'Hintergrundfarbe'),
-					('fontcolor', '#333', 'color', 'Textfarbe'),
+					('bgcolor', '#dddddd', 'color', 'Hintergrundfarbe'),
+					('fontcolor', '#333333', 'color', 'Textfarbe'),
 					('meta_auhor', 'Xenux', 'text', 'Autor (Meta-Tag)'),
 					('hp_name', 'Meine Homepage', 'text', 'Homepagename'),
 					('meta_desc', 'Hier die Beschreibung der Homepage, die in den Meta-Tags angezeigt wird', 'textarea', 'Beschreibung der Homepage(Meta-Tag)'),
