@@ -30,7 +30,7 @@ $next = false;
 			</div>
 			<ul id="steps">
 				<?php
-					for($i=1;$i<=7;$i++) {
+					for($i=1;$i<=6;$i++) {
 						echo "<li class=\"";
 						if($step == $i) {
 							echo "actStep";

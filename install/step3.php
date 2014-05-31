@@ -1,5 +1,5 @@
 <p>Nun müssen sie hier die Datenbank einrichten.</p>
-	<form action="step4.php" method="post">
+	<form action="" method="post">
 	Datenbank-Server<br />
 	<input type="text" name="host" value="localhost" /><br /><br />
 	Benutzer<br />
@@ -9,7 +9,7 @@
 	Datenbankname<br />
 	<input type="text" name="dbname" value="" /><br /><br />
 	Tabellen-Prefix<br />
-	<input type="text" value="XENUX_" readonly />
+	<input type="text" value="XENUX_" readonly /><br /><br />
 	<input type="hidden" name="submit"  value="submit" />
 	<input type="submit" value="speichern" />
 </form>

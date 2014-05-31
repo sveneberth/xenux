@@ -61,9 +61,9 @@ if(isset($_POST['submit'])) {
 	<span <?php if (empty($password) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Passwort</span><br />
 	<input type="password" name="password" value="<?php echo $password; ?>" /><br /><br />
 	<span <?php if (empty($password1) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Passwort bestätigen</span><br />
-	<input type="password" name="password1" value="<?php echo $password1; ?>" /><br />
+	<input type="password" name="password1" value="<?php echo $password1; ?>" /><br /><br />
 	<?php
-	if(!$pw_stimmt){echo 'Die angegebenen Passwörter stimmen nicht überein!<br />';}
+	if(!$pw_stimmt){echo '<p>Die angegebenen Passwörter stimmen nicht überein!</p>';}
 	?>
 	<input type="hidden" name="submit" value="submit" />
 	<input type="submit" value="speichern"/>
