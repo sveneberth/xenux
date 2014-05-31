@@ -27,6 +27,7 @@ if(isset($_POST["submit"])) {
 			echo "<p>Es ist keine Verbindung zu Datenbank möglich, bitte überprüfen sie ihre angaben!</p>";
 		} else{
 			echo "<p>Verbindung zur Datenbank erfolgreich!</p>";
+			mysql_query('SET NAMES "utf8"');
 			$datei = fopen("../config.php","w");
 			$text = '<?php
 # In dieser Datei können sie alle Einstellungen ändern,

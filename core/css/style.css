@@ -134,6 +134,9 @@ a:active{color:#38315F;}
 	color: #cccccc;
 	border-left: #3C3C3C 1px solid;
 }
+#topmenu.mobilemenu li a {
+	padding: 0px 5px;
+}
 #topmenu li ul {
 	background: #333333;
 	display: block;
@@ -195,7 +198,7 @@ a:active{color:#38315F;}
 }
 
 #footer {
-	width: 100%;
+	width: calc(100% - 4px);
 	background: none;
 	font-size: 14px;
 	color: #808080;
@@ -641,7 +644,7 @@ ul#news-left li{
 
 @media only screen and (max-width: 600px) {
 	#wrapper {
-		width: 100%;
+		width: calc(100% - 20px);
 	}
 	#headWrapper {
 		position: fixed;
@@ -732,10 +735,13 @@ ul#news-left li{
 
 	#editroombox {
 		float: none;
-		width: 100%;
+		width: calc(100% - 10px);
 		margin: 1em 0;
 		padding: 5px;
 		border: 1px solid #EEEEEE;
+	}
+	input, textarea {
+		width: calc(100% - 10px);
 	}
 	/*---- TABLE STYLING ----*/
 	.responsive-table table {

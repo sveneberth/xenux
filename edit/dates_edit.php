@@ -67,7 +67,7 @@ while($row = mysql_fetch_array($erg)) {
 		echo $row['text'];
 	}
 	echo "</td>";
-	echo "<td data-title=\Datum"\">".$row['dat']."</td>";
+	echo "<td data-title=\"Datum\">".$row['dat']."</td>";
 	echo "<td data-title=\"\"><a id=\"edit_href\" style=\"font-size: 0.9em;\" href=\"./?site=$site&id=".$row['id']."\">Bearbeiten</a> <a id=\"edit_href\" style=\"font-size: 0.9em;\" href=\"./?site=$site&deldate=".$row['id']."\">löschen</a></td>";
 	echo "</tr>";
 }
