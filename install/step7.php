@@ -4,6 +4,9 @@
 <title>Xenux Installation</title>
 <meta charset="UTF-8" >
 <link rel="stylesheet" type="text/css" href="install.css" />
+<style>
+html,body{background-color:#ddd;font-family:Arial;font-size:17px;margin:0;padding:0;}.clear{clear:both;}h2{font-size:20px;color:#666666;border-bottom:1pxsolid#DADADA;padding:007px0;}#main{margin:30px5px5px;}#content{width:900px;margin:auto;background:#FFFFFF;border:1pxsolid#947D24;border-radius:8px;font-size:90%;line-height:1.5em;padding:10px;}#header{height:80px;padding:0px;width:100%}.topic{font-family:ComicSansMS;font-size:50px;color:#744520;position:relative;left:0px;top:20px;}.motto{font-family:ComicSansMS;font-size:15px;color:#8F2525;position:relative;left:40px;top:15px;}#steps{float:left;margin-left:-10px;width:20%;list-style-type:decimal;}#install{width:75%;float:right;}input,textarea{font-family:Arial;font-size:100%;border:#AAAAAA1pxsolid;color:#3A2B16;padding:2px3px;resize:none;}.next{text-decoration:none;color:#707070;font-size:130%;float:right;margin:15px30px10px0;background:#BBBBBB;border:1pxsolid#888;border-radius:3px;padding:3px5px;cursor:pointer;}.next:hover{background:#ddd;}
+</style>
 </head>
 
 <body>

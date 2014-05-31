@@ -1,4 +1,7 @@
 <?php
+function nextpage(){
+header("Location=step6.php");
+}
 include('../config.php')
 ?>
 <!DOCTYPE html>
@@ -7,11 +10,6 @@ include('../config.php')
 	<title>Xenux Installation</title>
 	<meta charset="UTF-8" >
 	<link rel="stylesheet" type="text/css" href="install.css" />
-	<?php
-	function nextpage(){
-	echo '<meta http-equiv="refresh" content="0; URL=step7.php">';
-	}
-	?>
 </head>
 
 <body>
