@@ -8,7 +8,7 @@ Xenux is a CMS.
 
 ### How do I get set up? ###
 
-* You must have an Apachea and MySQL Server on your System.
+* You must have an Apache and MySQL Server on your System.
 * the other things make the installer
 
 ### Contribution guidelines ###
