@@ -6,6 +6,9 @@ if(!$db_selected){
 	echo 'Es ist keine Verbindung zur Datenbank möglich!';
 	exit;
 }
+$pw_stimmt = true;
+$username_exist = true;
+$email_exist = true;
 if(isset($_POST['submit'])) {
 	foreach($_POST as $key => $val) {
 		$$key = mysql_real_escape_string($val);
@@ -16,7 +19,7 @@ if(isset($_POST['submit'])) {
 		$pw_stimmt = false;
 	}
 
-	if(!empty($FirstName) and !empty($LastName) and !empty($eMail) and !empty($username) and !empty($password) and $pw_stimmt){
+	if(!empty($FirstName) and !empty($LastName) and !empty($email) and !empty($username) and !empty($password) and $pw_stimmt){
 		$sql = "SELECT COUNT(username) AS anzahl FROM XENUX_users WHERE username = '$username'";
 		$erg = mysql_query($sql);
 		$row = mysql_fetch_array($erg);
@@ -45,23 +48,23 @@ if(isset($_POST['submit'])) {
 ?>
 <form action="" method="post">
 	<span <?php if (empty($FirstName) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Vorname</span><br />
-	<input type="text" name="FirstName" value="<?php echo $FirstName; ?>" /><br /><br />
+	<input type="text" name="FirstName" value="<?php echo @$FirstName; ?>" /><br /><br />
 	<span <?php if (empty($LastName) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Nachname</span><br />
-	<input type="text" name="LastName" value="<?php echo $LastName; ?>" /><br /><br />
+	<input type="text" name="LastName" value="<?php echo @$LastName; ?>" /><br /><br />
 	<span <?php if (empty($email) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>E-Mail</span><br />
-	<input type="email" name="email" value="<?php echo $email; ?>" /><br />
+	<input type="email" name="email" value="<?php echo @$email; ?>" /><br />
 	<?php
 	if($email_exist){echo 'Ein Account mit dieser E-Mail-Adresse existiert schon, zwei Accounts über eine E-Mail Adresse sind nicht zulässig!<br />';}
 	?><br />
 	<span <?php if (empty($username) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Benutzername</span><br />
-	<input type="text" name="username" value="<?php echo $username; ?>" /><br />
+	<input type="text" name="username" value="<?php echo @$username; ?>" /><br />
 	<?php
 	if($username_exist){echo 'Der Benutzername ist schon vergeben, bitte wähle einen anderen!<br />';}
 	?><br />
 	<span <?php if (empty($password) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Passwort</span><br />
-	<input type="password" name="password" value="<?php echo $password; ?>" /><br /><br />
+	<input type="password" name="password" value="<?php echo @$password; ?>" /><br /><br />
 	<span <?php if (empty($password1) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Passwort bestätigen</span><br />
-	<input type="password" name="password1" value="<?php echo $password1; ?>" /><br /><br />
+	<input type="password" name="password1" value="<?php echo @$password1; ?>" /><br /><br />
 	<?php
 	if(!$pw_stimmt){echo '<p>Die angegebenen Passwörter stimmen nicht überein!</p>';}
 	?>
