@@ -105,7 +105,7 @@ $MYSQL_DATENBANK	= "'.$dbname.'"; # Datenbankname
 					`type` varchar(150) NOT NULL,
 					`label` varchar(200) NOT NULL);";
 			$erg = mysql_query($sql) or die("<p>Fehler! Es konnte die Tabelle \"XENUX_main\" nicht erstellt werden!</p>");
-			$sql = "INSERT INTO `xenux_main` (`name`, `value`, `type`, `label`) VALUES
+			$sql = "INSERT INTO `XENUX_main` (`name`, `value`, `type`, `label`) VALUES
 					('bgcolor', '#dddddd', 'color', 'Hintergrundfarbe'),
 					('fontcolor', '#333333', 'color', 'Textfarbe'),
 					('meta_auhor', 'Xenux', 'text', 'Autor (Meta-Tag)'),
