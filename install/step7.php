@@ -31,12 +31,14 @@
 				<p>Viel Spaß!</p>
 				<?php
 				if(!empty($_POST['del'])) {
-					unlink('index.php');
-					unlink('install.css');
-					$i = 2;
-					while($i < '8'){
-						unlink('step'.$i.'.php');
-						$i++;
+					$dir = "./";
+					if($handle = opendir($dir)) {
+						while($file = readdir($handle)) {
+							if(!isdir($file)) {
+								unlink($file);
+							}
+						}
+						closedir($handle);
 					}
 					rmdir('../install/');
 					echo 'der Order <i>install</i> wurde gelöscht!';

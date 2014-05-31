@@ -2,7 +2,7 @@
 if(!isset($site)) die("You can not open this file individually/Sie k&ouml;nnen diese Datei nicht einzeln &ouml;ffnen!");
 $a = array('[bunt]', '[/bunt]');
 $b = array('<?php colortext("', '"); ?>');
-$tags = '<p><a><span><img><b><i><u><marquee><br><hr><sup><sub><em><strong><code><iframe>';
+$tags = '<p><a><span><img><b><i><u><marquee><br><hr><sup><sub><em><strong><code><iframe><table><tr><td><th><pre>';
 
 if(!empty($_GET['delfile']) and !empty($_GET['delid']) and file_exists('../core/pages/'.$_GET['delfile'].'.php') and $_GET['delfile']!="kontakt" and $_GET['delfile']!="impressum" and $_GET['delfile']!="home") {
 	unlink('../core/pages/'.$_GET['delfile'].'.php');
