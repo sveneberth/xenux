@@ -37,7 +37,7 @@ html,body{background-color:#ddd;font-family:Arial;font-size:17px;margin:0;paddin
 					$dir = "./";
 					if($handle = opendir($dir)) {
 						while($file = readdir($handle)) {
-							if(!isdir($file)) {
+							if(!is_dir($file)) {
 								unlink($file);
 							}
 						}
