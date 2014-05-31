@@ -1,11 +1,26 @@
+<?php
+if(!isset($_GET['step']) or empty($_GET['step']) or !is_numeric($_GET['step'])) {
+	$step = 1;
+} else {
+	$step = $_GET['step'];
+}
+$steps = array(
+				1 => "Hallo",
+				2 => "Technische Voraussetztungen",
+				3 => "Datenbank",
+				4 => "Homepage einrichten",
+				5 => "Administrator",
+				6 => "Fertigstellung",
+				);
+$next = false;
+?>
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<title>Xenux Installation</title>
-<meta charset="UTF-8" >
-<link rel="stylesheet" type="text/css" href="install.css" />
+	<meta charset="UTF-8" >
+	<title>Xenux Installation | Schritt <?php echo $step; ?></title>
+	<link rel="stylesheet" type="text/css" href="install.css" />
 </head>
-
 <body>
 	<div id="main">
 		<div id="content">
@@ -14,23 +29,32 @@
 				<span class="motto">das kostenlose CMS</span>
 			</div>
 			<ul id="steps">
-				<li class="actStep">Hallo</li>
-				<li class="nextStep">Technische Voraussetztungen</li>
-				<li class="nextStep">Datenbank</li>
-				<li class="nextStep">Datenbank prüfen</li>
-				<li class="nextStep">Homepage einrichten</li>
-				<li class="nextStep">Administrator</li>
-				<li class="nextStep">Fertigstellung</li>
+				<?php
+					for($i=1;$i<=7;$i++) {
+						echo "<li class=\"";
+						if($step == $i) {
+							echo "actStep";
+						} elseif($step > $i) {
+							echo "lastStep";
+						} else {
+							echo "nextStep";
+						}
+						echo "\">".$steps[$i]."</li>";
+					}
+				?>
 			</ul>
 			<div id="install">
-				<h2>Hallo!</h2>
-				<p>Xenux ist ein CMS, das Kenntisse von HTML voraussetzt, alternativ können auch die Befehle aus einer Übersicht ausgewählt werden.</p>
-				<p>Es ist keine Erstellung eines Layouts notwendig, es müssen nur in den nachfolgenden Schritten einfache Einstellungen vorgenommen</p>
-				<a class="next" href="step2.php">Weiter</a>
+				<h2><?php echo $steps[$step]; ?></h2>
+				<?php
+				include_once("step$step.php");
+				
+				if($next) {
+					echo "<a class=\"next\" href=\"?step=".($step+1)."\">Weiter</a>";
+				}
+				?>
 			</div>
 			<div class="clear"></div>
-		</div><!-- #content -->
-	</div><!-- #main -->
-
+		</div>
+	</div>
 </body>
 </html>

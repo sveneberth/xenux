@@ -89,7 +89,7 @@ while($row = mysql_fetch_array($erg)) {
 	<meta name="generator" content="Xenux - das kostenlose CMS">
 	<meta name="robots" content="index, follow" />
 	<link rel="stylesheet" type="text/css" href="../core/css/style.css" media="all"/>
-	<link rel="shortcut icon" href="../images/core/logo.ico" />
+	<link rel="shortcut icon" href="../core/images/<?php echo $favicon_src; ?>" />
 	<script src="../core/js/formatierungen.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -120,7 +120,7 @@ $(window).bind('keydown', function(event) {
 		<div id="head"> 
 			<div class="logo">
 				<a href="../">
-					<img src="../core/images/logo.png" />
+					<img src="../core/images/<?php echo $logo_src; ?>" />
 				</a>
 			</div>
 			<ul id="topmenu" class="mobilemenu">
