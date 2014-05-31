@@ -35,8 +35,8 @@ $sql = "SELECT *, DATE_FORMAT(date,'%d.%m.%Y %H:%i') as dat FROM XENUX_dates ORD
 $erg = mysql_query($sql);
 while($row = mysql_fetch_array($erg)) {
 	echo	'<tr>
-				<td>'.$row["name"].'</td>
-				<td>'.$row["dat"].'</td>
+				<td data-title=\"\">'.$row["name"].'</td>
+				<td data-title=\"\">'.$row["dat"].'</td>
 			</tr>
 			<tr>
 				<td colspan="2">'.$row["text"].'</td>

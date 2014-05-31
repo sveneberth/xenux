@@ -1,25 +1,21 @@
+$(document).ready(function() {
+	$("body").append("<div id=\"transparent\"></div>");
+})
 function popupopen() {
 	$( "#popup").show();
-	$( "#field").show();
-	console.log('opened Popup');
+	$( "#transparent").show();
 };
 function popupclose(field1, field2) {
 	$( "#popup" ).hide();
 	$( "#transparent" ).hide();
 	$( "#field1" ).val( field1 )
 	$( "#field2" ).val( field2 )
-	console.log('closed Popup with content');
 };
 function popupclosewithoutcontent() {
 	$( "#popup" ).hide();
 	$( "#transparent" ).hide();
-	console.log('closed Popup without content');
 }
 
-// menu
-$(document).ready(function() {
-	$("body").append("<div id=\"transparent\"></div>");
-})
 function openmobilemenu() {
 	$('html,body').animate({
 		scrollTop: 0
@@ -30,7 +26,6 @@ function openmobilemenu() {
 	} else {
 		$( "#transparent" ).fadeIn("fast");
 	}
-	console.log("toggle mobilemenu");
 }
 function openmenupoints(name) {
 	console.log("toggle mobilemenu point "+name);
@@ -56,5 +51,6 @@ $(window).resize(function () {
 	if($( window ).width() > 600) {
 		$( "#mobilemenu" ).hide();
 		$( "#transparent" ).hide();
+		$("tr.head").show();
 	}
 });

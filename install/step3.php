@@ -27,15 +27,15 @@
 			<p>Nun müssen sie hier die Datenbank einrichten.</p>
 				<form action="step4.php" method="post">
 				Datenbank-Server<br />
-				<input type="text" name="host" size="70" value="localhost" /><br /><br />
+				<input type="text" name="host" value="localhost" /><br /><br />
 				Benutzer<br />
-				<input type="text" name="username" size="70" value="" /><br /><br />
+				<input type="text" name="username" value="" /><br /><br />
 				Passwort<br />
-				<input type="password" name="password" size="70" value="" /><br /><br />
+				<input type="password" name="password" value="" /><br /><br />
 				Datenbankname<br />
-				<input type="text" name="dbname" size="70" value="" /><br /><br />
+				<input type="text" name="dbname" value="" /><br /><br />
 				Tabellen-Prefix<br />
-				<input type="text" size="70" value="XENUX_" readonly />
+				<input type="text" value="XENUX_" readonly />
 				<div class="clear"></div>
 				<input type="submit" name="submit" class="next" value="Weiter"/>
 			</form>

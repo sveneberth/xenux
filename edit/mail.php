@@ -1,7 +1,8 @@
 <?php
-if($login['role'] < '2') {
+if(!isset($site)) die("You can not open this file individually/Sie k&ouml;nnen diese Datei nicht einzeln &ouml;ffnen!");
+if($login['role'] < 1) {
 	echo '<p>Du bist nicht berechtigt, diese Seite zu öffnen!</p>';
-	exit;
+	return;
 }
 $to = "";
 $subject = "";
@@ -30,24 +31,23 @@ if(!empty($_POST['to']) and !empty($_POST['subject']) and !empty($_POST['text'])
 		while($row2 = mysql_fetch_object($erg)) {
 			mail($row2->email, $subject, $nachricht, $header);
 		}
-	}else{
+	} else{
 		$sql = "SELECT * FROM XENUX_users WHERE username='".$to."'LIMIT 1";
 		$res = mysql_query($sql, $link);
 		$anzahl = mysql_num_rows($res);
 		if ($anzahl > 0) {
 			mail($row1->email, $subject, $nachricht, $header);
-		}else{
+		} else{
 			echo '<p>Es existiert kein Account mit dem Benutzernamen <i>'.$to.'</i>!';
 			echo '<br /><a href="javascript:history.back()">Zurück</a>';
-			exit;
+			return;
 		}
 	}
 	echo 'Die Mail wurde gesendet!<br />';
 	echo '<a href="?site=mail">Weitere Mails senden</a>';
-	exit;
+	return;
 }
 ?>
-<div id="transparent"></div>
 <div id="popup">
 <div class="close" id="close"><a href="javascript:popupclosewithoutcontent()">&times;</a></div>
 <h3>Nutzer</h3>
@@ -63,9 +63,9 @@ while($row = mysql_fetch_assoc($erg)) {
 <br />
 <form action="" method="post" name="form">
 	<span <?php if (empty($to) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Bitte wähle einen Empfänger (Benutzername) aus<br /> oder %alle% um eine Mail an alle zu senden:</span><br />
-	<input type="text" id="field1" name="to" size="70" value="<?php echo $to; ?>" />&nbsp;<a href="javascript:popupopen()">Nutzer auswählen</a><br /><br />
+	<input type="text" id="field1" name="to" value="<?php echo $to; ?>" />&nbsp;<a href="javascript:popupopen()">Nutzer auswählen</a><br /><br />
 	<span <?php if (empty($subject) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Betreff:</span><br />
-	<input type="text" name="subject" size="70" value="<?php echo $subject; ?>" /><br /><br />
+	<input type="text" name="subject" value="<?php echo $subject; ?>" /><br /><br />
 	<span <?php if (empty($text) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Text</span><br />
 	<div id="page_edit">
 		<div id="formatierungen">

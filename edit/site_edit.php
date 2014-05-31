@@ -2,7 +2,7 @@
 if(!isset($site)) die("You can not open this file individually/Sie k&ouml;nnen diese Datei nicht einzeln &ouml;ffnen!");
 $a = array('[bunt]', '[/bunt]');
 $b = array('<?php colortext("', '"); ?>');
-$tags = '<p><a><span><img><b><i><u><marquee><br><hr><sup><sub><em><strong><code><iframe><table><tr><td><th><pre>';
+$tags = '<p><a><span><img><b><i><u><marquee><br><hr><sup><sub><em><strong><code><iframe><table><tr><td data-title=\"\"><th><pre>';
 
 if(!empty($_GET['delfile']) and !empty($_GET['delid']) and file_exists('../core/pages/'.$_GET['delfile'].'.php') and $_GET['delfile']!="kontakt" and $_GET['delfile']!="impressum" and $_GET['delfile']!="home") {
 	unlink('../core/pages/'.$_GET['delfile'].'.php');
@@ -128,18 +128,18 @@ if(isset($_GET['id'])) {
 ?>
 <p>Hier kannst du die Seiten anzeigen und bearbeiten.</p>
 <p>Bitte wähle eine Seite aus:</p>
-<table id="table1">
-	<tr><th>Kurzname</th><th>Seitentitel</th><th>Kategorie</th><th></th></tr>
+<table id="table1" class="responsive-table">
+	<tr class="head"><th>Kurzname</th><th>Seitentitel</th><th>Kategorie</th><th></th></tr>
 	<?php
 	$sql = "SELECT * FROM XENUX_pages order by filename";
 	$erg = mysql_query($sql);
 	while ($zeile = mysql_fetch_array($erg)) {
 		if($zeile['filename'] != 'news' and $zeile['filename'] != 'error' and $zeile['filename'] != 'termine' and $zeile['filename'] != 'terminview') {
 			echo "<tr>";
-			echo "<td>".$zeile['filename']."</td>";
-			echo "<td><a href=\"../?site=".$zeile['filename']."\" title=\"Klicken, um die Seite anzuzeigen\">".$zeile['fullname']."</a></td>";
+			echo "<td data-title=\"Kurzname\">".$zeile['filename']."</td>";
+			echo "<td data-title=\"Seitentitel\"><a href=\"../?site=".$zeile['filename']."\" title=\"Klicken, um die Seite anzuzeigen\">".$zeile['fullname']."</a></td>";
 			echo "<td data-title=\"Kategorie\">".$zeile['category']."</td>";
-			echo "<td><a id=\"edit_href\" style=\"font-size: 0.9em;\" href=\"./?site=$site&id=".$zeile['id']."\">Bearbeiten</a> <a id=\"edit_href\" style=\"font-size: 0.9em;\" href=\"./?site=$site&delfile=".$zeile['filename']."&delid=".$zeile['id']."\">löschen</a></td>";
+			echo "<td data-title=\"\"><a id=\"edit_href\" style=\"font-size: 0.9em;\" href=\"./?site=$site&id=".$zeile['id']."\">Bearbeiten</a> <a id=\"edit_href\" style=\"font-size: 0.9em;\" href=\"./?site=$site&delfile=".$zeile['filename']."&delid=".$zeile['id']."\">löschen</a></td>";
 			echo "</tr>";
 		}
 	}

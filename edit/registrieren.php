@@ -62,23 +62,23 @@ if($show!='no'){
 ?>
 <form action="" method="post">
 	<span <?php if (empty($FirstName) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Vorname</span><br />
-	<input type="text" name="FirstName" size="70" value="<?php echo $FirstName; ?>" /><br /><br />
+	<input type="text" name="FirstName" value="<?php echo $FirstName; ?>" /><br /><br />
 	<span <?php if (empty($LastName) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Nachname</span><br />
-	<input type="text" name="LastName" size="70" value="<?php echo $LastName; ?>" /><br /><br />
+	<input type="text" name="LastName" value="<?php echo $LastName; ?>" /><br /><br />
 	<span <?php if (empty($eMail) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>E-Mail</span><br />
-	<input type="email" name="eMail" size="70" value="<?php echo $eMail; ?>" /><br />
+	<input type="email" name="eMail" value="<?php echo $eMail; ?>" /><br />
 	<?php
 	if($email_exist == 'y'){echo 'Ein Account mit dieser E-Mail-Adresse existiert schon, zwei Accounts über eine E-Mail Adresse sind nicht zulässig!<br />';}
 	?><br />
 	<span <?php if (empty($username) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Benutzername</span><br />
-	<input type="text" name="username" size="70" value="<?php echo $username; ?>" /><br />
+	<input type="text" name="username" value="<?php echo $username; ?>" /><br />
 	<?php
 	if($username_exist == 'y'){echo 'Der Benutzername ist schon vergeben, bitte wähle einen anderen!<br />';}
 	?><br />
 	<span <?php if (empty($password) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Passwort</span><br />
-	<input type="password" name="password" size="70" value="<?php echo $password; ?>" /><br /><br />
+	<input type="password" name="password" value="<?php echo $password; ?>" /><br /><br />
 	<span <?php if (empty($password1) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Passwort bestätigen</span><br />
-	<input type="password" name="password1" size="70" value="<?php echo $password1; ?>" /><br />
+	<input type="password" name="password1" value="<?php echo $password1; ?>" /><br />
 	<?php
 	if($pw_stimmt == 'n'){echo 'Die angegebenen Passwörter stimmen nicht überein!<br />';}
 	?>

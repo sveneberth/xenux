@@ -1,36 +1,33 @@
 <?php
-$FirstName	= "";
-$LastName	= "";
-$eMail		= "";
-$result		= "";
-if(!empty($_POST['sub1'])) {
-	$FirstName	= $_POST['FirstName'];
-	$LastName	= $_POST['LastName'];
-	$eMail		= $_POST['eMail'];
-
-	if(!empty($FirstName) and !empty($LastName) and !empty($eMail)) {
-		$sql = "UPDATE XENUX_users Set vorname = '".mysql_real_escape_string($FirstName)."', nachname = '".mysql_real_escape_string($LastName)."', email = '".mysql_real_escape_string($eMail)."' WHERE username = '".$_SESSION['user']['username']."'";
-		$erg = mysql_query($sql);
-		$result = 'Die Daten wurden geändert!';
+if(!isset($site)) die("You can not open this file individually/Sie k&ouml;nnen diese Datei nicht einzeln &ouml;ffnen!");
+if(isset($_POST['form'])) {
+	foreach($_POST as $key => $val) {
+		$$key = mysql_real_escape_string($val);
 	}
-}else {
-	$sql = "SELECT * FROM XENUX_users WHERE username = '".$_SESSION['user']['username']."'";
+	if(!empty($vorname) and !empty($nachname) and !empty($email)) {
+		$sql = "UPDATE XENUX_users Set vorname = '$vorname', nachname = '$nachname', username = '$username', email = '$email' WHERE id = '".$_SESSION['userid']."'";
+		$erg = mysql_query($sql);
+		echo "Die Daten wurden geändert!";
+	}
+} else {
+	$sql = "SELECT * FROM XENUX_users WHERE id = '".$_SESSION['userid']."'";
 	$erg = mysql_query($sql);
 	$row = mysql_fetch_array($erg);
-	$FirstName	= $row['vorname'];
-	$LastName	= $row['nachname'];
-	$eMail		= $row['email'];
+	foreach($row as $key => $val) {
+		$$key = $val;
+	}
 }
-//%FIXIT% you can change your username and delete your account from xenux
 ?>
 <p>Hier kannst du deine Daten ändern.</p>
 <form action="" method="post">
-	<span <?php if (empty($FirstName) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Vorname</span><br />
-	<input type="text" name="FirstName" size="70" value="<?php echo $FirstName; ?>" /><br /><br />
-	<span <?php if (empty($FirstName) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Nachname</span><br />
-	<input type="text" name="LastName" size="70" value="<?php echo $LastName; ?>" /><br /><br />
-	<span <?php if (empty($FirstName) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>E-Mail</span><br />
-	<input type="text" name="eMail" size="70" value="<?php echo $eMail; ?>" /><br /><br />
-	<p><?php echo $result ?></p>
-	<input name="sub1" type="submit" value="ändern">
+	<span <?php if(empty($vorname) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Vorname</span><br />
+	<input type="text" name="vorname" value="<?php echo @$vorname; ?>" /><br /><br />
+	<span <?php if(empty($vorname) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Nachname</span><br />
+	<input type="text" name="nachname" value="<?php echo @$nachname; ?>" /><br /><br />
+	<span <?php if(empty($username) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Benutzername</span><br />
+	<input type="text" name="username" value="<?php echo @$username; ?>" /><br /><br />
+	<span <?php if(empty($vorname) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>E-Mail</span><br />
+	<input type="text" name="email" value="<?php echo @$email; ?>" /><br /><br />
+	<input type="hidden" name="form" value="form" />
+	<input type="submit" value="ändern" />
 </form>

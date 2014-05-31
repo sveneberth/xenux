@@ -6,8 +6,8 @@ if(!empty($_GET['delfile']) and file_exists('../files/'.$_GET['delfile'])) {
 }
 
 ?>
-<table id="table1">
-	<tr><th>Dateiname</th><th>Type</th><th>Größe</th><th></th></tr>
+<table id="table1" class="responsive-table">
+	<tr class="head"><th>Dateiname</th><th>Type</th><th>Größe</th><th></th></tr>
 	<?php
 	if(file_exists("../files/")) {
 		$handle=opendir ("../files/");
@@ -21,10 +21,10 @@ if(!empty($_GET['delfile']) and file_exists('../files/'.$_GET['delfile'])) {
 			}
 			if($datei != '.' and $datei != '..') {
 				echo "<tr>";
-				echo "<td><a href=\"javascript:window.open ('../files/$datei','Datei zeigen','width=700,height=500,location=0,menubar=0,scrollbars=0,status=0,toolbar=0,resizable=0')\">$datei</a></td>";
-				echo "<td>$type</td>";
-				echo "<td>$size</td>";
-				echo "<td><a id=\"edit_href\" style=\"font-size: 0.9em;\" href=\"?site=$site&delfile=$datei\">löschen</a></td>";
+				echo "<td data-title=\"Dateiname\"><a href=\"javascript:window.open ('../files/$datei','Datei zeigen','width=700,height=500,location=0,menubar=0,scrollbars=0,status=0,toolbar=0,resizable=0')\">$datei</a></td>";
+				echo "<td data-title=\"Type\">$type</td>";
+				echo "<td data-title=\"Größe\">$size</td>";
+				echo "<td data-title=\"\"><a id=\"edit_href\" style=\"font-size: 0.9em;\" href=\"?site=$site&delfile=$datei\">löschen</a></td>";
 				echo "</tr>";
 			}
 		}

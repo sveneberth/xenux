@@ -127,6 +127,27 @@ $MYSQL_DATENBANK	= "'.$dbname.'"; # Datenbankname
 						$db_erg = mysql_query($sql)
 						or die('<br />Fehler! Es konnten keine Daten in die Tabelle "XENUX_dates" eingetragen werden!<br /><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>');
 						//
+						$sql = "CREATE TABLE IF NOT EXISTS `XENUX_main` (
+								`id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+								`name` varchar(150) NOT NULL,
+								`value` text NOT NULL,
+								`type` varchar(150) NOT NULL,
+								`label` varchar(200) NOT NULL);";
+						$db_erg = mysql_query($sql)
+						or die('<br />Fehler! Es konnte die Tabelle "XENUX_main" nicht erstellt werden!<br /><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>');
+						//
+						$sql = "INSERT INTO `xenux_main` (`name`, `value`, `type`, `label`) VALUES
+								('bgcolor', '#ddd', 'color', 'Hintergrundfarbe'),
+								('fontcolor', '#333', 'color', 'Textfarbe'),
+								('meta_auhor', 'Xenux', 'text', 'Autor (Meta-Tag)'),
+								('hp_name', 'Meine Homepage', 'text', 'Homepagename'),
+								('meta_desc', 'Hier die Beschreibung der Homepage, die in den Meta-Tags angezeigt wird', 'textarea', 'Beschreibung der Homepage(Meta-Tag)'),
+								('meta_keys', 'Schlüsselwörter der Homepage, die in den Meta-Tags angezeigt werden', 'textarea', 'Schlüsselwörter Homepage (Meta-Tag)'),
+								('contact_form_email', 'mail@me.com', 'email', 'E-Mail Adresse (für das Kontaktformular)'),
+								;";
+						$db_erg = mysql_query($sql)
+						or die('<br />Fehler! Es konnten keine Daten in die Tabelle "XENUX_main" eingetragen werden!<br /><a href="javascript:history.back()" class="last">Zurück</a><style>.next{display:none;}</style>');
+						//
 												
 						echo '<p>Es wurden alle Tabellen erstellt!</p>';
 						mysql_close($link);

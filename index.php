@@ -58,15 +58,26 @@ if (@$_SESSION['login'] == 1) {
 	$erg = mysql_query($sql);
 	$login = mysql_fetch_array($erg);
 }
+$sql = "SELECT * FROM XENUX_main";
+$erg = mysql_query($sql);
+while($row = mysql_fetch_array($erg)) {
+	foreach($row as $key => $val) {
+		$$key = $val;
+	}
+	$$name = $value;
+}
 ?>
 <!DOCTYPE html>
 <html lang="de">
 <head>
-	<title><?php if(!empty($HP_Prefix)){echo $HP_Prefix." | ";}; echo $fullname; if(!empty($HP_Sufix)){echo " | ".$HP_Sufix;}; ?></title>
+	<title><?php echo "$hp_name | $fullname"; ?></title>
 	<meta charset="UTF-8" />
 	<meta name="language" content="de"/>
-	<meta name="description" content="<?php echo $HP_Beschreibung; ?>" />
-	<meta name="keywords" content="<?php echo $HP_Keywords; ?>" />
+	<meta name="description" content="<?php echo $meta_desc; ?>" />
+	<meta name="keywords" content="<?php echo $meta_keys; ?>" />
+	<meta name="auhor" content="<?php echo $meta_auhor; ?>" />
+	<meta name="publisher" content="<?php echo $meta_auhor; ?>" />
+	<meta name="copyright" content="<?php echo $meta_auhor; ?>" />
 	<meta name="generator" content="Xenux - das kostenlose CMS" />
 	<meta name="robots" content="index, follow" />
 	<link rel="shortcut icon" href="images/core/logo.ico"/>
@@ -76,6 +87,12 @@ if (@$_SESSION['login'] == 1) {
 	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 	<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 	<script src="core/js/main.js"></script>
+	<style>
+	html,body{
+		background:<?php echo $bgcolor; ?>;
+		color:<?php echo $fontcolor; ?>;
+	}
+	</style>
 </head>
 <body>
 	<div id="headWrapper">
@@ -166,7 +183,7 @@ if (@$_SESSION['login'] == 1) {
 					echo '</span>';
 					if(strlen($text) > 70) {
 						echo substr($text, 0, strpos($text, " ", 70));
-					}else {
+					} else {
 						echo $text;
 					}
 					echo '...<br /><a href="?site=news&id='.$id.'">&raquo;weiterlesen</a></li>';
@@ -257,7 +274,7 @@ if (@$_SESSION['login'] == 1) {
 		if($filename == 'kontakt') {
 			include('core/macros/ansprechpartner.php');
 		}
-		if($filename == 'kontakt' and !empty($HP_Kontaktemail)) {
+		if($filename == 'kontakt' and !empty($contact_form_email)) {
 			include ('core/macros/kontakt_formular.php');
 		}
 		?>

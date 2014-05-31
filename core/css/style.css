@@ -3,8 +3,6 @@ html, body {
 	padding: 0px;
 	font-size: 100%;
 	font-family: Verdana, Tahoma, Arial;
-	background: #ddd;
-	color: #333333;
 }
 
 h1 {
@@ -35,11 +33,18 @@ input, textarea {
 	font-family: Arial;
     font-size: 100%;
     border: #aaaaaa 1px solid;
-    color: #3A2B16;
+    color: inherit;
     padding: 2px 3px;
 	resize: none;
 	background: #fff;
 	width: 400px;
+}
+textarea {
+	height: 150px;
+}
+textarea.big {
+	height: 200px;
+	width: 100%;
 }
 input[type="submit"],
 input[type="checkbox"],
@@ -59,8 +64,8 @@ input[type="reset"]:hover {
 	background: #f6f6f6;
 }
 
-a:link{color:#38315F;text-decoration:none;}
-a:visited{color:#38315F;text-decoration:none}
+a:link{color:inherit;text-decoration:none;}
+a:visited{color:inherit;text-decoration:none}
 a:focus{color:#38315F;}
 a:hover{color:#1B0A7A;text-decoration:underline;}
 a:active{color:#38315F;}
@@ -108,7 +113,6 @@ a:active{color:#38315F;}
 	font-size: 14px;
 	padding: 0;
 	margin: 0;
-/*	background: #333333; */
 	height: 50px;
 	list-style: none;
 }
@@ -181,7 +185,6 @@ a:active{color:#38315F;}
 	background: #fff;
 	font-family: Verdana;
 	padding: 0 5px;
-	color: #333333;
 	float: right;
 	width: 75%;
 }
@@ -295,6 +298,7 @@ ul#news-left li{
 	text-decoration: none;
 	border-radius: 2px;
 	padding: .03em 0.2em;
+	line-height: 1.5em;
 }
 #edit_href:hover {
 	background: #EEE;
@@ -441,6 +445,7 @@ ul#news-left li{
 	padding: 20px;
 	margin:10px 0;
 	border: 1px solid rgba(0, 0, 0, 0.6);
+	z-index: 9999;
 }
 #popup h3 {
 	margin-top: 0;
@@ -549,7 +554,6 @@ ul#news-left li{
 	padding: 2px 10px;
 	border: 1px solid #888;
 	text-decoration: none;
-	color: #333;
 	display: inline-block;
 	margin: 2px 1px;
 	border-radius: 2px;
@@ -610,12 +614,6 @@ ul#news-left li{
 #box_contact > .desc {
 	margin-bottom: 2px;
 }
-#box_contact > .email > a:link,
-#box_contact > .email > a:visited,
-#box_contact > .email > a:active {
-	color: #333;
-	text-decoration: none;
-}
 #box_contact > .email > a:hover {
 	color: #999;
 }
@@ -644,7 +642,6 @@ ul#news-left li{
 @media only screen and (max-width: 600px) {
 	#wrapper {
 		width: 100%;
-		margin-top: 60px;
 	}
 	#headWrapper {
 		position: fixed;
@@ -740,5 +737,50 @@ ul#news-left li{
 		padding: 5px;
 		border: 1px solid #EEEEEE;
 	}
-
+	/*---- TABLE STYLING ----*/
+	.responsive-table table {
+		width: 100%;
+	} 
+	.responsive-table table, 
+	.responsive-table th, 
+	.responsive-table td, 
+	.responsive-table tr { 
+		display: block; 
+	}
+	.responsive-table tr.head { 
+		display: none;
+	}
+	.responsive-table tr {
+		border: 1px solid #ccc;
+	}
+	table {
+		width: 100%;
+	}
+	#table1 th, #table1 td {
+		padding: .5% .5% .5% 40%;
+		border: none;
+		border-bottom: 1px solid #eee; 
+		min-height: 22px;
+	}
+	.responsive-table td { 
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		white-space: normal;
+		text-align:left;
+	}
+ 
+	.responsive-table td:before { 
+		position: absolute;
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+		text-align:left;
+		font-weight: bold;
+	}
+	.responsive-table td:before {
+		content: attr(data-title);
+	}
 }

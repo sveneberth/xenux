@@ -32,6 +32,7 @@ $all_sites = array(
 					"Seiten" => array (
 										"site_new" => "Neue Seite erstellen",
 										"site_edit" => "Seiten bearbeiten",
+										"mainsettings" => "Grundeinstellungen",
 										),
 					"Sonstiges" => array (
 										"news_edit" => "News bearbeiten",
@@ -47,8 +48,6 @@ $all_sites = array(
 										"mail" => "Mail senden",
 										"logout" => "Logout",
 										),
-					"menu_anzeigen" => "Menü anzeigen",
-					"menu_bearbeiten" => "Menü bearbeiten",
 					/* Login etc */
 						"login" => "Login",
 						"registrieren" => "Registrieren",
@@ -71,6 +70,14 @@ if (!array_key_exists($site, $sites)) {
 	$site = "editroom";
 }
 $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-14);
+$sql = "SELECT * FROM XENUX_main";
+$erg = mysql_query($sql);
+while($row = mysql_fetch_array($erg)) {
+	foreach($row as $key => $val) {
+		$$key = $val;
+	}
+	$$name = $value;
+}
 //%FIXIT% you can change on one site the main setting like background, font color or font size, favicon from xenux sites
 //%FIXIT% make one site, where you can generate a form for things like order
 ?>
@@ -89,6 +96,12 @@ $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-14);
 	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 	<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 	<script src="../core/js/main.js"></script>
+	<style>
+	html,body{
+		background:<?php echo $bgcolor; ?>;
+		color:<?php echo $fontcolor; ?>;
+	}
+	</style>
 </head>
 <body>
 <script>
@@ -144,6 +157,9 @@ $(window).bind('keydown', function(event) {
 	<div id="content" style="width: calc(100% - 10px);float:none;">
 		<h1><?php echo $sites[$site]; ?></h1>
 		<?php
+			if(isset($_GET['id'])) {
+				echo "<a style=\"float: right;\" href=\"./?site=$site\">zur Auswahl</a>";
+			}
 			if(@$_SESSION['login'] == 1 or $site == "forgotusername" or $site == "forgotpassword" or $site == "registrieren" or $site == "freigabe") {
 				include($site.".php");
 			} else {

@@ -71,23 +71,23 @@ $HP_Email			= "'.$email.'"; # E-Mail-Adresse (diese wird u.A. benötigt um Accou
 				?>
 				<form action="" method="post">
 					Homepage Name (angezeigte Name im Kopf)<br />
-					<input type="text" name="hpname" size="70" value="<?php if(empty($hpname)){echo 'Meine Homepage"';}else{echo $hpname;} ?>" /><br />
+					<input type="text" name="hpname" value="<?php if(empty($hpname)){echo 'Meine Homepage"';}else{echo $hpname;} ?>" /><br />
 					<span <?php if (empty($hpslogan) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Slogan(Schriftzug unter dem Name im Kopf)</span><br />
-					<input type="text" name="hpslogan" size="70" value="<?php echo $hpslogan; ?>" /><br /><br />
+					<input type="text" name="hpslogan" value="<?php echo $hpslogan; ?>" /><br /><br />
 					Title Prefix (Optional)<br />
-					<input type="text" name="titleprefix" size="70" value="<?php echo $titleprefix; ?>" /><br />
+					<input type="text" name="titleprefix" value="<?php echo $titleprefix; ?>" /><br />
 					Title Sufix (Optional)<br />
-					<input type="text" name="titlesufix" size="70" value="<?php echo $titlesufix; ?>" 
+					<input type="text" name="titlesufix" value="<?php echo $titlesufix; ?>" 
 					/><br /><br />
 					Möchten sie auf der Seite "Kontakt" ein Kontaktformular? Falls sie ein Kontaktformular wünschen, müssen sie hier ihre E-Mail-Adresse angeben, das die Nachricht an sie geschickt werden kann. Falls sie kein Kontaktformular wünschen lassen sie diese Feld einfach leer.<br />
-					<input type="email" name="kontaktemail" size="70" value="<?php echo $kontaktemail; ?>" /><br /><br />
+					<input type="email" name="kontaktemail" value="<?php echo $kontaktemail; ?>" /><br /><br />
 					<span <?php if (empty($description) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Beschreibung der Homepage (max. 150 Zeichen)</span><br />
-					<input type="text" name="description" size="70" maxlength="150" value="<?php echo $description; ?>" /><br />
+					<input type="text" name="description" maxlength="150" value="<?php echo $description; ?>" /><br />
 					<span <?php if (empty($keywords) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Schlüsselwörter der Homepage (durch Komma getrennt)</span><br />
-					<input type="text" name="keywords" size="70" value="<?php echo $keywords; ?>"
+					<input type="text" name="keywords" value="<?php echo $keywords; ?>"
 					/><br /><br />
 					<span <?php if (empty($email) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>E-Mail-Adresse (diese wird u.A. benötigt um Accounts freizuschalten)</span><br />
-					<input type="email" name="email" size="70" value="<?php echo $email; ?>" 
+					<input type="email" name="email" value="<?php echo $email; ?>" 
 					/><br /><br />
 					<div class="clear"></div>
 					<input type="submit" name="submit" class="next" value="Weiter"/>

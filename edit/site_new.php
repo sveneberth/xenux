@@ -36,9 +36,9 @@ if(!empty($_POST)) {
 <p>Hier kannst du eine neue Seite erstellen!</p>
 <form action="" method="post">
 	<span <?php if (empty($filename) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Seitenkurzname (Bsp.: <i>Die Geschichte von uns</i> => <i>geschichte</i>):</span><br />
-	<input type="text" name="filename" maxlength="15" size="70" value="<?php echo @$filename; ?>"><br /><br />
+	<input type="text" name="filename" maxlength="15" value="<?php echo @$filename; ?>"><br /><br />
 	<span <?php if (empty($fullname) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Seitentitel (Überschrift):</span><br />
-	<input type="text" name="fullname" size="70" value="<?php echo @$fullname; ?>"><br /><br />
+	<input type="text" name="fullname" value="<?php echo @$fullname; ?>"><br /><br />
 	Kategorie:<br />
 	<input type="text" name="category" value="<?php echo @$category; ?>"><br /><br />
 	<input type="submit" name="submit" value="Seite hinzufügen">
