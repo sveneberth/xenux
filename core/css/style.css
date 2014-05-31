@@ -24,6 +24,13 @@ topic {
 	margin: 20px 0 5px 0;
 }
 
+p { 
+   -moz-hyphens: auto;
+   -o-hyphens: auto;
+   -webkit-hyphens: auto;
+   -ms-hyphens: auto;
+   hyphens: auto; 
+}
 input, textarea {
 	font-family: Arial;
     font-size: 100%;
@@ -35,11 +42,19 @@ input, textarea {
 	width: 400px;
 }
 input[type="submit"],
+input[type="checkbox"],
+input[type="radio"],
 input[type="reset"] {
 	background: #ddd;
 	width: auto;
 }
+input[type="radio"],
+input[type="checkbox"] {
+	height: auto;
+}
 input[type="submit"]:hover,
+input[type="checkbox"]:hover,
+input[type="radio"]:hover,
 input[type="reset"]:hover {
 	background: #f6f6f6;
 }
@@ -330,7 +345,7 @@ ul#news-left li{
 
 #page_edit {
 	border: 2px solid #AAAAAA;
-	width: 1000px;
+	width: 100%;
 	margin-bottom: 20px;
 }
 #page_edit input{
@@ -364,7 +379,7 @@ ul#news-left li{
 }
 
 #text{
-	width: 994px;
+	width: calc(100% - 10px);
 	height: 500px;
 	margin: 0;
 	border-color: #BAD4E6;
@@ -633,6 +648,7 @@ ul#news-left li{
 	}
 	#headWrapper {
 		position: fixed;
+		z-index: 1000;
 	}
 	#head {
 		width: 100%;
@@ -692,10 +708,10 @@ ul#news-left li{
 	}
 	.openpoints {
 		float: left;
-		height: 40px;
+		height: 38px;
 		width: 50px;
 		display: block;
-		margin: 0;
+		margin: 1px;
 	}
 	#content {
 		float: left;

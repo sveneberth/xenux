@@ -17,11 +17,19 @@ function popupclosewithoutcontent() {
 }
 
 // menu
+$(document).ready(function() {
+	$("body").append("<div id=\"transparent\"></div>");
+})
 function openmobilemenu() {
 	$('html,body').animate({
 		scrollTop: 0
 	}, 500);
 	$( ".mainmenu" ).toggle("fast");
+	if($("#transparent").is(":visible")) {
+		$( "#transparent" ).fadeOut("fast");
+	} else {
+		$( "#transparent" ).fadeIn("fast");
+	}
 	console.log("toggle mobilemenu");
 }
 function openmenupoints(name) {
@@ -41,8 +49,12 @@ function openmenupoints(name) {
 	}
 	$( "#"+name ).slideToggle("fast");
 }
+$(window).scroll(function(){
+    $('.mainmenu').css('top', 60 - $(this).scrollTop());
+});
 $(window).resize(function () {
 	if($( window ).width() > 600) {
 		$( "#mobilemenu" ).hide();
+		$( "#transparent" ).hide();
 	}
 });
