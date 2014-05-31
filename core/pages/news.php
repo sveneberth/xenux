@@ -9,7 +9,7 @@ $erg = mysql_query($sql);
 $row = mysql_fetch_object($erg);
 echo '<topic>'.$row->title;
 if ($_SESSION["login"] == 1) {
-			echo '<a id="edit_href" href="edit/?site=news&newspoint='.$_GET['id'].'">Bearbeiten</a>';
+			echo '<a id="edit_href" href="edit/?site=news_edit&newspoint='.$_GET['id'].'">Bearbeiten</a>';
 		}
 echo '</topic>';
 echo $row->text;

@@ -69,8 +69,7 @@ if (@$_SESSION['login'] == 1) {
 	<meta name="keywords" content="<?php echo $HP_Keywords; ?>" />
 	<meta name="generator" content="Xenux - das kostenlose CMS" />
 	<meta name="robots" content="index, follow" />
-	<link rel="icon" href="core/logo.ico" type="image/x-icon" />
-	<link rel="shortcut icon" href="core/logo.ico" type="image/x-icon" />
+	<link rel="shortcut icon" href="images/core/logo.ico"/>
 	<link rel="stylesheet" type="text/css" href="core/css/style.css" media="all"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -83,7 +82,7 @@ if (@$_SESSION['login'] == 1) {
 		<div id="head"> 
 			<div class="logo">
 				<a href="./">
-					<img src="core/logo.png" />
+					<img src="core/images/logo.png" />
 				</a>
 			</div>
 			<ul id="topmenu" class="mobilemenu">
@@ -100,6 +99,7 @@ if (@$_SESSION['login'] == 1) {
 												"kontakt",
 												"home",
 												"news",
+												"newslist",
 												"termine",
 												"terminview",
 											);
