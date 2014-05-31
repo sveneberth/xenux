@@ -15,7 +15,7 @@ if(!empty($_POST['del'])) {
 		closedir($handle);
 	}
 	rmdir('../install/');
-	header("Location=../");
+	header("Location: ../");
 }
 ?>
 <form action="" method="post">

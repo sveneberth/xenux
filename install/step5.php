@@ -7,8 +7,8 @@ if(!$db_selected){
 	exit;
 }
 $pw_stimmt = true;
-$username_exist = true;
-$email_exist = true;
+$username_exist = false;
+$email_exist = false;
 if(isset($_POST['submit'])) {
 	foreach($_POST as $key => $val) {
 		$$key = mysql_real_escape_string($val);
