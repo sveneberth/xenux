@@ -1,7 +1,7 @@
 <?php
 if(empty($_GET['id']) or !isset($_GET['id'])) {
 	echo 'Bei der Anfrage trat ein Fehler auf, möglicherweise haben sie auf einen fehlerhaften Link geklickt...';
-	exit;
+	return;
 }
 $id = $_GET['id'];
 $sql = "SELECT *, DATE_FORMAT(date,'%d.%m.%Y %H:%i') as dat FROM XENUX_dates WHERE id ='$id'";

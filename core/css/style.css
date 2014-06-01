@@ -49,6 +49,7 @@ textarea.big {
 input[type="submit"],
 input[type="checkbox"],
 input[type="radio"],
+input[type="button"],
 input[type="reset"] {
 	background: #ddd;
 	width: auto;

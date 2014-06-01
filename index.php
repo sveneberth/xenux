@@ -179,7 +179,7 @@ while($row = mysql_fetch_array($erg)) {
 				if($title != '' and $text != '') {
 					echo '<li><span class="title">'.$title;
 					if (@$_SESSION["login"] == 1) {
-						echo '<a id="edit_href" href="edit/?site=news_edit&newspoint='.$id.'">Bearbeiten</a>';
+						echo '<a id="edit_href" href="edit/?site=news_edit&id='.$id.'">Bearbeiten</a>';
 					}
 					echo '</span>';
 					if(strlen($text) > 70) {

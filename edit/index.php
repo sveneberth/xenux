@@ -56,6 +56,7 @@ $all_sites = array(
 						"forgotusername" => "Benutzername vergessen",
 						"forgotpassword" => "Passwort vergessen",
 						"freigabe" => "Freigabe",
+						"delete_acc" => "Account löschen",
 					/* Login etc */
 					);
 $sites = array();
