@@ -31,70 +31,9 @@ if(isset($_POST['form'])) {
 	<input type="hidden" name="form" value="form" />
 	<input type="submit" value="ändern" />
 </form>
-<style>
-.transparent {
-	position: fixed;
-	left: 0;
-	top: 0;
-	background: rgba(0,0,0,.7);
-	height: 100%;
-	width: 100%;
-	z-index: 500;
-}
-.message {
-	position: fixed;
-	background: #fff;
-	border: 3px solid #1B1B1B;
-	padding: 10px;
-	z-index: 1000;
-	font-family: Tahoma;
-	border-radius: 8px;
-	color: #222;
-}
-.message > h3 {
-	margin: 0 0 10px 0;
-}
-.message > #closemessage {
-	position: absolute;
-	right: 5px;
-	top: 5px;
-	color: #222;
-	height: 18px;
-	width: 18px;
-	text-decoration: none;
-	line-height: 16px;
-	font-weight: bold;
-	border-radius: 20px;
-	text-align: center;
-	vertical-align: middle;
-	font-size: 20px;
-}
-.message > #closemessage:hover {
-	background: #222;
-	color: #fff;
-}
-.message > .content {
-}
-</style>
 <script>
-function messagebox(width, height, topic, text) {
-	$("body").append("<div class=\"transparent\"></div>");
-	$("body").append("<div class=\"message\"></div>");
-	$(".message").append("<a id=\"closemessage\" href=\"javascript:void(0)\">&times;</a>");
-	$(".message").append("<h3>"+topic+"</h3>");
-	$(".message").append("<div class=\"content\">"+text+"</h3>");
-	$(".message").css("height", height+"%");
-	$(".message").css("width", width+"%");
-	$(".message").css("top", ((100-height)/2-10)+"%");
-	$(".message").css("left", ((100-width)/2)+"%");
-	$( ".message" ).draggable();
-	$("#closemessage").click(function() {
-		$(".transparent").remove();
-		$(".message").remove();
-	})
-}
 function delacc() {
-	messagebox(30,20,'Meldung',"Möchten du wirklich deinen Account löschen? Das lsöchen kann nicht rückgängig gemacht werden!<br /><input type=\"button\" id=\"confirmdelacc\" value=\"löschen bestätigen\"/>");
+	messagebox(30,20,'Meldung',"Möchtest du wirklich deinen Account löschen? Das löschen kann nicht rückgängig gemacht werden!<br /><input type=\"button\" id=\"confirmdelacc\" value=\"löschen bestätigen\"/>");
 	$("#confirmdelacc").click(function() {
 		$(".transparent").remove();
 		$(".message").remove();

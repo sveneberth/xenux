@@ -642,6 +642,47 @@ ul#news-left li{
 .newslistbox h3 {
 	margin: 0 0 5px 0;
 }
+.transparent {
+	position: fixed;
+	left: 0;
+	top: 0;
+	background: rgba(0,0,0,.7);
+	height: 100%;
+	width: 100%;
+	z-index: 500;
+}
+.message {
+	position: fixed;
+	background: #fff;
+	border: 3px solid #1B1B1B;
+	padding: 10px;
+	z-index: 1000;
+	font-family: Tahoma;
+	border-radius: 8px;
+	color: #222;
+}
+.message > h3 {
+	margin: 0 0 10px 0;
+}
+.message > #closemessage {
+	position: absolute;
+	right: 5px;
+	top: 5px;
+	color: #222;
+	height: 18px;
+	width: 18px;
+	text-decoration: none;
+	line-height: 16px;
+	font-weight: bold;
+	border-radius: 20px;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 20px;
+}
+.message > #closemessage:hover {
+	background: #222;
+	color: #fff;
+}
 
 @media only screen and (max-width: 600px) {
 	#wrapper {

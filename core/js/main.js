@@ -54,3 +54,20 @@ $(window).resize(function () {
 		$("tr.head").show();
 	}
 });
+
+function messagebox(width, height, topic, text) {
+	$("body").append("<div class=\"transparent\"></div>");
+	$("body").append("<div class=\"message\"></div>");
+	$(".message").append("<a id=\"closemessage\" href=\"javascript:void(0)\">&times;</a>");
+	$(".message").append("<h3>"+topic+"</h3>");
+	$(".message").append("<div class=\"content\">"+text+"</h3>");
+	$(".message").css("height", height+"%");
+	$(".message").css("width", width+"%");
+	$(".message").css("top", ((100-height)/2-10)+"%");
+	$(".message").css("left", ((100-width)/2)+"%");
+	$( ".message" ).draggable();
+	$("#closemessage").click(function() {
+		$(".transparent").remove();
+		$(".message").remove();
+	})
+}
