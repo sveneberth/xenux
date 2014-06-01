@@ -14,7 +14,7 @@ $rechte = array(
 
 if(!empty($_GET['id'])) {
 	$id = mysql_real_escape_string($_GET['id']);
-	if(isset($_POST['sub'])) {
+	if(isset($_POST['form'])) {
 		$role_new = mysql_real_escape_string($_POST['role']);
 		$sql = "UPDATE XENUX_users Set role = '$role_new' WHERE id = '".$_GET['id']."'";
 		$erg = mysql_query($sql);
@@ -68,7 +68,7 @@ if(!empty($_GET['id'])) {
 	while($row = mysql_fetch_array($erg)) {
 		echo "<tr>";
 		echo "<td data-title=\"Benutzername\">".$row['username']."</td>";
-		echo "<td data-title=\"Bürgerlicher Name\">".$row['vorname'].$row['nachname']."</td>";
+		echo "<td data-title=\"Bürgerlicher Name\">".$row['vorname']." ".$row['nachname']."</td>";
 		echo "<td data-title=\"Rechte\">".$rechte[$row['role']]."</td>";
 		
 		echo "<td data-title=\"\"><a id=\"edit_href\" style=\"font-size: 1em;\" href=\"?site=$site&id=".$row['id']."\">Rechte&nbsp;ändern</a> <a id=\"edit_href\" style=\"font-size: 1em;\" href=\"?site=mail&id=".$row['id']."\">Mail</a></td>";

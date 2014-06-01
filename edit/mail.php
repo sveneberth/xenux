@@ -51,6 +51,7 @@ if(!empty($_POST['to']) and !empty($_POST['subject']) and !empty($_POST['text'])
 <div id="popup">
 <div class="close" id="close"><a href="javascript:popupclosewithoutcontent()">&times;</a></div>
 <h3>Nutzer</h3>
+<a href="javascript:popupclose('%alle%')">An alle</a>
 <?php
 $sql = "SELECT * FROM XENUX_users ORDER by vorname";
 $erg = mysql_query($sql);

@@ -23,13 +23,14 @@ if (!empty($_POST["submit"])) {
 if(@$_SESSION["login"] == 0) {
 ?>
 	<p>Um die Homepage zu bearbeiten, musst du dich zuerst anmelden!<br />
-	Falls du noch keine Account hast kannst du dich <a href="./?site=registrieren">hier Registrieren</a>, dieser Account musst jedoch erst vom Homepage-Administrator bestätigt werden!</p>
+	Falls du noch keine Account hast kannst du dich <a href="./?site=registrieren">Registrieren</a>.</p>
 	<form method="POST" action="./?site=login">
 	<input type="text" name="username" size="40" placeholder="Benutzername"><br />
 	<a href="./?site=forgotusername">Benutzernamen vergessen?</a><br /><br />
 	<input type="password" name="password" size="40" placeholder="Passwort"><br />
 	<a href="./?site=forgotpassword">Passwort vergessen?</a><br /><br />
 	<input type="submit" name="submit" value="Einloggen"></form>
+	<p><a href="./?site=registrieren">Registrieren</a></p>
 <?php
 } elseif($_SESSION['login'] == 1) {
 	echo "<p>Hallo ".$login['vorname'].", du bist erfolgreich eingeloggt!<br />";

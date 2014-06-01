@@ -4,7 +4,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$$var = mysql_real_escape_string($value);
 	}
 	if(preg_match("/[^a-zA-Z0-9_-]/", $username)) {
-		echo "Der Benuzername enthält unerlaubte Zeichen, zulässig sind nur Buchstaben, Zahlen und (Unter-)Strich.<br />";
+		echo "Der Benutzername enthält unerlaubte Zeichen, zulässig sind nur Buchstaben, Zahlen und (Unter-)Strich.<br />";
 	} else {
 		if(!empty($firstname) and !empty($lastname) and !empty($email) and !empty($username) and !empty($password) and $password == $passwordre) {
 			$sql = "SELECT COUNT(username) AS anzahl FROM XENUX_users WHERE username = '$username'";
@@ -26,7 +26,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 			if(!$username_exist and !$email_exist) {
 				$sql = "INSERT INTO XENUX_users(vorname, nachname, email, username, pw, admin, role) VALUES ('$firstname', '$lastname', '$email', '$username', 'xkanf".md5($password)."v4sf5w', 'no', '0');";
 				$erg = mysql_query($sql);
-				$Freigabelink = 'http://'.$HP_URL.'/edit/?site=freigabe&username='.$username.'&email='.$email;
+				$Freigabelink = 'http://'.$HP_URL.'edit/?site=freigabe&username='.$username.'&email='.$email;
 				$nachricht = '<!Doctype html><html lang="de"><head><meta charset="UTF-8" ><title>Accountfreischaltung</title></head><body>
 				Hallo!<br />
 				Es hat sich jemand auf der Homepage http://'.$HP_URL.' registriert, er wartet nun auf die Freigabe!<br /><br />
@@ -39,10 +39,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 				$header		.= 'MIME-Version: 1.0' . "\r\n";
 				$header		.= 'Content-type: text/html; charset=utf-8' . "\r\n";
 				mail($HP_Email, 'Accountfreischaltung', $nachricht, $header);
-				echo '<br />Du wurdest erfolgreich registriert! Nun musst du warten, bis der Administrator deinen Account freischaltet, du wirst darüber per E-Mail benachrichtig!';
+				echo '<br />Du wurdest erfolgreich registriert! Nun musst du warten, bis der Administrator deinen Account freischaltet, du wirst darüber per E-Mail benachrichtigt!';
 				return;
 			} else {
-				echo "Es existiert bereits ein Account mit dem Nutzernamen oder der E-Mail-Adresse!<br />";
+				echo "Es existiert bereits ein Account mit dem Benutzernamen oder der E-Mail-Adresse!<br />";
 			}
 		} else {
 				echo "Alle Felder müssen ausgefüllt sein!<br />";
