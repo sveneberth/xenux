@@ -1,4 +1,17 @@
 <?php
+if(isset($_POST['deldir']) and $_GET['step'] == 6) {
+	$dir = "./";
+	if($handle = opendir($dir)) {
+		while($file = readdir($handle)) {
+			if(!is_dir($file)) {
+				unlink($file);
+			}
+		}
+		closedir($handle);
+	}
+	rmdir('../install');
+	header("Location: ../");
+}
 if(!isset($_GET['step']) or empty($_GET['step']) or !is_numeric($_GET['step'])) {
 	$step = 1;
 } else {
