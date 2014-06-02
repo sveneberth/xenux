@@ -87,15 +87,19 @@ while($row = mysql_fetch_array($erg)) {
 <head>
 	<title><?php if(!empty($HP_Prefix)){echo $HP_Prefix." | ";}; echo $sites[$site]; if(!empty($HP_Sufix)){echo " | ".$HP_Sufix;}; ?></title>
 	<meta charset="UTF-8" >
-	<meta name="generator" content="Xenux - das kostenlose CMS">
-	<meta name="robots" content="index, follow" />
+	<meta name="description" content="<?php echo $meta_desc; ?>" />
+	<meta name="keywords" content="<?php echo $meta_keys; ?>" />
+	<meta name="auhor" content="<?php echo $meta_auhor; ?>" />
+	<meta name="publisher" content="<?php echo $meta_auhor; ?>" />
+	<meta name="copyright" content="<?php echo $meta_auhor; ?>" />
+	<meta name="generator" content="Xenux - das kostenlose CMS" />
 	<link rel="stylesheet" type="text/css" href="../core/css/style.css" media="all"/>
 	<link rel="shortcut icon" href="../core/images/<?php echo $favicon_src; ?>" />
-	<script src="../core/js/formatierungen.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-	<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+	<script src="../core/js/jquery-2.1.1.min.js"></script>
+	<script src="../core/js/jquery-migrate-1.2.1.min.js"></script>
+	<script src="../core/js/jquery-ui.js"></script>
+	<script src="../core/js/formatierungen.js"></script>
 	<script src="../core/js/main.js"></script>
 	<style>
 	html,body{

@@ -85,9 +85,9 @@ $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-9);
 	<link rel="shortcut icon" href="./core/images/<?php echo $favicon_src; ?>"/>
 	<link rel="stylesheet" type="text/css" href="core/css/style.css" media="all"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-	<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+	<script src="core/js/jquery-2.1.1.min.js"></script>
+	<script src="core/js/jquery-migrate-1.2.1.min.js"></script>
+	<script src="core/js/jquery-ui.js"></script>
 	<script src="core/js/main.js"></script>
 	<style>
 	html,body{
