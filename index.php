@@ -67,6 +67,7 @@ while($row = mysql_fetch_array($erg)) {
 	}
 	$$name = $value;
 }
+$HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-9);
 ?>
 <!DOCTYPE html>
 <html lang="de">

@@ -10,12 +10,11 @@ if(isset($_POST['form'])) {
 	$nachricht = htmlentities($_POST['nachricht']);
 	if(!empty($eMail) and !empty($nachricht)) {
 		$header  = 'MIME-Version: 1.0' . "\r\n";
-		$header .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-		$header .= 'To: '.$contact_form_email. "\r\n";
+		$header .= 'Content-type: text/html; charset=utf-8' . "\r\n";
 		$header .= 'From: "'.$name.'"<'.$eMail.'>' . "\r\n";
-		$mailtext = '<html lang="de"></head><title>Kontakt</title></head><body>
+		$mailtext = '<html lang="de"></head><meta charset="utf-8" /><title>Kontakt</title></head><body>
 Hallo!<br />
-Es hat ihnen jemand auf der Homepage <a href="http://'.$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']).'">http://'.$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']).'</a> eine Nachricht geschickt!<br /><br />
+Es hat ihnen jemand auf der Homepage <a href="http://'.$HP_URL.'">http://'.$HP_URL.'</a> eine Nachricht geschickt!<br /><br />
 <table style="font-size:100%;text-align:left;vertical-align:top;">
 <tr><th style="text-align:left;vertical-align:top;">Name:</th style="text-align:left;vertical-align:top;"><td data-title=\"\">'.$name.'</td></tr>
 <tr><th style="text-align:left;vertical-align:top;">E-Mail:</th style="text-align:left;vertical-align:top;"><td data-title=\"\">'.$eMail.'</td></tr>

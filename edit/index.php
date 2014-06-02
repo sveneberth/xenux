@@ -81,8 +81,6 @@ while($row = mysql_fetch_array($erg)) {
 	}
 	$$name = $value;
 }
-//%FIXIT% you can change on one site the main setting like background, font color or font size, favicon from xenux sites
-//%FIXIT% make one site, where you can generate a form for things like order
 ?>
 <!Doctype html>
 <html lang="de">
