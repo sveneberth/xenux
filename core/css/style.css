@@ -566,9 +566,8 @@ ul#news-left li{
 }
 .calender .now {
 	position: absolute;
-	font-size: 100%;
+	font-size: 120%;
 	margin-left: 5px;
-	line-height: 1em;
 }
 .calender .last:hover,
 .calender .now:hover,
@@ -784,6 +783,10 @@ ul#news-left li{
 	}
 	input, textarea {
 		width: calc(100% - 10px);
+	}
+	.calender .pagination,
+	.calender .now {
+		font-size: 100%;
 	}
 	/*---- TABLE STYLING ----*/
 	.responsive-table table {
