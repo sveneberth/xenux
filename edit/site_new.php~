@@ -9,7 +9,7 @@ if(!empty($_POST)) {
 		$erg = mysql_query($sql);
 		$var = mysql_fetch_object($erg);
 		if($var->anzahl >= 1) {
-			echo '<p style="color:red;">Es existiert bereits eine Seite mit dem Kurznamen <i>'.$filename.'</i> Duplikate sind nicht erlaubt!</p>';
+			echo '<p style="color:red;">Es existiert bereits eine Seite mit dem Kurzname <i>'.$filename.'</i> Duplikate sind nicht erlaubt!</p>';
 		} else{
 			$content= 'Hier der Inhalt von '.$fullname;
 			$file = '../core/pages/'.$filename.'.php';
