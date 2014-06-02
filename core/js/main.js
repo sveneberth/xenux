@@ -1,3 +1,4 @@
+//---Popup---------------------------------------------------------------------
 $(document).ready(function() {
 	$("body").append("<div id=\"transparent\"></div>");
 })
@@ -16,6 +17,7 @@ function popupclosewithoutcontent() {
 	$( "#transparent" ).hide();
 }
 
+//---Menu----------------------------------------------------------------------
 function openmobilemenu() {
 	$('html,body').animate({
 		scrollTop: 0
@@ -55,6 +57,7 @@ $(window).resize(function () {
 	}
 });
 
+//---Messagebox----------------------------------------------------------------
 function messagebox(width, height, topic, text) {
 	$("body").append("<div class=\"transparent\"></div>");
 	$("body").append("<div class=\"message\"></div>");
