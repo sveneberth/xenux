@@ -134,6 +134,7 @@ while($row = mysql_fetch_array($erg)) {
 						}
 					}
 					foreach($read_category as $val) {
+						$catergorypoint = $val;
 						echo "<li><img src=\"core/images/right.png\" class=\"".strtolower(preg_replace("/[^a-zA-Z0-9_]/" , "" , $val))." openpoints\" onclick=\"javascript:openmenupoints('".strtolower(preg_replace("/[^a-zA-Z0-9_]/" , "" , $val))."')\"><a";
 						if(file_exists("core/pages/$val.php")) {
 							echo " href=\"?site=$val\"";
@@ -146,7 +147,9 @@ while($row = mysql_fetch_array($erg)) {
 								$a = "menu_$key";
 								$$a = $val;
 							}
-							echo "<li><a href=\"?site=$menu_filename\">$menu_fullname</a></li>";
+							if($catergorypoint != $menu_filename) {
+								echo "<li><a href=\"?site=$menu_filename\">$menu_fullname</a></li>";
+							}
 						}
 						echo "</ul></li>";
 					}
