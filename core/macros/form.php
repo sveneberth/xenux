@@ -7,7 +7,7 @@ if(isset($_POST["submit"])) {
 		$header .= 'Content-type: text/html; charset=utf-8' . "\r\n";
 		$header .= 'To: '.$contact_form_email. "\r\n";
 		$header .= 'From: '.$contact_form_email. "\r\n";
-		$mailtext = '<html lang="de"></head><meta charset="UTF-8" /><title>Formular</title></head><body>
+		$mailtext = '<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8" /><title>Formular</title></head><body>
 <style>
 table {font-size:100%;text-align:left;vertical-align:top;}
 th,td {text-align:left;vertical-align:top;}

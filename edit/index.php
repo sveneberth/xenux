@@ -9,8 +9,7 @@ include('../core/macros/escape_mail.php');
 $link = mysql_connect($MYSQL_HOST, $MYSQL_BENUTZER, $MYSQL_KENNWORT);
 $db_selected = mysql_select_db($MYSQL_DATENBANK, $link);
 if(!$db_selected){
-	echo 'Es ist keine Verbindung zur Datenbank möglich!';
-	exit;
+	die('Es ist keine Verbindung zur Datenbank möglich!');
 }
 mysql_query('SET NAMES "utf8"');
 if(@$_SESSION['login'] == 1) {

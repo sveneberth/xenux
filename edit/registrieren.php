@@ -27,7 +27,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 				$sql = "INSERT INTO XENUX_users(vorname, nachname, email, username, pw, admin, role) VALUES ('$firstname', '$lastname', '$email', '$username', 'xkanf".md5($password)."v4sf5w', 'no', '0');";
 				$erg = mysql_query($sql);
 				$Freigabelink = 'http://'.$HP_URL.'edit/?site=freigabe&username='.$username.'&email='.$email;
-				$nachricht = '<!Doctype html><html lang="de"><head><meta charset="UTF-8" ><title>Accountfreischaltung</title></head><body>
+				$nachricht = '<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8" ><title>Accountfreischaltung</title></head><body>
 				Hallo!<br />
 				Es hat sich jemand auf der Homepage http://'.$HP_URL.' registriert, er wartet nun auf die Freigabe!<br /><br />
 				Name: '.$firstname.' '.$lastname.'<br />

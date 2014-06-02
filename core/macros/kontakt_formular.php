@@ -12,7 +12,7 @@ if(isset($_POST['form'])) {
 		$header  = 'MIME-Version: 1.0' . "\r\n";
 		$header .= 'Content-type: text/html; charset=utf-8' . "\r\n";
 		$header .= 'From: "'.$name.'"<'.$eMail.'>' . "\r\n";
-		$mailtext = '<html lang="de"></head><meta charset="utf-8" /><title>Kontakt</title></head><body>
+		$mailtext = '<!DOCTYPE html><html lang="de"></head><meta charset="utf-8" /><title>Kontakt</title></head><body>
 Hallo!<br />
 Es hat ihnen jemand auf der Homepage <a href="http://'.$HP_URL.'">http://'.$HP_URL.'</a> eine Nachricht geschickt!<br /><br />
 <table style="font-size:100%;text-align:left;vertical-align:top;">

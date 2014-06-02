@@ -17,7 +17,7 @@ if(isset($_POST['to'])){
 	};
 }
 if(!empty($_POST['to']) and !empty($_POST['subject']) and !empty($_POST['text'])) {
-	$nachricht = '<html></head><title>'.$subject.'</title></head><body>'.nl2br($text).'<br /><br /><span style="font-family:Verdana;color:#777;border-top: 1px #777 solid;">Die Mail wurde mit Xenux erstellt</span></body></html>';
+	$nachricht = '<!DOCTYPE html><html lang="de"><head><meta charset="utf-8"/><title>'.$subject.'</title></head><body>'.nl2br($text).'<br /><br /><span style="font-family:Verdana;color:#777;border-top: 1px #777 solid;">Die Mail wurde mit Xenux erstellt</span></body></html>';
 	$header		 = 'From: "'.$login['vorname'].' '.$login['nachname'].'"<'.$login['email'].'>'. "\r\n";
 	$header		.= 'Reply-To: "'.$login['vorname'].' '.$login['nachname'].'"<'.$login['email'].'>'."\r\n";
 	$header		.= 'MIME-Version: 1.0' . "\r\n";
