@@ -39,6 +39,7 @@ if(isset($_GET['id'])) {
 				$erg = mysql_query($sql);
 				rename("../core/pages/".$filename_old.".php", "../core/pages/".$filename.".php");
 				echo "Seite wurde gespeichert.<br />";
+				echo "<a href=\"../?site=$filename\">Zur Seite $fullname</a><br />";
 			} else {
 				echo "<p>Fehler: kann die Seite <i>".$fullname."</i> nicht öffnen!</p>";
 			}
