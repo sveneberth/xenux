@@ -23,4 +23,5 @@ if(isset($_GET['userid']) and !empty($_GET['userid'])) {
 	session_destroy();
 	echo "Dein Account wurde gelöscht!";
 }
+mysql_close($link);
 ?>
