@@ -79,27 +79,27 @@ function messagebox(width, height, topic, text) {
 $(document).ready(function() {
 	var actfontsize = $.cookie("fontsize");
 	var actfontsize = parseInt(actfontsize.replace(/[^0-9]/g, ''));
-	$("html,body").css("font-size", actfontsize+"px")
+	$("body").css("font-size", actfontsize+"px")
 })
 function fontsizerecrease() {
 	var actfontsize = $.cookie("fontsize");
 	var actfontsize = parseInt(actfontsize.replace(/[^0-9]/g, ''));
 	var newfontsize = actfontsize + 2;
 	if(newfontsize <= 30) {
-		$("html,body").css("font-size", newfontsize+"px");
+		$("body").css("font-size", newfontsize+"px");
 		$.cookie("fontsize", newfontsize);
 	}
 }
 function fontsizereset() {
-	$("html,body").css("font-size", "16px");
+	$("body").css("font-size", "16px");
 	$.cookie("fontsize", 16);
 }
 function fontsizedecrease() {
-	var actfontsize = $("html,body").css("font-size");
+	var actfontsize = $("body").css("font-size");
 	var actfontsize = parseInt(actfontsize.replace(/[^0-9]/g, ''));
 	var newfontsize = actfontsize - 2;
 	if(newfontsize >= 10) {
-		$("html,body").css("font-size", newfontsize+"px");
+		$("body").css("font-size", newfontsize+"px");
 		$.cookie("fontsize", newfontsize);
 	}
 }

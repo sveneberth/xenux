@@ -112,7 +112,7 @@ if(isset($_GET['id'])) {
 							echo "checked";
 						}
 					}
-					echo ' type="checkbox" name="contact_'.$row['id'].'" value="yes">'.$row['name'].'<br />';
+					echo ' type="checkbox" id="contact_'.$row['id'].'" name="contact_'.$row['id'].'" value="yes"><label for="contact_'.$row['id'].'">'.$row['name'].'</label><br />';
 				}
 				?>
 				</form>

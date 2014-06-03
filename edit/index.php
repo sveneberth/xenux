@@ -159,6 +159,9 @@ $(window).bind('keydown', function(event) {
 		</div>
 	</div>
 <div id="wrapper">
+	<div class="fontsize">
+		Schrift&nbsp;<a href="javascript:fontsizedecrease()">-</a>&nbsp;<a href="javascript:fontsizereset()">O</a>&nbsp;<a href="javascript:fontsizerecrease()">+</a>
+	</div>
 	<div id="content" style="width: calc(100% - 10px);float:none;">
 		<h1><?php echo $sites[$site]; ?></h1>
 		<?php
