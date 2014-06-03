@@ -111,7 +111,7 @@ a:active{color:#38315F;}
 	display: none;
 }
 #topmenu {
-	font-size: 14px;
+	font-size: 90%;
 	padding: 0;
 	margin: 0;
 	height: 50px;
@@ -201,7 +201,7 @@ a:active{color:#38315F;}
 #footer {
 	width: calc(100% - 4px);
 	background: none;
-	font-size: 14px;
+	font-size: 90%;
 	color: #808080;
 	border-top: 1px #808080 solid;
 	padding: 2px;
@@ -681,6 +681,27 @@ ul#news-left li{
 .message > #closemessage:hover {
 	background: #222;
 	color: #fff;
+}
+
+.fontsize {
+	float: right;
+	position: relative;
+	height: 0px;
+}
+.fontsize a {
+	background: #eee;
+	border-radius: 5em;
+	height: 1em;
+	width: 1em;
+	line-height: 1em;
+	display: inline-block;
+	text-align: center;
+	text-decoration: none;
+	color: #222;
+}
+.fontsize a:hover {
+	background: #555;
+	color: #eee;
 }
 
 @media only screen and (max-width: 600px) {

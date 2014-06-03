@@ -98,6 +98,7 @@ while($row = mysql_fetch_array($erg)) {
 	<script src="../core/js/jquery-2.1.1.min.js"></script>
 	<script src="../core/js/jquery-migrate-1.2.1.min.js"></script>
 	<script src="../core/js/jquery-ui.js"></script>
+	<script src="../core/js/jquery.cookie.js"></script>
 	<script src="../core/js/formatierungen.js"></script>
 	<script src="../core/js/main.js"></script>
 	<style>

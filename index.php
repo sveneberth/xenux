@@ -88,6 +88,7 @@ $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-9);
 	<script src="core/js/jquery-2.1.1.min.js"></script>
 	<script src="core/js/jquery-migrate-1.2.1.min.js"></script>
 	<script src="core/js/jquery-ui.js"></script>
+	<script src="core/js/jquery.cookie.js"></script>
 	<script src="core/js/main.js"></script>
 	<style>
 	html,body{
@@ -170,6 +171,9 @@ $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-9);
 		</div>
 	</div>
 <div id="wrapper">
+	<div class="fontsize">
+		Schrift&nbsp;<a href="javascript:fontsizedecrease()">-</a>&nbsp;<a href="javascript:fontsizereset()">O</a>&nbsp;<a href="javascript:fontsizerecrease()">+</a>
+	</div>
 	<div id="leftboxes">
 		<ul id="news-left">
 			<span class="topic">News:</span>
