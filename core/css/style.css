@@ -87,6 +87,7 @@ a:active{color:#38315F;}
 	padding: 0;
 	background: #333333;
 	position: fixed;
+	z-index: 10;
 }
 #head {
 	width: 80%;
@@ -196,6 +197,21 @@ a:active{color:#38315F;}
 	display: block;
 	content: '';
 	clear: both;
+}
+
+#content > .prevnextnavi {
+	margin: 40px 0 0 0;	
+}
+#content > .prevnextnavi > .prev {
+	float: left;
+}
+#content > .prevnextnavi > .next {
+	float: right;
+}
+#content > .prevnextnavi:after {
+	display: block;
+	clear: both;
+	content: '';
 }
 
 #footer {

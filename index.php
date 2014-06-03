@@ -35,7 +35,41 @@ $erg = mysql_query($sql);
 $row = mysql_fetch_assoc($erg);
 $fullname = $row['fullname'];
 $siteid = $row['id'];
+$category = $row['category'];
 mysql_free_result($erg);
+if(!empty($category)) {
+	$sql = "SELECT * FROM XENUX_pages WHERE category = '$category' ORDER by fullname";
+	$erg = mysql_query($sql);
+	$i = 1;
+	$s_i_c = 0;
+	$site_pos = array();
+	while($row_s = mysql_fetch_array($erg)) {
+		$site_pos[$i] = $row_s["id"];
+		if($siteid == $row_s['id']) {
+			$cur_pos = $i;
+		}
+		$i++;
+		$s_i_c++;
+	}
+	if($cur_pos != 1) {
+		$sql = "SELECT * FROM XENUX_pages WHERE id = '".($site_pos[$cur_pos-1])."' ORDER by fullname";
+		$erg = mysql_query($sql);
+		$row_prev = mysql_fetch_array($erg);
+		foreach($row_prev as $key => $val) {
+			$a = "prev_$key";
+			$$a = $val;
+		}
+	}
+	if($cur_pos != $s_i_c) {
+		$sql = "SELECT * FROM XENUX_pages WHERE id = '".($site_pos[$cur_pos+1])."' ORDER by fullname";
+		$erg = mysql_query($sql);
+		$row_next = mysql_fetch_array($erg);
+		foreach($row_next as $key => $val) {
+			$a = "next_$key";
+			$$a = $val;
+		}
+	}
+}
 if($fullname == '') {
 	$filename = 'error';
 	$fullname = 'Error 404 - Seite nicht gefunden';
@@ -285,6 +319,16 @@ $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-9);
 		}
 		if($filename == 'kontakt' and !empty($contact_form_email)) {
 			include ('core/macros/kontakt_formular.php');
+		}
+		if(isset($prev_filename) or isset($next_filename)) {
+			echo "<div class=\"prevnextnavi\">";
+				if(isset($prev_filename)) {
+					echo "<a class=\"prev\" href=\"?site=$prev_filename\">&laquo;$prev_fullname</a>";
+				}
+				if(isset($next_filename)) {
+					echo "<a class=\"next\" href=\"?site=$next_filename\">$next_fullname&raquo;</a>";
+				}
+			echo "</div>";
 		}
 		?>
 	</div>
