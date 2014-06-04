@@ -2,7 +2,7 @@
 if(!isset($site)) die("You can not open this file individually/Sie k&ouml;nnen diese Datei nicht einzeln &ouml;ffnen!");
 $a = array('[bunt]', '[/bunt]','[form][/form]');
 $b = array('<?php colortext("', '"); ?>', '<?php include("core/macros/form.php");  ?>');
-$tags = '<p><a><span><img><b><i><u><marquee><br><hr><sup><sub><em><strong><code><iframe><table><tr><td data-title=\"\"><th><pre><h1><h2><h3><h4><h5><h6>';
+$tags = '<p><a><span><img><b><i><u><marquee><br><hr><sup><sub><em><strong><code><iframe><table><tr><td><th><pre><h1><h2><h3><h4><h5><h6><ul><li><ol>';
 
 if(!empty($_GET['delfile']) and !empty($_GET['delid']) and file_exists('../core/pages/'.$_GET['delfile'].'.php') and $_GET['delfile']!="kontakt" and $_GET['delfile']!="impressum" and $_GET['delfile']!="home") {
 	unlink('../core/pages/'.$_GET['delfile'].'.php');
@@ -73,7 +73,7 @@ if(isset($_GET['id'])) {
 					})
 				</script>
 				<div class="alowedhtmltags"><strong>Erlaubte HTML-Tags:</strong><br /><?php echo htmlentities($tags); ?></div>
-				<p>Du bearbeitest gerade die Seite <i><?php echo $fullname; ?></i><br />
+				<p>Du bearbeitest gerade die Seite <a href="../?site=<?php echo $filename; ?>"><i><?php echo $fullname; ?></i></a><br />
 				Es werden nur <a href="javascript:void(0)" class="htmltags">bestimmte HTML-Befehle</a> unterstützt.<br />
 				<form action="" method="post" name="form">
 				Seitenkurzname:<br />
