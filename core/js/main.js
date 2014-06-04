@@ -85,7 +85,7 @@ function fontsizerecrease() {
 	var actfontsize = $.cookie("fontsize");
 	var actfontsize = parseInt(actfontsize.replace(/[^0-9]/g, ''));
 	var newfontsize = actfontsize + 2;
-	if(newfontsize <= 30) {
+	if(newfontsize <= 26) {
 		$("body").css("font-size", newfontsize+"px");
 		$.cookie("fontsize", newfontsize);
 	}

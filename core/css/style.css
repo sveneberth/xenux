@@ -158,6 +158,9 @@ a:active{color:#38315F;}
 	padding: 0px;
 	border-bottom: #3C3C3C 1px solid;
 }
+#topmenu li li:last-child {
+	border-bottom: none;
+}
 #topmenu li ul a {
 	display: block;
 	font-size: 90%;
@@ -395,7 +398,7 @@ ul#news-left li{
 	color: #000000;
 	text-decoration: none;
 	font-size: 80%;
-	height: 22px;
+	height: 1em;
 	margin: 0px 2px;
 }
 #formatierungen a:hover{
@@ -417,8 +420,8 @@ ul#news-left li{
 	border-radius: 3px;
 	border: 1px solid #BBBBBB;
 	background: #ECECEC;
-	height: 20px;
 	padding: 0;
+	vertical-align: middle;
 }
 
 #group a{
@@ -426,8 +429,9 @@ ul#news-left li{
 	background: transparent;
 	border-radius: 0;
 	margin: 0;
-	width: 20px;
-	height: 20px;
+	width: 1em;
+	height: 1em;
+	display: table-cell;
 }
 
 #vorschau {
@@ -578,7 +582,7 @@ ul#news-left li{
 	margin: 2px 1px;
 	border-radius: 2px;
 	line-height: .8em;
-	height: 16px;
+	color: inherit;
 }
 .calender .now {
 	position: absolute;
@@ -731,6 +735,9 @@ ul#news-left li{
 	#head {
 		width: 100%;
 	}
+	#head .logo img {
+		margin: 0;
+	}
 	.mainmenu {
 		display: none;
 	}
@@ -824,6 +831,12 @@ ul#news-left li{
 	.calender .pagination,
 	.calender .now {
 		font-size: 100%;
+	}
+	.calender .last,
+	.calender .now,
+	.calender .next {
+		padding: 2px 3px;
+		line-height: 1em;
 	}
 	/*---- TABLE STYLING ----*/
 	.responsive-table table {
