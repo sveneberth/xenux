@@ -790,6 +790,7 @@ ul#news-left li{
 	}
 	.mobilemenu {
 		display: block;
+		font-size: 16px !important;
 	}
 	.openpoints {
 		float: left;
