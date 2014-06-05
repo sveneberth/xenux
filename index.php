@@ -333,7 +333,7 @@ $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-9);
 		?>
 	</div>
 	<div id="footer">
-		This Side was made with <a href="http://xenux.sven-eberth.bplaced.net/">Xenux</a>
+		This Side was made with <a href="http://xenux.bplaced.net">Xenux</a>
 		<div class="href">
 			<a href="./edit/">Editroom</a>
 			<a href="./?site=kontakt">Kontakt</a>

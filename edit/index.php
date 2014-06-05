@@ -177,7 +177,7 @@ $(window).bind('keydown', function(event) {
 	</div>
 	
 	<div id="footer">
-		This Side was made with <a href="http://xenux.sven-eberth.bplaced.net/">Xenux</a>
+		This Side was made with <a href="http://xenux.bplaced.net">Xenux</a>
 		<div class="href">
 			<a href="../">Homepage</a>
 			<a href="../?site=kontakt">Kontakt</a>
