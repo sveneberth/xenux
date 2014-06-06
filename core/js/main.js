@@ -77,6 +77,9 @@ function messagebox(width, height, topic, text) {
 
 //---FontSize------------------------------------------------------------------
 $(document).ready(function() {
+	if(typeof $.cookie("fontsize") == "undefined") {
+		$.cookie("fontsize", 16);
+	}
 	var actfontsize = $.cookie("fontsize");
 	var actfontsize = parseInt(actfontsize.replace(/[^0-9]/g, ''));
 	$("body").css("font-size", actfontsize+"px")
@@ -95,7 +98,7 @@ function fontsizereset() {
 	$.cookie("fontsize", 16);
 }
 function fontsizedecrease() {
-	var actfontsize = $("body").css("font-size");
+	var actfontsize = $.cookie("fontsize");
 	var actfontsize = parseInt(actfontsize.replace(/[^0-9]/g, ''));
 	var newfontsize = actfontsize - 2;
 	if(newfontsize >= 10) {
