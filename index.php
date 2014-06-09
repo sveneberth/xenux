@@ -158,32 +158,24 @@ $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-9);
 												"terminview",
 											);
 					$read_category = array();
-					$sql = "SELECT * from XENUX_pages ORDER by category";
-					$erg = mysql_query($sql);
+					$sql = "SELECT DISTINCT category FROM XENUX_pages";
+					$erg = mysql_query($sql) or die(mysql_error());
 					while($row = mysql_fetch_array($erg)) {
-						foreach($row as $key => $val) {
-							$a = "menu_$key";
-							$$a = $val;
+						$menu_category = $row['category'];
+						$catergorypoint = $menu_category;
+						echo "<li><img src=\"core/images/right.png\" class=\"".strtolower(preg_replace("/[^a-zA-Z0-9_]/" , "" , $menu_category))." openpoints\" onclick=\"javascript:openmenupoints('".strtolower(preg_replace("/[^a-zA-Z0-9_]/" , "" , $menu_category))."')\"><a";
+						if(file_exists("core/pages/$menu_category.php")) {
+							echo " href=\"?site=$menu_category\"";
 						}
-						if(!empty($menu_category) and !in_array($menu_category, $read_category)) {
-							$read_category[] = $menu_category;
-						}
-					}
-					foreach($read_category as $val) {
-						$catergorypoint = $val;
-						echo "<li><img src=\"core/images/right.png\" class=\"".strtolower(preg_replace("/[^a-zA-Z0-9_]/" , "" , $val))." openpoints\" onclick=\"javascript:openmenupoints('".strtolower(preg_replace("/[^a-zA-Z0-9_]/" , "" , $val))."')\"><a";
-						if(file_exists("core/pages/$val.php")) {
-							echo " href=\"?site=$val\"";
-						}
-						echo ">$val</a><ul id=\"".strtolower(preg_replace("/[^a-zA-Z0-9_]/" , "" , $val))."\">";
-						$sql = "SELECT * from XENUX_pages WHERE category = '$val' ORDER by fullname";
-						$erg = mysql_query($sql);
-						while($row = mysql_fetch_array($erg)) {
-							foreach($row as $key => $val) {
-								$a = "menu_$key";
-								$$a = $val;
+						echo ">$menu_category</a><ul id=\"".strtolower(preg_replace("/[^a-zA-Z0-9_]/" , "" , $menu_category))."\">";
+						$sql1 = "SELECT * FROM XENUX_pages WHERE category = '$menu_category' AND category != '' ORDER by fullname";
+						$erg1 = mysql_query($sql1);
+						while($row1 = mysql_fetch_array($erg1)) {
+							foreach($row1 as $key1 => $val1) {
+								$a = "menu_$key1";
+								$$a = $val1;
 							}
-							if($catergorypoint != $menu_filename) {
+							if($catergorypoint != @$menu_filename) {
 								echo "<li><a href=\"?site=$menu_filename\">$menu_fullname</a></li>";
 							}
 						}
