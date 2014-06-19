@@ -1,7 +1,7 @@
 <?php
 if(!isset($site)) die("You can not open this file individually/Sie k&ouml;nnen diese Datei nicht einzeln &ouml;ffnen!");
 $form = false;
-if(isset($_GET['news']) and $_GET['new'] == "yes") {
+if(isset($_GET['new']) and $_GET['new'] == "yes") {
 	$sql = "INSERT INTO `XENUX_dates`(`name`, `text`) VALUES ('Name','Text')";
 	$erg = mysql_query($sql);
 }

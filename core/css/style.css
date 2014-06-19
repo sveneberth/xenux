@@ -150,6 +150,7 @@ a:active{color:#38315F;}
 	height: 0;
 	overflow: hidden;
 	transition: .7s opacity ease;
+	margin-left: 1px;
 }
 #topmenu li li {
 	float: none;
@@ -168,6 +169,7 @@ a:active{color:#38315F;}
 	text-align: left;
 	line-height: 30px;
 	height: 30px;
+	border-left: 0px;
 }
 
 @media only screen and (min-width: 600px) {
@@ -184,7 +186,7 @@ a:active{color:#38315F;}
 	#topmenu li ul a:hover,
 	#topmenu li ul li:hover > a {
 		background: #2580a2;
-		border: 0px;
+	/* 	border: 0px; */
 		color: #ffffff;
 		text-decoration: none;
 	}
