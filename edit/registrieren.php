@@ -4,7 +4,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$$var = mysql_real_escape_string($value);
 	}
 	if(preg_match("/[^a-zA-Z0-9_-]/", $username)) {
-		echo "Der Benutzername enthält unerlaubte Zeichen, zulässig sind nur Buchstaben, Zahlen und (Unter-)Strich.<br />";
+		echo "<p>Der Benutzername enthält unerlaubte Zeichen, zulässig sind nur Buchstaben, Zahlen und (Unter-)Strich.</p>";
 	} else {
 		if(!empty($firstname) and !empty($lastname) and !empty($email) and !empty($username) and !empty($password) and $password == $passwordre) {
 			$sql = "SELECT COUNT(username) AS anzahl FROM XENUX_users WHERE username = '$username'";
@@ -32,22 +32,22 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 				Es hat sich jemand auf der Homepage http://'.$HP_URL.' registriert, er wartet nun auf die Freigabe!<br /><br />
 				Name: '.$firstname.' '.$lastname.'<br />
 				Datum: '.date("d.m.y H:i:s ").'<br /><br />
-				Sie können ihn hier Freischalten: <a href="'.$Freigabelink.'">'.$Freigabelink.'</a><br />
+				Du kannst ihn hier Freischalten: <a href="'.$Freigabelink.'">'.$Freigabelink.'</a><br />
 				<br />
 				<span style="font-family:Verdana;color:#777;border-top: 1px #777 solid;">Die Mail wurde mit Xenux erstellt</span></body></html>';
-				$header		 = 'From: noreply@sven-eberth.de.hm'."\r\n";
+				$header		 = 'From: noreply@'.str_replace("www.", "", $_SERVER['SERVER_NAME'])."\r\n";
 				$header		.= 'MIME-Version: 1.0' . "\r\n";
 				$header		.= 'Content-type: text/html; charset=utf-8' . "\r\n";
 				mail($HP_Email, 'Accountfreischaltung', $nachricht, $header);
-				echo '<br />Du wurdest erfolgreich registriert! Nun musst du warten, bis der Administrator deinen Account freischaltet, du wirst darüber per E-Mail benachrichtigt!';
+				echo "<p>Du wurdest erfolgreich registriert! Nun musst du warten, bis der Administrator deinen Account freischaltet, du wirst darüber per E-Mail benachrichtigt!</p>";
 				return;
 			} else {
-				echo "Es existiert bereits ein Account mit dem Benutzernamen oder der E-Mail-Adresse!<br />";
+				echo "<p>Es existiert bereits ein Account mit dem Benutzernamen oder der E-Mail-Adresse!</p>";
 			}
 		} else {
-				echo "Alle Felder müssen ausgefüllt sein!<br />";
+				echo "<p>Alle Felder müssen ausgefüllt sein!</p>";
 				if($password != $passwordre) {
-					echo "Die eingeben Passwörter stimmen nicht überein!<br />";
+					echo "<p>Die eingeben Passwörter stimmen nicht überein!</p>";
 				}
 		}
 	}

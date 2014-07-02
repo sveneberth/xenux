@@ -17,8 +17,8 @@ $id = mysql_real_escape_string($_GET['id']);
 		$text = mysql_real_escape_string($_POST['text']);
 			$sql = "UPDATE XENUX_news Set title = '$title', text = '$text' WHERE id = '$id'";
 			$erg = mysql_query($sql);
-			echo "Die News wurde gespeichert!<br />";
-			echo "<a href='../?site=news&id=$id'>News anzeigen</a><br />";
+			echo "<p>Die News wurde gespeichert!</p>";
+			echo "<p><a href='../?site=news&id=$id'>News anzeigen</a></p>";
 			$form = false;
 	} else {
 		$sql = "SELECT * FROM XENUX_news WHERE id = '".$id."'";

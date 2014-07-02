@@ -62,6 +62,6 @@ if(isset($_GET['id'])) {
 <br />
 <a id="edit_href" style="font-size: 1em;" href="./?site=<?php echo $site; ?>&new=yes">neues Eingabefeld</a>
 <br />
-<p>Zum Einbinden des Formulares auf einer Seite, fügen sie folgenden Code hinzu:<br />
+<p>Zum Einbinden des Formulars auf einer Seite, füge folgenden Code hinzu:<br />
 <textarea style="height:auto;width:auto;" onclick="this.select()">[form][/form]</textarea>
 </p>

@@ -24,7 +24,7 @@ $id = mysql_real_escape_string($_GET['id']);
 		}
 		$sql = "UPDATE XENUX_ansprechpartner Set name = '$name', position = '$position', email = '$email', text = '$text' WHERE id = '$id'";
 		$erg = mysql_query($sql);
-		echo "Der Ansprechpartner wurde gespeichert!<br />";
+		echo "<p>Der Ansprechpartner wurde gespeichert!</p>";
 		return;
 	} else {
 		$sql = "SELECT * FROM XENUX_ansprechpartner WHERE id = '".$id."'";

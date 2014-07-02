@@ -85,7 +85,7 @@ if(isset($_POST["username"])) {
 		$_SESSION["login"] = 1;
 		$_SESSION["userid"] = $erg['id'];
 	} else{
-		$result1 = "Deine Logindaten sind nicht korrekt, oder du wurdest noch nicht freigeschaltet.<br />";
+		$result1 = "<p>Deine Logindaten sind nicht korrekt, oder du wurdest noch nicht freigeschaltet.</p>";
 	}
 }
 if (@$_SESSION['login'] == 1) {

@@ -39,7 +39,7 @@ if(isset($_POST['submit'])) {
 		if(!$username_exist and !$email_exist) {
 			$sql = "INSERT INTO XENUX_users (nachname, vorname, email, username, pw, admin, role) VALUES ('$LastName', '$FirstName', '$email', '$username', 'xkanf".md5($password)."v4sf5w', 'yes', '3');";
 			$erg = mysql_query($sql) or die("Anfrage fehlgeschlagen.");
-			echo "<p>Sie wurden erfolgreich registriert!</p>";
+			echo "<p>Du wurdest erfolgreich registriert!</p>";
 			$next = true;
 		}
 		mysql_close($link);

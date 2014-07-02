@@ -19,8 +19,8 @@ $id = mysql_real_escape_string($_GET['id']);
 		$text = mysql_real_escape_string($_POST['text']);
 			$sql = "UPDATE XENUX_dates Set name = '$name', date = '$dat $time', text = '$text' WHERE id = '$id'";
 			$erg = mysql_query($sql);
-			echo "Der Termin wurde gespeichert!<br />";
-			echo "<a href='../?site=terminview&id=$id'>Termin anzeigen</a><br />";
+			echo "<p>Der Termin wurde gespeichert!</p>";
+			echo "<p><a href='../?site=terminview&id=$id'>Termin anzeigen</a></p>";
 			$form = false;
 	} else {
 		$sql = "SELECT *, DATE_FORMAT(date,'%Y-%m-%d') as dat, DATE_FORMAT(date,'%H:%i:%s') as time FROM XENUX_dates WHERE id = '".$id."'";

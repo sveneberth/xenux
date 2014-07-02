@@ -30,8 +30,8 @@ if(isset($_POST["submit"])) {
 			mysql_query('SET NAMES "utf8"');
 			$datei = fopen("../config.php","w");
 			$text = '<?php
-# In dieser Datei können sie alle Einstellungen ändern,
-# die sie auch schon in der Installation vorgenommen haben!
+# In dieser Datei kannst du alle Einstellungen ändern,
+# die du auch schon in der Installation vorgenommen haben!
 
 # MySQL-Daten:
 $MYSQL_HOST			= "'.$host.'"; # Servername

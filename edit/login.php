@@ -7,11 +7,11 @@ if (!empty($_POST["submit"])) {
 	$anzahl = mysql_num_rows($res);
 	$erg = mysql_fetch_array($res);
 	if($anzahl > 0) {
-		echo "Der Login war erfolgreich.<br />";
+		echo "<p>Der Login war erfolgreich.</p>";
 		$_SESSION["login"] = 1;
 		$_SESSION["userid"] = $erg['id'];
 	} else {
-		echo "Deine Logindaten sind nicht korrekt, oder du wurdest noch nicht freigeschaltet.<br />";
+		echo "<p>Deine Logindaten sind nicht korrekt, oder du wurdest noch nicht freigeschaltet.</p>";
 	}
 	if (@$_SESSION['login'] == 1) {
 		$sql = "SELECT * FROM XENUX_users WHERE id = '".$_SESSION['userid']."'";

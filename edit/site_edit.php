@@ -38,8 +38,8 @@ if(isset($_GET['id'])) {
 				$sql = "UPDATE XENUX_pages Set filename = '$filename', fullname = '$fullname', category = '$category', ansprechpartner = '$contact' WHERE id = '$id'";
 				$erg = mysql_query($sql);
 				rename("../core/pages/".$filename_old.".php", "../core/pages/".$filename.".php");
-				echo "Seite wurde gespeichert.<br />";
-				echo "<a href=\"../?site=$filename\">Zur Seite $fullname</a><br />";
+				echo "<p>Seite wurde gespeichert.</p>";
+				echo "<p><a href=\"../?site=$filename\">Zur Seite $fullname</a></p>";
 			} else {
 				echo "<p>Fehler: kann die Seite <i>".$fullname."</i> nicht öffnen!</p>";
 			}

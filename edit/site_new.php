@@ -25,11 +25,11 @@ if(!empty($_POST)) {
 			foreach($row as $key => $val) {
 				$$key = $val;
 			}
-			echo 'Die Seite wurde erfolgreich hinzugefügt!<br />';
-			echo "Die Seite <i>$fullname</i> <a href=\"./?site=site_edit&id=$id\">bearbeiten</a><br />";
+			echo "<p>Die Seite wurde erfolgreich hinzugefügt!</p>";
+			echo "<p>Die Seite <i>$fullname</i> <a href=\"./?site=site_edit&id=$id\">bearbeiten</a></p>";
 		}
 	} else {
-		echo '<p style="color:red;">Bitte füllen sie alle Felder aus!</p>';
+		echo "<p style=\"color:red;\">Bitte fülle alle Felder aus!</p>";
 	}
 }
 ?>

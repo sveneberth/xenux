@@ -68,7 +68,7 @@ if(!empty($_POST['submit'])) {
 		$uploadfile = '../files/'.$filename.$filetyp;
 	};
 	if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
-		echo "Die Datei wurde erfolgreich hochgeladen!<br />";
+		echo "<p>Die Datei wurde erfolgreich hochgeladen!</p>";
 	} else {
 		echo "<p style=\"color:red;\">Beim Hochladen der Datei trat folgender Fehler auf:<br />";
 		echo $Fehlercodes[$_FILES["userfile"]["error"]];
