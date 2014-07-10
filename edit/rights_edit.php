@@ -22,7 +22,7 @@ if(!empty($_GET['id'])) {
 		return;
 	} else {
 		if($_GET['id'] == $login['id']) {
-			echo '<p>Du kannst nicht deine eigenen Rechte bearbeiten!</p><br />';
+			echo '<p>Du kannst nicht deine eigenen Rechte bearbeiten!</p>';
 		} else {
 			$sql = "SELECT * FROM XENUX_users WHERE id = '".$_GET['id']."'";
 			$erg = mysql_query($sql);
@@ -31,7 +31,7 @@ if(!empty($_GET['id'])) {
 				$$key = $val;
 			}
 			if($role >= $login['role']) {
-				echo '<p>Du kannst nicht bei Benutzern, die die gleichen oder höhere Rechte haben als du, die Rechte ändern!<br />';
+				echo '<p>Du kannst nicht bei Benutzern, die die gleichen oder höhere Rechte haben als du, die Rechte ändern!</p>';
 			} else {
 				echo 'Du bearbeitest gerade die Rechte für '.$username.' ('.$vorname.' '.$nachname.')!';
 				?>
