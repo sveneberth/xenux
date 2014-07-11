@@ -217,9 +217,9 @@ $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-9);
 					}
 					echo '</span>';
 					if(strlen($text) > 70) {
-						echo substr($text, 0, strpos($text, " ", 70));
+						echo htmlentities(substr($text, 0, strpos($text, " ", 70)));
 					} else {
-						echo $text;
+						echo htmlentities($text);
 					}
 					echo '...<br /><a href="?site=news&id='.$id.'">&raquo;weiterlesen</a></li>';
 				}
@@ -238,8 +238,12 @@ $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-9);
 			$i = 5;
 			while($row1 = mysql_fetch_array($erg1) and $i > 0) {
 				if(strtotime($row1['date']) > strtotime(date('Y-m-d H:i'))) {
-					echo '<li><span class="title">'.$row1['name'].'</span>';
-					echo $row1['dat'].'<br/>'.$row1['text'].'</a></li>';
+					echo '<li><span class="title">'.$row1['name'];
+					if (@$_SESSION["login"] == 1) {
+						echo '<a id="edit_href" href="edit/?site=dates_edit&id='.$row1['id'].'">Bearbeiten</a>';
+					}
+					echo '</span>';
+					echo $row1['dat'].'<br/>'.htmlentities(substr($row1['text'],0,70)).'<br /><a href="?site=terminview&id='.$row1['id'].'">&raquo;Termin anzeigen</a></li>';
 					$i--;
 				}
 			}

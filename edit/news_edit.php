@@ -1,9 +1,15 @@
 <?php
 if(!isset($site)) die("You can not open this file individually/Sie k&ouml;nnen diese Datei nicht einzeln &ouml;ffnen!");
 $form = false;
-if(isset($_GET['new']) and $_GET['new'] == "yes") {
-	$sql = "INSERT INTO XENUX_news(title, text) VALUES ('Titel','Text')";
-	$erg = mysql_query($sql);
+if(isset($_GET['new'])) {
+	if($_GET['new'] == "yes") {
+		$sql = "INSERT INTO XENUX_news(id) VALUES (NULL);";
+		$erg = mysql_query($sql);
+		$sql = "SELECT * FROM XENUX_news ORDER by id DESC LIMIT 1;";
+		$erg = mysql_query($sql);
+		$row = mysql_fetch_array($erg);
+		$_GET['id'] = $row['id'];
+	}
 }
 if(!empty($_GET['delnews'])) {
 	$sql = "DELETE FROM XENUX_news WHERE id = '".$_GET['delnews']."'";
@@ -31,11 +37,11 @@ $id = mysql_real_escape_string($_GET['id']);
 	}
 	if($form){
 	?>
-	<form action="" method="post">
+	<form action="<?php echo "?site=$site&id=$id"; ?>" method="post">
 		<span <?php if (empty($title) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Titel:</span><br />
-		<input type="text" name="title" value="<?php echo $title; ?>" /><br /><br />
+		<input type="text" name="title" placeholder="Titel" value="<?php echo $title; ?>" /><br /><br />
 		<span <?php if (empty($text) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Text:</span><br />
-		<textarea type="text" name="text" class="big"><?php echo $text; ?></textarea><br /><br />
+		<textarea type="text" name="text" placeholder="Text" class="big"><?php echo $text; ?></textarea><br /><br />
 		<input type="hidden" name="form" value="form" />
 		<input type="submit" value="speichern" />
 	</form>
@@ -56,9 +62,9 @@ while($row = mysql_fetch_array($erg)) {
 	echo "<td data-title=\"Titel\">".$row['title']."</td>";
 	echo "<td data-title=\"Text\">";
 	if(strlen($row['text']) > 300) {
-		echo substr($row['text'], 0, strpos($row['text'], " ", 300))."...";
+		echo htmlentities(substr($row['text'], 0, strpos($row['text'], " ", 300)))."...";
 	} else {
-		echo $row['text'];
+		echo htmlentities($row['text']);
 	}
 	echo "</td>";
 	echo "<td data-title=\"\"><a id=\"edit_href\" style=\"font-size: 0.9em;\" href=\"./?site=$site&id=".$row['id']."\">Bearbeiten</a> <a id=\"edit_href\" style=\"font-size: 0.9em;\" href=\"./?site=$site&delnews=".$row['id']."\">löschen</a></td>";

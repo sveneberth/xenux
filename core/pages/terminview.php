@@ -12,7 +12,7 @@ foreach($row as $key => $val) {
 }
 echo "<h3 style=\"margin: 20px 0 5px 0;\">$name</h3>";
 echo "<strong>$dat</strong><br />";
-echo "$text";
+echo nl2br(htmlentities($text));
 ?>
 <br />
 <br />

@@ -5,6 +5,9 @@ html, body {
 	font-family: Verdana, Tahoma, Arial;
 }
 
+table {
+	width: 100%;
+}
 h1 {
 	margin: 0 0 15px 0;
 	font-size: 170%;
@@ -44,7 +47,7 @@ textarea {
 }
 textarea.big {
 	height: 200px;
-	width: 100%;
+	width: calc(100% - 8px);
 }
 input[type="submit"],
 input[type="checkbox"],
@@ -566,6 +569,11 @@ ul#news-left li{
 	text-decoration: none;
 	color: inherit;
 	font-weight: normal;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	max-height: 5em;
 }
 .calender .date > span {
 	display: block;
@@ -856,9 +864,6 @@ ul#news-left li{
 	}
 	.responsive-table tr {
 		border: 1px solid #ccc;
-	}
-	table {
-		width: 100%;
 	}
 	#table1 th, #table1 td {
 		padding: .5% .5% .5% 40%;

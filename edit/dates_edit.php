@@ -1,18 +1,24 @@
 <?php
 if(!isset($site)) die("You can not open this file individually/Sie k&ouml;nnen diese Datei nicht einzeln &ouml;ffnen!");
 $form = false;
-if(isset($_GET['new']) and $_GET['new'] == "yes") {
-	$sql = "INSERT INTO `XENUX_dates`(`name`, `text`) VALUES ('Name','Text')";
-	$erg = mysql_query($sql);
+if(isset($_GET['new'])) {
+	if($_GET['new'] == "yes") {
+		$sql = "INSERT INTO XENUX_dates(id) VALUES (NULL);";
+		$erg = mysql_query($sql);
+		$sql = "SELECT * FROM XENUX_dates ORDER by id DESC LIMIT 1;";
+		$erg = mysql_query($sql);
+		$row = mysql_fetch_array($erg);
+		$_GET['id'] = $row['id'];
+	}
 }
 if(!empty($_GET['deldate'])) {
-	$sql = "DELETE FROM XENUX_dates WHERE id = '".$_GET['deldate']."'";
+	$sql = "DELETE FROM XENUX_dates WHERE id = '".$_GET['deldate']."';";
 	$erg = mysql_query($sql);
-	echo 'Der Termin wurde soeben erfolgreich gelöscht!<br />';
+	echo '<p>Der Termin wurde soeben erfolgreich gelöscht!</p>';
 }
 if(!empty($_GET['id'])) {
 $id = mysql_real_escape_string($_GET['id']);
-	if(isset($_POST['sub2'])) {
+	if(isset($_POST['form'])) {
 		$name = mysql_real_escape_string($_POST['name']);
 		$dat = mysql_real_escape_string($_POST['dat']);
 		$time = mysql_real_escape_string($_POST['time']);
@@ -33,15 +39,15 @@ $id = mysql_real_escape_string($_GET['id']);
 	}
 	if($form){
 	?>
-	<form action="" method="post">
+	<form action="<?php echo "?site=$site&id=$id"; ?>" method="post">
 		<span <?php if(empty($name) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Name:</span><br />
-		<input type="text" name="name" value="<?php echo $name; ?>" /><br /><br />
+		<input type="text" name="name" placeholder="Name" value="<?php echo $name; ?>" /><br /><br />
 		<span <?php if(empty($dat) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Datum:</span><br />
-		<input type="date" name="dat" value="<?php echo $dat; ?>" /><br /><br />
+		<input type="date" name="dat" placeholder="Datum" value="<?php echo $dat; ?>" /><br /><br />
 		<span <?php if (empty($time) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Zeit:</span><br />
-		<input type="time" name="time" value="<?php echo $time; ?>" /><br /><br />
+		<input type="time" name="time" placeholder="Zeit" value="<?php echo $time; ?>" /><br /><br />
 		<span <?php if(empty($text) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Text:</span><br />
-		<textarea type="text" name="text" class="big"><?php echo $text; ?></textarea><br /><br />
+		<textarea type="text" name="text" placeholder="Text" class="big"><?php echo $text; ?></textarea><br /><br />
 		<input type="hidden" name="form" value="form" />
 		<input type="submit" value="speichern">
 	</form>
@@ -62,9 +68,9 @@ while($row = mysql_fetch_array($erg)) {
 	echo "<td data-title=\"Name\">".$row['name']."</td>";
 	echo "<td data-title=\"Text\">";
 	if(strlen($row['text']) > 300) {
-		echo substr($row['text'], 0, strpos($row['text'], " ", 300))."...";
+		echo htmlentities(substr($row['text'], 0, strpos($row['text'], " ", 300)))."...";
 	} else {
-		echo $row['text'];
+		echo htmlentities($row['text']);
 	}
 	echo "</td>";
 	echo "<td data-title=\"Datum\">".$row['dat']."</td>";

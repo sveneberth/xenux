@@ -4,11 +4,21 @@ if($login['role'] < 2) {
 	echo '<p>Du bist nicht berechtigt, diese Seite zu öffnen!</p>';
 	return;
 }
-if(isset($_GET['new']) and $_GET['new'] == "yes") {
-	$sql = "INSERT INTO XENUX_form(label) VALUES ('Neues Feld')";
-	$erg = mysql_query($sql);
+if(isset($_GET['new'])) {
+	if($_GET['new'] == "yes") {
+		$sql = "INSERT INTO XENUX_form(id) VALUES (NULL);";
+		$erg = mysql_query($sql);
+		$sql = "SELECT * FROM XENUX_form ORDER by id DESC LIMIT 1;";
+		$erg = mysql_query($sql);
+		$row = mysql_fetch_array($erg);
+		$_GET['id'] = $row['id'];
+	}
 }
-
+if(!empty($_GET['delid'])) {
+	$sql = "DELETE FROM XENUX_form WHERE id = '".$_GET['delid']."'";
+	$erg = mysql_query($sql);
+	echo '<p>Das Feld wurde soeben erfolgreich gelöscht!</p>';
+}
 if(isset($_GET['id'])) {
 	$id = $_GET['id'];
 	$sql = "SELECT * FROM XENUX_form WHERE id = '$id'";
@@ -26,9 +36,9 @@ if(isset($_GET['id'])) {
 		echo "<p>Gespeichert</p>";
 	} else {
 		?>
-		<form action="" method="post" name="form">
+		<form action="<?php echo "?site=$site&id=$id"; ?>" method="post" name="form">
 			Feldbeschreibung:<br />
-			<input type="text" name="label" value="<?php echo $label; ?>"><br /><br />
+			<input type="text" name="label" placeholder="Feldbeschreibung" value="<?php echo $label; ?>"><br /><br />
 			Feld-Typ:<br />
 			<input type="radio" <?php if($type=="text")echo "checked"; ?> name="type" id="txt" value="text"><label for="txt">Eingabe-Feld</label><br />
 			<input type="radio" <?php if($type=="number")echo "checked"; ?> name="type" id="number" value="number"><label for="number">Zahlen-Feld</label><br />
