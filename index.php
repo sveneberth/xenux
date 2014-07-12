@@ -158,7 +158,7 @@ $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-9);
 												"terminview",
 											);
 					$read_category = array();
-					$sql = "SELECT DISTINCT category FROM XENUX_pages";
+					$sql = "SELECT DISTINCT category FROM XENUX_pages WHERE category != '';";
 					$erg = mysql_query($sql) or die(mysql_error());
 					while($row = mysql_fetch_array($erg)) {
 						$menu_category = $row['category'];
