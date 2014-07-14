@@ -3,6 +3,11 @@ SESSION_START();
 function logger($value) {
 	echo "<script>console.log('".$value."');</script>";
 };
+function contains($var) {
+	$array = func_get_args();
+	unset($array[0]);
+	return in_array($var, $array); 
+}
 include('../config.php');
 include('../core/macros/colortext.php');
 include('../core/macros/escape_mail.php');

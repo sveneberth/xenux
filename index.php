@@ -1,5 +1,15 @@
 <?php
 SESSION_START();
+function contains($var) {
+	$array = func_get_args();
+	unset($array[0]);
+	return in_array($var, $array); 
+}
+function maxlines($str, $num=10) {
+    $lines = explode("\n", $str);
+    $firsts = array_slice($lines, 0, $num);
+    return implode("\n", $firsts);
+}
 if(@$_SESSION["login"] == 1 and !empty($_POST['session_delete'])) {
 	$_SESSION = array();
 	if (ini_get("session.use_cookies")) {
@@ -37,39 +47,6 @@ $fullname = $row['fullname'];
 $siteid = $row['id'];
 $category = $row['category'];
 mysql_free_result($erg);
-if(!empty($category)) {
-	$sql = "SELECT * FROM XENUX_pages WHERE category = '$category' ORDER by fullname";
-	$erg = mysql_query($sql);
-	$i = 1;
-	$s_i_c = 0;
-	$site_pos = array();
-	while($row_s = mysql_fetch_array($erg)) {
-		$site_pos[$i] = $row_s["id"];
-		if($siteid == $row_s['id']) {
-			$cur_pos = $i;
-		}
-		$i++;
-		$s_i_c++;
-	}
-	if($cur_pos != 1) {
-		$sql = "SELECT * FROM XENUX_pages WHERE id = '".($site_pos[$cur_pos-1])."' ORDER by fullname";
-		$erg = mysql_query($sql);
-		$row_prev = mysql_fetch_array($erg);
-		foreach($row_prev as $key => $val) {
-			$a = "prev_$key";
-			$$a = $val;
-		}
-	}
-	if($cur_pos != $s_i_c) {
-		$sql = "SELECT * FROM XENUX_pages WHERE id = '".($site_pos[$cur_pos+1])."' ORDER by fullname";
-		$erg = mysql_query($sql);
-		$row_next = mysql_fetch_array($erg);
-		foreach($row_next as $key => $val) {
-			$a = "next_$key";
-			$$a = $val;
-		}
-	}
-}
 if($fullname == '') {
 	$filename = 'error';
 	$fullname = 'Error 404 - Seite nicht gefunden';
@@ -156,6 +133,8 @@ $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-9);
 												"newslist",
 												"termine",
 												"terminview",
+												"page",
+												"search",
 											);
 					$read_category = array();
 					$sql = "SELECT DISTINCT category FROM XENUX_pages WHERE category != '';";
@@ -164,8 +143,10 @@ $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-9);
 						$menu_category = $row['category'];
 						$catergorypoint = $menu_category;
 						echo "<li><img src=\"core/images/right.png\" class=\"".strtolower(preg_replace("/[^a-zA-Z0-9_]/" , "" , $menu_category))." openpoints\" onclick=\"javascript:openmenupoints('".strtolower(preg_replace("/[^a-zA-Z0-9_]/" , "" , $menu_category))."')\"><a";
-						if(file_exists("core/pages/$menu_category.php")) {
-							echo " href=\"?site=$menu_category\"";
+						$thissql = mysql_query("SELECT * FROM XENUX_pages WHERE fullname = '$menu_category' AND category  = '$menu_category' LIMIT 1;");
+						$thispage = mysql_fetch_object($thissql);
+						if(mysql_num_rows($thissql) > 0) {
+							echo " href=\"?site=page&page_id=$thispage->id\"";
 						}
 						echo ">$menu_category</a><ul id=\"".strtolower(preg_replace("/[^a-zA-Z0-9_]/" , "" , $menu_category))."\">";
 						$sql1 = "SELECT * FROM XENUX_pages WHERE category = '$menu_category' AND category != '' ORDER by fullname";
@@ -175,8 +156,8 @@ $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-9);
 								$a = "menu_$key1";
 								$$a = $val1;
 							}
-							if($catergorypoint != @$menu_filename) {
-								echo "<li><a href=\"?site=$menu_filename\">$menu_fullname</a></li>";
+							if($catergorypoint != @$menu_fullname) {
+								echo "<li><a href=\"?site=page&page_id=$menu_id\">$menu_fullname</a></li>";
 							}
 						}
 						echo "</ul></li>";
@@ -189,7 +170,7 @@ $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-9);
 							$$a = $val;
 						}
 						if(!in_array($menu_filename, $unallowedsites)) {
-							echo "<li><a href=\"?site=$menu_filename\">$menu_fullname</a></li>";
+							echo "<li><a href=\"?site=page&page_id=$menu_id\">$menu_fullname</a></li>";
 						}
 					}
 				?>
@@ -201,33 +182,47 @@ $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-9);
 		Schrift&nbsp;<a href="javascript:fontsizedecrease()">-</a>&nbsp;<a href="javascript:fontsizereset()">O</a>&nbsp;<a href="javascript:fontsizerecrease()">+</a>
 	</div>
 	<div id="leftboxes">
-		<ul id="news-left">
-			<span class="topic">News:</span>
-			<?php
-			$sql = "SELECT * FROM XENUX_news LIMIT 5";
-			$erg = mysql_query($sql);
-			while ($zeile = mysql_fetch_array($erg)) {
-				$id = $zeile['id'];
-				$title = $zeile['title'];
-				$text = $zeile['text'];
-				if($title != '' and $text != '') {
-					echo '<li><span class="title">'.$title;
-					if (@$_SESSION["login"] == 1) {
-						echo '<a id="edit_href" href="edit/?site=news_edit&id='.$id.'">Bearbeiten</a>';
-					}
-					echo '</span>';
-					if(strlen($text) > 70) {
-						echo htmlentities(substr($text, 0, strpos($text, " ", 70)));
-					} else {
-						echo htmlentities($text);
-					}
-					echo '...<br /><a href="?site=news&id='.$id.'">&raquo;weiterlesen</a></li>';
-				}
-			}
-			mysql_free_result($erg);
-			?>
-		</ul>
+		<div id="search-left">
+			<h3>Suche:</h3>
+			<form action="" method="GET">
+				<input type="hidden" name="site" value="search" />
+				<input style="width: calc(100% - 8px);" type="text" name="searchtxt" placeholder="Suche">
+			</form>
+		</div>
 		<?php
+		$sql = "SELECT * FROM XENUX_news;";
+		$result = mysql_query($sql);
+		$number = mysql_num_rows($result);
+		if($number > 0) {
+			?>
+			<ul id="news-left">
+				<span class="topic">News:</span>
+				<?php
+				$sql = "SELECT * FROM XENUX_news LIMIT 5;";
+				$erg = mysql_query($sql);
+				while ($zeile = mysql_fetch_array($erg)) {
+					$id = $zeile['id'];
+					$title = $zeile['title'];
+					$text = $zeile['text'];
+					if($title != '' and $text != '') {
+						echo '<li><span class="title">'.$title;
+						if (@$_SESSION["login"] == 1) {
+							echo '<a id="edit_href" href="edit/?site=news_edit&id='.$id.'">Bearbeiten</a>';
+						}
+						echo '</span>';
+						if(strlen($text) > 70) {
+							echo htmlentities(substr($text, 0, strpos($text, " ", 70)));
+						} else {
+							echo htmlentities($text);
+						}
+						echo '...<br /><a href="?site=news&id='.$id.'">&raquo;weiterlesen</a></li>';
+					}
+				}
+				mysql_free_result($erg);
+				?>
+			</ul>
+		<?php
+		}
 		$sql = "SELECT * FROM XENUX_dates";
 		$erg = mysql_query($sql);
 		$anzahl = mysql_num_rows($erg);
@@ -298,33 +293,29 @@ $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-9);
 		</div>
 	</div>
 	<div id="content">
-		<h1>
-			<?php
-			echo $fullname;
+		<?php
+		if($filename != 'page') {
+			echo "<h1>$fullname";
 			if (@$_SESSION["login"] == 1) {
-				if($filename!='news' and $filename!='error') {
+				if(!contains($filename, 'search', 'news', 'error', 'termine', 'terminview', 'page')) {
 					echo '<a id="edit_href" href="edit/?site=site_edit&id='.$siteid.'">Bearbeiten</a>';
 				}
 			}
-			?>
-		</h1>
-		<?php
-		include('core/pages/'.$filename.'.php');
+			echo "</h1>";
+		}
+		if(contains($filename, 'newslist', 'news', 'error', 'termine', 'terminview', 'page', 'search')) {
+			include('core/pages/'.$filename.'.php');
+		} else {
+			$sql = "SELECT * FROM XENUX_pages WHERE filename = '$filename' LIMIT 1;";
+			$erg = mysql_query($sql);
+			$row = mysql_fetch_object($erg);
+			echo /*nl2br*/($row->text);
+		}
 		if($filename == 'kontakt') {
 			include('core/macros/ansprechpartner.php');
 		}
 		if($filename == 'kontakt' and !empty($contact_form_email)) {
 			include ('core/macros/kontakt_formular.php');
-		}
-		if(isset($prev_filename) or isset($next_filename)) {
-			echo "<div class=\"prevnextnavi\">";
-				if(isset($prev_filename)) {
-					echo "<a class=\"prev\" href=\"?site=$prev_filename\">&laquo;$prev_fullname</a>";
-				}
-				if(isset($next_filename)) {
-					echo "<a class=\"next\" href=\"?site=$next_filename\">$next_fullname&raquo;</a>";
-				}
-			echo "</div>";
 		}
 		?>
 	</div>

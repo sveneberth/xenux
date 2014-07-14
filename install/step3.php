@@ -54,21 +54,23 @@ $MYSQL_DATENBANK	= "'.$dbname.'"; # Datenbankname
 			$erg = mysql_query($sql) or die("<p>Fehler! Es konnte die Tabelle \"XENUX_users\" nicht erstellt werden!</p>");
 			//-----------------------------------------------------------------------------------------
 			$sql = "CREATE TABLE IF NOT EXISTS `XENUX_pages` (
-					`id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-					`filename` VARCHAR(150) NOT NULL ,
-					`fullname` VARCHAR(300) NOT NULL,
-					`ansprechpartner` VARCHAR(150) NULL,
-					`category` VARCHAR(150) NULL
-					)";
+					`id` int(10) NOT NULL  AUTO_INCREMENT PRIMARY KEY,
+					`filename` varchar(150) NOT NULL,
+					`fullname` varchar(300) NOT NULL,
+					`ansprechpartner` varchar(150) NOT NULL,
+					`category` varchar(150) NOT NULL,
+					`text` text NOT NULL);";
 			$erg = mysql_query($sql) or die("<p>Fehler! Es konnte die Tabelle \"XENUX_pages\" nicht erstellt werden!</p>");
-			$sql = "INSERT INTO `XENUX_pages`(`filename`, `fullname`) VALUES
-					('news', 'News'),
-					('newslist', 'News'),
-					('termine', 'Termine'),
-					('terminview', 'Termin'),
-					('home','Home'),
-					('kontakt', 'Kontakt'),
-					('impressum', 'Impressum')";
+			$sql = "INSERT INTO `XENUX_pages`(filename, fullname, text) VALUES
+					('home','Home', 'Die Installation von Xenux hat geklappt!\nIch wünsche ihnen viel Spaß bei der Nutzung von Xenux'),
+					('kontakt', 'Kontakt', NULL),
+					('impressum', 'Impressum', '<p>Eine gute Seite zum erstellen eines Impressum: <a href=\"http://www.e-recht24.de/impressum-generator.html\">www.e-recht24.de</a></p>'),
+					('news', 'News', NULL),
+					('newslist', 'News', NULL),
+					('termine', 'Termine', NULL),
+					('terminview', 'Termin', NULL),
+					('page', 'Page', NULL),
+					('search', 'Suchergebnisse', NULL);";
 			$erg = mysql_query($sql) or die("<p>Fehler! Es konnten keine Daten in die Tabelle \"XENUX_pages\" eingetragen werden!</p>");
 			//-----------------------------------------------------------------------------------------
 			$sql = "CREATE TABLE IF NOT EXISTS `XENUX_news` (

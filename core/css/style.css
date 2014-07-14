@@ -31,6 +31,7 @@ p {
    -webkit-hyphens: auto;
    -ms-hyphens: auto;
    hyphens: auto; 
+	margin: 0 0 16px 0;
 }
 input, textarea {
 	font-family: Arial;
@@ -56,6 +57,7 @@ input[type="button"],
 input[type="reset"] {
 	background: #ddd;
 	width: auto;
+	cursor: pointer;
 }
 input[type="radio"],
 input[type="checkbox"] {
@@ -299,8 +301,16 @@ ul#news-left li{
 	margin: 0px 0px 5px 0;
 	width: calc(100% - 4px);
 }
+#search-left h3,
 #login-left h3{
 	margin: 0 0 5px 0;
+}
+
+#search-left {
+	padding: 2px 2px 5px 2px;
+	margin: 0px 0px 5px 0;
+	width: calc(100% - 4px);
+	border-bottom: 2px solid #BBBBBB;
 }
 
 .notfill {
@@ -313,6 +323,17 @@ ul#news-left li{
 
 .pf {
 	color: #FF0000;
+}
+
+.searchresult {
+	border: 1px solid rgba(0,0,0,.2);
+	margin-bottom: 10px;
+	padding: 3px 5px;
+}
+.searchresult > * {
+	padding: 0;
+	color: inherit;
+	margin: 0;
 }
 
 /* EDIT LAYOUT */
