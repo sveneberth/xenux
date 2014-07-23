@@ -34,21 +34,23 @@ p {
 	margin: 0 0 16px 0;
 }
 input, textarea {
-	font-family: Arial;
-    font-size: 100%;
-    border: #aaaaaa 1px solid;
+	font-family: inherit;
+    font-size: 95%;
+    border: 1px solid #999;
     color: inherit;
     padding: 2px 3px;
 	resize: none;
 	background: #fff;
 	width: 400px;
+	box-sizing: border-box;
+	max-width: 100%;
 }
 textarea {
 	height: 150px;
 }
 textarea.big {
 	height: 200px;
-	width: calc(100% - 8px);
+	width: 100%;
 }
 input[type="submit"],
 input[type="checkbox"],
@@ -191,7 +193,6 @@ a:active{color:#38315F;}
 	#topmenu li ul a:hover,
 	#topmenu li ul li:hover > a {
 		background: #2580a2;
-	/* 	border: 0px; */
 		color: #ffffff;
 		text-decoration: none;
 	}
@@ -253,30 +254,14 @@ a:active{color:#38315F;}
 	float: left;
 	font-size: 90%;
 	width: 20%;
-	border: 2px solid #BBBBBB;
-}
-
-#pages-left {
-	padding: 2px 2px 5px 2px;
-	margin: 0px 0px 5px 0;
-	width: calc(100% - 4px);
-	border-bottom: 2px solid #BBBBBB;
-}
-ul#pages-left li{
-	list-style: none;
-	margin: 1px 0;
-}
-#pages-left  .topic {
-	font-weight: bold;
-	display: block;
-	font-size: 110%;
+	border: 2px solid #777;
 }
 
 #news-left {
 	padding: 2px 2px 5px 2px;
-	margin: 0px 0px 5px 0;
+	margin: 0;
 	width: calc(100% - 4px);
-	border-bottom: 2px solid #BBBBBB;
+	border-bottom: 2px solid #777;
 }
 ul#news-left li{
 	list-style: none;
@@ -288,7 +273,8 @@ ul#news-left li{
 #news-left  .topic {
 	font-weight: bold;
 	display: block;
-	font-size: 110%;
+	font-size: 115%;
+	margin: 0px 0px 5px 0;
 }
 #news-left  .title {
 	font-weight: bold;
@@ -304,13 +290,14 @@ ul#news-left li{
 #search-left h3,
 #login-left h3{
 	margin: 0 0 5px 0;
+	font-size: 115%;
 }
 
 #search-left {
 	padding: 2px 2px 5px 2px;
-	margin: 0px 0px 5px 0;
+	margin: 0;
 	width: calc(100% - 4px);
-	border-bottom: 2px solid #BBBBBB;
+	border-bottom: 2px solid #777;
 }
 
 .notfill {
@@ -339,18 +326,22 @@ ul#news-left li{
 /* EDIT LAYOUT */
 
 #edit_href {
-	font-size: 0.55em;
+	font-size: 0.6em;
 	vertical-align: top;
-	color: #0000FF;
-	background: #CCC;
-	border: 1px solid;
+	color: #090972;
+	background: #eee;
+	border: 1px solid #090972;
 	text-decoration: none;
 	border-radius: 2px;
 	padding: .03em 0.2em;
 	line-height: 1.5em;
+	margin-left: .5em;
+font-weight: normal;
 }
 #edit_href:hover {
-	background: #EEE;
+	background: #090972;
+	color: #eee;
+	border: 1px inset #eee;
 }
 
 #editroom {
@@ -858,7 +849,7 @@ ul#news-left li{
 		border: 1px solid #EEEEEE;
 	}
 	input, textarea {
-		width: calc(100% - 10px);
+		width: 100%;
 	}
 	.calender .pagination,
 	.calender .now {

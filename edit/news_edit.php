@@ -12,16 +12,16 @@ if(isset($_GET['new'])) {
 	}
 }
 if(!empty($_GET['delnews'])) {
-	$sql = "DELETE FROM XENUX_news WHERE id = '".$_GET['delnews']."'";
+	$sql = "DELETE FROM XENUX_news WHERE id = '".$_GET['delnews']."';";
 	$erg = mysql_query($sql);
-	echo 'Die News wurde soeben erfolgreich gelöscht!<br />';
+	echo '<p>Die News wurde soeben erfolgreich gelöscht!</p>';
 }
 if(!empty($_GET['id'])) {
 $id = mysql_real_escape_string($_GET['id']);
 	if(isset($_POST['form'])) {
 		$title = mysql_real_escape_string($_POST['title']);
 		$text = mysql_real_escape_string($_POST['text']);
-			$sql = "UPDATE XENUX_news Set title = '$title', text = '$text' WHERE id = '$id'";
+			$sql = "UPDATE XENUX_news Set title = '$title', text = '$text' WHERE id = '$id';";
 			$erg = mysql_query($sql);
 			echo "<p>Die News wurde gespeichert!</p>";
 			echo "<p><a href='../?site=news&id=$id'>News anzeigen</a></p>";
@@ -44,6 +44,7 @@ $id = mysql_real_escape_string($_GET['id']);
 		<textarea type="text" name="text" placeholder="Text" class="big"><?php echo $text; ?></textarea><br /><br />
 		<input type="hidden" name="form" value="form" />
 		<input type="submit" value="speichern" />
+		<input type="button" onclick="window.location='?site=news_edit&delnews=<?php echo $id; ?>'" value="löschen" />
 	</form>
 	<?php
 	return;

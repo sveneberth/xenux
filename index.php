@@ -186,7 +186,7 @@ $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-9);
 			<h3>Suche:</h3>
 			<form action="" method="GET">
 				<input type="hidden" name="site" value="search" />
-				<input style="width: calc(100% - 8px);" type="text" name="searchtxt" placeholder="Suche">
+				<input type="text" name="searchtxt" placeholder="Suche">
 			</form>
 		</div>
 		<?php
@@ -227,20 +227,19 @@ $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-9);
 		$erg = mysql_query($sql);
 		$anzahl = mysql_num_rows($erg);
 		if($anzahl > 0) {
-			echo '<ul class="dates" id="news-left"><span class="topic">anstehende Termine:</span>';
-			$sql1 = "SELECT *, DATE_FORMAT(date,'%d.%m.%Y %H:%i') as dat FROM XENUX_dates ORDER by date";
+			echo '<ul class="dates" id="news-left"><span class="topic">Termine:</span>';
+			$sql1 = "SELECT *, DATE_FORMAT(date,'%d.%m.%Y %H:%i') as dat FROM XENUX_dates WHERE date >= NOW() ORDER by date LIMIT 5;";
 			$erg1 = mysql_query($sql1);
-			$i = 5;
-			while($row1 = mysql_fetch_array($erg1) and $i > 0) {
-				if(strtotime($row1['date']) > strtotime(date('Y-m-d H:i'))) {
-					echo '<li><span class="title">'.$row1['name'];
-					if (@$_SESSION["login"] == 1) {
-						echo '<a id="edit_href" href="edit/?site=dates_edit&id='.$row1['id'].'">Bearbeiten</a>';
-					}
-					echo '</span>';
-					echo $row1['dat'].'<br/>'.htmlentities(substr($row1['text'],0,70)).'<br /><a href="?site=terminview&id='.$row1['id'].'">&raquo;Termin anzeigen</a></li>';
-					$i--;
+			if(mysql_num_rows($erg1) == 0) {
+				echo "<p>keine Anstehenden Termine vorhanden!</p>";
+			}
+			while($row1 = mysql_fetch_array($erg1)) {
+				echo '<li><span class="title">'.$row1['name'];
+				if (@$_SESSION["login"] == 1) {
+					echo '<a id="edit_href" href="edit/?site=dates_edit&id='.$row1['id'].'">Bearbeiten</a>';
 				}
+				echo '</span>';
+				echo $row1['dat'].'<br/>'.htmlentities(substr($row1['text'],0,70)).'<br /><a href="?site=terminview&id='.$row1['id'].'">&raquo;Termin anzeigen</a></li>';
 			}
 			echo '<a href="?site=termine">alle Termine anzeigen</a></ul>';
 		}
@@ -272,9 +271,9 @@ $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-9);
 			if (@$_SESSION["login"] == 0) {
 				?>
 				<form action="" method="POST">
-				<input style="width: calc(100% - 8px);" type="text" name="username" placeholder="Benutzername"><br />
+				<input type="text" name="username" placeholder="Benutzername"><br />
 				<a href="edit/?site=forgotusername">Benutzernamen vergessen?</a><br />
-				<input style="width: calc(100% - 8px);" type="password" name="password" placeholder="Passwort"><br />
+				<input type="password" name="password" placeholder="Passwort"><br />
 				<a href="edit/?site=forgotpassword">Passwort vergessen?</a><br />
 				<?php echo @$result1; ?>
 				<input type="submit" name="submit" value="Einloggen"><br />

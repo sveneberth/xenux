@@ -50,6 +50,7 @@ $id = mysql_real_escape_string($_GET['id']);
 		<textarea type="text" name="text" placeholder="Text" class="big"><?php echo $text; ?></textarea><br /><br />
 		<input type="hidden" name="form" value="form" />
 		<input type="submit" value="speichern">
+		<input type="button" onclick="window.location='?site=dates_edit&deldate=<?php echo $id; ?>'" value="löschen" />
 	</form>
 	<?php
 	return;
