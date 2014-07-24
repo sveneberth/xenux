@@ -34,6 +34,7 @@ if(!isset($_GET['site'])) {
 include('config.php');
 include('core/macros/colortext.php');
 include('core/macros/escape_mail.php');
+include('core/macros/hex2rgb.php');
 $link = mysql_connect($MYSQL_HOST, $MYSQL_BENUTZER, $MYSQL_KENNWORT);
 $db_selected = mysql_select_db($MYSQL_DATENBANK, $link);
 if(!$db_selected) {
@@ -105,6 +106,10 @@ $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-9);
 	html,body{
 		background:<?php echo $bgcolor; ?>;
 		color:<?php echo $fontcolor; ?>;
+	}
+	a:focus,a:hover{color: <?php
+	echo lighter(hex2RGB($fontcolor)['red'],hex2RGB($fontcolor)['green'],hex2RGB($fontcolor)['blue']);
+	?>;
 	}
 	</style>
 </head>
@@ -179,10 +184,13 @@ $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-9);
 	</div>
 <div id="wrapper">
 	<div class="fontsize">
-		Schrift&nbsp;<a href="javascript:fontsizedecrease()">-</a>&nbsp;<a href="javascript:fontsizereset()">O</a>&nbsp;<a href="javascript:fontsizerecrease()">+</a>
+		Schrift
+		&nbsp;<a title="Schrift kleiner" href="javascript:fontsizedecrease()">-</a>
+		&nbsp;<a title="Schrift normal" href="javascript:fontsizereset()">O</a>
+		&nbsp;<a title="Schrift größer" href="javascript:fontsizerecrease()">+</a>
 	</div>
 	<div id="leftboxes">
-		<div id="search-left">
+		<div id="box">
 			<h3>Suche:</h3>
 			<form action="" method="GET">
 				<input type="hidden" name="site" value="search" />
@@ -195,8 +203,8 @@ $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-9);
 		$number = mysql_num_rows($result);
 		if($number > 0) {
 			?>
-			<ul id="news-left">
-				<span class="topic">News:</span>
+			<ul id="box">
+				<h3>News:</h3>
 				<?php
 				$sql = "SELECT * FROM XENUX_news LIMIT 5;";
 				$erg = mysql_query($sql);
@@ -227,7 +235,7 @@ $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-9);
 		$erg = mysql_query($sql);
 		$anzahl = mysql_num_rows($erg);
 		if($anzahl > 0) {
-			echo '<ul class="dates" id="news-left"><span class="topic">Termine:</span>';
+			echo '<ul class="dates" id="box"><h3>Termine:</h3>';
 			$sql1 = "SELECT *, DATE_FORMAT(date,'%d.%m.%Y %H:%i') as dat FROM XENUX_dates WHERE date >= NOW() ORDER by date LIMIT 5;";
 			$erg1 = mysql_query($sql1);
 			if(mysql_num_rows($erg1) == 0) {
@@ -248,7 +256,7 @@ $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-9);
 		$erg = mysql_query($sql);
 		$row = mysql_fetch_array($erg);
 		if(!empty($row['ansprechpartner'])) {
-			echo '<ul id="news-left"><span class="topic">Ansprechpartner:</span>';
+			echo '<ul id="box"><h3>Ansprechpartner:</h3>';
 			$zerlegen = explode("|", $row['ansprechpartner']);
 			for($i=1;isset($zerlegen[$i]);$i++) {
 				$sql1 = "SELECT * FROM XENUX_ansprechpartner WHERE id = '$zerlegen[$i]'";
@@ -262,7 +270,7 @@ $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-9);
 			echo '</ul>';
 		}
 		?>
-		<div id="login-left">
+		<div id="box">
 			<h3>Login:</h3>
 			<?php
 			if(isset($del)){
