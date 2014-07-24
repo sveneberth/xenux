@@ -612,29 +612,6 @@ textarea#text{
 	background: #eee;
 }
 
-#dates {
-	border-collapse: collapse;
-	border: 2px solid #333;
-	width: 750px;
-}
-#dates tr:nth-child(odd) {background: #eee; }
-#dates tr:nth-child(even) {background: #e7e7e7; }
-#dates th, #dates td {
-	vertical-align: top;
-	text-align: left;
-	padding: 3px 5px;
-}
-#dates tr:nth-child(2n-1) > td:nth-child(1) {
-}
-#dates tr:nth-child(2n-1) > td:nth-child(2) {
-	text-align: right;
-}
-#dates tr:nth-child(2n+0) {
-	border-top: 1px solid #999;
-	border-bottom: 2px solid #333;
-	margin-bottom: 10px;
-}
-
 #box_contact {
 	border: 1px solid #aaa;
 	padding: .5% 1%;
