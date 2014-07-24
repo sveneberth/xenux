@@ -2,6 +2,8 @@
  
 Xenux is a CMS.
 
+Xenux is developed by Sven Eberth.
+
 Official Xenux Website: [www.xenux.bplaced.net](http://xenux.bplaced.net/)
  
 ### What is this repository for? ###
@@ -10,8 +12,9 @@ Official Xenux Website: [www.xenux.bplaced.net](http://xenux.bplaced.net/)
  
 ### How do I get set up? ###
 
-* You must have an Apache and MySQL Server on your System.
-* the other things make the installer
+* You must have installaed a Apache and MySQL Server on your System.
+* You must have access to the file management
+* the settings set the Xenux installer
  
 ### Contribution guidelines ###
  
