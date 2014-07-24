@@ -161,7 +161,7 @@ $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-9);
 								$a = "menu_$key1";
 								$$a = $val1;
 							}
-							if($catergorypoint != @$menu_fullname) {
+							if(strtolower($catergorypoint) != strtolower(@$menu_fullname)) {
 								echo "<li><a href=\"?site=page&page_id=$menu_id\">$menu_fullname</a></li>";
 							}
 						}
