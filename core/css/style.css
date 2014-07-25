@@ -8,13 +8,40 @@ html, body {
 	font-family: 'Roboto', sans-serif;
 }
 
+* {
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: top;
+}
+
+b, strong, th {
+	font-weight: bold;
+}
+
+address {
+	font-family: 'Ubuntu', sans-serif;
+}
+i, cite, em, var, address, dfn {
+	font-style: italic;
+}
+
+img {
+	max-width: 100%;
+}
+
 table {
 	width: 100%;
 }
-h1 {
-	margin: 0 0 15px 0;
-	font-size: 170%;
-}
+h1 {font-weight: bold;font-size: 170%;margin: 0 0 15px 0;}
+h2 {font-weight: bold;font-size: 150%;margin: 0 0 15px 0;}
+h3 {font-weight: bold;font-size: 130%;margin: 0 0 05px 0;}
+h4 {font-weight: bold;font-size: 120%;margin: 0 0 05px 0;}
+h5 {font-weight: bold;font-size: 110%;margin: 0 0 05px 0;}
+h6 {font-weight: bold;font-size: 100%;margin: 0 0 05px 0;}
 
 select {
 	width: 100px;
@@ -27,7 +54,15 @@ topic {
 	font-weight: bold;
 	margin: 20px 0 5px 0;
 }
-
+.clickable,
+a,
+label,
+input[type=button],
+input[type=submit],
+input[type=file],
+button {
+	cursor: pointer;
+}
 p { 
 	-moz-hyphens: auto;
 	-o-hyphens: auto;
@@ -186,24 +221,6 @@ a:active{color:inherit;}
 	border-left: 0px;
 }
 
-@media only screen and (min-width: 600px) {
-	#topmenu li:hover > a {
-		background: #2580a2;
-		color: #FFFFFF;
-		text-decoration: none;
-	}
-	#topmenu li:hover ul {
-		display: block;
-		opacity: 1;
-		height: auto;
-	}
-	#topmenu li ul a:hover,
-	#topmenu li ul li:hover > a {
-		background: #2580a2;
-		color: #ffffff;
-		text-decoration: none;
-	}
-}
 #content {
 	background: #fff;
 	font-family: inherit;
@@ -351,7 +368,7 @@ ul#box li{
 }
 
 #editroom > ul > h4  {
-	margin: 0 0 10px 0;
+	margin: 0 0 5px 0;
 	border-bottom: #398F4E solid 1px;
 }
 #editroom > ul {
@@ -386,14 +403,20 @@ ul#box li{
 	width: 100%;
 	margin-bottom: 20px;
 }
-#page_edit input{
+#page_edit input[type="submit"]{
 	background: #3F6E92;
 	border-radius: 5px;
 	color: #FFFFFF;
 	font-weight: bolder;
+	margin: 5px;
 }
-#page_edit input:hover {
+#page_edit input[type="submit"]:hover {
 	background: #539BD1;
+}
+#formatierungen:after {
+	clear: both;
+	content: '';
+	display: block;
 }
 #formatierungen {
 	border: 0;
@@ -409,8 +432,9 @@ ul#box li{
 	color: #000000;
 	text-decoration: none;
 	font-size: 80%;
-	height: 1em;
+	height: 1.5em;
 	margin: 0px 2px;
+	float: left;
 }
 #formatierungen a:hover{
 	background: #CCCCCC;
@@ -426,13 +450,15 @@ textarea#text{
 	outline: none;
 }
 
-#group {
+#formatierungen #group {
 	display: inline-block;
 	border-radius: 3px;
 	border: 1px solid #BBBBBB;
 	background: #ECECEC;
 	padding: 0;
 	vertical-align: middle;
+	float: left;
+	height: 1.5em;
 }
 
 #group a{
@@ -441,8 +467,6 @@ textarea#text{
 	border-radius: 0;
 	margin: 0;
 	width: 1em;
-	height: 1em;
-	display: table-cell;
 }
 
 #vorschau {
@@ -509,27 +533,23 @@ textarea#text{
 	display: none;
 }
 #popup > .close {
-	height: 20px;
-	width: 20px;
+	height: .9em;
+	width: .9em;
 	float: right;
 	margin: -15px -15px 0 0; 
-	border: 1px solid #AAA;
+	border: 1px solid #333;
 	background: #fff;
 	text-align: center;
 	vertical-align: middle;
-	font-size: 150%;
-	line-height: .7;
-	border-radius: 5px;
+	font-size: 160%;
+	line-height: .9em;
+	border-radius: 50px;
 }
 #popup > .close:hover {
-	background: #bbb;
+	background: #333;
 }
-#popup > .close > a:link{color:#000000; text-decoration: none;}
-#popup > .close > a:visited{color:#000000;}
-#popup > .close > a:focus{color:#000000;}
-#popup > .close > a:hover{color:#000000;}
-#popup > .close > a:active{color:#000000;}
-
+#popup > .close > a {color:#333; text-decoration: none;}
+#popup > .close:hover > a {color:#fff; border-color: #fff;}
 
 .calender {
 	border: 1px solid black;
@@ -877,5 +897,23 @@ textarea#text{
 	}
 	.responsive-table td:before {
 		content: attr(data-title);
+	}
+}
+@media only screen and (min-width: 600px) {
+	#topmenu li:hover > a {
+		background: #2580a2;
+		color: #FFFFFF;
+		text-decoration: none;
+	}
+	#topmenu li:hover ul {
+		display: block;
+		opacity: 1;
+		height: auto;
+	}
+	#topmenu li ul a:hover,
+	#topmenu li ul li:hover > a {
+		background: #2580a2;
+		color: #ffffff;
+		text-decoration: none;
 	}
 }

@@ -37,11 +37,11 @@ Es hat ihnen jemand auf der Homepage <a href="http://'.$HP_URL.'">http://'.$HP_U
 <form action="" method="post">
 	<h3>Kontaktformular</h3>
 	Ihr Name:<br />
-	<input type="text" name="name" size="50" value="<?php echo $name; ?>" /><br /><br />
+	<input type="text" name="name" placeholder="Name" value="<?php echo $name; ?>" /><br /><br />
 	<span <?php if(isset($_POST['form']) and empty($_POST['eMail'])){echo 'style="color:#F00;"';} ?>>Ihre E-Mail</span><span class="pf">*</span>:<br />
-	<input type="email" name="eMail" size="50" value="<?php echo $eMail; ?>" /><br /><br />
+	<input type="email" name="eMail" placeholder="E-Mail" value="<?php echo $eMail; ?>" /><br /><br />
 	<span <?php if(isset($_POST['form']) and empty($_POST['nachricht'])){echo 'style="color:#F00;"';} ?>>Ihre Nachricht</span><span class="pf">*</span>:<br />
-	<textarea name="nachricht" rows="10" cols="80"><?php echo $nachricht; ?></textarea><br /><br />
+	<textarea name="nachricht" placeholder="Nachricht"><?php echo $nachricht; ?></textarea><br /><br />
 	<input type="hidden" name="form" value="form" />
 	<input type="submit" value="Senden" />
 	<input type="reset" value="Felder Zurücksetzen" onclick="return confirm('Wirklich löschen?')" />

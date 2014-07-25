@@ -79,7 +79,7 @@ while($row = mysql_fetch_array($erg)) {
 	}
 	$$name = $value;
 }
-$HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-9);
+$HP_URL = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT'].substr($_SERVER['SCRIPT_NAME'],0,-9);
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -92,8 +92,9 @@ $HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-9);
 	<meta name="auhor" content="<?php echo $meta_auhor; ?>" />
 	<meta name="publisher" content="<?php echo $meta_auhor; ?>" />
 	<meta name="copyright" content="<?php echo $meta_auhor; ?>" />
+	<!-- http://xenux.bplaced.net -->
 	<meta name="generator" content="Xenux - das kostenlose CMS" />
-	<meta name="robots" content="index, follow" />
+	<meta name="robots" content="index, follow, noarchive" />
 	<link rel="shortcut icon" href="./core/images/<?php echo $favicon_src; ?>"/>
 	<link rel="stylesheet" type="text/css" href="core/css/style.css" media="all"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
