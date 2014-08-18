@@ -1,6 +1,6 @@
 <?php
 if(!isset($site)) die("You can not open this file individually/Sie k&ouml;nnen diese Datei nicht einzeln &ouml;ffnen!");
-$a = array('[bunt]', '[/bunt]','[form][/form]');
+$a = array('[bunt]', '[/bunt]','[form][/form]'); #FIXIT include form
 $b = array('<?php colortext("', '"); ?>', '<?php include("core/macros/form.php");  ?>');
 $tags = '<p><a><span><img><b><i><u><marquee><br><hr><sup><sub><em><strong><code><iframe><table><tr><td><th><pre><h1><h2><h3><h4><h5><h6><ul><li><ol>';
 
@@ -74,9 +74,9 @@ if(isset($_GET['id'])) {
 			Es werden nur <a href="javascript:void(0)" class="htmltags">bestimmte HTML-Befehle</a> unterstützt.<br />
 			<form action="" method="post" name="form">
 			Seitenname:<br />
-			<input type="text" name="fullname" value="<?php echo $fullname; ?>"><br /><br />
+			<input type="text" placeholder="Seitenname" name="fullname" value="<?php echo $fullname; ?>"><br /><br />
 			Kategorie:<br />
-			<input type="text" name="category" value="<?php echo $category; ?>"><br /><br />
+			<input type="text" placeholder="Kategorie" name="category" value="<?php echo $category; ?>"><br /><br />
 			<div id="page_edit">
 				<div id="formatierungen">
 					<a id='textb' href='javascript:text()'>farbiger Text</a>
@@ -92,7 +92,7 @@ if(isset($_GET['id'])) {
 					<a id="bunt" href='javascript:insert("[bunt]","[/bunt]")'>bunter Text</a>
 					<a id="bunt" href='javascript:insert("<p>","</p>")'>Absatz</a>
 				</div>
-				<textarea name="text" id="text"><?php echo $text ?></textarea><br />
+				<textarea placeholder="Seiteninhalt" name="text" id="text"><?php echo $text ?></textarea><br />
 				<input type="hidden" name="editor" value="editor" />
 				<input type="submit" value="Seite speichern">
 			</div>

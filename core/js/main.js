@@ -3,18 +3,18 @@ $(document).ready(function() {
 	$("body").append("<div id=\"transparent\"></div>");
 })
 function popupopen() {
-	$( "#popup").show();
-	$( "#transparent").show();
+	$( ".popup").show();
+	$( ".transparent").show();
 };
 function popupclose(field1, field2) {
-	$( "#popup" ).hide();
-	$( "#transparent" ).hide();
-	$( "#field1" ).val( field1 )
-	$( "#field2" ).val( field2 )
+	$( ".popup" ).hide();
+	$( ".transparent" ).hide();
+	$( ".field1" ).val( field1 )
+	$( ".field2" ).val( field2 )
 };
 function popupclosewithoutcontent() {
-	$( "#popup" ).hide();
-	$( "#transparent" ).hide();
+	$( ".popup" ).hide();
+	$( ".transparent" ).hide();
 }
 
 //---Menu----------------------------------------------------------------------

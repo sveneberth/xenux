@@ -25,11 +25,11 @@ if(!empty($_POST['form'])) {
 <p>Hier kannst du dein Passwort ändern.</p>
 <form action="" method="post">
 	<span <?php if (empty($password0) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>altes Passwort:</span><br />
-	<input type="password" name="password0" /><br /><br />
+	<input type="password" placeholder="altes Passwort" name="password0" /><br /><br />
 	<span <?php if (empty($password) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>neues Passwort:</span><br />
-	<input type="password" name="password" /><br /><br />
+	<input type="password" placeholder="neues Passwort" name="password" /><br /><br />
 	<span <?php if (empty($password1) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Passwort bestätigen</span><br />
-	<input type="password" name="password1" /><br /><br />
+	<input type="password" placeholder="Passwort bestätigen" name="password1" /><br /><br />
 	<input type="hidden" name="form" value="form" />
 	<input type="submit" value="ändern" />
 </form>

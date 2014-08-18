@@ -21,13 +21,13 @@ if(isset($_POST['form'])) {
 <p>Hier kannst du deine Daten ändern.</p>
 <form action="" method="post">
 	<span <?php if(empty($vorname) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Vorname</span><br />
-	<input type="text" name="vorname" value="<?php echo @$vorname; ?>" /><br /><br />
+	<input type="text" placeholder="Vorname" name="vorname" value="<?php echo @$vorname; ?>" /><br /><br />
 	<span <?php if(empty($vorname) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Nachname</span><br />
-	<input type="text" name="nachname" value="<?php echo @$nachname; ?>" /><br /><br />
+	<input type="text" placeholder="Nachname" name="nachname" value="<?php echo @$nachname; ?>" /><br /><br />
 	<span <?php if(empty($username) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Benutzername</span><br />
-	<input type="text" name="username" value="<?php echo @$username; ?>" /><br /><br />
+	<input type="text" placeholder="Benutzername" name="username" value="<?php echo @$username; ?>" /><br /><br />
 	<span <?php if(empty($vorname) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>E-Mail</span><br />
-	<input type="text" name="email" value="<?php echo @$email; ?>" /><br /><br />
+	<input type="text" placeholder="E-Mail" name="email" value="<?php echo @$email; ?>" /><br /><br />
 	<input type="hidden" name="form" value="form" />
 	<input type="submit" value="ändern" />
 </form>
