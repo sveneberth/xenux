@@ -87,7 +87,6 @@ if(isset($_GET['id'])) {
 					<a href='javascript:bild()'>Bild</a>
 					<a href='javascript:insert("<br />","")'>Zeilenumbruch</a>
 					<a href='javascript:insert("<hr />","")'>horizontale Linie</a>
-					<a id="bunt" href='javascript:insert("[bunt]","[/bunt]")'>bunter Text</a>
 					<a id="bunt" href='javascript:insert("<p>","</p>")'>Absatz</a>
 				</div>
 				<textarea placeholder="Seiteninhalt" name="text" id="text"><?php echo $text ?></textarea><br />
