@@ -1,7 +1,5 @@
 <?php
 if(!isset($site)) die("You can not open this file individually/Sie k&ouml;nnen diese Datei nicht einzeln &ouml;ffnen!");
-$a = array('[bunt]', '[/bunt]','[form][/form]'); #FIXIT include form
-$b = array('<?php colortext("', '"); ?>', '<?php include("core/macros/form.php");  ?>');
 $tags = '<p><a><span><img><b><i><u><marquee><br><hr><sup><sub><em><strong><code><iframe><table><tr><td><th><pre><h1><h2><h3><h4><h5><h6><ul><li><ol>';
 
 if(!empty($_GET['delid']) and is_numeric($_GET['delid']) and !contains($_GET['delfile'], "kontakt", "impressum", "home")) {

@@ -15,7 +15,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 	};
 }
 if(!empty($_POST['to']) and !empty($_POST['subject']) and !empty($_POST['text'])) {
-	$mailtxt = '<!DOCTYPE html><html lang="de"><head><meta charset="utf-8"/><title>'.$subject.'</title></head><body>'.nl2br($text).'<br /><br /><span style="font-family:Verdana;color:#777;border-top: 1px #777 solid;">Die Mail wurde mit Xenux erstellt</span></body></html>';
+	$mailtxt = '<!DOCTYPE html><html lang="de"><head><meta charset="utf-8"/><title>'.$subject.'</title></head><body>'.nl2br($text).'<br /><br /><span style="font-family:Verdana;color:#777;border-top: 1px #777 solid;">Diese Mail wurde mit Xenux erstellt</span></body></html>';
 	$header		 = 'From: "'.$login['name'].'"<'.$login['email'].'>'. "\r\n";
 	$header		.= 'Reply-To: "'.$login['name'].'"<'.$login['email'].'>'."\r\n";
 	$header		.= 'MIME-Version: 1.0' . "\r\n";
@@ -38,8 +38,8 @@ if(!empty($_POST['to']) and !empty($_POST['subject']) and !empty($_POST['text'])
 			return;
 		}
 	}
-	echo 'Die Mail wurde gesendet!<br />';
-	echo '<a href="?site=mail">Weitere Mails senden</a>';
+	echo '<p>Die Mail wurde gesendet!</p>';
+	echo '<p><a href="?site=mail">Weitere Mails senden</a></p>';
 	return;
 }
 ?>

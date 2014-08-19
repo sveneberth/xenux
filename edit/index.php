@@ -44,7 +44,6 @@ $all_sites = array(
 										"dates_edit" => "Termine bearbeiten",
 										"files" => "Dateien",
 										"contact" => "Ansprechpartner",
-										"form" => "Formular",
 										),
 					"Account" => array (
 										"personal_data_change" => "Persönliche Daten ändern",
