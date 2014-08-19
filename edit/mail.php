@@ -58,9 +58,9 @@ if(!empty($_POST['to']) and !empty($_POST['subject']) and !empty($_POST['text'])
 <p>Hier kannst du eine Mail senden.</p>
 <form action="" method="post" name="form">
 	<span <?php if (empty($to) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Bitte wähle einen Empfänger (Benutzername) aus<br /> oder %alle% um eine Mail an alle zu senden:</span><br />
-	<input style="display: inline-block;" type="text" class="field1" name="to" value="<?php echo @$to; ?>" />&nbsp;<a href="javascript:popupopen()">Nutzer auswählen</a><br />
+	<input style="display: inline-block;" placeholder="Empfänger" type="text" class="field1" name="to" value="<?php echo @$to; ?>" />&nbsp;<a href="javascript:popupopen()">Nutzer auswählen</a><br />
 	<span <?php if (empty($subject) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Betreff:</span><br />
-	<input type="text" name="subject" value="<?php echo @$subject; ?>" /><br /><br />
+	<input type="text" placeholder="Betreff" name="subject" value="<?php echo @$subject; ?>" /><br /><br />
 	<div id="page_edit">
 		<div id="formatierungen">
 			<a id='textb' href='javascript:text()'>farbiger Text</a>
