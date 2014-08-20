@@ -31,7 +31,7 @@ Dein Benutzername für <a href="http://'.$HP_URL.'">http://'.$HP_URL.'</a> laute
 <p>Fals du deinen Benutzernamen vergessen kannst, kannst du ihn hier an die Registrierte E-Mail-Adresse schicken.</p>
 <form action="" method="post">
 E-Mail:<br />
-<input type="email" name="email" value=<?php echo'"'.@$email.'"'; if(@$email_fill=='n'){echo 'class="notfill"';} ?> />
+<input type="email" placeholder="E-Mail" name="email" value=<?php echo'"'.@$email.'"'; if(@$email_fill=='n'){echo 'class="notfill"';} ?> />
 <p><?php echo @$result ?></p>
 <input name="submit" type="submit" value="Benutzernamen zusenden">
 </form>

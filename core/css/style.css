@@ -367,24 +367,35 @@ ul#box li{
 	padding: 0;
 }
 
-#editroom > ul > h4  {
-	margin: 0 0 5px 0;
-	border-bottom: #398F4E solid 1px;
-}
-#editroom > ul {
-	background: #CED3DF;
-}
-
 #editroombox {
 	float: left;
+	padding: 0;
 	width: 31%;
 	margin: 0 .1em;
-	padding: 5px;
-	border: 1px solid #EEEEEE;
-}
-
-#editroom > ul > li{
+	border: 1px solid rgba(0,0,0,.8);
+	background: #888;
 	list-style: none;
+	padding-bottom: 5px;
+	overflow: hidden;
+}
+#editroombox h4  {
+	margin: 0 0 5px 0;
+	border-bottom: 1px solid rgb(10, 67, 168);
+	padding: 2px 5px;
+	color: #fff;
+}
+#editroombox li {
+	list-style: none;
+	display: block;
+	padding: 2px 5px;
+}
+#editroombox li:hover {
+	background: #2c4572;
+}
+#editroombox li a {
+	display: block;
+	color: #fff!important;
+	text-decoration: none;
 }
 
 #table1 {

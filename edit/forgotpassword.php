@@ -45,7 +45,7 @@ Es empfiehlt sich, das Passwort nach Login zu ändern.
 <p>Fals du deinen Passwort vergessen hast, kannst du dir hier ein neues an die Registrierte E-Mail-Adresse schicken.</p>
 <form action="" method="post">
 Benutzername:<br />
-<input type="text" name="username" />
+<input type="text" placeholder="Benutzername" name="username" />
 <p><?php echo @$result ?></p>
 <input name="submit" type="submit" value="Passwort zusenden">
 </form>
