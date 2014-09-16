@@ -232,7 +232,7 @@ $HP_URL = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].":".$_SERVER[
 			</ul>
 		<?php
 		}
-		$sql = "SELECT * FROM XENUX_dates";
+		$sql = "SELECT * FROM XENUX_dates;";
 		$erg = mysql_query($sql);
 		$anzahl = mysql_num_rows($erg);
 		if($anzahl > 0) {
@@ -253,7 +253,7 @@ $HP_URL = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].":".$_SERVER[
 			echo '<a href="?site=termine">alle Termine anzeigen</a></ul>';
 		}
 		
-		$sql = "SELECT * FROM XENUX_pages WHERE filename = '$filename'";
+		$sql = "SELECT * FROM XENUX_pages WHERE filename = '$filename';";
 		$erg = mysql_query($sql);
 		$row = mysql_fetch_array($erg);
 		if(!empty($row['ansprechpartner'])) {

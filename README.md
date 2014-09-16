@@ -1,5 +1,5 @@
 # README #
- 
+
 Xenux is a CMS.
 
 Xenux is developed by Sven Eberth.
@@ -21,5 +21,4 @@ Official Xenux Website: [www.xenux.bplaced.net](http://xenux.bplaced.net/)
 * GNU licens
  
 ### Who do I talk to? ###
- 
 * [Sven Eberth](mailto:mail@sven-eberth.de.hm)
