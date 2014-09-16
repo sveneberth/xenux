@@ -6,6 +6,20 @@ html, body {
 	padding: 0;
 }
 
+input, textarea {
+	font-family: Arial;
+    font-size: 100%;
+    border: #AAAAAA 1px solid;
+    color: #3A2B16;
+    padding: 2px 3px;
+	resize: none;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+	width: 300px;
+}
 .clear {
     clear: both;
 }
@@ -39,7 +53,7 @@ h2 {
 }
 
 .topic {
-	font-family: Comic Sans MS;
+	font-family: 'Comic Sans MS';
 	font-size: 50px;
 	color: #744520;
 	position: relative;
@@ -48,7 +62,7 @@ h2 {
 }
 
 .motto {
-	font-family: Comic Sans MS;
+	font-family: 'Comic Sans MS';
 	font-size: 15px;
 	color: #8F2525;
 	position: relative;
@@ -79,15 +93,6 @@ h2 {
 
 .nextStep {
     color: #FFA864;
-}
-
-input, textarea {
-	font-family: Arial;
-    font-size: 100%;
-    border: #AAAAAA 1px solid;
-    color: #3A2B16;
-    padding: 2px 3px;
-	resize: none;
 }
 
 .error {
@@ -129,7 +134,6 @@ input, textarea {
 .next:hover {
 	background: #ddd;
 }
-
 
 .notfill {
 	background: #FFA3A3;

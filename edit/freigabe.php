@@ -4,7 +4,7 @@ $email = $_GET['email'];
 $sql = "UPDATE XENUX_users Set admin = 'yes' WHERE username = '".mysql_real_escape_string($username)."'";
 $erg = mysql_query($sql);
 
-$nachricht = '<html></head><title>Accountfreischaltung</title></head><body>
+$nachricht = '<!DOCTYPE html><html lang="de"><head><meta charset="utf-8"/><title>Accountfreischaltung</title></head><body>
 Hallo!<br />
 Dein Account auf der Homepage '.$HP_URL.' wurde freigegeben!<br /><br />
 <span style="font-family:Verdana;color:#777;border-top: 1px #777 solid;">Die Mail wurde mit Xenux erstellt</span></body></html>';

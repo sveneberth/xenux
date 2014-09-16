@@ -79,7 +79,7 @@ function yearForward($timestamp) {
 			$erg = mysql_query($sql);
 			while($row1 = mysql_fetch_array($erg)) {
 				if($row1['d'] == $i and $row1['m'] == date("m",$date) and $row1['Y'] == date("Y",$date)) {
-					echo "<a href=\"?site=terminview&id=".$row1['id']."\" class=\"date\"><span>".$row1['H'].":".$row1['i']."</span>".substr($row1['text'],0,50)."</a>";
+					echo "<a href=\"?site=terminview&id=".$row1['id']."\" class=\"date\"><span>".$row1['H'].":".$row1['i']."</span>".$row1['text']."</a>";
 				}
 			}
 			echo "</div>";
@@ -90,7 +90,7 @@ function yearForward($timestamp) {
 			$erg = mysql_query($sql);
 			while($row1 = mysql_fetch_array($erg)) {
 				if($row1['d'] == $i and $row1['m'] == date("m",$date) and $row1['Y'] == date("Y",$date)) {
-					echo "<a href=\"?site=terminview&id=".$row1['id']."\" class=\"date\"><span>".$row1['H'].":".$row1['i']."</span>".substr($row1['text'],0,50)."</a>";
+					echo "<a href=\"?site=terminview&id=".$row1['id']."\" class=\"date\"><span>".$row1['H'].":".$row1['i']."</span>".$row1['text']."</a>";
 				}
 			}
 			echo "</div>";

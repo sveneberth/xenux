@@ -17,18 +17,18 @@ function insert(aTag, eTag) {
 function text() {
 	var col = prompt("Farbe (englisch oder Hex-Wert):","black");
 	if(col != null) {
-		insert("<span style='color:"+col+"'>", "</span>")
+		insert("<span style=\"color:"+col+"\">", "</span>")
 	}
 }
 function link() {
 	var href = prompt("Adresse:","http://");
 	if(href != null) {
-		insert("<a href='"+href+"'>", "</a>");
+		insert("<a href=\""+href+"\">", "</a>");
 	}
 }
 function bild() {
 	var src = prompt("Adresse:","http://");
 	if(src != null) {
-		insert("<img src='"+src+"' />", "");
+		insert("<img src=\""+src+"\" />", "");
 	}
 }
