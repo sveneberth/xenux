@@ -29,6 +29,7 @@ if(!isset($_GET['site']) or !file_exists($_GET['site'].".html") or empty($_GET['
 }
 $all_sites = array(		//%FIXIT% rewrite filenames, change types from *.html to *.php, if the files are opened directly , exit they
 					"editroom" => "Editroom",
+<<<<<<< master
 					"login" => "Login",
 					"logout" => "Logout",
 					"registrieren" => "Registrieren",
@@ -49,6 +50,35 @@ $all_sites = array(		//%FIXIT% rewrite filenames, change types from *.html to *.
 					"freigabe" => "Freigabe",
 					"ansprechpartner" => "Ansprechpartner",
 					"termine" => "Termine",
+=======
+					"Seiten" => array (
+										"site_new" => "Neue Seite erstellen",
+										"site_edit" => "Seiten bearbeiten",
+										"mainsettings" => "Grundeinstellungen",
+										),
+					"Sonstiges" => array (
+										"news_edit" => "News bearbeiten",
+										"dates_edit" => "Termine bearbeiten",
+										"files" => "Dateien",
+										"contact" => "Ansprechpartner",
+										),
+					"Account" => array (
+										"personal_data_change" => "Persönliche Daten ändern",
+										"password_change" => "Passwort ändern",
+										"rights_show" => "Meine Rechte anzeigen",
+										"rights_edit" => "Rechte ändern",
+										"mail" => "Mail senden",
+										"logout" => "Logout",
+										),
+					/* Login etc */
+						"login" => "Login",
+						"registrieren" => "Registrieren",
+						"forgotusername" => "Benutzername vergessen",
+						"forgotpassword" => "Passwort vergessen",
+						"freigabe" => "Freigabe",
+						"delete_acc" => "Account löschen",
+					/* Login etc */
+>>>>>>> local
 					);
 if (!array_key_exists($site, $all_sites)) {
 	$site = "editroom";
