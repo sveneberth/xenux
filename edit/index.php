@@ -34,7 +34,6 @@ if(!isset($_GET['site']) or !file_exists($_GET['site'].".php") or empty($_GET['s
 }
 $all_sites = array(
 					"editroom" => "Editroom",
-<<<<<<< HEAD
 					"Seiten" => array (
 										"site_new" => "Neue Seite erstellen",
 										"site_edit" => "Seiten bearbeiten",
@@ -62,28 +61,6 @@ $all_sites = array(
 						"freigabe" => "Freigabe",
 						"delete_acc" => "Account löschen",
 					/* Login etc */
-=======
-					"login" => "Login",
-					"logout" => "Logout",
-					"registrieren" => "Registrieren",
-					"forgotusername" => "Benutzername vergessen",
-					"forgotpassword" => "Passwort vergessen",
-					"seite_neu" => "Neue Seite erstellen",
-					"seiten_tools" => "Seiten Tools",
-					"menu_anzeigen" => "Menü anzeigen",
-					"menu_bearbeiten" => "Menü bearbeiten",
-					"news" => "News bearbeiten",
-					"daten_aendern" => "Persönliche Daten ändern",
-					"passwort_aendern" => "Passwort ändern",
-					"rechte_anzeigen" => "Meine Rechte anzeigen",
-					"rechte_aendern" => "Rechte ändern",
-					"mail" => "Mail senden",
-					"datei_hochladen" => "Dateien hochladen",
-					"dateitools" => "Dateien ansehen",
-					"freigabe" => "Freigabe",
-					"ansprechpartner" => "Ansprechpartner",
-					"termine" => "Termine",
->>>>>>> c7aba01451f5062a40c82a8eef22d2f3b943442e
 					);
 $sites = array();
 foreach($all_sites as $key => $val) {
@@ -187,7 +164,7 @@ $(window).bind('keydown', function(event) {
 	</div>
 <div id="wrapper">
 	<div class="fontsize">
-		Schrift&nbsp;<a href="javascript:fontsizedecrease()">-</a>&nbsp;<a href="javascript:fontsizereset()">O</a>&nbsp;<a href="javascript:fontsizerecrease()">+</a>
+		Schrift <a href="javascript:fontsizedecrease()">-</a> <a href="javascript:fontsizereset()">O</a> <a href="javascript:fontsizerecrease()">+</a>
 	</div>
 	<div id="content" style="width: calc(100% - 10px);float:none;">
 		<h1><?php echo $sites[$site]; ?></h1>
