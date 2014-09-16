@@ -1,101 +1,73 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-<title>Xenux Installation</title>
-<meta charset="UTF-8" >
-<link rel="stylesheet" type="text/css" href="install.css" />
 <?php
-function nextpage(){
-echo '<meta http-equiv="refresh" content="0; URL=step6.php">';
+include("../config.php");
+$link = mysql_connect($MYSQL_HOST, $MYSQL_BENUTZER, $MYSQL_KENNWORT);
+$db_selected = mysql_select_db($MYSQL_DATENBANK, $link);
+if(!$db_selected){
+	echo 'Es ist keine Verbindung zur Datenbank möglich!';
+	exit;
+}
+$pw_stimmt = true;
+$username_exist = false;
+$email_exist = false;
+if(isset($_POST['submit'])) {
+	foreach($_POST as $key => $val) {
+		$$key = mysql_real_escape_string($val);
+	}
+	if($password == $password1) {
+		$pw_stimmt = true;
+	} else {
+		$pw_stimmt = false;
+	}
+
+	if(!empty($FirstName) and !empty($LastName) and !empty($email) and !empty($username) and !empty($password) and $pw_stimmt){
+		$sql = "SELECT COUNT(username) AS anzahl FROM XENUX_users WHERE username = '$username'";
+		$erg = mysql_query($sql);
+		$row = mysql_fetch_array($erg);
+		if($row["anzahl"] >= 1) {
+			$username_exist = true;
+		} else {
+			$username_exist = false;
+		}
+		$sql = "SELECT COUNT(email) AS anzahl FROM XENUX_users WHERE email = '$email'";
+		$erg = mysql_query($sql);
+		$row = mysql_fetch_array($erg);
+		if($row["anzahl"] >= 1) {
+			$email_exist = true;
+		} else {
+			$email_exist = false;
+		}
+		if(!$username_exist and !$email_exist) {
+			$sql = "INSERT INTO XENUX_users (nachname, vorname, email, username, pw, admin, role) VALUES ('$LastName', '$FirstName', '$email', '$username', 'xkanf".md5($password)."v4sf5w', 'yes', '3');";
+			$erg = mysql_query($sql) or die("Anfrage fehlgeschlagen.");
+			echo "<p>Du wurdest erfolgreich registriert!</p>";
+			$next = true;
+		}
+		mysql_close($link);
+	}
 }
 ?>
-</head>
-
-<body>
-	<div id="main">
-		<div id="content">
-			<div id="header">
-				<span class="topic">Xenux</span></a><br />
-				<span class="motto">das kostenlose CMS</span>
-			</div>
-			<ul id="steps">
-				<li class="lastStep">Hallo</li>
-				<li class="lastStep">Technische Voraussetztungen</li>
-				<li class="lastStep">Datenbank</li>
-				<li class="lastStep">Datenbank prüfen</li>
-				<li class="actStep">Homepage einrichten</li>
-				<li class="nextStep">Administrator</li>
-				<li class="nextStep">Fertigstellung</li>
-			</ul>
-			<div id="install">
-				<h2>Homepage einrichen</h2>
-				<?php
-				if(!isset($_POST['submit'])){
-					$hpname = "";
-					$hpslogan = "";
-					$titleprefix = "";
-					$titlesufix = "";
-					$kontaktemail = "";
-					$description = "";
-					$keywords = "";
-					$email = "";
-				} else {
-					$hpname = $_POST['hpname'];
-					$hpslogan = $_POST['hpslogan'];
-					$titleprefix = $_POST['titleprefix'];
-					$titlesufix = $_POST['titlesufix'];
-					$kontaktemail = $_POST['kontaktemail'];
-					$description = $_POST['description'];
-					$keywords = $_POST['keywords'];
-					$email = $_POST['email'];
-					if(empty($hpname) and empty($hpslogan) and empty($description) and empty($keywords) and empty($email)){
-						echo '<p style="color:red;">Sie müssen alle Felder ausfüllen!</p>';
-					} else {
-						$datei = fopen("../config.php","a");
-						$text = '
-# Homepage-Daten
-$HP_Name			= "'.$hpname.'"; # Homepagename (im Kopf)
-$HP_Slogan			= "'.$hpslogan.'"; # Homepage-Slogan (im Kopf)
-$HP_Prefix			= "'.$titleprefix.'"; # Title Prefix (Optional)
-$HP_Sufix			= "'.$titlesufix.'"; # Title Sufix (Optional)
-$HP_Kontaktemail	= "'.$kontaktemail.'"; # E-Mail Adresse für das Kontaktformular
-$HP_Beschreibung	= "'.$description.'"; # Beschreibung der Homepage (max 150 Zeichen)
-$HP_Keywords		= "'.$keywords.'"; # Schlüsselwörter der Homepage (mit Komma trennen)
-$HP_Email			= "'.$email.'"; # E-Mail-Adresse (diese wird u.A. benötigt um Accounts freizuschalten)
-?>';
-						fwrite($datei, $text);
-						fclose($datei);
-						nextpage();
-					}
-				}
-				?>
-				<form action="" method="post">
-					Homepage Name (angezeigte Name im Kopf)<br />
-					<input type="text" name="hpname" size="70" value="<?php if(empty($hpname)){echo 'Meine Homepage"';}else{echo $hpname;} ?>" /><br />
-					<span <?php if (empty($hpslogan) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Slogan(Schriftzug unter dem Name im Kopf)</span><br />
-					<input type="text" name="hpslogan" size="70" value="<?php echo $hpslogan; ?>" /><br /><br />
-					Title Prefix (Optional)<br />
-					<input type="text" name="titleprefix" size="70" value="<?php echo $titleprefix; ?>" /><br />
-					Title Sufix (Optional)<br />
-					<input type="text" name="titlesufix" size="70" value="<?php echo $titlesufix; ?>" 
-					/><br /><br />
-					Möchten sie auf der Seite "Kontakt" ein Kontaktformular? Falls sie ein Kontaktformular wünschen, müssen sie hier ihre E-Mail-Adresse angeben, das die Nachricht an sie geschickt werden kann. Falls sie kein Kontaktformular wünschen lassen sie diese Feld einfach leer.<br />
-					<input type="email" name="kontaktemail" size="70" value="<?php echo $kontaktemail; ?>" /><br /><br />
-					<span <?php if (empty($description) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Beschreibung der Homepage (max. 150 Zeichen)</span><br />
-					<input type="text" name="description" size="70" maxlength="150" value="<?php echo $description; ?>" /><br />
-					<span <?php if (empty($keywords) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Schlüsselwörter der Homepage (durch Komma getrennt)</span><br />
-					<input type="text" name="keywords" size="70" value="<?php echo $keywords; ?>"
-					/><br /><br />
-					<span <?php if (empty($email) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>E-Mail-Adresse (diese wird u.A. benötigt um Accounts freizuschalten)</span><br />
-					<input type="email" name="email" size="70" value="<?php echo $email; ?>" 
-					/><br /><br />
-					<div class="clear"></div>
-					<input type="submit" name="submit" class="next" value="Weiter"/>
-				</form>
-			</div>
-			<div class="clear"></div>
-		</div><!-- #content -->
-	</div><!-- #main -->
-
-</body>
-</html>
+<form action="" method="post">
+	<span <?php if (empty($FirstName) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Vorname</span><br />
+	<input type="text" name="FirstName" value="<?php echo @$FirstName; ?>" /><br /><br />
+	<span <?php if (empty($LastName) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Nachname</span><br />
+	<input type="text" name="LastName" value="<?php echo @$LastName; ?>" /><br /><br />
+	<span <?php if (empty($email) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>E-Mail</span><br />
+	<input type="email" name="email" value="<?php echo @$email; ?>" /><br />
+	<?php
+	if($email_exist){echo 'Ein Account mit dieser E-Mail-Adresse existiert schon, zwei Accounts über eine E-Mail Adresse sind nicht zulässig!<br />';}
+	?><br />
+	<span <?php if (empty($username) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Benutzername</span><br />
+	<input type="text" name="username" value="<?php echo @$username; ?>" /><br />
+	<?php
+	if($username_exist){echo 'Der Benutzername ist schon vergeben, bitte wähle einen anderen!<br />';}
+	?><br />
+	<span <?php if (empty($password) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Passwort</span><br />
+	<input type="password" name="password" value="<?php echo @$password; ?>" /><br /><br />
+	<span <?php if (empty($password1) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Passwort bestätigen</span><br />
+	<input type="password" name="password1" value="<?php echo @$password1; ?>" /><br /><br />
+	<?php
+	if(!$pw_stimmt){echo '<p>Die angegebenen Passwörter stimmen nicht überein!</p>';}
+	?>
+	<input type="hidden" name="submit" value="submit" />
+	<input type="submit" value="speichern"/>
+</form>

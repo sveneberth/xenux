@@ -1,4 +1,5 @@
 <?php
+if(!isset($site)) die("You can not open this file individually/Sie k&ouml;nnen diese Datei nicht einzeln &ouml;ffnen!");
 $random_pw = substr(md5(uniqid(rand())), 0, 10);
 if(!empty($_POST['submit'])) {
 	$username = mysql_real_escape_string($_POST['username']);
@@ -12,9 +13,18 @@ if(!empty($_POST['submit'])) {
 			$sql = "SELECT * FROM XENUX_users WHERE username = '$username'";
 			$erg = mysql_query($sql);
 			$row = mysql_fetch_array($erg);
+			/* ##################################
+			** FIXME:
+			** change password first, if
+			** the user open a link
+			** where he can set a new own
+			** password
+			** -->	spammer can not destroy the
+			** 		login for other user...
+			*/ ##################################
 			$sql = "UPDATE XENUX_users Set pw = 'xkanf".md5($random_pw)."v4sf5w' WHERE username = '$username'";
 			$erg = mysql_query($sql);
-			$nachricht = '<html></head><title>Passwort vergessen</title></head><body>
+			$nachricht = '<html><head><title>Passwort vergessen</title></head><body>
 Hallo!<br />
 Dein neues Passwort für <a href="http://'.$HP_URL.'">http://'.$HP_URL.'</a>  lautet: '.$random_pw.'<br />
 Es empfiehlt sich, das Passwort nach Login zu ändern.
@@ -35,7 +45,7 @@ Es empfiehlt sich, das Passwort nach Login zu ändern.
 <p>Fals du deinen Passwort vergessen hast, kannst du dir hier ein neues an die Registrierte E-Mail-Adresse schicken.</p>
 <form action="" method="post">
 Benutzername:<br />
-<input type="text" name="username" size="70" />
+<input type="text" placeholder="Benutzername" name="username" />
 <p><?php echo @$result ?></p>
 <input name="submit" type="submit" value="Passwort zusenden">
 </form>
