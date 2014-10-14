@@ -106,3 +106,21 @@ function fontsizedecrease() {
 		$.cookie("fontsize", newfontsize);
 	}
 }
+
+/* add label before input */
+$(document).ready(function() {
+	var i = 1;
+	$('input[type="text"], input[type="email"], input[type="number"], input[type="password"], input[type="color"], textarea').each(function() {
+		if(!$(this).hasClass('nolabel')) {
+			if(typeof $(this).attr('id') !== 'undefined') {
+				var id = $(this).attr('id');
+			} else {
+				$(this).attr('id', 'input'+i);
+				var id = $(this).attr('id');
+				i++;	
+			}
+			var placeholder = $(this).attr('placeholder');
+			$(this).before('<label for="'+id+'">'+placeholder+'</label>');
+		}
+	})
+})

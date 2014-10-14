@@ -1,10 +1,11 @@
 <?php
-if($login['role'] < 1) {
+if($login->role < 1) {
 	echo '<p>Du bist nicht berechtigt, diese Seite zu öffnen!</p>';
-	return;
+	return false;
 }
 if(!isset($site)) die("You can not open this file individually/Sie k&ouml;nnen diese Datei nicht einzeln &ouml;ffnen!");
 ?>
+
 <style>
 p.info {
 	color: rgb(31, 61, 88);

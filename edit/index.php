@@ -1,37 +1,14 @@
 <?php
-SESSION_START();
-function logger($value) {
-	echo "<script>console.log('".$value."');</script>";
-};
-function contains($var) {
-	$array = func_get_args();
-	unset($array[0]);
-	return in_array($var, $array); 
+include_once('../core/inc/config.php'); // include config
+
+if(!isset($_GET['site'])) { //read the site
+	$site = 'editroom';
+} elseif(empty($_GET['site'])) {
+	$site = 'editroom';
+} else {
+	$site = $db->real_escape_string($_GET['site']);
 }
-include('../config.php');
-include('../core/macros/colortext.php');
-include('../core/macros/escape_mail.php');
-$link = mysql_connect($MYSQL_HOST, $MYSQL_BENUTZER, $MYSQL_KENNWORT);
-$db_selected = mysql_select_db($MYSQL_DATENBANK, $link);
-if(!$db_selected){
-	die('Es ist keine Verbindung zur Datenbank möglich!');
-}
-mysql_query('SET NAMES "utf8"');
-if(@$_SESSION['login'] == 1) {
-	$sql = "SELECT * FROM XENUX_users WHERE id = '".$_SESSION["userid"]."'";
-	$erg = mysql_query($sql);
-	$login = mysql_fetch_array($erg);
-}
-if(!isset($_GET['site'])) {
-	$site = 'home';
-}elseif(empty($_GET['site'])){
-	$site = 'home';
-}else {
-	$site = $_GET['site'];
-}
-if(!isset($_GET['site']) or !file_exists($_GET['site'].".php") or empty($_GET['site'])){
-	$_GET['site'] = "editroom";
-}
+
 $all_sites = array(
 					"editroom" => "Editroom",
 					"Seiten" => array (
@@ -41,7 +18,7 @@ $all_sites = array(
 										),
 					"Sonstiges" => array (
 										"news_edit" => "News bearbeiten",
-										"dates_edit" => "Termine bearbeiten",
+										"event_edit" => "Termine bearbeiten",
 										"files" => "Dateien",
 										"contact" => "Ansprechpartner",
 										),
@@ -55,10 +32,10 @@ $all_sites = array(
 										),
 					/* Login etc */
 						"login" => "Login",
-						"registrieren" => "Registrieren",
+						"register" => "Registrieren",
 						"forgotusername" => "Benutzername vergessen",
 						"forgotpassword" => "Passwort vergessen",
-						"freigabe" => "Freigabe",
+						"confirm" => "Freigabe",
 						"delete_acc" => "Account löschen",
 					/* Login etc */
 					);
@@ -72,43 +49,40 @@ foreach($all_sites as $key => $val) {
 		$sites[$key] = $val;
 	}
 }
-if (!array_key_exists($site, $sites)) {
+if(!array_key_exists($site, $sites)) {
 	$site = "editroom";
 }
-$HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-14);
-$sql = "SELECT * FROM XENUX_main";
-$erg = mysql_query($sql);
-while($row = mysql_fetch_array($erg)) {
-	foreach($row as $key => $val) {
-		$$key = $val;
-	}
-	$$name = $value;
-}
+
+define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-14));
 ?>
 <!Doctype html>
 <html lang="de">
 <head>
-	<title><?php if(!empty($HP_Prefix)){echo $HP_Prefix." | ";}; echo $sites[$site]; if(!empty($HP_Sufix)){echo " | ".$HP_Sufix;}; ?></title>
+	<title><?php echo "$main->hp_name Administration | ".$sites[$site]; ?></title>
 	<meta charset="UTF-8" >
-	<meta name="description" content="<?php echo $meta_desc; ?>" />
-	<meta name="keywords" content="<?php echo $meta_keys; ?>" />
-	<meta name="auhor" content="<?php echo $meta_auhor; ?>" />
-	<meta name="publisher" content="<?php echo $meta_auhor; ?>" />
-	<meta name="copyright" content="<?php echo $meta_auhor; ?>" />
+	<meta name="description" content="<?php echo $main->meta_desc; ?>" />
+	<meta name="keywords" content="<?php echo $main->meta_keys; ?>" />
+	<meta name="auhor" content="<?php echo $main->meta_auhor; ?>" />
+	<meta name="publisher" content="<?php echo $main->meta_auhor; ?>" />
+	<meta name="copyright" content="<?php echo $main->meta_auhor; ?>" />
+	<!-- http://xenux.bplaced.net -->
 	<meta name="generator" content="Xenux - das kostenlose CMS" />
+	<meta name="robots" content="noindex, nofollow, noarchive" />
 	<link rel="stylesheet" type="text/css" href="../core/css/style.css" media="all"/>
-	<link rel="shortcut icon" href="../core/images/<?php echo $favicon_src; ?>" />
+	<link rel="shortcut icon" href="../core/images/<?php echo $main->favicon_src; ?>" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<script src="../core/js/jquery-2.1.1.min.js"></script>
 	<script src="../core/js/jquery-migrate-1.2.1.min.js"></script>
 	<script src="../core/js/jquery-ui.js"></script>
 	<script src="../core/js/jquery.cookie.js"></script>
-	<script src="../core/js/formatierungen.js"></script>
+	<script src="../core/ckeditor/ckeditor.js"></script>
+	<script src="../core/js/colResizable-1.3.min.js"></script>
+	<script src="https://code-snippets-se.googlecode.com/git/functions.js"></script>
 	<script src="../core/js/main.js"></script>
 	<style>
-	html,body{
-		background:<?php echo $bgcolor; ?>;
-		color:<?php echo $fontcolor; ?>;
+	html, body {
+		background: <?php echo $main->bgcolor; ?>;
+		color: <?php echo $main->fontcolor; ?>;
 	}
 	</style>
 </head>
@@ -129,20 +103,20 @@ $(window).bind('keydown', function(event) {
 		<div id="head"> 
 			<div class="logo">
 				<a href="../">
-					<img src="../core/images/<?php echo $logo_src; ?>" />
+					<img src="../core/images/<?php echo $main->logo_src;; ?>" />
 				</a>
 			</div>
 			<ul id="topmenu" class="mobilemenu">
 				<li><a href="javascript:openmobilemenu()">Menu</a></li>
 				<?php
-				if(@$_SESSION['login'] == 1) {
-				?>
+				if(isset($login)) {
+					?>
 					<li><a href="?site=logout">Logout</a></li>
-				<?php
+					<?php
 				} else {
-				?>
-				<li><a href="?site=login">Login</a></li>
-				<?php
+					?>
+					<li><a href="?site=login">Login</a></li>
+					<?php
 				}
 				?>
 			</ul>
@@ -151,7 +125,7 @@ $(window).bind('keydown', function(event) {
 				<?php
 				foreach($all_sites as $key => $val) {
 					if(is_array($val)) {
-						echo "<li><img src=\"../core/images/right.png\" class=\"".strtolower(preg_replace("/[^a-zA-Z0-9_]/" , "" , $key))." openpoints\" onclick=\"javascript:openmenupoints('".strtolower(preg_replace("/[^a-zA-Z0-9_]/" , "" , $key))."')\"><a>$key</a><ul id=\"".strtolower(preg_replace("/[^a-zA-Z0-9_]/" , "" , $key))."\">";
+						echo "<li><a>$key</a><ul>";
 						foreach($val as $key => $val) {
 							echo "<li><a href=\"./?site=$key\">$val</a></li>";
 						}
@@ -164,7 +138,10 @@ $(window).bind('keydown', function(event) {
 	</div>
 <div id="wrapper">
 	<div class="fontsize">
-		Schrift <a href="javascript:fontsizedecrease()">-</a> <a href="javascript:fontsizereset()">O</a> <a href="javascript:fontsizerecrease()">+</a>
+		Schrift
+		&nbsp;<a title="Schrift kleiner" href="javascript:fontsizedecrease()">-</a>
+		&nbsp;<a title="Schrift normal" href="javascript:fontsizereset()">O</a>
+		&nbsp;<a title="Schrift größer" href="javascript:fontsizerecrease()">+</a>
 	</div>
 	<div id="content" style="width: calc(100% - 10px);float:none;">
 		<h1><?php echo $sites[$site]; ?></h1>
@@ -172,7 +149,7 @@ $(window).bind('keydown', function(event) {
 			if(isset($_GET['id'])) {
 				echo "<a style=\"float: right;\" href=\"./?site=$site\">zur Auswahl</a>";
 			}
-			if(@$_SESSION['login'] == 1 or $site == "forgotusername" or $site == "forgotpassword" or $site == "registrieren" or $site == "freigabe") {
+			if(isset($login) or $site == "forgotusername" or $site == "forgotpassword" or $site == "register" or $site == "confirm") {
 				include($site.".php");
 			} else {
 				include("login.php");
@@ -192,5 +169,5 @@ $(window).bind('keydown', function(event) {
 </body>
 </html>
 <?php
-mysql_close($link);
+$db->close(); //close the connection to the db
 ?>

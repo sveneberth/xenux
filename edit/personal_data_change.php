@@ -1,34 +1,24 @@
 <?php
 if(!isset($site)) die("You can not open this file individually/Sie k&ouml;nnen diese Datei nicht einzeln &ouml;ffnen!");
-if(isset($_POST['form'])) {
-	foreach($_POST as $key => $val) {
-		$$key = mysql_real_escape_string($val);
+if(isset($_POST['submit_form'])) {
+	if(!empty($firstname) and !empty($lastname)  and !empty($username) and !empty($email)) {
+		$result = $db->query("UPDATE XENUX_users Set firstname = '$firstname', lastname = '$lastname', username = '$username', email = '$email' WHERE id = '$login->id';");
 	}
-	if(!empty($vorname) and !empty($nachname) and !empty($email)) {
-		$sql = "UPDATE XENUX_users Set vorname = '$vorname', nachname = '$nachname', username = '$username', email = '$email' WHERE id = '".$_SESSION['userid']."'";
-		$erg = mysql_query($sql);
-		echo "Die Daten wurden geändert!";
-	}
-} else {
-	$sql = "SELECT * FROM XENUX_users WHERE id = '".$_SESSION['userid']."'";
-	$erg = mysql_query($sql);
-	$row = mysql_fetch_array($erg);
-	foreach($row as $key => $val) {
-		$$key = $val;
-	}
+	$result = $db->query("SELECT * FROM XENUX_users WHERE id = {$_SESSION['userid_xenux']};");
+	$login = $result->fetch_object(); // set login with userdata
 }
 ?>
 <p>Hier kannst du deine Daten ändern.</p>
 <form action="" method="post">
-	<span <?php if(empty($vorname) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Vorname</span><br />
-	<input type="text" placeholder="Vorname" name="vorname" value="<?php echo @$vorname; ?>" /><br /><br />
-	<span <?php if(empty($vorname) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Nachname</span><br />
-	<input type="text" placeholder="Nachname" name="nachname" value="<?php echo @$nachname; ?>" /><br /><br />
-	<span <?php if(empty($username) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Benutzername</span><br />
-	<input type="text" placeholder="Benutzername" name="username" value="<?php echo @$username; ?>" /><br /><br />
-	<span <?php if(empty($vorname) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>E-Mail</span><br />
-	<input type="text" placeholder="E-Mail" name="email" value="<?php echo @$email; ?>" /><br /><br />
-	<input type="hidden" name="form" value="form" />
+	<input <?php if(empty($firstname) && isset($_POST['submit_form'])) echo 'class="wrong"'; ?> type="text" placeholder="Vorname" name="firstname" value="<?php echo $login->firstname; ?>" />
+	
+	<input <?php if(empty($lastname) && isset($_POST['submit_form'])) echo 'class="wrong"'; ?> type="text" placeholder="Nachname" name="lastname" value="<?php echo $login->lastname; ?>" />
+	
+	<input <?php if(empty($username) && isset($_POST['submit_form'])) echo 'class="wrong"'; ?> type="text" placeholder="Benutzername" name="username" value="<?php echo $login->username; ?>" />
+	
+	<input <?php if(empty($email) && isset($_POST['submit_form'])) echo 'class="wrong"'; ?> type="text" placeholder="E-Mail" name="email" value="<?php echo $login->email; ?>" />
+	
+	<input type="hidden" name="submit_form" value="true" />
 	<input type="submit" value="ändern" />
 </form>
 <script>
@@ -38,7 +28,7 @@ function delacc() {
 		$(".transparent").remove();
 		$(".message").remove();
 		$.ajax({
-			url: "delete_acc.php?userid=<?php echo $login['id']; ?>",
+			url: "macros/delete_acc.php",
 			success: function(content) {
 				messagebox(30,20,'Meldung',content);
 			}

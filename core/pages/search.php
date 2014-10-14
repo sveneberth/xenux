@@ -3,34 +3,35 @@ if(!isset($_GET['searchtxt'])) {
 	echo "<p>Bei der Anfrage trat ein Fehler auf, möglicherweise haben sie auf einen fehlerhaften Link geklickt...</p>";
 	return;
 }
-$searchtxt = mysql_real_escape_string($_GET['searchtxt']);
-$sql = "SELECT * FROM XENUX_pages WHERE (
+$result = $db->query("SELECT * FROM XENUX_sites WHERE (
 				(
-					fullname	LIKE	'%".$searchtxt."%' 
-					OR	text	LIKE	'%".$searchtxt."%'
+						title	LIKE	'%".$get->searchtxt."%' 
+					OR	text	LIKE	'%".$get->searchtxt."%'
 				)
-				AND	filename	!=		'termine'
-				AND	filename	!=		'terminview'
-				AND	filename	!=		'page'
-				AND	filename	!=		'newslist'
-				AND	filename	!=		'news'
-				AND	filename	!=		'error'
-				AND	filename	!=		'search'
-				) ORDER by fullname;";
-$erg = mysql_query($sql) or die(mysql_error());
-$num = mysql_num_rows($erg);
+				AND		site	!=		'event_list'
+				AND		site	!=		'event_view'
+				AND		site	!=		'page'
+				AND		site	!=		'news_list'
+				AND		site	!=		'news_view'
+				AND		site	!=		'error'
+				AND		site	!=		'search'
+				) ORDER by title ASC;");
+$num = $result->num_rows;
 if($num < 1) {
 	echo "<p>keine Suchergebnisse...</p>";
 	return;
 }
-while($row = mysql_fetch_object($erg)) {
-	if(contains($row->filename, 'impressum', 'kontakt', 'home')) {
-		echo "<div class=\"searchresult\"><b><a href=\"?site=$row->filename\">$row->fullname</a></b><br />
-		".nl2br(maxlines($row->text,5))."</div>";
+while($row = $result->fetch_object()) {
+	if(contains($row->site, 'impressum', 'kontakt', 'home')) {
+		echo "	<div class=\"searchresult\">
+					<b><a href=\"?site=$row->site\">$row->title</a></b><br />
+					".nl2br(maxlines($row->text,5))."
+				</div>";
 	} else {
-		echo "<div class=\"searchresult\"><b><a href=\"?site=page&page_id=$row->id\">$row->fullname</a></b><br />
-		".nl2br($row->text)."<br /></div>";
+		echo "	<div class=\"searchresult\">
+					<b><a href=\"?site=page&page_id=$row->id\">$row->title</a></b><br />
+					".nl2br($row->text)."<br />
+				</div>";
 	}
 }
-# nl2br(substr($row->text,0,200))
 ?>

@@ -38,7 +38,7 @@ switch($token) {
 			if(file_exists('../files/'.$filename.$filetyp)) {
 				$i = 1;
 				while(file_exists('../files/'.$filename.'_'.$i.$filetyp)){
-				$i++;
+					$i++;
 				}
 				$uploadfile = '../files/'.$filename.'_'.$i.$filetyp;
 			} else {

@@ -1,7 +1,7 @@
 <?php
 if(!isset($site)) die("You can not open this file individually/Sie k&ouml;nnen diese Datei nicht einzeln &ouml;ffnen!");
 ?>
-<p>Hallo <?php echo $login['vorname']; ?>!<br />
+<p>Hallo <?php echo $login->firstname; ?>!<br />
 Hier kannst du die Homepage bearbeiten und verwalten!</p>
 <div id="editroom">
 	<?php
