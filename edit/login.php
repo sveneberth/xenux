@@ -1,6 +1,6 @@
 <?php
 if(!empty($_POST["submit_login"])) {
-	$result = $db->query("SELECT * FROM XENUX_users WHERE username = '$post->username' AND password = SHA1('{$_POST['password']}') AND confirmed = true LIMIT 1";
+	$result = $db->query("SELECT * FROM XENUX_users WHERE username = '$post->username' AND password = SHA1('{$_POST['password']}') AND confirmed = true LIMIT 1;");
 	$num = $result->num_rows;
 	if($num > 0) {
 		$login = $result->fetch_object();
