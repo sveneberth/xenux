@@ -5,7 +5,7 @@ if(isset($_POST['submit'])) {
 	if(empty($post->hpname) and empty($post->email)){
 		echo '<p style="color:red;">Sie müssen alle Felder ausfüllen!</p>';
 	} else {
-		$db->query	("UPDATE XENUX_main Set value = '$post->hpname' WHERE name = 'hp_name';")
+		$db->query	("UPDATE XENUX_main Set value = '$post->hpname' WHERE name = 'hp_name';");
 		$db->query	("UPDATE XENUX_main Set value = '$post->email' WHERE name = 'noreplay_email';");
 		$next = true;
 		$db->close(); //close the connection to the db
