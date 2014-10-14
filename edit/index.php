@@ -161,8 +161,8 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 			This Side was made with <a href="http://xenux.bplaced.net">Xenux</a>
 			<div class="href">
 				<a href="../">Homepage</a>
-				<a href="../?site=kontakt">Kontakt</a>
-				<a href="../?site=impressum">Impressum</a>
+				<a href="../?site=contact">Kontakt</a>
+				<a href="../?site=imprint">Impressum</a>
 			</div>
 		</footer>
 	</div>

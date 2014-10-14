@@ -276,7 +276,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 			if($site->site != 'page') {
 				echo "<h1>$site->title";
 				if(@$_SESSION["login"] == 1) {
-					if(!in_array($site->site, $special_sites) || contains($site->site, 'imprint', 'contact')) {
+					if(!in_array($site->site, $special_sites) || contains($site->site, 'home', 'imprint', 'contact')) {
 						echo "<a id=\"edit_href\" href=\"edit/?site=site_edit&token=edit_site&site_id=$site->id\">Bearbeiten</a>";
 					}
 				}
