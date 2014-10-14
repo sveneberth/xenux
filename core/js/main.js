@@ -1,6 +1,6 @@
 //---Popup---------------------------------------------------------------------
 $(document).ready(function() {
-	$("body").append("<div id=\"transparent\"></div>");
+	$("body").append("<div class=\"transparent\"></div>");
 })
 function popupopen() {
 	$( ".popup").show();
@@ -23,10 +23,10 @@ function openmobilemenu() {
 		scrollTop: 0
 	}, 500);
 	$( ".mainmenu" ).toggle("fast");
-	if($("#transparent").is(":visible")) {
-		$( "#transparent" ).fadeOut("fast");
+	if($(".transparent").is(":visible")) {
+		$( ".transparent" ).fadeOut("fast");
 	} else {
-		$( "#transparent" ).fadeIn("fast");
+		$( ".transparent" ).fadeIn("fast");
 	}
 }
 function openmenupoints(name) {

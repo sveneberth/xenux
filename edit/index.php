@@ -87,20 +87,20 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 	</style>
 </head>
 <body>
-<script>
-$(window).bind('keydown', function(event) {
-	if (event.ctrlKey || event.metaKey) {
-		switch (String.fromCharCode(event.which).toLowerCase()) {
-		case 's':
-			event.preventDefault();
-			document.forms[0].submit();
-			break;
+	<script>
+	$(window).bind('keydown', function(event) {
+		if (event.ctrlKey || event.metaKey) {
+			switch (String.fromCharCode(event.which).toLowerCase()) {
+			case 's':
+				event.preventDefault();
+				document.forms[0].submit();
+				break;
+			}
 		}
-	}
-});
-</script>
-<div id="headWrapper">
-		<div id="head"> 
+	});
+	</script>
+	<div class="headWrapper">
+		<header> 
 			<div class="logo">
 				<a href="../">
 					<img src="../core/images/<?php echo $main->logo_src;; ?>" />
@@ -134,38 +134,38 @@ $(window).bind('keydown', function(event) {
 				}
 				?>
 			</ul>
+		</header>
+	</div>
+	<div class="wrapper">
+		<div class="fontsize">
+			Schrift
+			&nbsp;<a title="Schrift kleiner" href="javascript:fontsizedecrease()">-</a>
+			&nbsp;<a title="Schrift normal" href="javascript:fontsizereset()">O</a>
+			&nbsp;<a title="Schrift größer" href="javascript:fontsizerecrease()">+</a>
 		</div>
+		<main style="width: calc(100% - 10px);float:none;">
+			<h1><?php echo $sites[$site]; ?></h1>
+			<?php
+				if(isset($_GET['id'])) {
+					echo "<a style=\"float: right;\" href=\"./?site=$site\">zur Auswahl</a>";
+				}
+				if(isset($login) or $site == "forgotusername" or $site == "forgotpassword" or $site == "register" or $site == "confirm") {
+					include($site.".php");
+				} else {
+					include("login.php");
+				}
+			?>
+		</main>
+		
+		<footer>
+			This Side was made with <a href="http://xenux.bplaced.net">Xenux</a>
+			<div class="href">
+				<a href="../">Homepage</a>
+				<a href="../?site=kontakt">Kontakt</a>
+				<a href="../?site=impressum">Impressum</a>
+			</div>
+		</footer>
 	</div>
-<div id="wrapper">
-	<div class="fontsize">
-		Schrift
-		&nbsp;<a title="Schrift kleiner" href="javascript:fontsizedecrease()">-</a>
-		&nbsp;<a title="Schrift normal" href="javascript:fontsizereset()">O</a>
-		&nbsp;<a title="Schrift größer" href="javascript:fontsizerecrease()">+</a>
-	</div>
-	<div id="content" style="width: calc(100% - 10px);float:none;">
-		<h1><?php echo $sites[$site]; ?></h1>
-		<?php
-			if(isset($_GET['id'])) {
-				echo "<a style=\"float: right;\" href=\"./?site=$site\">zur Auswahl</a>";
-			}
-			if(isset($login) or $site == "forgotusername" or $site == "forgotpassword" or $site == "register" or $site == "confirm") {
-				include($site.".php");
-			} else {
-				include("login.php");
-			}
-		?>
-	</div>
-	
-	<div id="footer">
-		This Side was made with <a href="http://xenux.bplaced.net">Xenux</a>
-		<div class="href">
-			<a href="../">Homepage</a>
-			<a href="../?site=kontakt">Kontakt</a>
-			<a href="../?site=impressum">Impressum</a>
-		</div>
-	</div>
-</div>
 </body>
 </html>
 <?php
