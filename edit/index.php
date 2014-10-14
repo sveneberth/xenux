@@ -77,7 +77,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 	<script src="../core/js/jquery.cookie.js"></script>
 	<script src="../core/ckeditor/ckeditor.js"></script>
 	<script src="../core/js/colResizable-1.3.min.js"></script>
-	<script src="https://code-snippets-se.googlecode.com/git/functions.js"></script>
+	<script src="../core/js/functions.js?from=https://code-snippets-se.googlecode.com/"></script>
 	<script src="../core/js/main.js"></script>
 	<style>
 	html, body {
