@@ -234,7 +234,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 									WHERE site_id = '".(($site->site == 'page')?$page->id:$site->id)."';");
 			$num = $result->num_rows;
 			if($num > 0) {
-				echo "<ul id=\"box\">
+				echo "<ul class=\"contactpersons\">
 						<h3>Ansprechpartner:</h3>";
 				while($row = $result->fetch_object()) {
 					echo "	<li>
