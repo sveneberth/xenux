@@ -24,7 +24,7 @@ if(!isset($login)) {
 		<input type="hidden" name="submit_login" value="true">
 		<input type="submit" value="Einloggen">
 	</form>
-	<p><a href="./?site=registrieren">Registrieren</a></p>
+	<p><a href="./?site=register">Registrieren</a></p>
 <?php
 } else {
 	echo "<p>Hallo $login->firstname, du bist erfolgreich eingeloggt!<br />";

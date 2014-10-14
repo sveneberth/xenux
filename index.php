@@ -259,7 +259,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 						<input style="margin: 5px 0;" type="submit" value="Einloggen">
 						<a href="edit/?site=forgotpassword">Passwort vergessen?</a><br />
 						<a href="edit/?site=forgotusername">Benutzernamen vergessen?</a><br />
-						<a href="edit/?site=registrieren">Registrieren</a>
+						<a href="edit/?site=register">Registrieren</a>
 					</form>
 					<?php
 				} else {
