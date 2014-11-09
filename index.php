@@ -155,7 +155,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 					<div id="sb-search" class="sb-search">
 						<form action="" method="GET">
 							<input type="hidden" name="site" value="search" />
-							<input onkeyup="if($(this).val()==''){$('.sb-search-submit').css('z-index', 11);}else{$('.sb-search-submit').css('z-index', 99);}" type="text" class="sb-search-input" name="searchtxt" placeholder="Suche" value="" />
+							<input onkeyup="if($(this).val()==''){$('.sb-search-submit').css('z-index', 11);}else{$('.sb-search-submit').css('z-index', 99);}" type="search" class="sb-search-input" name="q" placeholder="Suche" value="<?php if($get->site =='search')echo @$get->q; ?>" />
 							<input type="submit" class="sb-search-submit" value="" />
 							<span onclick="$('div#sb-search').toggleClass('sb-search-open');" class="sb-icon-search"></span>
 						</form>

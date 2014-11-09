@@ -1,12 +1,12 @@
 <?php
-if(!isset($_GET['searchtxt'])) {
+if(!isset($_GET['q'])) {
 	echo "<p>Bei der Anfrage trat ein Fehler auf, möglicherweise haben sie auf einen fehlerhaften Link geklickt...</p>";
 	return;
 }
 $result = $db->query("SELECT * FROM XENUX_sites WHERE (
 				(
-						title	LIKE	'%".$get->searchtxt."%' 
-					OR	text	LIKE	'%".$get->searchtxt."%'
+						title	LIKE	'%".$get->q."%' 
+					OR	text	LIKE	'%".$get->q."%'
 				)
 				AND		site	!=		'event_list'
 				AND		site	!=		'event_view'
