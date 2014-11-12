@@ -289,7 +289,22 @@ main:after {
 }
 
 main .prevnextnavi {
-	margin: 40px 0 0 0;	
+	margin: 40px 0 0 0;
+}
+main .prevnextnavi > a {
+	display: block;
+	height: .7em;
+	padding: 10px;
+	text-decoration: none;
+	text-align: center;
+	width: 1em;
+	line-height: .5em;
+	font-size: 2em;
+	font-weight: 800;
+}
+main .prevnextnavi > a:hover {
+	background: #0d5fa3;
+	color: #eee;
 }
 main .prevnextnavi > .prev {
 	float: left;

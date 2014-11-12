@@ -44,10 +44,10 @@ if(!empty($row->category)) {
 if(isset($prev) or isset($next)) {
 	echo "<div class=\"prevnextnavi\">";
 		if(isset($prev)) {
-			echo "<a class=\"prev\" href=\"?site=page&page_id=$prev->id\">&laquo;$prev->title</a>";
+			echo "<a class=\"prev\" title=\"$prev->title\" href=\"?site=page&page_id=$prev->id\">&larr;</a>";
 		}
 		if(isset($next)) {
-			echo "<a class=\"next\" href=\"?site=page&page_id=$next->id\">$next->title&raquo;</a>";
+			echo "<a class=\"next\" title=\"$next->title\" href=\"?site=page&page_id=$next->id\">&rarr;</a>";
 		}
 	echo "</div>";
 }

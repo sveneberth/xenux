@@ -127,7 +127,6 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 					$result = $db->query("SELECT DISTINCT category FROM XENUX_sites WHERE category != '';");
 					while($row = $result->fetch_object()) {
 						$menu_category = $row->category;
-						logger($row->category);
 						echo "<li><a";
 						$InnerResult = $db->query("SELECT * FROM XENUX_sites WHERE title = '$menu_category' AND category  = '$menu_category' LIMIT 1;");
 						$thispage = $InnerResult->fetch_object();
