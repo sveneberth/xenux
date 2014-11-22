@@ -219,6 +219,7 @@ header:after {
 #topmenu li {
 	float: left;
 	padding: 0px;
+	position: relative;
 }
 #topmenu > li > a {
 	text-transform: uppercase;
@@ -248,10 +249,15 @@ header:after {
 	height: 0;
 	overflow: hidden;
 	transition: .2s opacity ease;
-	margin-left: 1px;
+	/* margin-left: 1px; */
 	border: 1px solid #444;
-	border-top: 0px;
+	border-top-width: 0px;
 	color: #333;
+	min-width: 100%;
+	box-sizing: border-box;
+}
+#topmenu  li:hover  > ul {
+	overflow: visible !important;
 }
 #topmenu li li {
 	float: none;
@@ -259,6 +265,7 @@ header:after {
 	margin: 0px;
 	padding: 0px;
 	border-bottom: #666 1px solid;
+	position: relative;
 }
 #topmenu li li:last-child {
 	border-bottom: none;
@@ -274,6 +281,19 @@ header:after {
 	background: inherit;
 	color: inherit;
 }
+#topmenu li li ul {
+	position: absolute;
+	left: 100%;
+	top: 0;
+	margin-left: 0px;
+	margin-top: -1px;
+	border-top-width: 1px;
+}
+/*
+#topmenu li li li {
+	background: rgb(26, 179, 100);
+}
+*/
 
 main {
 	background: #fff;
@@ -836,6 +856,64 @@ div.add.backend .close:hover {
 	background: #555;
 }
 
+/* site_edit menu sortable */
+.menu_order > ul,
+.menu_order > ul ul {
+	margin: 0 0 0 25px;
+	padding: 0;
+	list-style-type: none;
+}
+.menu_order > ul {
+	margin: 1em 0;
+}
+.menu_order > ul li {
+	margin: 5px 0 0 0;
+	padding: 0;
+}
+.menu_order ul > li {
+	padding: 15px 10px;
+	background: #fff;
+	margin: 10px 0;
+	border: 1px solid #777;
+	cursor: move;
+}
+.menu_order ul > li.ignore {cursor: default;}
+.menu_order ul > li:nth-child(odd) {background: #fff;}
+.menu_order ul > li:nth-child(even) {background: #eee;}
+.menu_order > ul > li ul > li {padding: 5px;}
+.menu_order > ul > li ul > li {background: #e5e5e5 !important; padding-left: 20px; margin: 5px 0;}
+.menu_order > ul > li > ul > li ul {border-left: 1px dotted #555;}
+.menu_order > ul > li > ul > li ul > li {border: 0;}
+.menu_order > ul > li > ul > li ul > li {padding-bottom: 0;}
+
+.menu_order > ul li.collapsed > ul {
+	display: none;
+}
+
+.menu_order > ul li > div > .disclose {
+	cursor: pointer;
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	font-size: 1.2em;
+	line-height: 1em;
+}
+.menu_order > ul li:not(.ignore)			> div > .disclose:before {content: '-';}
+.menu_order > ul li:not(.ignore).collapsed	> div > .disclose:before {content: '+';}
+
+.placeholder {outline: 1px dashed #4183C4;}
+.menu_order > ul li.error {background: #fbe3e4!important;border-color: transparent!important;}
+
+.menu_order > ul li div .remove-icon {
+	height: 1.5rem;
+	width: 1.5rem;
+	display: inline-block;
+	vertical-align: top;
+	margin: 0;
+	/* float: left; */
+	line-height: 1.5rem;
+}
+
 /* font size */
 .fontsize {
 	float: right;
@@ -1159,7 +1237,7 @@ div.add.backend .close:hover {
 		color: #FFFFFF;
 		text-decoration: none;
 	}
-	#topmenu li:hover ul {
+	#topmenu li:hover > ul {
 		display: block;
 		opacity: 1;
 		height: auto;

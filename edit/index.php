@@ -9,36 +9,35 @@ if(!isset($_GET['site'])) { //read the site
 	$site = $db->real_escape_string($_GET['site']);
 }
 
-$all_sites = array(
-					"editroom" => "Editroom",
-					"Seiten" => array (
-										"site_new" => "Neue Seite erstellen",
-										"site_edit" => "Seiten bearbeiten",
-										"mainsettings" => "Grundeinstellungen",
-										),
-					"Sonstiges" => array (
-										"news_edit" => "News bearbeiten",
-										"event_edit" => "Termine bearbeiten",
-										"files" => "Dateien",
-										"contact" => "Ansprechpartner",
-										),
-					"Account" => array (
-										"personal_data_change" => "Persönliche Daten ändern",
-										"password_change" => "Passwort ändern",
-										"rights_show" => "Meine Rechte anzeigen",
-										"rights_edit" => "Rechte ändern",
-										"mail" => "Mail senden",
-										"logout" => "Logout",
-										),
-					/* Login etc */
-						"login" => "Login",
-						"register" => "Registrieren",
-						"forgotusername" => "Benutzername vergessen",
-						"forgotpassword" => "Passwort vergessen",
-						"confirm" => "Freigabe",
-						"delete_acc" => "Account löschen",
-					/* Login etc */
-					);
+$all_sites = array
+(
+	"editroom"	=> "Editroom",
+	"Seiten"	=> array	(
+								"site_edit" => "Seiten bearbeiten",
+								"mainsettings" => "Grundeinstellungen",
+							),
+	"Sonstiges"	=> array	(
+								"news_edit" => "News bearbeiten",
+								"event_edit" => "Termine bearbeiten",
+								"files" => "Dateien",
+								"contact" => "Ansprechpartner",
+							),
+	"Account"	=> array	(
+								"personal_data_change" => "Persönliche Daten ändern",
+								"password_change" => "Passwort ändern",
+								"rights_show" => "Meine Rechte anzeigen",
+								"rights_edit" => "Rechte ändern",
+								"mail" => "Mail senden",
+								"logout" => "Logout",
+							),
+	/* login etc */
+	"login"				=> "Login",
+	"register"			=> "Registrieren",
+	"forgotusername" 	=> "Benutzername vergessen",
+	"forgotpassword"	=> "Passwort vergessen",
+	"confirm"			=> "Freigabe",
+	"delete_acc"		=> "Account löschen",
+);
 $sites = array();
 foreach($all_sites as $key => $val) {
 	if(is_array($val)) {
@@ -75,8 +74,9 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 	<script src="../core/js/jquery-migrate-1.2.1.min.js"></script>
 	<script src="../core/js/jquery-ui.js"></script>
 	<script src="../core/js/jquery.cookie.js"></script>
-	<script src="../core/ckeditor/ckeditor.js"></script>
+	<script src="../wysiwyg/ckeditor.js"></script>
 	<script src="../core/js/colResizable-1.3.min.js"></script>
+	<script src="../core/js/jquery.mjs.nestedSortable.js"></script>
 	<script src="../core/js/functions.js?from=https://code-snippets-se.googlecode.com/"></script>
 	<script src="../core/js/main.js"></script>
 	<style>
@@ -127,7 +127,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 					if(is_array($val)) {
 						echo "<li><a>$key</a><ul>";
 						foreach($val as $key => $val) {
-							echo "<li><a href=\"./?site=$key\">$val</a></li>";
+							echo "<li><a href=\"./?site=$key\">".nbsp($val)."</a></li>";
 						}
 						echo "</ul></li>";
 					};
@@ -146,7 +146,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 		<main style="width: calc(100% - 10px);float:none;">
 			<h1><?php echo $sites[$site]; ?></h1>
 			<?php
-				if(isset($_GET['id'])) {
+				if(isset($_GET['backbtn'])) {
 					echo "<a style=\"float: right;\" href=\"./?site=$site\">zur Auswahl</a>";
 				}
 				if(isset($login) or $site == "forgotusername" or $site == "forgotpassword" or $site == "register" or $site == "confirm") {

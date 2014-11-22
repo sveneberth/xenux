@@ -14,12 +14,11 @@ if($num < 1) {
 
 $row = $result->fetch_object();
 
-echo "<h1>$row->title" . ((isset($login))?"<a id=\"edit_href\" href=\"edit/?site=site_edit&token=edit_site&site_id=$row->id\">Bearbeiten</a>":'') . "</h1>";
+echo "<h1>$row->title" . ((isset($login))?"<a id=\"edit_href\" href=\"edit/?site=site_edit&token=edit_site&site_id=$row->id&backbtn\">Bearbeiten</a>":'') . "</h1>";
 echo $row->text;
 
-if(!empty($row->category)) {
-	
-	$result = $db->query("SELECT * FROM XENUX_sites WHERE category = '$row->category' ORDER by title ASC;");
+if($row->parent_id != 0) {
+	$result = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = '$row->parent_id' ORDER by title ASC;");
 	$i = 1;
 	$s_i_c = 0;
 	$site_pos = array();
@@ -32,11 +31,11 @@ if(!empty($row->category)) {
 		$s_i_c++;
 	}
 	if($cur_pos != 1) {
-		$result = $db->query("SELECT * FROM XENUX_sites WHERE id = '{$site_pos[$cur_pos-1]}' ORDER by title ASC;");
+		$result = $db->query("SELECT * FROM XENUX_sites WHERE id = '{$site_pos[$cur_pos-1]}' LIMIT 1;");
 		$prev = $result->fetch_object();
 	}
 	if($cur_pos != $s_i_c) {
-		$result = $db->query("SELECT * FROM XENUX_sites WHERE id = '{$site_pos[$cur_pos+1]}' ORDER by title ASC;");
+		$result = $db->query("SELECT * FROM XENUX_sites WHERE id = '{$site_pos[$cur_pos+1]}' LIMIT 1;");
 		$next = $result->fetch_object();
 	}
 }

@@ -122,39 +122,32 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 			<ul id="topmenu" class="mainmenu">
 				<li><a href='./'>Home</a></li>
 				<?php
-					$read_category = array();
-					
-					$result = $db->query("SELECT DISTINCT category FROM XENUX_sites WHERE category != '';");
-					while($row = $result->fetch_object()) {
-						$menu_category = $row->category;
-						echo "<li><a";
-						$InnerResult = $db->query("SELECT * FROM XENUX_sites WHERE title = '$menu_category' AND category  = '$menu_category' LIMIT 1;");
-						$thispage = $InnerResult->fetch_object();
-						if($InnerResult->num_rows > 0) {
-							echo " href=\"?site=page&page_id=$thispage->id\"";
-						}
-						echo ">$menu_category</a><ul>";
+					$result1 = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = 0 ORDER by title ASC;");
+					while($rank1 = $result1->fetch_object()) {
+						if(in_array($rank1->site, $special_sites) || $rank1->site == 'home')
+							continue;
+						echo "<li><a href=\"?site=page&page_id=$rank1->id\">".nbsp($rank1->title)."</a><ul>";
 						
-						$result_point = $db->query("SELECT * FROM XENUX_sites WHERE category = '$menu_category' AND category != '' ORDER by title ASC");
-						while($row_point = $result_point->fetch_object()) {
-							if(strtolower($menu_category) != strtolower($row_point->title)) {
-								echo "<li><a href=\"?site=page&page_id=$row_point->id\">$row_point->title</a></li>";
+						$result2 = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = $rank1->id ORDER by title ASC;");
+						while($rank2 = $result2->fetch_object()) {
+							echo "<li><a href=\"?site=page&page_id=$rank2->id\">".nbsp($rank2->title)."</a><ul>";
+							
+							$result3 = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = $rank2->id ORDER by title ASC;");
+							while($rank3 = $result3->fetch_object()) {
+								echo "<li><a href=\"?site=page&page_id=$rank3->id\">".nbsp($rank3->title)."</a></li>";
 							}
+							
+							echo "</ul></li>";
 						}
+						
 						echo "</ul></li>";
-					}
-					$result = $db->query("SELECT * from XENUX_sites WHERE category = '' ORDER by title ASC;");
-					while($row = $result->fetch_object()) {
-						if(!in_array($row->site, $special_sites) && $row->site != 'home') {
-							echo "<li><a href=\"?site=page&page_id=$row->id\">$row->title</a></li>";
-						}
 					}
 				?>
 				<li class="search">
 					<div id="sb-search" class="sb-search">
 						<form action="" method="GET">
 							<input type="hidden" name="site" value="search" />
-							<input onkeyup="if($(this).val()==''){$('.sb-search-submit').css('z-index', 11);}else{$('.sb-search-submit').css('z-index', 99);}" type="search" class="sb-search-input" name="q" placeholder="Suche" value="<?php if($get->site =='search')echo @$get->q; ?>" />
+							<input onkeyup="if($(this).val()==''){$('.sb-search-submit').css('z-index', 11);}else{$('.sb-search-submit').css('z-index', 99);}" type="search" class="sb-search-input" name="q" placeholder="Suche" value="<?php if($site->site =='search')echo @$get->q; ?>" />
 							<input type="submit" class="sb-search-submit" value="" />
 							<span onclick="$('div#sb-search').toggleClass('sb-search-open');" class="sb-icon-search"></span>
 						</form>
@@ -181,7 +174,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 					<?php
 					while($row = $result->fetch_object()) {
 						if(!empty($row->title) && !empty($row->text)) {
-							echo "<li><span class=\"title\">$row->title" . /*((isset($login))?"<a id=\"edit_href\" href=\"edit/?site=news_edit&token=edit_news&news_id=$row->id\">Bearbeiten</a>":'') . */"</span>";
+							echo "<li><span class=\"title\">$row->title</span>";
 							if(strlen($row->text) > 70) {
 								echo htmlentities(substr($row->text, 0, strpos($row->text, " ", 70)));
 							} else {
@@ -276,7 +269,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 				echo "<h1>$site->title";
 				if(isset($login)) {
 					if(!in_array($site->site, $special_sites) || contains($site->site, 'home', 'imprint', 'contact')) {
-						echo "<a id=\"edit_href\" href=\"edit/?site=site_edit&token=edit_site&site_id=$site->id\">Bearbeiten</a>";
+						echo "<a id=\"edit_href\" href=\"edit/?site=site_edit&token=edit_site&site_id=$site->id&backbtn\">Bearbeiten</a>";
 					}
 				}
 				echo "</h1>";

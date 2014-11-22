@@ -71,9 +71,9 @@ define('MYSQL_DB',		'$dbname');
 											`id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 											`site` varchar(150) NOT NULL,
 											`title` varchar(300) NOT NULL,
-											`category` varchar(150) NOT NULL,
 											`text` text NOT NULL,
-											`create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+											`create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+											`parent_id` int(10) NOT NULL
 										);
 									");
 			if (!$result) {

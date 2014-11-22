@@ -276,4 +276,11 @@ function request_failed() {
 	echo "Bei der Anfrage trat ein Fehler auf, möglicherweise haben sie auf einen fehlerhaften Link geklickt...";
 	return false;
 }
+
+function nbsp($str) {
+	if(empty($str) || !isset($str))
+		return false;
+		
+	return str_replace(" ", "&nbsp;", $str);
+}
 ?>
