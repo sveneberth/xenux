@@ -1,6 +1,4 @@
 <?php
-include("../core/inc/config.php");
-
 if(isset($_POST['submit'])) {
 	if(empty($post->hpname) and empty($post->email)){
 		echo '<p style="color:red;">Sie müssen alle Felder ausfüllen!</p>';

@@ -17,11 +17,17 @@ if(!isset($_GET['step']) or empty($_GET['step']) or !is_numeric($_GET['step'])) 
 } else {
 	$step = $_GET['step'];
 }
+
 if($step == 1) {
+	/* start session and delete */
 	session_start();
 	$_SESSION = array();
 	session_destroy();
 }
+if($step == 4 || $step == 5) {
+	include("../core/inc/config.php"); // include config
+}
+
 $steps = array(
 				1 => "Hallo",
 				2 => "Technische Voraussetztungen",

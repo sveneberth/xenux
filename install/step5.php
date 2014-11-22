@@ -1,6 +1,4 @@
 <?php
-include("../core/inc/config.php");
-
 if(isset($_POST['submit_register'])) {
 	if(preg_match("/[^a-zA-Z0-9_-]/", $post->username)) {
 		echo "<p>Der Benutzername enthält unerlaubte Zeichen, zulässig sind nur Buchstaben, Zahlen und (Unter-)Strich.</p>";
