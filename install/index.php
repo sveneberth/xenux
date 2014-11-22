@@ -17,6 +17,11 @@ if(!isset($_GET['step']) or empty($_GET['step']) or !is_numeric($_GET['step'])) 
 } else {
 	$step = $_GET['step'];
 }
+if($step == 1) {
+	session_start();
+	$_SESSION = array();
+	session_destroy();
+}
 $steps = array(
 				1 => "Hallo",
 				2 => "Technische Voraussetztungen",
