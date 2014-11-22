@@ -12,7 +12,7 @@ if($num < 1) {
 }
 
 $row = $result->fetch_object();
-echo "<topic>$row->title" . /*((isset($login))?"<a id=\"edit_href\" href=\"edit/?site=news_edit&token=edit_news&news_id=$row->id\">Bearbeiten</a>":'') . */"</topic>".
+echo "<topic>$row->title</topic>".
 nl2br(htmlentities($row->text));
 ?>
 <br />

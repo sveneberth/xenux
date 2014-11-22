@@ -250,7 +250,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 						<?php echo @$returnlogin; ?>
 						<input style="margin: 5px 0;" type="submit" value="Einloggen">
 						<a href="edit/?site=forgotpassword">Passwort vergessen?</a><br />
-						<a href="edit/?site=forgotusername">Benutzernamen vergessen?</a><br />
+						<a href="edit/?site=forgotusername">Benutzername vergessen?</a><br />
 						<a href="edit/?site=register">Registrieren</a>
 					</form>
 					<?php
@@ -288,7 +288,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 			?>
 		</main>
 		<footer>
-			This Side was made with <a href="http://xenux.bplaced.net">Xenux</a>
+			this site was made with <a href="http://xenux.bplaced.net">Xenux</a>
 			<div class="href">
 				<a href="./edit/">Editroom</a>
 				<a href="./?site=contact">Kontakt</a>
