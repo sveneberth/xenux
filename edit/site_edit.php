@@ -13,7 +13,7 @@ if(isset($get->token)) {
 			
 			if(isset($_POST['editor'])) {
 				$post->title = preg_replace("/[^a-zA-Z0-9_üÜäÄöÖ&#,.()[]{}*\/ ]/" , "" , $post->title);
-				if($_GET['new'] == 1) {
+				if(@$_GET['new'] == 1) {
 					// new
 					$db->query("INSERT INTO XENUX_sites(text, title) VALUES ('$post->text', '$post->title');");
 					$result = $db->query("SELECT * FROM XENUX_sites WHERE title = '$post->title' ORDER by id DESC LIMIT 1;");
