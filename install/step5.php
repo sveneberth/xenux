@@ -27,7 +27,7 @@ if(isset($_POST['submit_register'])) {
 			}
 		} else {
 				echo "<p>Alle Felder müssen richtig ausgefüllt sein!</p>";
-				if($$post->password != $post->passwordre) {
+				if($post->password != $post->passwordre) {
 					echo "<p>Die eingeben Passwörter stimmen nicht überein!</p>";
 				}
 		}
@@ -35,12 +35,12 @@ if(isset($_POST['submit_register'])) {
 }
 ?>
 <form action="" method="POST" name="form">
-	<input type="text" name="firstname" placeholder="Vorname" />
-	<input type="text" name="lastname" placeholder="Nachname" />
-	<input type="email" name="email" placeholder="E-Mail" />
-	<input type="text" name="username" placeholder="Benutzername" />
-	<input type="password" name="password" placeholder="Passwort" />
-	<input type="password" name="passwordre" placeholder="Passwort wiederholen" />
+	<input <?php if(empty(@$post->firstname)) echo 'class="wrong"'; ?> type="text" name="firstname" placeholder="Vorname" />
+	<input <?php if(empty(@$post->lastname)) echo 'class="wrong"'; ?> type="text" name="lastname" placeholder="Nachname" />
+	<input <?php if(empty(@$post->email)) echo 'class="wrong"'; ?> type="email" name="email" placeholder="E-Mail" />
+	<input <?php if(empty(@$post->username)) echo 'class="wrong"'; ?> type="text" name="username" placeholder="Benutzername" />
+	<input <?php if(empty(@$post->password)) echo 'class="wrong"'; ?> type="password" name="password" placeholder="Passwort" />
+	<input <?php if(empty(@$post->passwordre)) echo 'class="wrong"'; ?> type="password" name="passwordre" placeholder="Passwort wiederholen" />
 	<input type="hidden" name="submit_register" value="true" />
 	<input type="submit" value="Registrieren" />
 </form>

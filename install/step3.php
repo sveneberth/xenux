@@ -1,13 +1,13 @@
 <p>Nun müssen sie hier die Datenbank einrichten.</p>
 	<form action="" method="post">
 	Datenbank-Server<br />
-	<input type="text" name="host" value="localhost" /><br /><br />
+	<input <?php if(empty(@$post->host)) echo 'class="wrong"'; ?> type="text" name="host" value="localhost" /><br /><br />
 	Benutzer<br />
-	<input type="text" name="username" value="" /><br /><br />
+	<input <?php if(empty(@$post->username)) echo 'class="wrong"'; ?> type="text" name="username" value="" /><br /><br />
 	Passwort<br />
-	<input type="password" name="password" value="" /><br /><br />
+	<input <?php if(empty(@$post->password)) echo 'class="wrong"'; ?> type="password" name="password" value="" /><br /><br />
 	Datenbankname<br />
-	<input type="text" name="dbname" value="" /><br /><br />
+	<input <?php if(empty(@$post->dbname)) echo 'class="wrong"'; ?> type="text" name="dbname" value="" /><br /><br />
 	Tabellen-Prefix<br />
 	<input type="text" value="XENUX_" readonly /><br /><br />
 	<input type="hidden" name="submit"  value="submit" />
