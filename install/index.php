@@ -12,7 +12,18 @@ if(isset($_POST['deldir']) and $_GET['step'] == 6) {
 	rmdir('../install');
 	header("Location: ../");
 }
-if(!isset($_GET['step']) or empty($_GET['step']) or !is_numeric($_GET['step'])) {
+
+$steps = array
+(
+	1 => "Hallo",
+	2 => "Technische Voraussetzungen",
+	3 => "Datenbank",
+	4 => "Homepage einrichten",
+	5 => "Administrator",
+	6 => "Fertigstellung",
+);
+
+if(!isset($_GET['step']) || empty($_GET['step']) || !is_numeric($_GET['step']) || $_GET['step'] > count($steps)) {
 	$step = 1;
 } else {
 	$step = $_GET['step'];
@@ -28,14 +39,6 @@ if($step == 4 || $step == 5) {
 	include("../core/inc/config.php"); // include config
 }
 
-$steps = array(
-				1 => "Hallo",
-				2 => "Technische Voraussetztungen",
-				3 => "Datenbank",
-				4 => "Homepage einrichten",
-				5 => "Administrator",
-				6 => "Fertigstellung",
-				);
 $next = false;
 ?>
 <!DOCTYPE html>

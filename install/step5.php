@@ -35,12 +35,12 @@ if(isset($_POST['submit_register'])) {
 }
 ?>
 <form action="" method="POST" name="form">
-	<input <?php if(empty(@$post->firstname)) echo 'class="wrong"'; ?> type="text" name="firstname" placeholder="Vorname" />
-	<input <?php if(empty(@$post->lastname)) echo 'class="wrong"'; ?> type="text" name="lastname" placeholder="Nachname" />
-	<input <?php if(empty(@$post->email)) echo 'class="wrong"'; ?> type="email" name="email" placeholder="E-Mail" />
-	<input <?php if(empty(@$post->username)) echo 'class="wrong"'; ?> type="text" name="username" placeholder="Benutzername" />
-	<input <?php if(empty(@$post->password)) echo 'class="wrong"'; ?> type="password" name="password" placeholder="Passwort" />
-	<input <?php if(empty(@$post->passwordre)) echo 'class="wrong"'; ?> type="password" name="passwordre" placeholder="Passwort wiederholen" />
+	<input <?php if(empty(@$post->firstname) && isset($post->firstname)) echo 'class="wrong"'; ?> type="text" name="firstname" placeholder="Vorname" value="<?php echo @$post->firstname; ?>" />
+	<input <?php if(empty(@$post->lastname) && isset($post->lastname)) echo 'class="wrong"'; ?> type="text" name="lastname" placeholder="Nachname" value="<?php echo @$post->lastname; ?>" />
+	<input <?php if(empty(@$post->email) && isset($post->email)) echo 'class="wrong"'; ?> type="email" name="email" placeholder="E-Mail" value="<?php echo @$post->email; ?>" />
+	<input <?php if(empty(@$post->username) && isset($post->username)) echo 'class="wrong"'; ?> type="text" name="username" placeholder="Benutzername" value="<?php echo @$post->username; ?>" />
+	<input <?php if(empty(@$post->password) && isset($post->password)) echo 'class="wrong"'; ?> type="password" name="password" placeholder="Passwort" />
+	<input <?php if(empty(@$post->passwordre) && isset($post->passwordre)) echo 'class="wrong"'; ?> type="password" name="passwordre" placeholder="Passwort wiederholen" />
 	<input type="hidden" name="submit_register" value="true" />
 	<input type="submit" value="Registrieren" />
 </form>
