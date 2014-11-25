@@ -37,7 +37,7 @@ $(window).resize(function () {
 		$(".topmenu.mobilemenu").show();
 		$(".topmenu.mainmenu").hide();
 		
-		if($(".topmenu.mainmenu li span").length == 0) {
+		if($(".topmenu.mainmenu li a span").length == 0) {
 			$(".topmenu.mainmenu li").has("ul").children("a").append("<span></span>");
 		}
 	}
