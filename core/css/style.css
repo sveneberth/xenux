@@ -371,7 +371,7 @@ footer {
 	display: inline-table;
 	box-sizing: border-box;
 }
-footer > .href {
+footer > .links {
 	float: right;
 }
 footer a {
