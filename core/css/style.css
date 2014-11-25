@@ -1212,6 +1212,10 @@ div.add.backend .close:hover {
 		box-sizing: border-box;
 	}
 	
+	.contact-persons label {
+		width: 100%;
+	}
+	
 	.contactbox {
 		width: 100%;
 	}

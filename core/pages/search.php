@@ -22,16 +22,19 @@ if($num < 1) {
 	return;
 }
 while($row = $result->fetch_object()) {
+	$text_shortened = nl2br(maxlines($row->text,5));
+	
 	if(contains($row->site, 'impressum', 'kontakt', 'home')) {
 		echo "	<div class=\"searchresult\">
 					<b><a href=\"?site=$row->site\">$row->title</a></b><br />
-					".nl2br(maxlines($row->text,5))."
+					$text_shortened".(($text_shortened != $row->text)?'<br />...':'')."
 				</div>";
 	} else {
 		echo "	<div class=\"searchresult\">
 					<b><a href=\"?site=page&page_id=$row->id\">$row->title</a></b><br />
-					".nl2br($row->text)."<br />
+					$text_shortened".(($text_shortened != $row->text)?'<br />...':'')."
 				</div>";
 	}
+	#FIXME: add '...' works not trustworthy
 }
 ?>
