@@ -113,34 +113,42 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 					<img src="./core/images/<?php echo $main->logo_src; ?>" />
 				</a>
 			</div>
-			<ul id="topmenu" class="mobilemenu">
+			<ul class="topmenu mobilemenu">
 				<li><a href="javascript:openmobilemenu()">Menu</a></li>
 				<li><a href="?site=news_list">News</a></li>
 				<li><a href="?site=event_list">Termine</a></li>
 				<li><a href="./edit?site=login">Login</a></li>
 			</ul>
-			<ul id="topmenu" class="mainmenu">
+			<ul class="topmenu mainmenu">
 				<li><a href='./'>Home</a></li>
 				<?php
 					$result1 = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = 0 ORDER by title ASC;");
 					while($rank1 = $result1->fetch_object()) {
 						if(in_array($rank1->site, $special_sites) || $rank1->site == 'home')
 							continue;
-						echo "<li><a href=\"?site=page&page_id=$rank1->id\">".nbsp($rank1->title)."</a><ul>";
+						echo "<li><a href=\"?site=page&page_id=$rank1->id\">".nbsp($rank1->title)."</a>";
 						
 						$result2 = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = $rank1->id ORDER by title ASC;");
-						while($rank2 = $result2->fetch_object()) {
-							echo "<li><a href=\"?site=page&page_id=$rank2->id\">".nbsp($rank2->title)."</a><ul>";
-							
-							$result3 = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = $rank2->id ORDER by title ASC;");
-							while($rank3 = $result3->fetch_object()) {
-								echo "<li><a href=\"?site=page&page_id=$rank3->id\">".nbsp($rank3->title)."</a></li>";
+						if($result2->num_rows > 0) {
+							echo "<ul>";
+							while($rank2 = $result2->fetch_object()) {
+								echo "<li><a href=\"?site=page&page_id=$rank2->id\">".nbsp($rank2->title)."</a>";
+								
+								$result3 = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = $rank2->id ORDER by title ASC;");
+								if($result3->num_rows > 0) {
+									echo "<ul>";
+									while($rank3 = $result3->fetch_object()) {
+										echo "<li><a href=\"?site=page&page_id=$rank3->id\">".nbsp($rank3->title)."</a></li>";
+									}
+									echo "</ul>";
+								}
+								echo "</li>";
+								
 							}
-							
-							echo "</ul></li>";
+							echo "</ul>";
 						}
 						
-						echo "</ul></li>";
+						echo "</li>";
 					}
 				?>
 				<li class="search">
@@ -289,7 +297,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 		</main>
 		<footer>
 			this site was made with <a href="http://xenux.bplaced.net">Xenux</a>
-			<div class="href">
+			<div class="links">
 				<a href="./edit/">Editroom</a>
 				<a href="./?site=contact">Kontakt</a>
 				<a href="./?site=imprint">Impressum</a>

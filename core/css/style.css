@@ -230,22 +230,22 @@ header:after {
 .openpoints {
 	display: none;
 }
-#topmenu {
+.topmenu {
 	font-size: 90%;
 	padding: 0;
 	margin: 0;
 	height: 50px;
 	list-style: none;
 }
-#topmenu li {
+.topmenu li {
 	float: left;
 	padding: 0px;
 	position: relative;
 }
-#topmenu > li > a {
+.topmenu > li > a {
 	text-transform: uppercase;
 }
-#topmenu li a {
+.topmenu li a {
 	background: #333333;
 	display: block;
 	line-height: 50px;
@@ -256,10 +256,10 @@ header:after {
 	color: #cccccc;
 	border-left: #3C3C3C 1px solid;
 }
-#topmenu.mobilemenu li a {
+.topmenu.mobilemenu li a {
 	padding: 0px 5px;
 }
-#topmenu li ul {
+.topmenu li ul {
 	background: #fff;
 	display: block;
 	padding: 0px;
@@ -277,10 +277,10 @@ header:after {
 	min-width: 100%;
 	box-sizing: border-box;
 }
-#topmenu  li:hover  > ul {
-	overflow: visible !important;
+.topmenu  li:hover  > ul {
+	overflow: visible;
 }
-#topmenu li li {
+.topmenu li li {
 	float: none;
 	display: block;
 	margin: 0px;
@@ -288,10 +288,10 @@ header:after {
 	border-bottom: #666 1px solid;
 	position: relative;
 }
-#topmenu li li:last-child {
+.topmenu li li:last-child {
 	border-bottom: none;
 }
-#topmenu li ul a {
+.topmenu li ul a {
 	display: block;
 	font-size: 90%;
 	padding: 15px;
@@ -302,7 +302,7 @@ header:after {
 	background: inherit;
 	color: inherit;
 }
-#topmenu li li ul {
+.topmenu li li ul {
 	position: absolute;
 	left: 100%;
 	top: 0;
@@ -311,7 +311,7 @@ header:after {
 	border-top-width: 1px;
 }
 /*
-#topmenu li li li {
+.topmenu li li li {
 	background: rgb(26, 179, 100);
 }
 */
@@ -465,12 +465,12 @@ footer a:hover {
 }
 
 /* editroom */
-#editroom {
+.editroomboxes {
 	width: 100%;
 	margin: 10px 0;
 	padding: 0;
 }
-#editroombox {
+.editroomboxes > ul.editroombox {
 	float: left;
 	padding: 0;
 	width: 31%;
@@ -481,21 +481,21 @@ footer a:hover {
 	padding-bottom: 5px;
 	overflow: hidden;
 }
-#editroombox h4  {
+.editroomboxes > ul.editroombox h4  {
 	margin: 0 0 5px 0;
 	border-bottom: 1px solid rgb(10, 67, 168);
 	padding: 2px 5px;
 	color: #fff;
 }
-#editroombox li {
+.editroomboxes > ul.editroombox li {
 	list-style: none;
 	display: block;
 	padding: 2px 5px;
 }
-#editroombox li:hover {
+.editroomboxes > ul.editroombox li:hover {
 	background: #2c4572;
 }
-#editroombox li a {
+.editroomboxes > ul.editroombox li > a {
 	display: block;
 	color: #fff!important;
 	text-decoration: none;
@@ -819,27 +819,28 @@ div.add.backend .close:hover {
 }
 
 /* contact box */
-#box_contact {
+.contactbox {
 	border: 1px solid #aaa;
 	padding: .5% 1%;
-	width: 45%;
+	width: 48%;
 	margin: 0 2% 2% 0;
 	float: left;
+	box-sizing: border-box;
 }
-#box_contact > .name {
+.contactbox > .name {
 	font-size: 150%;
 	font-weight: 500;
 	margin-bottom: 5px;
 }
-#box_contact > .position {
+.contactbox > .position {
 	margin-bottom: 2px;
 	font-size: 110%;
 	font-weight: 500;
 }
-#box_contact > .desc {
+.contactbox > .desc {
 	margin-bottom: 2px;
 }
-#box_contact > .email > a:hover {
+.contactbox > .email > a:hover {
 	color: #999;
 }
 
@@ -1023,7 +1024,7 @@ div.add.backend .close:hover {
 }
 
 /* search */
-#topmenu li.search {
+.topmenu li.search {
 	width: 200px;
 	float:right!important
 }
@@ -1091,23 +1092,23 @@ div.add.backend .close:hover {
 ** MEDIA QUERYS
 ** #############################################*/
 @media only screen and (max-width: 600px) {
-	#wrapper {
+	.wrapper {
 		width: 100%;
 	}
-	#headWrapper {
+	.headWrapper {
 		position: fixed;
 		z-index: 1000;
 	}
-	#head {
+	header {
 		width: 100%;
 	}
-	#head .logo img {
+	header .logo img {
 		margin: 0;
 	}
 	.mainmenu {
 		display: none;
 	}
-	#topmenu.mainmenu  {
+	.topmenu.mainmenu  {
 		height: auto;
 		position: absolute;
 		top: 60px;
@@ -1117,21 +1118,22 @@ div.add.backend .close:hover {
 		border: solid #1958e7;
 		border-width: 2px 2px 2px 0px ;
 	}
-	#topmenu.mainmenu  li {
+	.topmenu.mainmenu  li {
 		float: none;
 		display: block;
 		padding: 0px;
+		border: 0;
 		border-top: 1px solid #555;
 	}
-	#topmenu.mainmenu  li a {
+	.topmenu.mainmenu  li a {
 		display: block;
 		line-height: 40px;
-		margin: 0px 0 0 50px; 
-		padding: 0 3px;
+		margin: 0; 
+		padding: 0 0 0 10px;
 		text-align: left;
 		border-left: none;
 	}
-	#topmenu.mainmenu  li ul {
+	.topmenu.mainmenu li ul {
 		display: none;
 		padding: 0px;
 		margin: 0px;
@@ -1143,51 +1145,65 @@ div.add.backend .close:hover {
 		opacity: 1;
 		background: #333;
 		color: #ccc;
+		left: 0;
+		border: 0;
 	}
-	#topmenu.mainmenu  li li {
+	.topmenu.mainmenu li ul li a{
+		padding-left: 20px;
+	}
+	.topmenu.mainmenu li ul li ul li a{
+		padding-left: 30px;
+	}
+	.topmenu.mainmenu li li {
 		float: none;
 		display: block;
 		margin: 0px;
 		padding: 0px;
 	}
-	#topmenu.mainmenu  li ul a {
-		padding: 0px 0 0px 20px;
-		text-align: left;
-		line-height: 40px;
+	.topmenu.mainmenu li span {
+		float: right;
+		background: #444;
+		width: 40px;
 		height: 40px;
+		display: block;
+	}
+	.topmenu.mainmenu ul li a:before{
+	   content: "\00BB";
+		margin-right: 2px;
+	}
+	.topmenu.mainmenu li span:before {
+		width: 0;
+		height: 0;
+		border-left: 12px solid transparent;
+		border-right: 12px solid transparent;
+		content: '';
+		border-top: 15px solid #aaa;
+		display: block;
+		left: 8px;
+		top: 13px;
+		position: relative;
 	}
 	.mobilemenu {
 		display: block;
 		font-size: 16px !important;
 	}
-	.openpoints {
-		float: left;
-		height: 38px;
-		width: 50px;
-		display: block;
-		margin: 1px;
-	}
-	#content {
+	
+	.topmenu.mainmenu li.search {display:none} /* #FIXME: show search */
+	
+	main {
 		float: left;
 		width: 100%;
+		padding: 0;
 	}
-	#leftboxes {
-		float: none;
-		width: 100%;
+	.leftboxes {
 		display: none;
 	}
-	#leftboxes .dates {
-		display: none;
-	}
-	#footer > .href {
+	footer > .links {
 		float: none;
 		display: block;
-	}
-	#login-left {
-		display: none;
 	}
 
-	#editroombox {
+	.editroomboxes > ul.editroombox {
 		float: none;
 		width: 100%;
 		margin: 1em 0;
@@ -1195,6 +1211,11 @@ div.add.backend .close:hover {
 		border: 1px solid #EEEEEE;
 		box-sizing: border-box;
 	}
+	
+	.contactbox {
+		width: 100%;
+	}
+	
 	input, textarea {
 		width: 100%;
 	}
@@ -1253,18 +1274,18 @@ div.add.backend .close:hover {
 	}
 }
 @media only screen and (min-width: 600px) {
-	#topmenu li:hover > a {
+	.topmenu li:hover > a {
 		background: #2580a2;
 		color: #FFFFFF;
 		text-decoration: none;
 	}
-	#topmenu li:hover > ul {
+	.topmenu li:hover > ul {
 		display: block;
 		opacity: 1;
 		height: auto;
 	}
-	#topmenu li ul a:hover,
-	#topmenu li ul li:hover > a {
+	.topmenu li ul a:hover,
+	.topmenu li ul li:hover > a {
 		background: #2580a2;
 		color: #ffffff;
 		text-decoration: none;

@@ -67,7 +67,7 @@ $num = $result->num_rows;
 if($num > 0) {
 	echo "<h3>Ansprechpartner</h3>";
 	while($row = $result->fetch_object()) {
-		echo "	<div id=\"box_contact\">
+		echo "	<div class=\"contactbox\">
 					<div class=\"name\">$row->name</div>
 					<div class=\"position\">$row->position</div>
 					<div class=\"desc\">$row->text</div>

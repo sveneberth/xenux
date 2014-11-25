@@ -106,7 +106,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 					<img src="../core/images/<?php echo $main->logo_src;; ?>" />
 				</a>
 			</div>
-			<ul id="topmenu" class="mobilemenu">
+			<ul class="topmenu mobilemenu">
 				<li><a href="javascript:openmobilemenu()">Menu</a></li>
 				<?php
 				if(isset($login)) {
@@ -120,7 +120,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 				}
 				?>
 			</ul>
-			<ul id="topmenu" class="mainmenu">
+			<ul class="topmenu mainmenu">
 				<li><a href="./">Editroom</a></li>
 				<?php
 				foreach($all_sites as $key => $val) {
@@ -159,7 +159,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 		
 		<footer>
 			this site was made with <a href="http://xenux.bplaced.net">Xenux</a>
-			<div class="href">
+			<div class="links">
 				<a href="../">Homepage</a>
 				<a href="../?site=contact">Kontakt</a>
 				<a href="../?site=imprint">Impressum</a>
