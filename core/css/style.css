@@ -1183,9 +1183,9 @@ div.add.backend .close:hover {
 		top: 13px;
 		position: relative;
 	}
-	.mobilemenu {
+	.topmenu.mobilemenu {
 		display: block;
-		font-size: 16px !important;
+		font-size: 16px;
 	}
 	
 	.topmenu.mainmenu li.search {display:none} /* #FIXME: show search */
@@ -1271,6 +1271,12 @@ div.add.backend .close:hover {
 	}
 	.responsive-table td:before {
 		content: attr(data-title);
+	}
+}
+@media only screen and (max-width: 360px) {
+	.topmenu.mobilemenu {
+		display: block;
+		font-size: 14px;
 	}
 }
 @media only screen and (min-width: 600px) {

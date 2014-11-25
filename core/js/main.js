@@ -30,18 +30,24 @@ $(window).scroll(function(){
 });
 $(window).resize(function () {
 	if($(window).width() > 600) {
-		$(".topmenu.mobilemenu" ).hide();
-		$(".transparent" ).hide();
-		$("tr.head").show();
+		$(".topmenu.mobilemenu, .transparent").hide();
+		$(".topmenu.mainmenu, tr.head").show();
+		$(".topmenu.mainmenu li span").remove();
+	} else {
+		$(".topmenu.mobilemenu").show();
+		$(".topmenu.mainmenu").hide();
+		
+		if($(".topmenu.mainmenu li span").length == 0) {
+			$(".topmenu.mainmenu li").has("ul").children("a").append("<span></span>");
+		}
 	}
 });
 $(document).ready(function () {
 	if($(window).width() <= 600) {
 		$(".topmenu.mainmenu li").has("ul").children("a").append("<span></span>");
-	//	$(".topmenu.mainmenu li").has("ul")/*.children("a")*/.prepend("<span></span>");
 	}
 	
-	$(".topmenu.mainmenu li span").bind('click', function(e) {
+	$(".topmenu.mainmenu li span").live('click', function(e) {
 		$(this).parent().parent().children('ul').slideToggle('fast');
 		e.preventDefault();
 		return false;
