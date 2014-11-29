@@ -12,9 +12,9 @@ if($num < 1) {
 }
 
 $row = $result->fetch_object();
-echo "<topic>$row->title</topic>".
+echo "<h1>$row->title</h1>".
 nl2br(htmlentities($row->text));
 ?>
 <br />
 <br />
-<a href="?site=news_list">&raquo;zur Übersicht</a>
+<a href="?site=news_list">&raquo;zur News Übersicht</a>

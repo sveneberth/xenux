@@ -10,7 +10,7 @@ while($row = $result->fetch_object()) {
 						echo $row->text;
 					}
 		echo "		...<br />
-					<a href=\"?site=news_view&news_id=$row->id\">&raquo;weiterlesen</a>
+					<a style=\"display:inline-block;margin-top:10px;\" href=\"?site=news_view&news_id=$row->id\">&raquo;weiterlesen</a>
 				</div>";
 	}
 }

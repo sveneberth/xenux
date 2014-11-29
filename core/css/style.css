@@ -69,7 +69,7 @@ a:focus		{color:#58aad6;}
 a:hover		{color:#58aad6;text-decoration:underline;}
 a:active	{color:#0d5fa3;}
 
-h1 {font-weight: bold;font-size: 170%;margin: 0 0 15px 0;}
+h1 {font-weight: bold;font-size: 170%;margin: 0 0 15px 0;border-bottom: 1px solid #eee;padding-bottom: 5px;}
 h2 {font-weight: bold;font-size: 150%;margin: 0 0 15px 0;}
 h3 {font-weight: bold;font-size: 130%;margin: 0 0 05px 0;}
 h4 {font-weight: bold;font-size: 120%;margin: 0 0 05px 0;}
@@ -322,6 +322,7 @@ main {
 	padding: 0 5px;
 	float: right;
 	width: 75%;
+	overflow: auto;
 }
 main:after {
 	display: block;
@@ -842,6 +843,16 @@ div.add.backend .close:hover {
 }
 .contactbox > .email > a:hover {
 	color: #999;
+}
+
+/* news_list */
+.newslistbox {
+	display: block;
+	border: 1px solid #ccc;
+	margin: 0 0 1em 0;
+	padding: 15px;
+	box-shadow: 0 0 5px 0px #aaa;
+	overflow: auto;
 }
 
 /* contact-persons */

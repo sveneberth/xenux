@@ -18,7 +18,7 @@ $num = $result->num_rows;
 if($num > 0) { //if site exists, than readout all the site informations
 	$site = $result->fetch_object();
 	if($site->site == 'page') {
-		$result = $db->query("SELECT * FROM XENUX_sites WHERE id = '$get->page_id' LIMIT 1;");
+		$result = $db->query("SELECT * FROM XENUX_sites WHERE id = '$get->page_id' AND site = '' LIMIT 1;");
 		$num = $result->num_rows;
 		if($num > 0) {
 			$page = $result->fetch_object();
@@ -228,22 +228,24 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 			}
 			
 			/* contact persons */
-			$result = $db->query("	SELECT * FROM XENUX_site_contactperson
-									LEFT JOIN XENUX_sites ON XENUX_site_contactperson.site_id = XENUX_sites.id
-									LEFT JOIN XENUX_contactpersons ON XENUX_site_contactperson.contactperson_id = XENUX_contactpersons.id
-									WHERE site_id = '".(($site->site == 'page')?$page->id:$site->id)."';");
-			$num = $result->num_rows;
-			if($num > 0) {
-				echo "<ul class=\"contactpersons\">
-						<h3>Ansprechpartner:</h3>";
-				while($row = $result->fetch_object()) {
-					echo "	<li>
-								<span class=\"title\">$row->name</span>
-								$row->position<br/>
-								".escapemail($row->email)."
-							</li>";
+			if($site->site == 'page' && $page->site != 'error') {
+				$result = $db->query("	SELECT * FROM XENUX_site_contactperson
+										LEFT JOIN XENUX_sites ON XENUX_site_contactperson.site_id = XENUX_sites.id
+										LEFT JOIN XENUX_contactpersons ON XENUX_site_contactperson.contactperson_id = XENUX_contactpersons.id
+										WHERE site_id = '".(($site->site == 'page')?$page->id:$site->id)."';");
+				$num = $result->num_rows;
+				if($num > 0) {
+					echo "<ul class=\"contactpersons\">
+							<h3>Ansprechpartner:</h3>";
+					while($row = $result->fetch_object()) {
+						echo "	<li>
+									<span class=\"title\">$row->name</span>
+									$row->position<br/>
+									".escapemail($row->email)."
+								</li>";
+					}
+					echo "</ul>";
 				}
-				echo "</ul>";
 			}
 			?>
 			<ul>
@@ -273,7 +275,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 		</div>
 		<main>
 			<?php
-			if($site->site != 'page') {
+			if(!contains($site->site, 'page', 'news_view')) {
 				echo "<h1>$site->title";
 				if(isset($login)) {
 					if(!in_array($site->site, $special_sites) || contains($site->site, 'home', 'imprint', 'contact')) {
@@ -282,7 +284,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 				}
 				echo "</h1>";
 			}
-			if(in_array($site->site, $special_sites)) {
+			if(in_array($site->site, $special_sites) && $site->site != 'imprint') {
 				if(file_exists("core/pages/$site->site.php")) {
 					include("core/pages/$site->site.php");
 				} else {

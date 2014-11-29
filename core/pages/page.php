@@ -4,7 +4,9 @@ if(empty($_GET['page_id']) or !isset($_GET['page_id']) or !is_numeric($_GET['pag
 	return;
 }
 
-$result = $db->query("SELECT * FROM XENUX_sites WHERE id = '$get->page_id' LIMIT 1;");
+#FIXME: use $page instead of new query
+
+$result = $db->query("SELECT * FROM XENUX_sites WHERE id = '$get->page_id' AND site = '' LIMIT 1;");
 $num = $result->num_rows;
 
 if($num < 1) {
