@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@import url(font-awesome.css);
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300italic,300,400italic,500,700,500italic,700italic,900,900italic);
 
 /* ##############################################
@@ -1097,6 +1098,48 @@ div.add.backend .close:hover {
 	z-index: 11;
 }
 
+.edit-btn {
+	background-image: url('../images/document-edit_grey.svg');
+	background-size: 100%;
+	background-repeat: no-repeat;
+	background-position: center;
+	display: inline-block;
+	height: 30px;
+	width: 30px;
+	line-height: 30px;
+	margin-left: 5px;
+	position: relative;
+}
+.edit-btn:hover {
+	background-image: url('../images/document-edit_blue.svg');
+}
+
+.toTop {
+	position: fixed;
+	right: 30px;
+	bottom: 30px;
+	height: 40px;
+	width: 40px;
+	display: none;
+	z-index: 9999;
+	background-color: rgba(0, 0, 0, 0.6);
+	border-radius: 30px;
+}
+.toTop:before {
+	content: "";
+	position: absolute;
+	height: 0;
+	width: 0;
+	content: "\f077";
+	/* content: "\f139"; */
+	font-size: 20px;
+	line-height: 20px;
+	left: 10px;
+	top: 10px;
+	text-decoration: none !important;
+	color: #eee !important;
+	font-family: 'FontAwesome';
+}
 
 
 /* ##############################################

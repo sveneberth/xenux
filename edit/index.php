@@ -53,6 +53,7 @@ if(!array_key_exists($site, $sites)) {
 }
 
 define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-14));
+ob_start();
 ?>
 <!Doctype html>
 <html lang="de">
@@ -147,13 +148,29 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 			<h1><?php echo $sites[$site]; ?></h1>
 			<?php
 				if(isset($_GET['backbtn'])) {
-					echo "<a style=\"float: right;\" href=\"./?site=$site\">zur Auswahl</a>";
+					echo "<a style=\"float: right;\" href=\"./?site=$site\">Schließen</a>";
 				}
-				if(isset($login) or $site == "forgotusername" or $site == "forgotpassword" or $site == "register" or $site == "confirm") {
-					include($site.".php");
-				} else {
-					include("login.php");
+				
+				###### get output ######
+				$page_output = ob_get_contents();
+				ob_end_clean();
+				########################
+
+				
+				ob_start();
+					if(isset($login) or $site == "forgotusername" or $site == "forgotpassword" or $site == "register" or $site == "confirm") {
+						include($site.".php");
+					} else {
+						include("login.php");
+					}	
+				$output = ob_get_contents();
+				ob_end_clean();
+				
+				if(!strpos($output, "!Doctype html>")) {
+					echo $page_output;
 				}
+				
+				echo $output;
 			?>
 		</main>
 		

@@ -44,10 +44,12 @@ $(document).ready(function() {
 	$("a[href^='#']").click(function(event) {
 		event.preventDefault();
 		var target = $(this).attr('href');
+		var bodyTop = $('body').offset().top;
 		$('html,body').animate({
-			scrollTop: $(target).offset().top
+			scrollTop: $(target).offset().top - bodyTop
 		}, 1000);
 		console.log("Scroll to "+target);
+		return false;
 	});
 });
 function scrollto(place, valuetype) {

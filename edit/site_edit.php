@@ -36,9 +36,22 @@ if(isset($get->token)) {
 					$db->query("UPDATE XENUX_sites SET text = '$post->text', title = '$post->title' WHERE id = '$edit_site->id';");
 				}
 				
+				if($edit_site->site == ''/* in_array($special_sites) || 'home'*/) {
+					$link = "../?site=page&page_id=$edit_site->id";
+				} else {
+					$link = "../?site=$edit_site->site";
+				}
+				
+				if(isset($_GET['gotosite'])) {
+					header("location: $link");
+				} else {
+					echo $page_output;
+				}
+				
 				echo "<p>Seite wurde gespeichert.</p>";
-				echo "<p><a href=\"../?site=page&page_id=$edit_site->id\">Zur Seite $edit_site->title</a></p>";
+				echo "<p><a href=\"$link\">Zur Seite $edit_site->title</a></p>";
 			} else {
+					echo $page_output;
 				// edit
 				?>
 				<script>
@@ -89,6 +102,8 @@ if(isset($get->token)) {
 			break;
 	}
 }
+
+echo $page_output;
 ?>
 
 <script>

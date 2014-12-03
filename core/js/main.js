@@ -121,3 +121,14 @@ $(document).ready(function() {
 		}
 	})
 })
+
+//--- Scroll ------------------------------------------------------------------
+$(window).scroll(function () {
+	var top = $('#top').offset().top;
+	var scroll_top = $(window).scrollTop();
+	if(scroll_top > top) {
+		$('.toTop').fadeIn();
+	} else {
+		$('.toTop').fadeOut();
+	}
+});

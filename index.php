@@ -105,7 +105,8 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 	}
 	</style>
 </head>
-<body>
+<body id="top">
+	<a href="#top" class="toTop"></a>
 	<div class="headWrapper">
 		<header> 
 			<div class="logo">
@@ -279,7 +280,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 				echo "<h1>$site->title";
 				if(isset($login)) {
 					if(!in_array($site->site, $special_sites) || contains($site->site, 'home', 'imprint', 'contact')) {
-						echo "<a id=\"edit_href\" href=\"edit/?site=site_edit&token=edit_site&site_id=$site->id&backbtn\">Bearbeiten</a>";
+						echo "<a class=\"edit-btn\" title=\"bearbeiten\" href=\"edit/?site=site_edit&token=edit_site&site_id=$site->id&backbtn&gotosite\"></a>";
 					}
 				}
 				echo "</h1>";
