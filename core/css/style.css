@@ -440,6 +440,7 @@ footer a:hover {
 	border-bottom: 1px #ccc solid;
 	padding: 0;
 	line-height: 1.1em;
+	padding-bottom: 1px;
 }
 .leftboxes ul.newest.sites li {
 	border: 0;

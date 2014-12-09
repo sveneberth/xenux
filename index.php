@@ -174,6 +174,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 		</div>
 		<div class="leftboxes">
 			<?php
+			/* news */
 			$result = $db->query("SELECT * FROM XENUX_news LIMIT 5;");
 			$number = $result->num_rows;
 			if($number > 0) {
@@ -197,22 +198,25 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 			<?php
 			}
 			
+			
+			/* dates */
+			echo "<ul class=\"dates\">
+					<h3>Termine:</h3>";
 			$result = $db->query("SELECT *, DATE_FORMAT(date,'%d.%m.%Y %H:%i') as date_formatted FROM XENUX_dates WHERE date >= NOW() ORDER by date LIMIT 5;");
 			$number = $result->num_rows;
 			if($number > 0) {
-				echo "<ul class=\"dates\">
-						<h3>Termine:</h3>";
 				while($row = $result->fetch_object()) {
 					echo "<li><span class=\"title\">$row->name" . ((isset($login))?"<a id=\"edit_href\" href=\"edit/?site=events_edit&token=edit_event&id=$row->id\">Bearbeiten</a>":'') . "</span>
 					$row->date_formatted<br/>
 					".htmlentities(substr($row->text, 0, 70))."<br />
 					<a href=\"?site=event_view&id=$row->id\">&raquo;Termin anzeigen</a></li>";
 				}
-				echo "<a href=\"?site=event_list\">alle Termine anzeigen</a>
-				</ul>";
+				echo "<a href=\"?site=event_list\">alle Termine anzeigen</a>";
 			} else {
-				echo "<p>keine Anstehenden Termine vorhanden!</p>";
+				echo "<p style=\"margin:5px 0;\">keine anstehenden Termine vorhanden!</p>";
 			}
+			echo "</ul>";
+			
 			
 			/* newest sites */
 			$result = $db->query("SELECT * FROM XENUX_sites ORDER by create_date DESC LIMIT 5;");
@@ -227,6 +231,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 				}
 				echo "</ul>";
 			}
+			
 			
 			/* contact persons */
 			if($site->site == 'page' && $page->site != 'error') {
