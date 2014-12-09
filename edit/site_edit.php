@@ -51,7 +51,7 @@ if(isset($get->token)) {
 				echo "<p>Seite wurde gespeichert.</p>";
 				echo "<p><a href=\"$link\">Zur Seite $edit_site->title</a></p>";
 			} else {
-					echo $page_output;
+				echo $page_output;
 				// edit
 				?>
 				<script>
