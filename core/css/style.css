@@ -970,19 +970,44 @@ div.add.backend .close:hover {
 	height: 0px;
 }
 .fontsize a {
-	background: #eee;
-	border-radius: 5em;
+	/* background: #333; */
+	border-radius: 2px;
 	height: 1em;
 	width: 1em;
 	line-height: 1em;
 	display: inline-block;
-	text-align: center;
+	text-align: left;
 	text-decoration: none;
-	color: #222;
+	color: #157EFB;
+	font-size: 1em;
+	padding: 5px;
+	position: relative;
 }
 .fontsize a:hover {
-	background: #555;
-	color: #eee;
+	background: #333;
+}
+.fontsize a:before {
+	content: 'A';
+}
+.fontsize a:after {
+	font-size: .8em;
+	line-height: .8em;
+	right: 2px;
+	top: 2px;
+	position: absolute;
+	text-align: right;
+}
+.fontsize a.decrease:after {
+	content: '-';
+}
+.fontsize a.reset:after {
+	font-family: FontAwesome;
+	content: '\f021';
+	font-size: .6em;
+	line-height: 1.5em;
+}
+.fontsize a.recrease:after {
+	content: '+';
 }
 
 
@@ -1065,7 +1090,7 @@ div.add.backend .close:hover {
 	overflow: hidden;
 	transition: width 0.3s;
 }
-.sb-search-input {
+.sb-search .sb-search-input {
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -1074,8 +1099,8 @@ div.add.backend .close:hover {
 	margin: 0;
 	z-index: 10;
 }
-.sb-icon-search,
-.sb-search-submit  {
+.sb-search .sb-icon-search,
+.sb-search .sb-search-submit  {
 	height: 40px;
 	display: block;
 	position: absolute;
@@ -1088,12 +1113,12 @@ div.add.backend .close:hover {
 	margin: 0 !important;
 	width: 40px !important;
 }
-.sb-search-submit {
+.sb-search .sb-search-submit {
 	opacity: 0;
 	border: none;
 	z-index: -1;
 }
-.sb-icon-search {
+.sb-search .sb-icon-search {
 	color: #fff;
 	z-index: 90;
 	font-size: 22px;

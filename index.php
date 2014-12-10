@@ -167,10 +167,9 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 	</div>
 	<div class="wrapper">
 		<div class="fontsize">
-			Schrift
-			&nbsp;<a title="Schrift kleiner" href="javascript:fontsizedecrease()">-</a>
-			&nbsp;<a title="Schrift normal" href="javascript:fontsizereset()">O</a>
-			&nbsp;<a title="Schrift größer" href="javascript:fontsizerecrease()">+</a>
+			&nbsp;<a title="Schrift kleiner" class="decrease" />
+			&nbsp;<a title="Schrift normal" class="reset" />
+			&nbsp;<a title="Schrift größer" class="recrease" />
 		</div>
 		<div class="leftboxes">
 			<?php

@@ -9,13 +9,20 @@ if(isset($get->token)) {
 				$result = $db->query("SELECT * FROM XENUX_sites WHERE id = '$get->site_id' LIMIT 1;");
 				if($result->num_rows != 0)
 					$edit_site = $result->fetch_object();
+				if(in_array($edit_site->site, $special_sites) && !contains($edit_site->site, 'imprint',
+	'contact')) {
+					request_failed();
+					return false;
+				}
 			};
 			
-			if(isset($_POST['editor'])) {
-				$post->title = preg_replace("/[^a-zA-Z0-9_üÜäÄöÖ&#,.()[]{}*\/ ]/" , "" , $post->title);
+			if(isset($_POST['editor']) && !empty($post->title)) {
+				$post->title = preg_replace("/[^a-zA-Z0-9_üÜäÄöÖ&#,.()[]{}*\/]/" , "" , $post->title);
+				
 				if(@$_GET['new'] == 1) {
 					// new
 					$db->query("INSERT INTO XENUX_sites(text, title) VALUES ('$post->text', '$post->title');");
+					
 					$result = $db->query("SELECT * FROM XENUX_sites WHERE title = '$post->title' ORDER by id DESC LIMIT 1;");
 					$edit_site = $result->fetch_object();
 					foreach($_POST as $key => $val) {
@@ -50,9 +57,11 @@ if(isset($get->token)) {
 				
 				echo "<p>Seite wurde gespeichert.</p>";
 				echo "<p><a href=\"$link\">Zur Seite $edit_site->title</a></p>";
+			
 			} else {
-				echo $page_output;
+			
 				// edit
+				echo $page_output;
 				?>
 				<script>
 				$(document).ready(function() {
@@ -75,7 +84,7 @@ if(isset($get->token)) {
 				})
 				</script>
 				<form action="" method="post" name="form">
-					<input type="text" placeholder="Seitenname" name="title" value="<?php echo @$edit_site->title; ?>">
+					<input <?php if(empty($post->title) && isset($post->title))echo 'class="wrong"'; ?> type="text" placeholder="Seitenname" name="title" value="<?php echo @$edit_site->title; ?>">
 					<textarea class="ckeditor nolabel" placeholder="Seiteninhalt" name="text" id="text"><?php echo @$edit_site->text ?></textarea>
 					
 					<div class="contact-persons">

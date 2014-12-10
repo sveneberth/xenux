@@ -39,7 +39,7 @@ if(isset($_POST['submit_register'])) {
 			}
 		} else {
 				echo "<p>Alle Felder müssen richtig ausgefüllt sein!</p>";
-				if($$post->password != $post->passwordre) {
+				if($post->password != $post->passwordre) {
 					echo "<p>Die eingeben Passwörter stimmen nicht überein!</p>";
 				}
 		}

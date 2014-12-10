@@ -32,7 +32,7 @@ $(window).resize(function () {
 	if($(window).width() > 600) {
 		$(".topmenu.mobilemenu, .transparent").hide();
 		$(".topmenu.mainmenu, tr.head").show();
-		$(".topmenu.mainmenu li span").remove();
+		$(".topmenu.mainmenu li span:not(.sb-icon-search)").remove();
 	} else {
 		$(".topmenu.mobilemenu").show();
 		$(".topmenu.mainmenu").hide();
@@ -103,6 +103,11 @@ function fontsizedecrease() {
 		$.cookie("fontsize", newfontsize);
 	}
 }
+$(document).ready(function() {
+	$('.fontsize .decrease').click(fontsizedecrease);
+	$('.fontsize .reset')	.click(fontsizereset);
+	$('.fontsize .recrease').click(fontsizerecrease);
+})
 
 /* add label before input */
 $(document).ready(function() {

@@ -55,7 +55,7 @@ if(!array_key_exists($site, $sites)) {
 define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-14));
 ob_start();
 ?>
-<!Doctype html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
 	<title><?php echo "$main->hp_name Administration | ".$sites[$site]; ?></title>
@@ -87,7 +87,7 @@ ob_start();
 	}
 	</style>
 </head>
-<body>
+<body id="top">
 	<script>
 	$(window).bind('keydown', function(event) {
 		if (event.ctrlKey || event.metaKey) {
@@ -139,10 +139,9 @@ ob_start();
 	</div>
 	<div class="wrapper">
 		<div class="fontsize">
-			Schrift
-			&nbsp;<a title="Schrift kleiner" href="javascript:fontsizedecrease()">-</a>
-			&nbsp;<a title="Schrift normal" href="javascript:fontsizereset()">O</a>
-			&nbsp;<a title="Schrift größer" href="javascript:fontsizerecrease()">+</a>
+			&nbsp;<a title="Schrift kleiner" class="decrease" />
+			&nbsp;<a title="Schrift normal" class="reset" />
+			&nbsp;<a title="Schrift größer" class="recrease" />
 		</div>
 		<main style="width: calc(100% - 10px);float:none;">
 			<h1><?php echo $sites[$site]; ?></h1>
@@ -166,7 +165,7 @@ ob_start();
 				$output = ob_get_contents();
 				ob_end_clean();
 				
-				if(!strpos($output, "!Doctype html>")) {
+				if(strpos($output, "<!DOCTYPE html>") === false) {
 					echo $page_output;
 				}
 				
