@@ -111,7 +111,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 		<header> 
 			<div class="logo">
 				<a href="./">
-					<img src="./core/images/<?php echo $main->logo_src; ?>" />
+					<img src="./core/images/<?php echo $main->logo_src; ?>" class="nojsload" />
 				</a>
 			</div>
 			<ul class="topmenu mobilemenu">
@@ -167,9 +167,9 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 	</div>
 	<div class="wrapper">
 		<div class="fontsize">
-			&nbsp;<a title="Schrift kleiner" class="decrease" />
-			&nbsp;<a title="Schrift normal" class="reset" />
-			&nbsp;<a title="Schrift größer" class="recrease" />
+			&nbsp;<a title="Schrift kleiner" class="decrease"></a>
+			&nbsp;<a title="Schrift normal" class="reset"></a>
+			&nbsp;<a title="Schrift größer" class="recrease"></a>
 		</div>
 		<div class="leftboxes">
 			<?php
@@ -233,7 +233,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 			
 			
 			/* contact persons */
-			if($site->site == 'page' && $page->site != 'error') {
+			if(/* $site->site == 'page' &&  */$site->site != 'error' && @$page->site != 'error') {
 				$result = $db->query("	SELECT * FROM XENUX_site_contactperson
 										LEFT JOIN XENUX_sites ON XENUX_site_contactperson.site_id = XENUX_sites.id
 										LEFT JOIN XENUX_contactpersons ON XENUX_site_contactperson.contactperson_id = XENUX_contactpersons.id

@@ -1,0 +1,124 @@
+<?php
+if(isset($_REQUEST['task'])) {
+	switch($_REQUEST['task']) {
+		case "remove":
+			$result = $db->query("DELETE FROM $skelTable WHERE id = '$get->id';");
+			if(!$result)
+				echo $db->error;
+			break;
+			
+		case "new":
+		case "edit":
+			if(isset($_POST['form'])) {
+				if($_REQUEST['task'] == "new") {
+					$sql_columns	= "";
+					$sql_values		= "";
+					$first			= true;
+					
+					foreach($skel as $name => $props) {
+						if($props['type'] == 'date') {
+							$value = $post->{$name."_date"}." ".$post->{$name."_time"};
+						} else {
+							$value = $post->$name;
+						}
+							
+							$sql_columns	.= (($first)?'':',')."$name";
+							$sql_values		.= (($first)?'':',')."'$value'";
+						
+							$first = false;
+					}
+					
+					$sql = "INSERT INTO `$skelTable`($sql_columns) VALUES($sql_values);";
+					$result = $db->query($sql);
+					if(!$result)
+						echo $db->error;
+						
+				} elseif($_REQUEST['task'] == "edit") {
+					foreach($skel as $name => $props) {
+						if($props['type'] == 'date') {
+							$db->query("UPDATE $skelTable SET $name = '".$post->{$name."_date"}." ".$post->{$name."_time"}."' WHERE id = '$get->id';");
+						} else {
+							$db->query("UPDATE $skelTable SET $name = '".$post->$name."' WHERE id = '$get->id';");
+						}
+					}
+				}
+				
+			} else {
+				if($_REQUEST['task'] == "edit") {
+					$result = $db->query("SELECT * FROM $skelTable WHERE id = '$get->id';");
+					$row = $result->fetch_object();
+				}
+				?>
+				<form action="" method="post">
+					<?php
+						foreach($skel as $name => $props) {
+							switch($props['type']) {
+								case 'email':
+									echo "<input type=\"email\" placeholder=\"{$props['title']}\" value=\"".@$row->$name."\" name=\"$name\" ".(($props['required']==true)?'required':'')." />";
+									break;
+								case 'string':
+									echo "<input type=\"text\" placeholder=\"{$props['title']}\" value=\"".@$row->$name."\" name=\"$name\" ".(($props['required']==true)?'required':'')." />";
+									break;
+								case 'number':
+									echo "<input type=\"number\" placeholder=\"{$props['title']}\" value=\"".@$row->$name."\" name=\"$name\" ".(($props['required']==true)?'required':'')." />";
+									break;
+								case 'date': #FIXME: type date
+									echo "<input type=\"date\" placeholder=\"{$props['title']} (Datum)\" value=\"".(isset($row->$name)?date("Y-m-d", strtotime(@$row->$name)):'')."\" name=\"".$name."_date\" ".(($props['required']==true)?'required':'')." />";
+									echo "<input type=\"time\" placeholder=\"{$props['title']} (Zeit)\" value=\"".(isset($row->$name)?date("h:i:s", strtotime(@$row->$name)):'')."\" name=\"".$name."_time\" ".(($props['required']==true)?'required':'')." />";
+									break;
+								case 'text':
+									echo "<textarea placeholder=\"{$props['title']}\" class=\"$name\" id=\"$name\" name=\"$name\" ".(($props['required']==true)?'required':'').">".@$row->$name."</textarea>";
+									break;
+								#FIXME: add case bool
+							}
+						}
+					?>
+					
+					<input type="hidden" name="form" value="form" />
+					<input type="submit" value="speichern">
+				</form>
+				<?php
+				return false;
+			}
+			break;
+	}
+}
+?>
+
+<div style="display: block;overflow: auto;width:100%;"> 
+	<table id="table1" class="responsive-table">
+	<tr class="head">
+	<?php
+		foreach($skel as $name => $props) {
+			echo "<th>".$props['title']."</th>";
+		}
+	?>
+		<th style="width:4rem;"></th>
+	</tr>
+	<?php
+	reset($skel);
+	$first_key = key($skel);
+
+	$result = $db->query("SELECT * FROM $skelTable ORDER by $first_key ASC;");
+	while($row = $result->fetch_object()) {
+		echo "<tr>";
+		foreach($skel as $name => $props) {
+			echo "<td>".$row->$name."</td>";
+		}
+		echo "	<td style=\"text-align: center;\">
+						<a href=\"?site=$site&task=edit&id=$row->id&backbtn\" title=\"bearbeiten\" class=\"edit edit-btn clickable\" style=\"display: inline-block;margin: 0;\"></a>
+						<a href=\"?site=$site&task=remove&id=$row->id\" title=\"entfernen\" class=\"remove remove-icon clickable\" style=\"display: inline-block;margin: 0;\"></a>
+					</td>";
+		echo "</tr>";
+	}
+	?>
+	</table>
+</div>
+<?php
+if($canAddNew) {
+?>
+<br />
+<a class="btn" href="./?site=<?php echo $site; ?>&task=new&backbtn">neu</a>
+<?php
+}
+?>

@@ -56,6 +56,14 @@ switch($_REQUEST['task']) {
 		if(!$result)
 			$return['err_db'] = $db->error;
 		break;
+	case "universal_remove":
+		$id	= $db->real_escape_string($_REQUEST['id']);
+		$table	= $db->real_escape_string($_REQUEST['table']);
+		
+		$result = $db->query("DELETE FROM $table WHERE id = '$id';");
+		if(!$result)
+			$return['err_db'] = $db->error;
+		break;
 }
 
 

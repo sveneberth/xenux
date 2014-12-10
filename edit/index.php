@@ -139,11 +139,11 @@ ob_start();
 	</div>
 	<div class="wrapper">
 		<div class="fontsize">
-			&nbsp;<a title="Schrift kleiner" class="decrease" />
-			&nbsp;<a title="Schrift normal" class="reset" />
-			&nbsp;<a title="Schrift größer" class="recrease" />
+			&nbsp;<a title="Schrift kleiner" class="decrease"></a>
+			&nbsp;<a title="Schrift normal" class="reset"></a>
+			&nbsp;<a title="Schrift größer" class="recrease"></a>
 		</div>
-		<main style="width: calc(100% - 10px);float:none;">
+		<main style="width:100%;float:none;">
 			<h1><?php echo $sites[$site]; ?></h1>
 			<?php
 				if(isset($_GET['backbtn'])) {

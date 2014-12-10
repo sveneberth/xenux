@@ -1,12 +1,31 @@
 <?php
-if(!isset($site)) echo("You can not open this file individually/Sie k&ouml;nnen diese Datei nicht einzeln &ouml;ffnen!");
+if(!isset($site)) die("You can not open this file individually/Sie k&ouml;nnen diese Datei nicht einzeln &ouml;ffnen!");
 
-if($login->role < 1) {
-	echo '<p>Du bist nicht berechtigt, diese Seite zu öffnen!</p>';
-	return false;
-}
+$skelName = "Ansprechpartner";
+$skelTable = "XENUX_contactpersons";
+$canAddNew = true;
+$skel = array (
+	'name' => array(
+		'title' => 'Name',
+		'type' => 'string',
+		"required" => true,
+	),
+	'position' => array(
+		'title' => 'Position',
+		'type' => 'string',
+		"required" => true,
+	),
+	'email' => array(
+		'title' => 'E-Mail',
+		'type' => 'email',
+		"required" => true,
+	),
+	'text' => array(
+		'title' => 'Beschreibung',
+		"type" => "text",
+		"required" => false,
+	),
+);
 
-$table = 'XENUX_contactpersons';
-$name = 'Ansprechpartner';
-include_once('macros/universal_inc.php');
+include_once(BASEDIR."/core/inc/universal_edit.php");
 ?>

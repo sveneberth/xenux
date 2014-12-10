@@ -338,6 +338,7 @@ main {
 	float: right;
 	width: 75%;
 	overflow: auto;
+	box-sizing: border-box;
 }
 main:after {
 	display: block;
@@ -1301,7 +1302,7 @@ div.add.backend .close:hover {
 		font-size: 16px;
 	}
 	
-	.topmenu.mainmenu li.search {display:none} /* #FIXME: show search */
+	.topmenu.mainmenu li.search {display:none} /* FIXME: show search in resposive view */
 	
 	main {
 		float: left;

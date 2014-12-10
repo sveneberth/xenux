@@ -6,7 +6,6 @@ define('BASEDIR', dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR
 
 include_once(BASEDIR.'core/inc/arrays.php'); // include arrays
 include_once(BASEDIR.'core/inc/functions.php'); // include functions
-include_once(BASEDIR.'core/inc/table_definitions.php'); // include table_definitions
 include_once(BASEDIR.'mysql.conf'); // include Config for MySQL
 
 if($_SERVER['HTTP_HOST'] == 'localhost') {
