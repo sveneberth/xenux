@@ -95,7 +95,6 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 	<script src="core/js/jquery-migrate-1.2.1.min.js"></script>
 	<script src="core/js/jquery-ui.js"></script>
 	<script src="core/js/jquery.cookie.js"></script>
-	<script src="core/js/colResizable-1.3.min.js"></script>
 	<script src="core/js/functions.js?from=https://code-snippets-se.googlecode.com/"></script>
 	<script src="core/js/main.js"></script>
 	<style>
@@ -233,7 +232,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 			
 			
 			/* contact persons */
-			if(/* $site->site == 'page' &&  */$site->site != 'error' && @$page->site != 'error') {
+			if($site->site != 'error' && @$page->site != 'error') {
 				$result = $db->query("	SELECT * FROM XENUX_site_contactperson
 										LEFT JOIN XENUX_sites ON XENUX_site_contactperson.site_id = XENUX_sites.id
 										LEFT JOIN XENUX_contactpersons ON XENUX_site_contactperson.contactperson_id = XENUX_contactpersons.id

@@ -76,7 +76,6 @@ ob_start();
 	<script src="../core/js/jquery-ui.js"></script>
 	<script src="../core/js/jquery.cookie.js"></script>
 	<script src="../wysiwyg/ckeditor.js"></script>
-	<script src="../core/js/colResizable-1.3.min.js"></script>
 	<script src="../core/js/jquery.mjs.nestedSortable.js"></script>
 	<script src="../core/js/functions.js?from=https://code-snippets-se.googlecode.com/"></script>
 	<script src="../core/js/main.js"></script>
