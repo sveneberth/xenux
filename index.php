@@ -205,7 +205,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 			$number = $result->num_rows;
 			if($number > 0) {
 				while($row = $result->fetch_object()) {
-					echo "<li><span class=\"title\">$row->name" . ((isset($login))?"<a id=\"edit_href\" href=\"edit/?site=events_edit&token=edit_event&id=$row->id\">Bearbeiten</a>":'') . "</span>
+					echo "<li><span class=\"title\">$row->name" . ((isset($login))?"<a class=\"edit-btn\" style=\"height: 1.2em;width:1.2em;\" href=\"edit/?site=event_edit&task=edit&id=$row->id&backbtn\"></a>":'') . "</span>
 					$row->date_formatted<br/>
 					".htmlentities(substr($row->text, 0, 70))."<br />
 					<a href=\"?site=event_view&id=$row->id\">&raquo;Termin anzeigen</a></li>";
