@@ -74,6 +74,7 @@ ob_start();
 	<script src="../core/js/jquery-2.1.1.min.js"></script>
 	<script src="../core/js/jquery-migrate-1.2.1.min.js"></script>
 	<script src="../core/js/jquery-ui.js"></script>
+	<script src="../core/js/jquery.ui.touch-punch.min.js"></script>
 	<script src="../core/js/jquery.cookie.js"></script>
 	<script src="../wysiwyg/ckeditor.js"></script>
 	<script src="../core/js/jquery.mjs.nestedSortable.js"></script>

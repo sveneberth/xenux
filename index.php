@@ -94,6 +94,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 	<script src="core/js/jquery-2.1.1.min.js"></script>
 	<script src="core/js/jquery-migrate-1.2.1.min.js"></script>
 	<script src="core/js/jquery-ui.js"></script>
+	<script src="core/js/jquery.ui.touch-punch.min.js"></script>
 	<script src="core/js/jquery.cookie.js"></script>
 	<script src="core/js/functions.js?from=https://code-snippets-se.googlecode.com/"></script>
 	<script src="core/js/main.js"></script>

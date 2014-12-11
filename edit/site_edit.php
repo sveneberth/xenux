@@ -111,8 +111,6 @@ if(isset($get->token)) {
 			break;
 	}
 }
-
-echo $page_output;
 ?>
 
 <script>
