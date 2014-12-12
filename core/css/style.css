@@ -1238,20 +1238,21 @@ div.add.backend .close:hover {
 		display: none;
 	}
 	.mainmenu:before {
-	content: 'Menü';
-	display: block;
-	position: absolute;
-	height: 22px;
-	width: 100%;
-	color: #fff;
-	z-index: 10000;
-	top: -45px;
-	right: 0px;
-	left: 60px;
-	font-size: 2em;
-	font-weight: 100;
+		content: 'Menü';
+		display: block;
+		position: absolute;
+		height: 22px;
+		width: 100%;
+		color: #fff;
+		z-index: 10000;
+		top: -50px;
+		right: 0px;
+		left: 60px;
+		font-size: 2em;
+		font-weight: 100;
+		height: 50px;
+		line-height: 50px;
 	}
-	
 	.topmenu.mainmenu  {
 		height: auto;
 		position: absolute;
