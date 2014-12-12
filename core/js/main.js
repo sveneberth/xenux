@@ -17,34 +17,46 @@ function popupclosewithoutcontent() {
 	$( ".transparent" ).hide();
 }
 
+
+
 //---Menu----------------------------------------------------------------------
 function openmobilemenu() {
 	$('html,body').animate({
 		scrollTop: 0
 	}, 500);
 	$(".topmenu.mainmenu").toggle("fast");
+	$(".topmenu.mobilemenu").fadeToggle("fast");
+	$(".logo").fadeToggle("fast");
 	$(".transparent").fadeToggle("fast");
 }
-$(window).scroll(function(){
-    $('.mainmenu').css('top', 60 - $(this).scrollTop());
+
+$(window).scroll(function() { // scroll -> move menu
+    $('.mainmenu').css('top', 50 - $(this).scrollTop());
 });
-$(window).resize(function () {
-	if($(window).width() > 600) {
+
+$(window).resize(function () { // resize window
+	if($(window).width() > 600) { // normal view
 		$(".topmenu.mobilemenu, .transparent").hide();
+		$(".logo").show();
 		$(".topmenu.mainmenu, tr.head").show();
 		$(".topmenu.mainmenu li span:not(.sb-icon-search)").remove();
-	} else {
+		$(".topmenu.mainmenu").css('min-height', '');
+	} else { // responsive view
 		$(".topmenu.mobilemenu").show();
 		$(".topmenu.mainmenu").hide();
 		
-		if($(".topmenu.mainmenu li a span").length == 0) {
+		$(".topmenu.mainmenu").css('min-height', $(window).height() - 50);
+		
+		if($(".topmenu.mainmenu li a span").length == 0) { 
 			$(".topmenu.mainmenu li").has("ul").children("a").append("<span></span>");
 		}
 	}
 });
-$(document).ready(function () {
+
+$(document).ready(function () { // after DOM load
 	if($(window).width() <= 600) {
 		$(".topmenu.mainmenu li").has("ul").children("a").append("<span></span>");
+		$(".topmenu.mainmenu").css('min-height', $(window).height() - 50);
 	}
 	
 	$(".topmenu.mainmenu li span").live('click', function(e) {
@@ -53,6 +65,8 @@ $(document).ready(function () {
 		return false;
 	})
 });
+
+
 
 //---Messagebox----------------------------------------------------------------
 function messagebox(width, height, topic, text) {
@@ -72,6 +86,8 @@ function messagebox(width, height, topic, text) {
 	})
 }
 
+
+
 //---FontSize------------------------------------------------------------------
 $(document).ready(function() {
 	if(typeof $.cookie("fontsize") == "undefined") {
@@ -81,6 +97,7 @@ $(document).ready(function() {
 	var actfontsize = parseInt(actfontsize.replace(/[^0-9]/g, ''));
 	$("body").css("font-size", actfontsize+"px")
 })
+
 function fontsizerecrease() {
 	var actfontsize = $.cookie("fontsize");
 	var actfontsize = parseInt(actfontsize.replace(/[^0-9]/g, ''));
@@ -89,6 +106,11 @@ function fontsizerecrease() {
 		$("body").css("font-size", newfontsize+"px");
 		$.cookie("fontsize", newfontsize);
 	}
+	
+	// click events
+	$('.fontsize .decrease').click(fontsizedecrease);
+	$('.fontsize .reset')	.click(fontsizereset);
+	$('.fontsize .recrease').click(fontsizerecrease);
 }
 function fontsizereset() {
 	$("body").css("font-size", "16px");
@@ -103,13 +125,10 @@ function fontsizedecrease() {
 		$.cookie("fontsize", newfontsize);
 	}
 }
-$(document).ready(function() {
-	$('.fontsize .decrease').click(fontsizedecrease);
-	$('.fontsize .reset')	.click(fontsizereset);
-	$('.fontsize .recrease').click(fontsizerecrease);
-})
 
-/* add label before input */
+
+
+//---add label before input----------------------------------------------------
 $(document).ready(function() {
 	var i = 1;
 	$('input[type="text"], input[type="email"], input[type="number"], input[type="password"], input[type="color"], textarea').each(function() {
@@ -127,7 +146,9 @@ $(document).ready(function() {
 	})
 })
 
-//--- Scroll ------------------------------------------------------------------
+
+
+//--- Scroll to Top -----------------------------------------------------------
 $(window).scroll(function () {
 	var top = $('#top').offset().top;
 	var scroll_top = $(window).scrollTop();

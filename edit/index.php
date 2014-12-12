@@ -101,14 +101,12 @@ ob_start();
 	});
 	</script>
 	<div class="headWrapper">
-		<header> 
-			<div class="logo">
-				<a href="../">
-					<img src="../core/images/<?php echo $main->logo_src;; ?>" />
-				</a>
-			</div>
+		<header>
+			<a href="javascript:openmobilemenu();" class="menu-icon"></a>
+			<a class="logo" href="../">
+				<img src="../core/images/<?php echo $main->logo_src; ?>" class="nojsload" />
+			</a>
 			<ul class="topmenu mobilemenu">
-				<li><a href="javascript:openmobilemenu()">Menu</a></li>
 				<?php
 				if(isset($login)) {
 					?>

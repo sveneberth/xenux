@@ -109,15 +109,11 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 	<a href="#top" class="toTop"></a>
 	<div class="headWrapper">
 		<header> 
-			<div class="logo">
-				<a href="./">
-					<img src="./core/images/<?php echo $main->logo_src; ?>" class="nojsload" />
-				</a>
-			</div>
+			<a href="javascript:openmobilemenu();" class="menu-icon"></a>
+			<a class="logo" href="./">
+				<img src="./core/images/<?php echo $main->logo_src; ?>" class="nojsload" />
+			</a>
 			<ul class="topmenu mobilemenu">
-				<li><a href="javascript:openmobilemenu()">Menu</a></li>
-				<li><a href="?site=news_list">News</a></li>
-				<li><a href="?site=event_list">Termine</a></li>
 				<li><a href="./edit?site=login">Login</a></li>
 			</ul>
 			<ul class="topmenu mainmenu">
@@ -162,6 +158,8 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 						</form>
 					</div>
 				</li>
+				<li class="mobilemenu"><a href="?site=news_list">News</a></li>
+				<li class="mobilemenu"><a href="?site=event_list">Termine</a></li>
 			</ul>
 		</header>
 	</div>

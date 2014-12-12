@@ -240,7 +240,7 @@ header:after {
 }
 .mobilemenu {
 	display: none;
-	float: right;
+	float: left;
 }
 .openpoints {
 	display: none;
@@ -1201,6 +1201,17 @@ div.add.backend .close:hover {
 	font-family: 'FontAwesome';
 }
 
+.menu-icon {
+	background-image: url('../images/menu-icon.svg');
+	background-size: 100%;
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 50px;
+	height: 50px;
+	float: left;
+	display: none;
+}
+
 
 /* ##############################################
 ** MEDIA QUERYS
@@ -1218,19 +1229,39 @@ div.add.backend .close:hover {
 	}
 	header .logo img {
 		margin: 0;
+		float: right;
+	}
+	.menu-icon {
+		display: block;
 	}
 	.mainmenu {
 		display: none;
 	}
+	.mainmenu:before {
+	content: 'Menü';
+	display: block;
+	position: absolute;
+	height: 22px;
+	width: 100%;
+	color: #fff;
+	z-index: 10000;
+	top: -45px;
+	right: 0px;
+	left: 60px;
+	font-size: 2em;
+	font-weight: 100;
+	}
+	
 	.topmenu.mainmenu  {
 		height: auto;
 		position: absolute;
-		top: 60px;
+		top: 50px;
 		left: 0;
-		width: 90%;
+		width: 100%;
 		background: #333333;
 		border: solid #1958e7;
 		border-width: 2px 2px 2px 0px ;
+		border-width: 0px ;
 	}
 	.topmenu.mainmenu  li {
 		float: none;
