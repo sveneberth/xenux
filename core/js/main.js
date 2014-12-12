@@ -95,8 +95,13 @@ $(document).ready(function() {
 	}
 	var actfontsize = $.cookie("fontsize");
 	var actfontsize = parseInt(actfontsize.replace(/[^0-9]/g, ''));
-	$("body").css("font-size", actfontsize+"px")
-})
+	$("body").css("font-size", actfontsize+"px");
+	
+	// click events
+	$('.fontsize .decrease').click(fontsizedecrease);
+	$('.fontsize .reset')	.click(fontsizereset);
+	$('.fontsize .recrease').click(fontsizerecrease);
+});
 
 function fontsizerecrease() {
 	var actfontsize = $.cookie("fontsize");
@@ -106,11 +111,6 @@ function fontsizerecrease() {
 		$("body").css("font-size", newfontsize+"px");
 		$.cookie("fontsize", newfontsize);
 	}
-	
-	// click events
-	$('.fontsize .decrease').click(fontsizedecrease);
-	$('.fontsize .reset')	.click(fontsizereset);
-	$('.fontsize .recrease').click(fontsizerecrease);
 }
 function fontsizereset() {
 	$("body").css("font-size", "16px");
