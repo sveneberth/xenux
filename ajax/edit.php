@@ -21,12 +21,10 @@ switch($_REQUEST['task']) {
 				$return['err_db'] = $db->error;
 			$row = $result->fetch_object();
 		
-			if(contains($row->site, 'imprint', 'home', 'contact')){
-			//	$return['success'] = false;
+			if(contains($row->site, 'imprint', 'home', 'contact')) {
 				$return['errmsg'][] = "can't move page '$row->title' (not allowed)";
 				continue;
 			}
-			
 			
 			$result = $db->query("UPDATE XENUX_sites SET parent_id = '$parent_id' WHERE id = '$item_id';");
 			if(!$result)

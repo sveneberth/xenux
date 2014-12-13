@@ -1,7 +1,6 @@
 <?php
 session_start(); // start php session
 
-//define('BASEDIR', substr(__file__,0,-19));
 define('BASEDIR', dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR);
 
 include_once(BASEDIR.'core/inc/arrays.php'); // include arrays

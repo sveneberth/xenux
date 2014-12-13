@@ -161,5 +161,4 @@ function shortstr($str, $size = 100) {
 		return $str;
 	}
 }
-
 ?>

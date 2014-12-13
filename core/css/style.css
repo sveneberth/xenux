@@ -35,12 +35,10 @@ html, body {
 ::-webkit-scrollbar-thumb {
 	-webkit-border-radius: 10px;
 	border-radius: 10px;
-	/* background: rgba(21, 126, 251, .8); */
 	background: rgba(13, 95, 163, 0.8);
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
 }
 ::-webkit-scrollbar-thumb:window-inactive {
-	/* background: rgba(21, 126, 251, .2); */
 	background: rgba(13, 95, 163, 0.2);
 }
 
@@ -113,7 +111,6 @@ input, textarea, select {
 }
 input:focus, textarea:focus, select:focus {
 	border-color: #244394;
-	/* border-color: #2580a2; */
 }
 input.wrong,
 textarea.wrong,
@@ -286,7 +283,6 @@ header:after {
 	height: 0;
 	overflow: hidden;
 	transition: .2s opacity ease;
-	/* margin-left: 1px; */
 	border: 1px solid #444;
 	border-top-width: 0px;
 	color: #333;
@@ -326,11 +322,6 @@ header:after {
 	margin-top: -1px;
 	border-top-width: 1px;
 }
-/*
-.topmenu li li li {
-	background: rgb(26, 179, 100);
-}
-*/
 
 main {
 	background: #fff;
@@ -989,7 +980,6 @@ div.add.backend .close:hover {
 	display: inline-block;
 	vertical-align: top;
 	margin: 0;
-	/* float: left; */
 	line-height: 1.5rem;
 }
 
@@ -1000,7 +990,6 @@ div.add.backend .close:hover {
 	height: 0px;
 }
 .fontsize a {
-	/* background: #333; */
 	border-radius: 2px;
 	height: 1em;
 	width: 1em;
@@ -1157,9 +1146,6 @@ div.add.backend .close:hover {
 	background-repeat: no-repeat !important;
 	background-position: center !important;
 	background-color: #333 !important;
-	/*
-	background: #333 url('../images/buttons_sprite.svg') no-repeat -60px 0px !important;
-	*/
 }
 /* Open state */
 .sb-search.sb-search-open {
@@ -1186,22 +1172,6 @@ div.add.backend .close:hover {
 .edit-btn:hover {
 	background-image: url('../images/document-edit_blue.svg');
 }
-/*
-.edit-btn {
-	background-image: url('../images/buttons_sprite.svg');
-	background-repeat: no-repeat;
-	background-position: 0px 0px;
-	display: inline-block;
-	height: 30px;
-	width: 30px;
-	line-height: 30px;
-	margin-left: 5px;
-	position: relative;
-}
-.edit-btn:hover {
-	background-position: -30px 0px;
-}
-*/
 
 .toTop {
 	position: fixed;
@@ -1220,7 +1190,6 @@ div.add.backend .close:hover {
 	height: 0;
 	width: 0;
 	content: "\f077";
-	/* content: "\f139"; */
 	font-size: 20px;
 	line-height: 20px;
 	left: 10px;
@@ -1254,9 +1223,6 @@ div.add.backend .close:hover {
 	padding: 20px;
 	color: #253152;
 	text-align: center;
-	/* top: 50px; */
-	/* margin: 0 auto; */
-	/* width: 80%; */
 }
 
 
