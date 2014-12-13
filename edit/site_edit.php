@@ -81,7 +81,7 @@ if(isset($get->token)) {
 							{ name: 'tools', items: [ 'Maximize', 'ShowBlocks' ] },
 						]
 					});
-				})
+				});
 				</script>
 				<form action="" method="post" name="form">
 					<input <?php if(empty($post->title) && isset($post->title))echo 'class="wrong"'; ?> type="text" placeholder="Seitenname" name="title" value="<?php echo @$edit_site->title; ?>">

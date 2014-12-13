@@ -127,7 +127,7 @@ define('MYSQL_DB',		'$dbname');
 											`id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 											`name` varchar(150) NOT NULL,
 											`text` text NOT NULL,
-											`date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+											`date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 										);
 									");
 			if (!$result) {
@@ -166,8 +166,8 @@ define('MYSQL_DB',		'$dbname');
 										('meta_desc', 'Hier die Beschreibung der Homepage, die in den Meta-Tags angezeigt wird', 'textarea', 'Beschreibung der Homepage(Meta-Tag)'),
 										('meta_keys', 'Schlüsselwörter der Homepage, die in den Meta-Tags angezeigt werden', 'textarea', 'Schlüsselwörter Homepage (Meta-Tag)'),
 										('contact_form_email', 'mail@me.com', 'email', 'E-Mail Adresse (für das Kontaktformular)'),
-										('favicon_src', 'logo.ico', 'text', 'Link zum Favicon'),
-										('logo_src', 'logo.png', 'text', 'Link zum Logo'),
+										('favicon_src', '/core/images/logo.ico', 'text', 'Link zum Favicon'),
+										('logo_src', '/core/images/logo.png', 'text', 'Link zum Logo'),
 										('noreplay_email', 'noreplay@localhost', 'email', 'E-Mail Adresse als Absender');
 								");
 			if (!$result) {

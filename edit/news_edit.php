@@ -15,6 +15,7 @@ $skel = array (
 		"title" => "Beschreibung",
 		"type" => "text",
 		"required" => false,
+		"wysiwyg-editor" => true,
 	),
 	"create_date" => array (
 		"title" => "Erstelldatum",

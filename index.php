@@ -111,7 +111,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 		<header> 
 			<a href="javascript:openmobilemenu();" class="menu-icon"></a>
 			<a class="logo" href="./">
-				<img src="./core/images/<?php echo $main->logo_src; ?>" class="nojsload" />
+				<img src="<?php echo (substr($main->logo_src, 0, 1)=='/') ? '.'.$main->logo_src : $main->logo_src; ?>" class="nojsload" />
 			</a>
 			<ul class="topmenu mobilemenu">
 				<li><a href="./edit?site=login">Login</a></li>
@@ -189,9 +189,9 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 					while($row = $result->fetch_object()) {
 						if(!empty($row->title) && !empty($row->text)) {
 							echo "	<li>
-										<span class=\"title\">$row->title</span>
+										<span class=\"title\">$row->title" . ((isset($login))?"<a class=\"edit-btn\" style=\"height: 1.2em;width:1.2em;\" href=\"edit/?site=news_edit&task=edit&id=$row->id&backbtn\"></a>":'') . "</span>
 										<span class=\"date\">".pretty_date($row->create_date)."</span>".
-										htmlentities(shortstr($row->text, 50))."<br />
+										shortstr(strip_tags($row->text), 50)."<br />
 										<a href=\"?site=news_view&news_id=$row->id\">&raquo;weiterlesen</a>
 									</li>";
 						}
@@ -216,7 +216,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 						echo "	<li>
 									<span class=\"title\">$row->name" . ((isset($login))?"<a class=\"edit-btn\" style=\"height: 1.2em;width:1.2em;\" href=\"edit/?site=event_edit&task=edit&id=$row->id&backbtn\"></a>":'') . "</span>
 									<span class=\"date\">$row->date_formatted</span>".
-									htmlentities(shortstr($row->text, 50))."<br />
+									shortstr(strip_tags($row->text), 50)."<br />
 									<a href=\"?site=event_view&event_id=$row->id\">&raquo;Termin anzeigen</a>
 								</li>";
 					}

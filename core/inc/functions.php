@@ -154,7 +154,9 @@ function pretty_date( $datestr='' ) {
 
 function shortstr($str, $size = 100) {
 	if(strlen($str) > $size) {
-		return substr($str, 0, strpos($str, " ", $size))." ...";
+		$spacePos = strpos($str, " ", $size);
+		$spacePos = ($spacePos==0) ? strlen($str) : $spacePos;
+		return substr($str, 0, $spacePos)." ...";
 	} else {
 		return $str;
 	}

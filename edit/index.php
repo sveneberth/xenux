@@ -104,7 +104,7 @@ ob_start();
 		<header>
 			<a href="javascript:openmobilemenu();" class="menu-icon"></a>
 			<a class="logo" href="../">
-				<img src="../core/images/<?php echo $main->logo_src; ?>" class="nojsload" />
+				<img src="<?php echo (substr($main->logo_src, 0, 1)=='/') ? '..'.$main->logo_src : $main->logo_src; ?>" class="nojsload" />
 			</a>
 			<ul class="topmenu mobilemenu">
 				<?php
