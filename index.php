@@ -179,13 +179,13 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 		<div class="leftboxes">
 			<?php
 			/* news */
-			$result = $db->query("SELECT * FROM XENUX_news ORDER by create_date DESC, title ASC LIMIT 5;");
-			$number = $result->num_rows;
-			if($number > 0) {
-				?>
-				<ul class="news">
-					<h3>News:</h3>
-					<?php
+			?>
+			<ul class="news">
+				<h3>News:</h3>
+				<?php
+				$result = $db->query("SELECT * FROM XENUX_news ORDER by create_date DESC, title ASC LIMIT 5;");
+				$number = $result->num_rows;
+				if($number > 0) {
 					while($row = $result->fetch_object()) {
 						if(!empty($row->title) && !empty($row->text)) {
 							echo "	<li>
@@ -196,32 +196,37 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 									</li>";
 						}
 					}
-					?>
-					<a href="?site=news_list">alle News anzeigen</a>
-				</ul>
-			<?php
-			}
-			
+				} else {
+					echo "<p style=\"margin:5px 0;\">keine News vorhanden!</p>";
+				}
+				?>
+				<a href="?site=news_list">alle News anzeigen</a>
+			</ul>
+			<?php			
 			
 			/* dates */
-			echo "<ul class=\"dates\">
-					<h3>Termine:</h3>";
-			$result = $db->query("SELECT *, DATE_FORMAT(date,'%d.%m.%Y %H:%i') as date_formatted FROM XENUX_dates WHERE date >= NOW() ORDER by date LIMIT 5;");
-			$number = $result->num_rows;
-			if($number > 0) {
-				while($row = $result->fetch_object()) {
-					echo "	<li>
-								<span class=\"title\">$row->name" . ((isset($login))?"<a class=\"edit-btn\" style=\"height: 1.2em;width:1.2em;\" href=\"edit/?site=event_edit&task=edit&id=$row->id&backbtn\"></a>":'') . "</span>
-								<span class=\"date\">$row->date_formatted</span>".
-								htmlentities(shortstr($row->text, 50))."<br />
-								<a href=\"?site=event_view&event_id=$row->id\">&raquo;Termin anzeigen</a>
-							</li>";
+			?>
+			<ul class="dates">
+				<h3>Termine:</h3>
+				<?php
+				$result = $db->query("SELECT *, DATE_FORMAT(date,'%d.%m.%Y %H:%i') as date_formatted FROM XENUX_dates WHERE date >= NOW() ORDER by date LIMIT 5;");
+				$number = $result->num_rows;
+				if($number > 0) {
+					while($row = $result->fetch_object()) {
+						echo "	<li>
+									<span class=\"title\">$row->name" . ((isset($login))?"<a class=\"edit-btn\" style=\"height: 1.2em;width:1.2em;\" href=\"edit/?site=event_edit&task=edit&id=$row->id&backbtn\"></a>":'') . "</span>
+									<span class=\"date\">$row->date_formatted</span>".
+									htmlentities(shortstr($row->text, 50))."<br />
+									<a href=\"?site=event_view&event_id=$row->id\">&raquo;Termin anzeigen</a>
+								</li>";
+					}
+				} else {
+					echo "<p style=\"margin:5px 0;\">keine anstehenden Termine vorhanden!</p>";
 				}
-				echo "<a href=\"?site=event_list\">alle Termine anzeigen</a>";
-			} else {
-				echo "<p style=\"margin:5px 0;\">keine anstehenden Termine vorhanden!</p>";
-			}
-			echo "</ul>";
+				?>
+				<a href="?site=event_list">alle Termine anzeigen</a>
+			</ul>
+			<?php
 			
 			
 			/* newest sites */
