@@ -45,7 +45,7 @@ $(window).resize(function () { // resize window
 		$(".topmenu.mobilemenu").show();
 		$(".topmenu.mainmenu").hide();
 		
-		$(".topmenu.mainmenu").css('min-height', $(window).height() - 50);
+		$(".topmenu.mainmenu").css('min-height', $(document).height() - 50);
 		
 		if($(".topmenu.mainmenu li a span").length == 0) { 
 			$(".topmenu.mainmenu li").has("ul").children("a").append("<span></span>");
@@ -56,7 +56,7 @@ $(window).resize(function () { // resize window
 $(document).ready(function () { // after DOM load
 	if($(window).width() <= 600) {
 		$(".topmenu.mainmenu li").has("ul").children("a").append("<span></span>");
-		$(".topmenu.mainmenu").css('min-height', $(window).height() - 50);
+		$(".topmenu.mainmenu").css('min-height', $(document).height() - 50);
 	}
 	
 	$(".topmenu.mainmenu li span").live('click', function(e) {
