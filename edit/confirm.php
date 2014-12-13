@@ -31,8 +31,8 @@ $message =
 		<span style="font-family:Verdana;color:#777;border-top: 1px #777 solid;">Diese E-Mail wurde mit Xenux generiert und versendet.</span>
 	</body>
 </html>';
-$header		 = "From: $main->noreplay_email \r\n";
-$header		.= "Reply-To: $main->noreplay_email \r\n";
+$header		 = "From: $main->reply_email \r\n";
+$header		.= "Reply-To: $main->reply_email \r\n";
 $header		.= 'MIME-Version: 1.0' . "\r\n";
 $header		.= 'Content-type: text/html; charset=utf-8' . "\r\n";
 mail($user->email, 'Accountfreischaltung', $message, $header);

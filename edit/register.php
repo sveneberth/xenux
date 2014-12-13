@@ -37,10 +37,10 @@ if(isset($_POST['submit_register'])) {
 		<span style="font-family:Verdana;color:#777;border-top: 1px #777 solid;">Diese E-Mail wurde mit Xenux generiert und versendet.</span>
 	</body>
 </html>';
-				$header		 = "From: $main->noreplay_email \r\n";
+				$header		 = "From: $main->reply_email \r\n";
 				$header		.= 'MIME-Version: 1.0' . "\r\n";
 				$header		.= 'Content-type: text/html; charset=utf-8' . "\r\n";
-				mail($main->noreplay_email, 'Accountfreischaltung', $message, $header);
+				mail($main->reply_email, 'Accountfreischaltung', $message, $header);
 				echo "<p>Du wurdest erfolgreich registriert! Nun musst du warten, bis der Administrator deinen Account freischaltet, du wirst darüber per E-Mail benachrichtigt!</p>";
 				return;
 			} else {

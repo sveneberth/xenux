@@ -46,7 +46,7 @@ Hallo {$user->name},<br />
 neu gesetzt werden.</p>
 <p>Sollten Sie nicht selbst diese Rücksetzung angefordert haben, handelt es sich wohl um einen Fehler (z.B. bei der Eingabe des Benutzernamens vertippt), bitte in so einem Fall einfach diese E-Mail ignorieren.</p>
 </body></html>";
-			$header		 = "From: $main->noreplay_email \r\n";
+			$header		 = "From: $main->reply_email \r\n";
 			$header		.= 'MIME-Version: 1.0' . "\r\n";
 			$header		.= 'Content-type: text/html; charset=utf-8' . "\r\n";
 			mail($user->email, "Passwortwortruecksetzung Xenux", $mailtxt, $header) 

@@ -2,7 +2,7 @@
 if(isset($_POST['submit'])) {
 	if(!empty($post->hpname) && !empty($post->email)) {
 		$db->query	("UPDATE XENUX_main Set value = '$post->hpname' WHERE name = 'hp_name';");
-		$db->query	("UPDATE XENUX_main Set value = '$post->email' WHERE name = 'noreplay_email';");
+		$db->query	("UPDATE XENUX_main Set value = '$post->email' WHERE name = 'reply_email';");
 		$next = true;
 		$db->close(); //close the connection to the db
 	}
