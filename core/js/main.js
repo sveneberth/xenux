@@ -27,7 +27,7 @@ function openmobilemenu() {
 	$(".topmenu.mainmenu").toggle("fast");
 	$(".topmenu.mobilemenu").fadeToggle("fast");
 	$(".logo").fadeToggle("fast");
-	$(".transparent").fadeToggle("fast");
+//	$(".transparent").fadeToggle("fast");
 }
 
 $(window).scroll(function() { // scroll -> move menu
