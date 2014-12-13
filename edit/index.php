@@ -69,7 +69,7 @@ ob_start();
 	<meta name="generator" content="Xenux - das kostenlose CMS" />
 	<meta name="robots" content="noindex, nofollow, noarchive" />
 	<link rel="stylesheet" type="text/css" href="../core/css/style.css" media="all"/>
-	<link rel="shortcut icon" href="../core/images/<?php echo $main->favicon_src; ?>" />
+	<link rel="shortcut icon" href="<?php echo (substr($main->favicon_src, 0, 1)=='/') ? '..'.$main->favicon_src : $main->favicon_src; ?>" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<script src="../core/js/jquery-2.1.1.min.js"></script>
 	<script src="../core/js/jquery-migrate-1.2.1.min.js"></script>
