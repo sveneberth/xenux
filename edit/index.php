@@ -59,7 +59,7 @@ ob_start();
 <html lang="de">
 <head>
 	<title><?php echo "$main->hp_name Administration | ".$sites[$site]; ?></title>
-	<meta charset="UTF-8" >
+	<meta charset="UTF-8" />
 	<meta name="description" content="<?php echo $main->meta_desc; ?>" />
 	<meta name="keywords" content="<?php echo $main->meta_keys; ?>" />
 	<meta name="auhor" content="<?php echo $main->meta_auhor; ?>" />
@@ -81,10 +81,10 @@ ob_start();
 	<script src="../core/js/functions.js?from=https://code-snippets-se.googlecode.com/"></script>
 	<script src="../core/js/main.js"></script>
 	<style>
-	html, body {
-		background: <?php echo $main->bgcolor; ?>;
-		color: <?php echo $main->fontcolor; ?>;
-	}
+		html, body {
+			background: <?php echo $main->bgcolor; ?>;
+			color: <?php echo $main->fontcolor; ?>;
+		}
 	</style>
 </head>
 <body id="top">
@@ -120,15 +120,17 @@ ob_start();
 				?>
 			</ul>
 			<ul class="topmenu mainmenu">
-				<li><a href="./">Editroom</a></li>
-				<?php
+				<li>
+					<a href="./">Editroom</a>
+				</li>
+<?php
 				foreach($all_sites as $key => $val) {
 					if(is_array($val)) {
-						echo "<li><a>$key</a><ul>";
+						echo "\n<li>\n\t<a>$key</a>\n\t<ul>";
 						foreach($val as $key => $val) {
-							echo "<li><a href=\"./?site=$key\">".nbsp($val)."</a></li>";
+							echo "\n\t\t<li>\n\t\t\t<a href=\"./?site=$key\">".nbsp($val)."</a>\n\t\t</li>";
 						}
-						echo "</ul></li>";
+						echo "\n\t</ul>\n</li>";
 					};
 				}
 				?>
@@ -136,6 +138,13 @@ ob_start();
 		</header>
 	</div>
 	<div class="wrapper">
+		<noscript>
+			<div class="warning-noscript">
+				<div>
+					In deinem Browser ist JavaScript deaktiviert. Um den vollen Funktionsumfang dieser Webseite zu nutzen, benötigst du JavaScript.
+				</div>
+			</div>
+		</noscript>
 		<div class="fontsize">
 			&nbsp;<a title="Schrift kleiner" class="decrease"></a>
 			&nbsp;<a title="Schrift normal" class="reset"></a>

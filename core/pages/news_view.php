@@ -12,8 +12,9 @@ if($num < 1) {
 }
 
 $row = $result->fetch_object();
-echo "<h1>$row->title</h1>".
-nl2br(htmlentities($row->text));
+echo	"<span class=\"news-view-date\">".date("d.m.Y H:i", strtotime($row->create_date))."</span>
+		<h1>$row->title</h1>".
+		nl2br(htmlentities($row->text));
 ?>
 <br />
 <br />

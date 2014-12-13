@@ -18,4 +18,4 @@ echo "	<h3 style=\"margin: 20px 0 5px 0;\">$row->name</h3>
 ?>
 <br />
 <br />
-<a href="?site=event_list">&raquo;zur Übersicht</a>
+<a href="?site=event_list">&raquo;zum Termin-Kalender</a>

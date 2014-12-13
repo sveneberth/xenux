@@ -99,10 +99,10 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 	<script src="core/js/functions.js?from=https://code-snippets-se.googlecode.com/"></script>
 	<script src="core/js/main.js"></script>
 	<style>
-	html, body {
-		background: <?php echo $main->bgcolor; ?>;
-		color: <?php echo $main->fontcolor; ?>;
-	}
+		html, body {
+			background: <?php echo $main->bgcolor; ?>;
+			color: <?php echo $main->fontcolor; ?>;
+		}
 	</style>
 </head>
 <body id="top">
@@ -118,34 +118,34 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 			</ul>
 			<ul class="topmenu mainmenu">
 				<li><a href='./'>Home</a></li>
-				<?php
+<?php
 					$result1 = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = 0 ORDER by title ASC;");
 					while($rank1 = $result1->fetch_object()) {
 						if(in_array($rank1->site, $special_sites) || $rank1->site == 'home')
 							continue;
-						echo "<li><a href=\"?site=page&page_id=$rank1->id\">".nbsp($rank1->title)."</a>";
+						echo "<li>\n\t<a href=\"?site=page&page_id=$rank1->id\">".nbsp($rank1->title)."</a>\n";
 						
 						$result2 = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = $rank1->id ORDER by title ASC;");
 						if($result2->num_rows > 0) {
-							echo "<ul>";
+							echo "\t<ul>";
 							while($rank2 = $result2->fetch_object()) {
-								echo "<li><a href=\"?site=page&page_id=$rank2->id\">".nbsp($rank2->title)."</a>";
+								echo "\n\t\t<li>\n\t\t\t<a href=\"?site=page&page_id=$rank2->id\">".nbsp($rank2->title)."</a>\n";
 								
 								$result3 = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = $rank2->id ORDER by title ASC;");
 								if($result3->num_rows > 0) {
-									echo "<ul>";
+									echo "\t\t\t<ul>";
 									while($rank3 = $result3->fetch_object()) {
-										echo "<li><a href=\"?site=page&page_id=$rank3->id\">".nbsp($rank3->title)."</a></li>";
+										echo "\n\t\t\t\t<li>\n\t\t\t\t\t<a href=\"?site=page&page_id=$rank3->id\">".nbsp($rank3->title)."</a>\n\t\t\t\t</li>\n";
 									}
-									echo "</ul>";
+									echo "\t\t\t</ul>";
 								}
-								echo "</li>";
+								echo "\n\t\t</li>";
 								
 							}
-							echo "</ul>";
+							echo "\n\t</ul>";
 						}
 						
-						echo "</li>";
+						echo "\n</li>\n";
 					}
 				?>
 				<li class="search">
@@ -164,6 +164,13 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 		</header>
 	</div>
 	<div class="wrapper">
+		<noscript>
+			<div class="warning-noscript">
+				<div>
+					In deinem Browser ist JavaScript deaktiviert. Um den vollen Funktionsumfang dieser Webseite zu nutzen, benötigst du JavaScript.
+				</div>
+			</div>
+		</noscript>
 		<div class="fontsize">
 			&nbsp;<a title="Schrift kleiner" class="decrease"></a>
 			&nbsp;<a title="Schrift normal" class="reset"></a>
@@ -172,7 +179,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 		<div class="leftboxes">
 			<?php
 			/* news */
-			$result = $db->query("SELECT * FROM XENUX_news LIMIT 5;");
+			$result = $db->query("SELECT * FROM XENUX_news ORDER by create_date DESC, title ASC LIMIT 5;");
 			$number = $result->num_rows;
 			if($number > 0) {
 				?>
@@ -181,16 +188,16 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 					<?php
 					while($row = $result->fetch_object()) {
 						if(!empty($row->title) && !empty($row->text)) {
-							echo "<li><span class=\"title\">$row->title</span>";
-							if(strlen($row->text) > 70) {
-								echo htmlentities(substr($row->text, 0, strpos($row->text, " ", 70)));
-							} else {
-								echo htmlentities($row->text);
-							}
-							echo "...<br /><a href=\"?site=news_view&news_id=$row->id\">&raquo;weiterlesen</a></li>";
+							echo "	<li>
+										<span class=\"title\">$row->title</span>
+										<span class=\"date\">".pretty_date($row->create_date)."</span>".
+										htmlentities(shortstr($row->text, 50))."<br />
+										<a href=\"?site=news_view&news_id=$row->id\">&raquo;weiterlesen</a>
+									</li>";
 						}
 					}
 					?>
+					<a href="?site=news_list">alle News anzeigen</a>
 				</ul>
 			<?php
 			}
@@ -203,10 +210,12 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 			$number = $result->num_rows;
 			if($number > 0) {
 				while($row = $result->fetch_object()) {
-					echo "<li><span class=\"title\">$row->name" . ((isset($login))?"<a class=\"edit-btn\" style=\"height: 1.2em;width:1.2em;\" href=\"edit/?site=event_edit&task=edit&id=$row->id&backbtn\"></a>":'') . "</span>
-					$row->date_formatted<br/>
-					".htmlentities(substr($row->text, 0, 70))."<br />
-					<a href=\"?site=event_view&id=$row->id\">&raquo;Termin anzeigen</a></li>";
+					echo "	<li>
+								<span class=\"title\">$row->name" . ((isset($login))?"<a class=\"edit-btn\" style=\"height: 1.2em;width:1.2em;\" href=\"edit/?site=event_edit&task=edit&id=$row->id&backbtn\"></a>":'') . "</span>
+								<span class=\"date\">$row->date_formatted</span>".
+								htmlentities(shortstr($row->text, 50))."<br />
+								<a href=\"?site=event_view&event_id=$row->id\">&raquo;Termin anzeigen</a>
+							</li>";
 				}
 				echo "<a href=\"?site=event_list\">alle Termine anzeigen</a>";
 			} else {
@@ -219,7 +228,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 			$result = $db->query("SELECT * FROM XENUX_sites ORDER by create_date DESC LIMIT 5;");
 			$num = $result->num_rows;
 			if($num > 0) {
-				echo "<ul class=\"newest sites\">
+				echo "<ul class=\"newest-sites\">
 						<h3>neuste Seiten:</h3>";
 				while($row = $result->fetch_object()) {
 					echo "	<li>

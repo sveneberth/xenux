@@ -20,6 +20,7 @@ html, body {
 	font-size: 100%;
 	font-family: inherit;
 	vertical-align: top;
+	margin: 0;
 }
 
 /* scrollbar */
@@ -417,12 +418,13 @@ footer a:hover {
 	border-bottom: 2px solid #777;
 	box-sizing: border-box;
 }
-.leftboxes ul li{
+.leftboxes ul li {
 	list-style: none;
 	display: block;
 	border-bottom: 1px #bbb solid;
 	margin: 0;
 	padding: 5px 0;
+	overflow: hidden;
 }
 .leftboxes ul:last-child,
 .leftboxes ul li:last-child {
@@ -432,6 +434,11 @@ footer a:hover {
 	font-weight: bold;
 	display: block;
 	margin-bottom: 2px;
+}
+.leftboxes ul .date {
+	color: #666;
+	font-size: .8em;
+	display: block;
 }
 .leftboxes ul h3{
 	margin: 2px 0 4px 0;
@@ -443,17 +450,16 @@ footer a:hover {
 	line-height: 1.1em;
 	padding-bottom: 1px;
 }
-.leftboxes ul.newest.sites li {
+.leftboxes ul.newest-sites li {
 	border: 0;
 	padding: 0;
-	
 }
-.leftboxes ul.newest.sites li a {
+.leftboxes ul.newest-sites li a {
 	display: block;
 	padding: 2px 3px;
 	text-decoration: none !important;
 }
-.leftboxes ul.newest.sites li a:hover {
+.leftboxes ul.newest-sites li a:hover {
 	background: #0d5fa3;
 	color: #fff;
 }
@@ -758,7 +764,7 @@ div.add.backend .close:hover {
 /* calender */
 .calender {
 	border: 1px solid black;
-	display: inline-block;
+	display: block;
 	width: 100%;
 }
 .calender div.after,
@@ -781,8 +787,16 @@ div.add.backend .close:hover {
 	font-weight: bold;
 	background: #eee
 }
-.calender .pagination {
+.calender menu {
 	text-align: center;
+	box-sizing: border-box;
+	padding: 5px 10px;
+}
+.calender menu > a.btn {
+	margin: 0;
+	padding: 4px 10px;
+}
+.calender menu > span {
 	font-weight: bold;
 	font-size: 120%;
 }
@@ -820,7 +834,6 @@ div.add.backend .close:hover {
 	text-decoration: none;
 	display: inline-block;
 	margin: 2px 1px;
-	border-radius: 2px;
 	line-height: .9em;
 	color: inherit;
 	font-weight: 400;
@@ -870,6 +883,22 @@ div.add.backend .close:hover {
 	padding: 15px;
 	box-shadow: 0 0 5px 0px #aaa;
 	overflow: auto;
+}
+.newslistbox .title {
+	margin: 0;
+}
+.newslistbox .date {
+	color: #666;
+	font-size: .8em;
+	display: block;
+	margin-bottom: 10px;
+}
+
+/* news_view */
+.news-view-date {
+	color: #666;
+	font-size: .8em;
+	display: block;
 }
 
 /* contact-persons */
@@ -1210,6 +1239,24 @@ div.add.backend .close:hover {
 	height: 50px;
 	float: left;
 	display: none;
+}
+
+.warning-noscript {
+	display: block;
+	box-sizing: border-box;
+	margin-bottom: 10px;
+}
+.warning-noscript div {
+	display: block;
+	box-sizing: border-box;
+	background: rgba(197, 40, 40, 0.4);
+	border: 2px dotted rgba(197, 40, 40, 1);
+	padding: 20px;
+	color: #253152;
+	text-align: center;
+	/* top: 50px; */
+	/* margin: 0 auto; */
+	/* width: 80%; */
 }
 
 

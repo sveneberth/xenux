@@ -4,6 +4,7 @@ if(!isset($site)) die("You can not open this file individually/Sie k&ouml;nnen d
 $skelName = "Termine";
 $skelTable = "XENUX_dates";
 $canAddNew = true;
+$order = "date DESC, name ASC";
 $skel = array (
 	"name" => array (
 		"title" => "Name",

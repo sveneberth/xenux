@@ -4,6 +4,7 @@ if(!isset($site)) die("You can not open this file individually/Sie k&ouml;nnen d
 $skelName = "News";
 $skelTable = "XENUX_news";
 $canAddNew = true;
+$order = "create_date DESC, title ASC";
 $skel = array (
 	"title" => array (
 		"title" => "Titel",
@@ -14,6 +15,12 @@ $skel = array (
 		"title" => "Beschreibung",
 		"type" => "text",
 		"required" => false,
+	),
+	"create_date" => array (
+		"title" => "Erstelldatum",
+		"type" => "date",
+		"required" => false,
+		"editable" => false,
 	),
 );
 

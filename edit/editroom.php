@@ -7,11 +7,11 @@ Hier kannst du die Homepage bearbeiten und verwalten!</p>
 	<?php
 	foreach($all_sites as $key => $val) {
 		if(is_array($val)) {
-			echo "<ul class=\"editroombox\"><h4>$key</h4>";
+			echo "\n<ul class=\"editroombox\">\n\t<h4>$key</h4>";
 			foreach($val as $key => $val) {
-				echo "<li><a href=\"./?site=$key\">$val</a></li>";
+				echo "\n\t<li>\n\t\t<a href=\"./?site=$key\">$val</a>\n\t</li>";
 			}
-			echo "</ul>";
+			echo "\n</ul>";
 		};
 	}
 	?>

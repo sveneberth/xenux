@@ -103,7 +103,8 @@ define('MYSQL_DB',		'$dbname');
 			$result = $db->query	("	CREATE TABLE IF NOT EXISTS `XENUX_news` (
 											`id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 											`title` varchar(200) NOT NULL,
-											`text` text NOT NULL
+											`text` text NOT NULL,
+											`create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 										);
 									");
 			if (!$result) {

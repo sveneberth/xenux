@@ -1,4 +1,10 @@
 <?php
+foreach($skel as $name => $props) {
+	if(!isset($props['required'])) $skel[$name]['required'] = false;
+	if(!isset($props['editable'])) $skel[$name]['editable'] = true;
+}
+
+
 if(isset($_REQUEST['task'])) {
 	switch($_REQUEST['task']) {
 		case "remove":
@@ -16,16 +22,18 @@ if(isset($_REQUEST['task'])) {
 					$first			= true;
 					
 					foreach($skel as $name => $props) {
-						if($props['type'] == 'date') {
-							$value = $post->{$name."_date"}." ".$post->{$name."_time"};
-						} else {
-							$value = $post->$name;
-						}
+						if($props['editable']) {
+							if($props['type'] == 'date') {
+								$value = $post->{$name."_date"}." ".$post->{$name."_time"};
+							} else {
+								$value = $post->$name;
+							}
+								
+								$sql_columns	.= (($first)?'':',')."$name";
+								$sql_values		.= (($first)?'':',')."'$value'";
 							
-							$sql_columns	.= (($first)?'':',')."$name";
-							$sql_values		.= (($first)?'':',')."'$value'";
-						
-							$first = false;
+								$first = false;
+						}
 					}
 					
 					$sql = "INSERT INTO `$skelTable`($sql_columns) VALUES($sql_values);";
@@ -35,14 +43,16 @@ if(isset($_REQUEST['task'])) {
 						
 				} elseif($_REQUEST['task'] == "edit") {
 					foreach($skel as $name => $props) {
-						if($props['type'] == 'date') {
-							$db->query("UPDATE $skelTable SET $name = '".$post->{$name."_date"}." ".$post->{$name."_time"}."' WHERE id = '$get->id';");
-						} else {
-							$db->query("UPDATE $skelTable SET $name = '".$post->$name."' WHERE id = '$get->id';");
+						if($props['editable']) {
+							if($props['type'] == 'date') {
+								$db->query("UPDATE $skelTable SET $name = '".$post->{$name."_date"}." ".$post->{$name."_time"}."' WHERE id = '$get->id';");
+							} else {
+								$db->query("UPDATE $skelTable SET $name = '".$post->$name."' WHERE id = '$get->id';");
+							}
 						}
 					}
 				}
-				
+				header("Location: ?site=$site");
 			} else {
 				if($_REQUEST['task'] == "edit") {
 					$result = $db->query("SELECT * FROM $skelTable WHERE id = '$get->id';");
@@ -52,24 +62,26 @@ if(isset($_REQUEST['task'])) {
 				<form action="" method="post">
 					<?php
 						foreach($skel as $name => $props) {
-							switch($props['type']) {
-								case 'email':
-									echo "<input type=\"email\" placeholder=\"{$props['title']}\" value=\"".@$row->$name."\" name=\"$name\" ".(($props['required']==true)?'required':'')." />";
-									break;
-								case 'string':
-									echo "<input type=\"text\" placeholder=\"{$props['title']}\" value=\"".@$row->$name."\" name=\"$name\" ".(($props['required']==true)?'required':'')." />";
-									break;
-								case 'number':
-									echo "<input type=\"number\" placeholder=\"{$props['title']}\" value=\"".@$row->$name."\" name=\"$name\" ".(($props['required']==true)?'required':'')." />";
-									break;
-								case 'date': #FIXME: type date
-									echo "<input type=\"date\" placeholder=\"{$props['title']} (Datum)\" value=\"".(isset($row->$name)?date("Y-m-d", strtotime(@$row->$name)):'')."\" name=\"".$name."_date\" ".(($props['required']==true)?'required':'')." />";
-									echo "<input type=\"time\" placeholder=\"{$props['title']} (Zeit)\" value=\"".(isset($row->$name)?date("h:i:s", strtotime(@$row->$name)):'')."\" name=\"".$name."_time\" ".(($props['required']==true)?'required':'')." />";
-									break;
-								case 'text':
-									echo "<textarea placeholder=\"{$props['title']}\" class=\"$name\" id=\"$name\" name=\"$name\" ".(($props['required']==true)?'required':'').">".@$row->$name."</textarea>";
-									break;
-								#FIXME: add case bool
+							if($props['editable']) {
+								switch($props['type']) {
+									case 'email':
+										echo "<input type=\"email\" placeholder=\"{$props['title']}\" value=\"".@$row->$name."\" name=\"$name\" ".(($props['required']==true)?'required':'')." />";
+										break;
+									case 'string':
+										echo "<input type=\"text\" placeholder=\"{$props['title']}\" value=\"".@$row->$name."\" name=\"$name\" ".(($props['required']==true)?'required':'')." />";
+										break;
+									case 'number':
+										echo "<input type=\"number\" placeholder=\"{$props['title']}\" value=\"".@$row->$name."\" name=\"$name\" ".(($props['required']==true)?'required':'')." />";
+										break;
+									case 'date': #FIXME: type date
+										echo "<input type=\"date\" placeholder=\"{$props['title']} (Datum)\" value=\"".(isset($row->$name)?date("Y-m-d", strtotime(@$row->$name)):'')."\" name=\"".$name."_date\" ".(($props['required']==true)?'required':'')." />";
+										echo "<input type=\"time\" placeholder=\"{$props['title']} (Zeit)\" value=\"".(isset($row->$name)?date("H:i:s", strtotime(@$row->$name)):'')."\" name=\"".$name."_time\" ".(($props['required']==true)?'required':'')." />";
+										break;
+									case 'text':
+										echo "<textarea placeholder=\"{$props['title']}\" class=\"$name\" id=\"$name\" name=\"$name\" ".(($props['required']==true)?'required':'').">".@$row->$name."</textarea>";
+										break;
+									#FIXME: add case bool
+								}
 							}
 						}
 					?>
@@ -98,8 +110,13 @@ if(isset($_REQUEST['task'])) {
 	<?php
 	reset($skel);
 	$first_key = key($skel);
+	
+	$order = (isset($order))?$order:$first_key." ASC";
 
-	$result = $db->query("SELECT * FROM $skelTable ORDER by $first_key ASC;");
+	$result = $db->query("SELECT * FROM $skelTable ORDER by $order;");
+	if(!$result)
+		echo $db->error;
+	
 	while($row = $result->fetch_object()) {
 		echo "<tr>";
 		foreach($skel as $name => $props) {
