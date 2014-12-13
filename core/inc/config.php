@@ -10,8 +10,6 @@ include_once(BASEDIR.'mysql.conf'); // include Config for MySQL
 
 if($_SERVER['HTTP_HOST'] == 'localhost') {
 	error_reporting(E_ALL);
-} else {
-//	error_reporting(0);
 }
 
 $db = new MySQLi(MYSQL_HOST, MYSQL_USER, MYSQL_PW, MYSQL_DB); // connect with database
