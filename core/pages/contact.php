@@ -34,7 +34,6 @@ if(!empty($main->contact_form_email)) {
 	<span style=\"font-family:Verdana;color:#808080;border-top: 1px #808080 solid;\">Diese E-Mail wurde mit Xenux erstellt</span>
 	</body>
 </html>";
-	echo $mailtext;
 			mail(
 				$main->contact_form_email, 
 				"Kontaktaufnahme über das Kontaktformular auf ihrer Homepage", 

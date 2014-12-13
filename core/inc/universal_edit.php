@@ -93,7 +93,7 @@ if(isset($_REQUEST['task'])) {
 									case 'number':
 										echo "<input type=\"number\" placeholder=\"{$props['title']}\" value=\"".@$row->$name."\" name=\"$name\" ".(($props['required']==true)?'required':'')." />";
 										break;
-									case 'date': #FIXME: type date
+									case 'date':
 										echo "<input type=\"date\" placeholder=\"{$props['title']} (Datum)\" value=\"".(isset($row->$name)?date("Y-m-d", strtotime(@$row->$name)):'')."\" name=\"".$name."_date\" ".(($props['required']==true)?'required':'')." />";
 										echo "<input type=\"time\" placeholder=\"{$props['title']} (Zeit)\" value=\"".(isset($row->$name)?date("H:i:s", strtotime(@$row->$name)):'')."\" name=\"".$name."_time\" ".(($props['required']==true)?'required':'')." />";
 										break;
