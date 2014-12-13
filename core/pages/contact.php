@@ -47,9 +47,9 @@ if(!empty($main->contact_form_email)) {
 
 	<form action="" method="post">
 		<h3>Kontaktformular</h3>
-		<input type="text" name="name" placeholder="Name*" value="<?php echo @$name; ?>" />
+		<input type="text" name="name" placeholder="Name" value="<?php echo @$name; ?>" />
 		<input <?php if(empty($post->email) && isset($post->contact_submitted)) echo 'class="wrong"'; ?> type="email" name="email" placeholder="E-Mail*" value="<?php echo @$eMail; ?>" />
-		<textarea <?php if(empty($post->message) && isset($post->contact_submitted)) echo 'class="wrong"'; ?> name="message" placeholder="Nachricht"><?php echo @$nachricht; ?></textarea>
+		<textarea <?php if(empty($post->message) && isset($post->contact_submitted)) echo 'class="wrong"'; ?> name="message" placeholder="Nachricht*"><?php echo @$nachricht; ?></textarea>
 		
 		<input type="hidden" name="contact_submitted" value="true" />
 		<input type="submit" value="Senden" />
