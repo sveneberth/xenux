@@ -24,7 +24,7 @@ if($num < 1) {
 while($row = $result->fetch_object()) {
 	$text_shortened = shortstr(strip_tags($row->text), 300);
 	
-	if(contains($row->site, 'impressum', 'kontakt', 'home')) {
+	if(contains($row->site, 'imprint', 'contact', 'home')) {
 		echo "	<div class=\"searchresult\">
 					<b><a href=\"?site=$row->site\">$row->title</a></b><br />
 					$text_shortened

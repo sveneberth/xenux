@@ -100,7 +100,19 @@ if(isset($_REQUEST['task'])) {
 									case 'text':
 										echo "<textarea ".(($props['wysiwyg-editor'])?'class="ckeditor nolabel"':'')." placeholder=\"{$props['title']}\" class=\"$name\" id=\"$name\" name=\"$name\" ".(($props['required']==true)?'required':'').">".@$row->$name."</textarea>";
 										break;
-									#FIXME: add case bool
+									case 'bool':
+										echo "{$props['title']}:
+										<input type=\"radio\" value=\"0\" name=\"$name\" id=\"$name"."_0\" ".(($row->$name==0)?'checked':'')." /><label for=\"$name"."_0\">Nein</label>
+										<input type=\"radio\" value=\"1\" name=\"$name\" id=\"$name"."_1\" ".(($row->$name==1)?'checked':'')." /><label for=\"$name"."_1\">Ja</label>";
+										break;
+										
+									case 'rool':
+									/*
+										echo "{$props['title']}:
+										<input type=\"radio\" value=\"0\" name=\"$name\" id=\"$name"."_0\" ".(($row->$name==0)?'checked':'')." /><label for=\"$name"."_0\">Nein</label>
+										<input type=\"radio\" value=\"1\" name=\"$name\" id=\"$name"."_1\" ".(($row->$name==1)?'checked':'')." /><label for=\"$name"."_1\">Ja</label>";
+										break;
+									*/
 								}
 							}
 						}
@@ -140,7 +152,11 @@ if(isset($_REQUEST['task'])) {
 	while($row = $result->fetch_object()) {
 		echo "<tr>";
 		foreach($skel as $name => $props) {
-			echo "<td>".shortstr(strip_tags($row->$name))."</td>";
+			if($props['type'] == 'bool') {
+				echo "<td>".(($row->$name==0)?'Nein':'Ja')."</td>";
+			} else {
+				echo "<td>".shortstr(strip_tags($row->$name))."</td>";
+			}
 		}
 		echo "	<td style=\"text-align: center;\">
 						<a href=\"?site=$site&task=edit&id=$row->id&backbtn\" title=\"bearbeiten\" class=\"edit edit-btn clickable\" style=\"display: inline-block;margin: 0;\"></a>

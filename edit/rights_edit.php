@@ -44,7 +44,7 @@ $skel = array (
 */
 	'role' => array(
 		'title' => 'Rolle',
-		"type" => "number",
+		"type" => "role",
 		"required" => true,
 	),
 	'confirmed' => array(
