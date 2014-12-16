@@ -128,10 +128,10 @@ function fontsizedecrease() {
 
 
 
-//---add label before input----------------------------------------------------
+//---add label before input, textarea, select----------------------------------
 $(document).ready(function() {
 	var i = 1;
-	$('input[type="text"], input[type="email"], input[type="number"], input[type="password"], input[type="color"], textarea').each(function() {
+	$('input[type="text"], input[type="email"], input[type="number"], input[type="password"], input[type="color"], textarea, select').each(function() {
 		if(!$(this).hasClass('nolabel')) {
 			if(typeof $(this).attr('id') !== 'undefined') {
 				var id = $(this).attr('id');

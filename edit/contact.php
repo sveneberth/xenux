@@ -24,6 +24,7 @@ $skel = array (
 		'title' => 'Beschreibung',
 		"type" => "text",
 		"required" => false,
+		"wysiwyg-editor" => true,		
 	),
 );
 

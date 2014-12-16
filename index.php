@@ -284,6 +284,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 				} else {
 					?>
 					Hallo <?php echo $login->firstname; ?>, du bist erfolgreich eingeloggt!<br />
+					<a href="./edit/">&raquo;zum Editroom</a>
 					<input type="button" onclick="window.location='?<?php foreach($_GET as $key => $val){if($key!="do")echo "$key=$val&";} ?>do=logout'" value="Logout" />
 					<?php
 				}

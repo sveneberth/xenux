@@ -2,7 +2,7 @@
 foreach($skel as $name => $props) {
 	if(!isset($props['required']))			$skel[$name]['required']		= false;
 	if(!isset($props['editable']))			$skel[$name]['editable']		= true;
-	if(!isset($props['wysiwyg-editor']))	$skel[$name]['wysiwyg-editor']	= true;
+	if(!isset($props['wysiwyg-editor']))	$skel[$name]['wysiwyg-editor']	= false;
 }
 
 
@@ -62,7 +62,7 @@ if(isset($_REQUEST['task'])) {
 				?>
 				<script>
 				$(document).ready(function() {
-					CKEDITOR.replace('text', {
+					CKEDITOR.replace('ckeditor', {
 						toolbar: [
 							{ name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates' ] },
 							{ name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: [ 'Cut', 'Copy', 'Paste', 'PasteText', '-', 'Undo', 'Redo' ] },
@@ -98,21 +98,24 @@ if(isset($_REQUEST['task'])) {
 										echo "<input type=\"time\" placeholder=\"{$props['title']} (Zeit)\" value=\"".(isset($row->$name)?date("H:i:s", strtotime(@$row->$name)):'')."\" name=\"".$name."_time\" ".(($props['required']==true)?'required':'')." />";
 										break;
 									case 'text':
-										echo "<textarea ".(($props['wysiwyg-editor'])?'class="ckeditor nolabel"':'')." placeholder=\"{$props['title']}\" class=\"$name\" id=\"$name\" name=\"$name\" ".(($props['required']==true)?'required':'').">".@$row->$name."</textarea>";
+										echo "<textarea ".(($props['wysiwyg-editor'])?'id="ckeditor" class="ckeditor nolabel"':'')." placeholder=\"{$props['title']}\"  name=\"$name\" ".(($props['required']==true)?'required':'').">".@$row->$name."</textarea>";
 										break;
 									case 'bool':
 										echo "{$props['title']}:
 										<input type=\"radio\" value=\"0\" name=\"$name\" id=\"$name"."_0\" ".(($row->$name==0)?'checked':'')." /><label for=\"$name"."_0\">Nein</label>
 										<input type=\"radio\" value=\"1\" name=\"$name\" id=\"$name"."_1\" ".(($row->$name==1)?'checked':'')." /><label for=\"$name"."_1\">Ja</label>";
 										break;
-										
-									case 'rool':
-									/*
+									case 'role':
 										echo "{$props['title']}:
-										<input type=\"radio\" value=\"0\" name=\"$name\" id=\"$name"."_0\" ".(($row->$name==0)?'checked':'')." /><label for=\"$name"."_0\">Nein</label>
-										<input type=\"radio\" value=\"1\" name=\"$name\" id=\"$name"."_1\" ".(($row->$name==1)?'checked':'')." /><label for=\"$name"."_1\">Ja</label>";
+										<select name=\"$name\">";
+										foreach($roles as $key => $val) {
+											if($key >= 2 && $login->role < 3)
+												continue;
+											echo "<option value=\"$key\" ".(($row->$name==$key)?'selected':'').">$val</option>";
+										}
+										echo "
+										</select>";
 										break;
-									*/
 								}
 							}
 						}
@@ -154,6 +157,8 @@ if(isset($_REQUEST['task'])) {
 		foreach($skel as $name => $props) {
 			if($props['type'] == 'bool') {
 				echo "<td>".(($row->$name==0)?'Nein':'Ja')."</td>";
+			} elseif($props['type'] == 'role') {
+				echo "<td>{$roles[$row->$name]}</td>";
 			} else {
 				echo "<td>".shortstr(strip_tags($row->$name))."</td>";
 			}

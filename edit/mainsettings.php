@@ -8,6 +8,9 @@ if(isset($post->sumbit)) {
 	foreach($post as $key => $val) {
 		$db->query("UPDATE XENUX_main Set value = '$val' WHERE name = '$key'");
 	}
+	header("Location: ./?site=mainsettings&updated=success");
+}
+if(@$get->updated == 'success') {
 	echo 'Die Einstellungen wurden geändert!';
 }
 ?>
