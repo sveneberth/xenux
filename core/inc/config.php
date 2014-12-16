@@ -1,7 +1,17 @@
 <?php
 session_start(); // start php session
 
+$XENUX_URL = 'http';
+if (@$_SERVER["HTTPS"] == "on") {$XENUX_URL .= "s";}
+$XENUX_URL .= "://";
+if ($_SERVER["SERVER_PORT"] != "80") {
+	$XENUX_URL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].dirname(dirname($_SERVER["SCRIPT_NAME"]));
+} else {
+	$XENUX_URL .= $_SERVER["SERVER_NAME"].dirname(dirname($_SERVER["SCRIPT_NAME"]));
+}
+
 define('BASEDIR', dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR);
+define('XENUX_URL', $XENUX_URL);
 
 include_once(BASEDIR.'core/inc/arrays.php'); // include arrays
 include_once(BASEDIR.'core/inc/functions.php'); // include functions

@@ -63,8 +63,12 @@ if(isset($get->token)) {
 				// edit
 				echo $page_output;
 				?>
+				<script src="../wysiwyg/plugins/simple-image-browser/plugin.js"></script>
 				<script>
 				$(document).ready(function() {
+					CKEDITOR.config.extraPlugins = 'simple-image-browser';
+					CKEDITOR.config.simpleImageBrowserURL = '../ajax/images.php';
+
 					CKEDITOR.replace('text', {
 						toolbar: [
 							{ name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates' ] },
@@ -79,6 +83,7 @@ if(isset($get->token)) {
 							{ name: 'styles', items: [ 'Styles', 'Format', 'Font', 'FontSize' ] },
 							{ name: 'colors', items: [ 'TextColor', 'BGColor' ] },
 							{ name: 'tools', items: [ 'Maximize', 'ShowBlocks' ] },
+							{ name: 'Simple Image Browser', items: [ 'Simple Image Browser' ] },
 						]
 					});
 				});
