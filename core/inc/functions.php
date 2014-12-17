@@ -161,4 +161,41 @@ function shortstr($str, $size = 100) {
 		return $str;
 	}
 }
+
+function FileSizeConvert($bytes) {
+    $bytes = floatval($bytes);
+	if($bytes == 0)
+		return "0 B";
+	$arBytes = array(
+		0 => array(
+			"UNIT" => "TiB",
+			"VALUE" => pow(1024, 4)
+		),
+		1 => array(
+			"UNIT" => "GiB",
+			"VALUE" => pow(1024, 3)
+		),
+		2 => array(
+			"UNIT" => "MiB",
+			"VALUE" => pow(1024, 2)
+		),
+		3 => array(
+			"UNIT" => "KiB",
+			"VALUE" => 1024
+		),
+		4 => array(
+			"UNIT" => "B",
+			"VALUE" => 1
+		),
+	);
+
+    foreach($arBytes as $arItem) {
+        if($bytes >= $arItem["VALUE"]) {
+            $result = $bytes / $arItem["VALUE"];
+            $result = str_replace(".", "," , strval(round($result, 2)))." ".$arItem["UNIT"];
+            break;
+        }
+    }
+    return $result;
+}
 ?>

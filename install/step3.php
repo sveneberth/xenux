@@ -174,7 +174,7 @@ define('MYSQL_DB',		'$dbname');
 			if (!$result) {
 				printf("Errormessage: %s\n", $db->error);
 			}
-					#############################################################################
+			#############################################################################
 			// table
 			$result = $db->query	("	DROP TABLE IF EXISTS `XENUX_contactpersons`;");
 			if (!$result) {
@@ -202,6 +202,26 @@ define('MYSQL_DB',		'$dbname');
 											`site_id` int(11) NOT NULL,
 											`contactperson_id` int(11) NOT NULL
 										);
+									");
+			if (!$result) {
+				printf("Errormessage: %s\n", $db->error);
+			}
+			#############################################################################
+			// table
+			$result = $db->query	("	DROP TABLE IF EXISTS `XENUX_files`;");
+			if (!$result) {
+				printf("Errormessage: %s\n", $db->error);
+			}
+			$result = $db->query	("		CREATE TABLE `xenux_files` (
+												`id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+												`type` varchar(50) NOT NULL,
+												`mime_type` varchar(200) DEFAULT NULL,
+												`data` longblob,
+												`filename` varchar(200) DEFAULT NULL,
+												`size` int(20) NOT NULL,
+												`lastModified` timestamp NULL DEFAULT NULL,
+												`parent_folder_id` int(10) NOT NULL
+											);
 									");
 			if (!$result) {
 				printf("Errormessage: %s\n", $db->error);

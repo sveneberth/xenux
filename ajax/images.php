@@ -4,17 +4,15 @@ error_reporting(0);
 
 $images	= array();
 
-$allowedExts = array("gif", "jpeg", "jpg", "png");
+$result = $db->query("SELECT id, type, mime_type, filename FROM XENUX_files WHERE type = 'file' ORDER by filename ASC;");
 
-$handle = opendir("../files/");
-while($file = readdir($handle)) {
-	$temp = explode(".", $file);
-	$extension = end($temp);
-	if(!is_dir($file) && in_array($extension, $allowedExts)) {
-		$images[]['url'] = XENUX_URL."/files/$file";
+while($row = $result->fetch_object()) {
+	$typeCategory = substr($row->mime_type, 0, strpos($row->mime_type, "/"));
+	
+	if($typeCategory == 'image') {
+		$images[]['url'] = XENUX_URL."/files/output.php?id=".SHA1($row->id);
 	}
 }
-closedir($handle);
 
 header('Content-type: application/json');  
 echo json_encode($images);

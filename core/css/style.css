@@ -1227,6 +1227,190 @@ div.add.backend .close:hover {
 
 
 /* ##############################################
+/* Cloud
+/* ############################################*/
+.actions {
+	background: #eee;
+	padding: 15px;
+	height: 30px;
+}
+.actions > button[mytitle]:not(.disabled) {
+	position: relative;
+}
+.actions > button[mytitle]:not(.disabled):after {
+	display: block;
+	position: absolute;
+	left: -999em;
+	top: 35px;
+	padding: .3em;
+	border: 1px solid #2a2a2a;
+	color: #fff;
+	background: #333;
+	text-decoration: none;
+	content: attr(mytitle);
+	font-size: 14px;
+	width: 150px;
+	z-index: 9999;
+	opacity: 0;
+	transition: opacity .4s .3s ease;
+}
+.actions > button[mytitle]:not(.disabled):hover:after {
+	left: -61px;
+	opacity: 1;
+}
+.actions > button:not(.disabled):hover {border: 1px solid #157efb;}
+.actions > button {
+	width: auto;
+	display: inline-block;
+	margin: 0 5px 0 0;
+	width: 30px;
+	height: 30px;
+	padding: 10px;
+	background-color: #fff;
+	background-position: center;
+	background-size: 90%;
+	background-repeat: no-repeat;
+	border: 1px solid #929292;
+}
+.actions > button.disabled {
+	box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.4);
+	background-color: #DBDBDB;
+	cursor: no-drop;
+}
+
+
+.breadcrumb {
+	background: #eee;
+	padding: 5px 15px;
+	margin-bottom: 0;
+	border-top: 2px solid #2C6DD2;
+	border-bottom: 2px solid #2C6DD2;
+	height: 30px;
+}
+.breadcrumb .treeitem {
+	margin-right: 10px;
+	font-size: 1.2em;
+	color: #333;
+	display: inline-block;
+}
+.breadcrumb .treeitem:hover {
+	color: #777;
+	cursor: pointer;
+}
+.breadcrumb .treeitem:not(:last-child):after {
+	content: '›';
+	display: inline-block;
+	margin-left: 10px;
+}
+
+.explorer {
+	background: #fff;
+	color: #333;
+	overflow-y: auto;
+}
+.explorer > .item {
+	padding: 10px;
+	line-height: 2em;
+	display: block;
+}
+.explorer > .item:nth-child(odd) {
+	background: #fff;
+}
+.explorer > .item:nth-child(even) {
+	background: #eee;
+}
+.explorer > .item.select {
+	padding: 20px 10px;
+	background: #4C90DD;
+}
+.explorer > .item .image {
+	height: 2em;
+	width: 2em;
+	margin-right: 10px;
+	display: inline-block;
+}
+progress {
+	position: fixed;
+	bottom: 100px;
+	width: 30%;
+	left: 35%;
+	height: 50px;
+}
+progress.uploading:before {
+	content: 'Uploading';
+	position: absolute;
+	line-height: 1.5em;
+	font-size: 2em;
+	text-align: center;
+	width: 100%;
+}
+progress[value]::-webkit-progress-value {
+	transition: .5s linear all;
+}
+.ajax-loader {
+	position: fixed;
+	top: 40%;
+	left: 48%;
+	height: 50px;
+	width: 50px;
+	z-index: 100;
+	background-position: center;
+	background-size: 100%;
+	background-image: url('../images/ajax-loader2.gif');
+}
+ #feedback { font-size: 1.4em; }
+.explorer .ui-selecting {background: #80BBFF!important;}
+.explorer .ui-selected { background: #4C90DD!important; }
+.ui-selectable-helper {z-index:100;border: 1px dotted #225793;position: absolute;background: rgba(34, 87, 147, 0.2); }
+
+.drop-files {
+	background: rgba(255, 255, 255, 0.7);
+	height: 50%;
+	width: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: none;
+	box-sizing: border-box;
+	text-align: center;
+	line-height: 6em;
+	font-size: 5em;
+	color: #2C6DD2;
+	z-index: 999999;
+}
+.popup-editor {
+	position: fixed;
+	top: 30%;
+	width: 40%;
+	left: 30%;
+	box-sizing: border-box;
+	z-index: 9999;
+	background: rgba(255, 255, 255, .9);
+	color: #333;
+	padding: 20px;
+	border: 2px solid #333;
+	text-align: center;
+	display: none;
+}
+.popup-editor > span {
+	font-size: 2em;
+	line-height: 2em;
+}
+.popup-editor > select {
+	display: block;
+	margin: 0; 
+	width: 100%;
+}
+.move-target > input[type="button"] {
+	display: block;
+	margin: 0;
+	margin-top: 10px;
+	width: 100%;
+}
+
+
+
+/* ##############################################
 ** MEDIA QUERYS
 ** #############################################*/
 @media only screen and (max-width: 600px) {
