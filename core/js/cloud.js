@@ -172,6 +172,7 @@ function upload(files) {
 
 	$.ajax({
 		xhr: function() {
+			// FIXME: add a progressbar for each upload
 			var xhr = new window.XMLHttpRequest();
 			xhr.upload.addEventListener("progress", function(evt) {
 				if(evt.lengthComputable) {
