@@ -1366,15 +1366,15 @@ progress[value]::-webkit-progress-value {
 .drop-files {
 	background: rgba(255, 255, 255, 0.7);
 	height: 50%;
-	width: 100%;
+	width: 80%;
 	position: fixed;
 	top: 0;
-	left: 0;
+	left: 10%;
 	display: none;
 	box-sizing: border-box;
 	text-align: center;
-	line-height: 6em;
-	font-size: 5em;
+	line-height: 5em;
+	font-size: 4em;
 	color: #2C6DD2;
 	z-index: 999999;
 }
