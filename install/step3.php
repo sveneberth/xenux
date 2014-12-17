@@ -73,7 +73,8 @@ define('MYSQL_DB',		'$dbname');
 											`title` varchar(300) NOT NULL,
 											`text` text NOT NULL,
 											`create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-											`parent_id` int(10) NOT NULL
+											`parent_id` int(10) NOT NULL,
+											`position_left` int(10) NOT NULL
 										);
 									");
 			if (!$result) {

@@ -119,19 +119,21 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 			<ul class="topmenu mainmenu">
 				<li><a href='./'>Home</a></li>
 <?php
-					$result1 = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = 0 ORDER by title ASC;");
+					$menu_order = "position_left ASC";
+					
+					$result1 = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = 0 ORDER BY $menu_order;");
 					while($rank1 = $result1->fetch_object()) {
 						if(in_array($rank1->site, $special_sites) || $rank1->site == 'home')
 							continue;
 						echo "<li>\n\t<a href=\"?site=page&page_id=$rank1->id\">".nbsp($rank1->title)."</a>\n";
 						
-						$result2 = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = $rank1->id ORDER by title ASC;");
+						$result2 = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = $rank1->id ORDER BY $menu_order;");
 						if($result2->num_rows > 0) {
 							echo "\t<ul>";
 							while($rank2 = $result2->fetch_object()) {
 								echo "\n\t\t<li>\n\t\t\t<a href=\"?site=page&page_id=$rank2->id\">".nbsp($rank2->title)."</a>\n";
 								
-								$result3 = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = $rank2->id ORDER by title ASC;");
+								$result3 = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = $rank2->id ORDER BY $menu_order;");
 								if($result3->num_rows > 0) {
 									echo "\t\t\t<ul>";
 									while($rank3 = $result3->fetch_object()) {

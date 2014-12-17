@@ -13,8 +13,9 @@ switch($_REQUEST['task']) {
 			if($key == 0)
 				continue;
 
-			$item_id	= $db->real_escape_string($val['item_id']);
-			$parent_id	= $db->real_escape_string($val['parent_id']);
+			$item_id		= $db->real_escape_string($val['item_id']);
+			$parent_id		= $db->real_escape_string($val['parent_id']);
+			$position_left	= $db->real_escape_string($val['left']);
 		
 			$result = $db->query("SELECT * FROM XENUX_sites WHERE id = '$item_id' LIMIT 1;");
 			if(!$result)
@@ -26,7 +27,7 @@ switch($_REQUEST['task']) {
 				continue;
 			}
 			
-			$result = $db->query("UPDATE XENUX_sites SET parent_id = '$parent_id' WHERE id = '$item_id';");
+			$result = $db->query("UPDATE XENUX_sites SET parent_id = '$parent_id', position_left = '$position_left' WHERE id = '$item_id';");
 			if(!$result)
 				$return['err_db'] = $db->error;
 		}

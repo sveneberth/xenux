@@ -159,7 +159,7 @@ if(isset($get->token)) {
 					remove(id);
 			});
 		});
-		function updateOrder() {
+		function updateOrder() {		
 			var array = $('.menu_order > ul').nestedSortable('toArray', {startDepthCount: 0});
 			console.log(array);
 			
@@ -254,7 +254,6 @@ if(isset($get->token)) {
 			display: inline-block;
 			vertical-align: top;
 			margin: 0;
-			/* float: left; */
 			line-height: 1.5rem;
 		}
 	</style>
@@ -268,8 +267,9 @@ if(isset($get->token)) {
 					'home',
 					'contact',
 				);
-
-				$result1 = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = 0 ORDER by title ASC;");
+				$menu_order = "position_left ASC";
+				
+				$result1 = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = 0 ORDER BY $menu_order;");
 				while($rank1 = $result1->fetch_object()) {
 					if(contains($rank1->site, 'news_list', 'news_view', 'event_list', 'event_view', 'error', 'page', 'search'))
 						continue;
@@ -278,11 +278,11 @@ if(isset($get->token)) {
 								<div>
 									<span class=\"disclose\"></span>
 									<a href=\"?site=$site&token=edit_site&site_id=$rank1->id&backbtn\" title=\"Klicken, um die Seite zu bearbeiten\">$rank1->title</a>
-									<span style=\"margin-right: 10px;\" title=\"entfernen\" class=\"remove remove-icon clickable\"></span>
+									 ".((!in_array($rank1->site, $not_sortable))?"<span style=\"margin-right: 10px;\" title=\"entfernen\" class=\"remove remove-icon clickable\"></span>":"")."
 								</div>
 								<ul>";
 					
-					$result2 = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = $rank1->id ORDER by title ASC;");
+					$result2 = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = $rank1->id ORDER BY $menu_order;");
 					while($rank2 = $result2->fetch_object()) {
 						echo "	<li id=\"list_$rank2->id\">
 									<div>
@@ -292,7 +292,7 @@ if(isset($get->token)) {
 									</div>
 									<ul>";
 						
-						$result3 = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = $rank2->id ORDER by title ASC;");
+						$result3 = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = $rank2->id ORDER BY $menu_order;");
 						while($rank3 = $result3->fetch_object()) {
 							echo "	<li id=\"list_$rank3->id\">
 										<div>
