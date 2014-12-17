@@ -212,7 +212,7 @@ define('MYSQL_DB',		'$dbname');
 			if (!$result) {
 				printf("Errormessage: %s\n", $db->error);
 			}
-			$result = $db->query	("		CREATE TABLE `xenux_files` (
+			$result = $db->query	("		CREATE TABLE `XENUX_files` (
 												`id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 												`type` varchar(50) NOT NULL,
 												`mime_type` varchar(200) DEFAULT NULL,
