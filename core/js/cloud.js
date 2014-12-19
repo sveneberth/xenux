@@ -70,13 +70,13 @@ $(document).ready(function() {
 	
 	
 	// double click events
-	$('.explorer > .item.folder').live('dblclick', function() {
+	$('.explorer > .item.folder').live('touchstart dblclick', function() {
 		var rowID = $(this).attr('id');
 		console.info("switched to folder: "+rowID);
 		
 		dir_list(rowID);
 	});
-	$('.explorer > .item.file').live('dblclick', function() {
+	$('.explorer > .item.file').live('touchstart dblclick', function() {
 		var rowID = $(this).attr('id');
 		console.info("opened file: "+rowID);
 		
