@@ -28,12 +28,12 @@ if(!isset($site)) die("You can not open this file individually/Sie k&ouml;nnen d
 </div>
 <div class="move-target popup-editor">
 	<span>Verschieben nach</span>
-	<select size="1"></select>
+	<select class="nolabel" size="1"></select>
 	<input type="button" value="Verschieben" />
 </div>
 <div class="rename popup-editor">
 	<span>Unbenennen nach</span>
-	<select size="1"></select>
+	<select class="nolabel" size="1"></select>
 	<input type="button" value="Verschieben" />
 </div>
 <div class="breadcrumb"></div>
