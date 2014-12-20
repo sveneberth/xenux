@@ -1396,12 +1396,13 @@ progress[value]::-webkit-progress-value {
 	font-size: 2em;
 	line-height: 2em;
 }
+.popup-editor > input,
 .popup-editor > select {
 	display: block;
 	margin: 0; 
 	width: 100%;
 }
-.move-target > input[type="button"] {
+.popup-editor > input[type="button"] {
 	display: block;
 	margin: 0;
 	margin-top: 10px;

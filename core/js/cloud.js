@@ -1,7 +1,7 @@
 /* ##############################################
 /* Cloud
 /* ############################################*/
-var defaultDisabled = ['remove', 'move', 'edit'];
+var defaultDisabled = ['remove', 'move', 'rename'];
 $(document).ready(function() {
 	dir_list(0); // load root
 	$('.explorer, .drop-files').height($(window).height() - 265); // FIXME: use a right value
@@ -14,15 +14,7 @@ $(document).ready(function() {
 	});
 
 	$('.drop-files').css('top', $('.explorer').offset().top);
-	
-	/*
-	not in use
-	$('.explorer .item').live('click', function() {
-		$('.explorer .item').removeClass('select');
-		$(this).addClass('select');
-	});
-	*/
-	
+		
 	// drag/drop upload
 	$.event.props.push('dataTransfer');
 	$('.explorer').bind('dragenter', function() {
@@ -43,14 +35,7 @@ $(document).ready(function() {
 	});
 	
 	// click events
-	/*	
-	$('.explorer .item .filename').live('mousedown', function(e) {
-		$(this).parent().draggable({ opacity: 0.7, helper: "clone" });
-		e.stopImmediatePropagation();
-		return false;
-	});
-	*/
-	$('.explorer .item').live('click', function() {
+		$('.explorer .item').live('click', function() {
 		$('.explorer .item').removeClass('ui-selected');
 		$(this).addClass('ui-selected');
 		$('.actions > button').removeClass('disabled');
@@ -62,9 +47,10 @@ $(document).ready(function() {
 		dir_list(ID);
 	});
 	$(document).click(function(e) {
-		var container = $(".move-target");
-		if(!container.is(e.target) && container.has(e.target).length === 0) {
+		var container = $(".popup-editor");
+		if(!$('.actions > button.rename').is(e.target) && !container.is(e.target) && container.has(e.target).length === 0) {
 			container.fadeOut(50);
+			console.log("popup-editor hide");
 		}
 	});
 	
@@ -124,14 +110,37 @@ $(document).ready(function() {
 			}
 		});
 	});
+	$('.actions > button.rename').click(function() {
+		if($('.explorer > .item.ui-selected').length == 0) {
+			console.error('no file select');
+			return false;
+		}
 		
-	$('.move-target > input[type="button"]').live('click', function() {
-		var to = $('.move-target > select').val();
+		var firstSelObj = $('.explorer > .item.ui-selected').eq(0);
+		var filename = firstSelObj.attr('data-filename');
+		
+		$('.rename').show();
+		$('.rename > input[type="text"]').val(filename);		
+	});
+	
+	$('.popup-editor.move-target > input[type="button"]').live('click', function() {
+		var to = $('.popup-editor.move-target > select').val();
 		$('.explorer > .item.ui-selected').each(function(i) {
 			var rowID = $(this).attr('id');
 			move(rowID, to);
 		});
-		$('.move-target').hide();
+		$('.popup-editor.move-target').hide();
+	});
+	$('.popup-editor.rename > input[type="text"]').live('keyup', function(event) {
+		if(event.keyCode == 13) {
+			$('.popup-editor.rename > input[type="button"]').trigger('click');
+		}
+	});
+	$('.popup-editor.rename > input[type="button"]').live('click', function() {
+		var newName = $('.popup-editor.rename > input[type="text"]').val();
+		var firstSelObj = $('.explorer > .item.ui-selected').eq(0);
+		rename(firstSelObj.attr('id'), newName);
+		$('.popup-editor.rename').hide();
 	});
 	$('.actions > button.create_folder').click(function() {
 		var folder_name = prompt("Ordnername");
@@ -248,6 +257,26 @@ function move(id, to) {
 	});
 	console.log(id, to);
 }
+function rename(id, newName) {
+	$.ajax({
+		url: '../ajax/cloud.php',
+		type: 'POST',
+		dataType: 'json',
+		data: {
+			task: 'rename',
+			id: id,
+			newName: newName,
+		},
+		success: function(response) {
+			console.log(response);
+			dir_list(getFolder()); // refresh
+		},
+		error: function(xhr, textStatus, errorThrown){
+			console.log('request failed: '+textStatus+xhr+errorThrown);
+		}
+	});
+	console.log(id, newName);
+}
 function getFolder() {
 	var folder = $('.explorer').attr('data-folder-id');
 	if(isInt(folder)) {
@@ -303,7 +332,7 @@ function dir_list(folder) {
 				var rows = "";
 				if(response.data != "no entrys"){
 					response.data.forEach(function(entry) { // as dataset
-						rows += "<div class=\"item "+entry.type+"\" id=\""+entry.id+"\">";
+						rows += "<div class=\"item "+entry.type+"\" id=\""+entry.id+"\" data-filename=\""+entry.filename+"\">";
 						if(entry.type == 'folder') {
 							rows += "<img src=\"../core/images/folder_grey.svg\" class=\"image\" />";
 						} else {

@@ -5,7 +5,6 @@ if($login->role < 2) {
 	//return;
 }
 
-#FIXME: role 
 $skelName = "Nutzer";
 $skelTable = "XENUX_users";
 $canAddNew = false;

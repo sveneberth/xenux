@@ -106,8 +106,8 @@ if(isset($_REQUEST['task'])) {
 										<input type=\"radio\" value=\"1\" name=\"$name\" id=\"$name"."_1\" ".(($row->$name==1)?'checked':'')." /><label for=\"$name"."_1\">Ja</label>";
 										break;
 									case 'role':
-										echo "{$props['title']}:
-										<select name=\"$name\">";
+									//	echo "{$props['title']}";
+										echo "<select name=\"$name\" placeholder=\"{$props['title']}\">";
 										foreach($roles as $key => $val) {
 											if($key >= 2 && $login->role < 3)
 												continue;

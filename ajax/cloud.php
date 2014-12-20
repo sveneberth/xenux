@@ -151,6 +151,15 @@ switch($_REQUEST['task']) {
 			$return['err_db'] = $db->error;
 		
 		break;
+	case 'rename':
+		$id = $_REQUEST['id'];
+		$newName = $db->real_escape_string($_REQUEST['newName']);
+		
+		$result = $db->query("UPDATE XENUX_files SET filename = '$newName' WHERE id = '$id';");
+		if(!$result)
+			$return['err_db'] = $db->error;
+		
+		break;
 	case "list_all_dirs":
 		$id = 0;
 		$arrAll			= array();
