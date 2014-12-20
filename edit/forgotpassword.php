@@ -47,7 +47,7 @@ if(isset($_POST['resetusername'])) {
 		<title>Passwort vergessen</title>
 	</head>
 	<body>
-		Hallo $user->name,<br />
+		Hallo $user->firstname,<br />
 		<p>Sie haben am ".date("d.m.Y")." um ".date("H:i")." von der IP-Adresse {$_SERVER['REMOTE_ADDR']} eine Passwortrücksetzung angefordert. Das Passwort kann unter der URL<br />
 		<a href=\"$XENUX_URL/edit?site=forgotpassword&user=".SHA1($user->id)."&verifykey=$verifykey\">$XENUX_URL/edit?site=forgotpassword&user=".SHA1($user->id)."&verifykey=$verifykey</a><br />
 		neu gesetzt werden.</p>
