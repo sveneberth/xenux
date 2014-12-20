@@ -9,7 +9,7 @@ echo "<h1>$page->title" . ((isset($login))?"<a class=\"edit-btn\" title=\"bearbe
 echo $page->text;
 
 if($page->parent_id != 0) {
-	$result = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = '$page->parent_id' ORDER by title ASC;");
+	$result = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = '$page->parent_id' ORDER by position_left ASC;");
 	$i = 1;
 	$s_i_c = 0;
 	$site_pos = array();
