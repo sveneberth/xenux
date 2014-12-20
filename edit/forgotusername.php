@@ -17,7 +17,7 @@ if(isset($_POST['submit'])) {
 	</head>
 	<body>
 		Hallo!<br />
-		Dein Benutzername für <a href="'.BASEURL.'">'.BASEURL.'</a> lautet: '.$row->username.'
+		Dein Benutzername für <a href="'.$XENUX_URL.'">'.$XENUX_URL.'</a> lautet: '.$row->username.'
 		<br /><br />
 		<span style="font-family:Verdana;color:#777;border-top: 1px #777 solid;">Diese E-Mail wurde mit Xenux generiert und versendet.</span>
 	</body>
