@@ -233,7 +233,21 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 			
 			
 			/* newest sites */
-			$result = $db->query("SELECT * FROM XENUX_sites ORDER by create_date DESC LIMIT 5;");
+			$result = $db->query("SELECT * FROM XENUX_sites WHERE
+			(
+						site	!=		'event_list'
+				AND		site	!=		'event_view'
+				AND		site	!=		'page'
+				AND		site	!=		'news_list'
+				AND		site	!=		'news_view'
+				AND		site	!=		'error'
+				AND		site	!=		'search'
+				AND		site	!=		'contact'
+				AND		site	!=		'imprint'
+			)
+			ORDER BY create_date DESC LIMIT 5;");
+			if(!$result)
+				echo $db->error;
 			$num = $result->num_rows;
 			if($num > 0) {
 				echo "<ul class=\"newest-sites\">
