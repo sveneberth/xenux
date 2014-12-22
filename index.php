@@ -237,7 +237,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 			(
 						site	!=		'home'
 				AND		site	!=		'event_view'
-				AND		site	!=		'event_view'
+				AND		site	!=		'event_list'
 				AND		site	!=		'page'
 				AND		site	!=		'news_list'
 				AND		site	!=		'news_view'
