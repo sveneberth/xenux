@@ -1414,6 +1414,14 @@ progress[value]::-webkit-progress-value {
 /* ##############################################
 ** MEDIA QUERYS
 ** #############################################*/
+@media only screen and (max-width: 800px) {
+	.headWrapper > header {
+		width: 100%;
+	}
+	.wrapper {
+		width: 100%;
+	}
+}
 @media only screen and (max-width: 600px) {
 	.wrapper {
 		width: 100%;
@@ -1422,7 +1430,7 @@ progress[value]::-webkit-progress-value {
 		position: fixed;
 		z-index: 1000;
 	}
-	header {
+	.headWrapper > .header {
 		width: 100%;
 	}
 	header .logo img {
