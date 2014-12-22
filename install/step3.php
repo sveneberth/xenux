@@ -168,7 +168,7 @@ define('MYSQL_DB',		'$dbname');
 										('hp_name', 'Meine Homepage', 'text', 'Homepagename'),
 										('meta_desc', 'Hier die Beschreibung der Homepage, die in den Meta-Tags angezeigt wird', 'textarea', 'Beschreibung der Homepage(Meta-Tag)'),
 										('meta_keys', 'Schlüsselwörter der Homepage, die in den Meta-Tags angezeigt werden', 'textarea', 'Schlüsselwörter Homepage (Meta-Tag)'),
-										('contact_form_email', 'mail@me.com', 'email', 'E-Mail Adresse (für das Kontaktformular)'),
+										('contact_form_email', 'contact@localhost', 'email', 'E-Mail Adresse (Empfänger für das Kontaktformular)'),
 										('favicon_src', '/core/images/logo.ico', 'text', 'Link zum Favicon'),
 										('logo_src', '/core/images/logo.png', 'text', 'Link zum Logo'),
 										('reply_email', 'noreply@localhost', 'email', 'E-Mail Adresse als Absender (bei Registrierungen o.Ä.)');
