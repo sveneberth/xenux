@@ -235,7 +235,8 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 			/* newest sites */
 			$result = $db->query("SELECT * FROM XENUX_sites WHERE
 			(
-						site	!=		'event_list'
+						site	!=		'home'
+				AND		site	!=		'event_view'
 				AND		site	!=		'event_view'
 				AND		site	!=		'page'
 				AND		site	!=		'news_list'
