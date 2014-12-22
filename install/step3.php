@@ -171,7 +171,7 @@ define('MYSQL_DB',		'$dbname');
 										('contact_form_email', 'mail@me.com', 'email', 'E-Mail Adresse (für das Kontaktformular)'),
 										('favicon_src', '/core/images/logo.ico', 'text', 'Link zum Favicon'),
 										('logo_src', '/core/images/logo.png', 'text', 'Link zum Logo'),
-										('reply_email', 'noreply@localhost', 'email', 'E-Mail Adresse als Absender (bei Registrierungen o.Ä.')');
+										('reply_email', 'noreply@localhost', 'email', 'E-Mail Adresse als Absender (bei Registrierungen o.Ä.)');
 								");
 			if (!$result) {
 				printf("Errormessage: %s\n", $db->error);
