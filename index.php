@@ -50,6 +50,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' and isset($_POST['loginform'])) { // if 
 				$_SESSION["login_xenux"] = 1;
 				$_SESSION['userid_xenux'] = $row->id;
 				$loginsuccess = true;
+				$result = $db->query("UPDATE XENUX_users SET lastlogin_date = NOW(), lastlogin_ip = '{$_SERVER['REMOTE_ADDR']}' WHERE id = '{$_SESSION['userid_xenux']}';");
 				$result = $db->query("SELECT * FROM XENUX_users WHERE id = '{$_SESSION['userid_xenux']}';");
 				$login = $result->fetch_object();
 			} else {

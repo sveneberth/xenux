@@ -21,22 +21,22 @@ if(isset($_POST['submit_register'])) {
 
 				$confirmlink = BASEURL.'/edit/?site=confirm&username='.$post->username.'&email='.$post->email;
 				$message = 
-'<!DOCTYPE html>
+"<!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8" />
+		<meta charset=\"UTF-8\" />
 		<title>Accountfreischaltung</title>
 	</head>
 	<body>
 		Hallo!<br />
-		Es hat sich jemand auf der Homepage '.BASEURL.' registriert, er wartet nun auf die Freigabe!<br /><br />
-		Name: '.$post->firstname.' '.$post->lastname.'<br />
-		Datum: '.date("d.m.y H:i:s").'<br /><br />
-		Du kannst ihn hier Freischalten: <a href="'.$confirmlink.'">'.$confirmlink.'</a><br />
+		Es hat sich jemand auf der Homepage <a href=\"".BASEURL."\">".BASEURL."</a> mit der IP-Adresse {$_SERVER['REMOTE_ADDR']} registriert, er wartet nun auf die Freigabe!<br /><br />
+		Name: $post->firstname $post->lastname<br />
+		Datum: ".date("d.m.y H:i:s")."<br /><br />
+		Du kannst ihn hier Freischalten: <a href=\"$confirmlink\">$confirmlink</a><br />
 		<br />
-		<span style="font-family:Verdana;color:#777;border-top: 1px #777 solid;">Diese E-Mail wurde mit Xenux generiert und versendet.</span>
+		<span style=\"font-family:Verdana;color:#777;border-top: 1px #777 solid;\">Diese E-Mail wurde mit Xenux generiert und versendet.</span>
 	</body>
-</html>';
+</html>";
 				$header		 = "From: $main->reply_email \r\n";
 				$header		.= 'MIME-Version: 1.0' . "\r\n";
 				$header		.= 'Content-type: text/html; charset=utf-8' . "\r\n";

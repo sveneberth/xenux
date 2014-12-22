@@ -5,8 +5,6 @@ if(!isset($site)) die("You can not open this file individually/Sie k&ouml;nnen d
 <ul style="list-style-type:circle;">
 	<?php
 	if($login->role >= 0) {
-		echo '<li>Seiten anzeigen</li>';
-		echo '<li>Seiten erstellen</li>';
 		echo '<li>Seiten bearbeiten</li>';
 		echo '<li>News bearbeiten</li>';
 		echo '<li>Termine bearbeiten</li>';

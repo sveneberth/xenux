@@ -55,7 +55,9 @@ define('MYSQL_DB',		'$dbname');
 											`password` varchar(200) NOT NULL,
 											`confirmed` tinyint(1) NOT NULL DEFAULT '0',
 											`role` int(2) NOT NULL DEFAULT '1',
-											`verifykey` varchar(200) NOT NULL
+											`verifykey` varchar(200) NOT NULL,
+											`lastlogin_date` timestamp NOT NULL,
+											`lastlogin_ip` varchar(100) NOT NULL
 										);
 									");
 			if (!$result) {
@@ -84,7 +86,7 @@ define('MYSQL_DB',		'$dbname');
 			$result = $db->query	("	INSERT INTO `XENUX_sites` (`site`, `title`, `text`) VALUES
 											('home', 'Home', 'Die Installation von Xenux hat geklappt!\nIch wünsche ihnen viel Spaß bei der Nutzung von Xenux'),
 											('contact', 'Kontakt', ''),
-											('imprint', 'Impressum', '<p>Eine gute Seite zum erstellen eines Impressum: <a href=\"http://www.e-recht24.de/impressum-generator.html\">www.e-recht24.de</a></p>'),
+											('imprint', 'Impressum', ''),
 											('news_view', 'News', ''),
 											('news_list', 'News', 'alle News im Überblick'),
 											('event_view', 'Termin', ''),
