@@ -185,10 +185,8 @@ input[type="radio"],
 input[type="checkbox"] {
 	height: auto;
 }
-input[type="text"]:before {
-	content: " (" attr(placeholder) ")";
-	color: #333;
-	display: inline-block;
+input[readonly] {
+	cursor: no-drop;
 }
 
 .clear {
@@ -199,7 +197,6 @@ input[type="text"]:before {
 /* ####################################
 ** BASIC LAYOUT
 ** ##################################*/
-
 .wrapper {
 	width: 80%;
 	background: #fff;

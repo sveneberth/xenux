@@ -1,18 +1,3 @@
-<p>Nun müssen sie hier die Datenbank einrichten.</p>
-	<form action="" method="post">
-	Datenbank-Server<br />
-	<input <?php if(empty(@$post->host) && isset($post->host)) echo 'class="wrong"'; ?> type="text" name="host" value="localhost" /><br /><br />
-	Benutzer<br />
-	<input <?php if(empty(@$post->username) && isset($post->username)) echo 'class="wrong"'; ?> type="text" name="username" value="" /><br /><br />
-	Passwort<br />
-	<input <?php if(empty(@$post->password) && isset($post->password)) echo 'class="wrong"'; ?> type="password" name="password" value="" /><br /><br />
-	Datenbankname<br />
-	<input <?php if(empty(@$post->dbname) && isset($post->dbname)) echo 'class="wrong"'; ?> type="text" name="dbname" value="" /><br /><br />
-	Tabellen-Prefix<br />
-	<input type="text" value="XENUX_" readonly /><br /><br />
-	<input type="hidden" name="submit"  value="submit" />
-	<input type="submit" value="speichern" />
-</form>
 <?php
 if(isset($_POST["submit"])) {
 	foreach($_POST as $key => $val) {
@@ -230,9 +215,31 @@ define('MYSQL_DB',		'$dbname');
 			}
 			
 			echo '<p>Es wurden alle Tabellen erstellt!</p>';
-			$db->close(); //close the connection to the db
 			$next = true;
+			
+			$db->close(); //close the connection to the db
+			return false;
 		}
 	}
 }
 ?>
+<p>Nun müssen sie hier die Datenbank einrichten.</p>
+<form action="" method="post">
+	<label for="host">Datenbank-Server</label>
+	<input type="text" <?php if(empty(@$post->host) && isset($post->host)) echo 'class="wrong"'; ?> id="host" name="host" placeholder="Datenbank-Server" value="localhost" />
+	
+	<label for="username">Benutzer</label>
+	<input type="text" <?php if(empty(@$post->username) && isset($post->username)) echo 'class="wrong"'; ?> id="username" name="username" placeholder="Benutzer" value="" />
+	
+	<label for="password">Passwort</label>
+	<input type="password" <?php if(empty(@$post->password) && isset($post->password)) echo 'class="wrong"'; ?> id="password" name="password" placeholder="Passwort" value="" />
+	
+	<label for="dbname">Datenbankname</label>
+	<input type="text" <?php if(empty(@$post->dbname) && isset($post->dbname)) echo 'class="wrong"'; ?> id="dbname" name="dbname" placeholder="Datenbankname" value="" />
+	
+	<label for="prefix">Tabellen-Prefix</label>
+	<input type="text" id="prefix" name="prefix" value="XENUX_" readonly />
+	
+	<input type="hidden" name="submit" value="submit" />
+	<input type="submit" value="speichern" />
+</form>
