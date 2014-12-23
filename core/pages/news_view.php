@@ -11,10 +11,11 @@ if($num < 1) {
 	return false;
 }
 
-$row = $result->fetch_object();
-echo "<topic>$row->title" . /*((isset($login))?"<a id=\"edit_href\" href=\"edit/?site=news_edit&token=edit_news&news_id=$row->id\">Bearbeiten</a>":'') . */"</topic>".
-nl2br(htmlentities($row->text));
+$news = $result->fetch_object();
+echo	"<span class=\"news-view-date\">".date("d.m.Y H:i", strtotime($news->create_date))."</span>
+		<h1>$news->title" . ((isset($login))?"<a class=\"edit-btn\" title=\"bearbeiten\" href=\"edit/?site=news_edit&task=edit&id=$news->id&backbtn\"></a>":'') . "</h1>
+		$news->text";
 ?>
 <br />
 <br />
-<a href="?site=news_list">&raquo;zur Übersicht</a>
+<a href="?site=news_list">&raquo;zur News Übersicht</a>

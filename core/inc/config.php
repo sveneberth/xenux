@@ -1,18 +1,24 @@
 <?php
 session_start(); // start php session
 
-//define('BASEDIR', substr(__file__,0,-19));
+$XENUX_URL = 'http';
+if (@$_SERVER["HTTPS"] == "on") {$XENUX_URL .= "s";}
+$XENUX_URL .= "://";
+if ($_SERVER["SERVER_PORT"] != "80") {
+	$XENUX_URL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].dirname(dirname($_SERVER["SCRIPT_NAME"]));
+} else {
+	$XENUX_URL .= $_SERVER["SERVER_NAME"].dirname(dirname($_SERVER["SCRIPT_NAME"]));
+}
+
 define('BASEDIR', dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR);
+define('XENUX_URL', $XENUX_URL);
 
 include_once(BASEDIR.'core/inc/arrays.php'); // include arrays
 include_once(BASEDIR.'core/inc/functions.php'); // include functions
-include_once(BASEDIR.'core/inc/table_definitions.php'); // include table_definitions
 include_once(BASEDIR.'mysql.conf'); // include Config for MySQL
 
 if($_SERVER['HTTP_HOST'] == 'localhost') {
 	error_reporting(E_ALL);
-} else {
-	error_reporting(0);
 }
 
 $db = new MySQLi(MYSQL_HOST, MYSQL_USER, MYSQL_PW, MYSQL_DB); // connect with database

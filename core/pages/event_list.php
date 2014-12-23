@@ -9,24 +9,24 @@ function monthBack($timestamp) {
 	return mktime(0,0,0, date("m",$timestamp)-1,date("d",$timestamp),date("Y",$timestamp));
 }
 function yearBack($timestamp) {
-	return mktime(0,0,0, date("m",$timestamp),date("d",$timestamp),date("Y",$timestamp)-1);
+	return mktime(0,0,0, date("m",$timestamp),	date("d",$timestamp),date("Y",$timestamp)-1);
 }
 function monthForward($timestamp) {
 	return mktime(0,0,0, date("m",$timestamp)+1,date("d",$timestamp),date("Y",$timestamp));
 }
 function yearForward($timestamp) {
-	return mktime(0,0,0, date("m",$timestamp),date("d",$timestamp),date("Y",$timestamp)+1);
+	return mktime(0,0,0, date("m",$timestamp),	date("d",$timestamp),date("Y",$timestamp)+1);
 }
 ?>
 <div class="calender">
-	<a href="?<?php echo "site=$site->site"; ?>" class="now">Heute</a>
-	<div class="pagination">
-		<a href="?<?php echo "site=$site->site&timestamp=".yearBack($date); ?>" class="last">&laquo;</a>
-		<a href="?<?php echo "site=$site->site&timestamp=".monthBack($date); ?>" class="last">&lt;</a>
+	<menu>
+		<a class="btn" style="float:left;" href="?<?php echo "site=$site->site"; ?>" class="now">Heute</a>
+		<a class="btn" href="?<?php echo "site=$site->site&timestamp=".yearBack($date); ?>" class="last">&laquo;</a>
+		<a class="btn" href="?<?php echo "site=$site->site&timestamp=".monthBack($date); ?>" class="last">&lt;</a>
 		<span><?php echo $month_DE[date('n',$date)];?> <?php echo date('Y',$date); ?></span>
-		<a href="?<?php echo "site=$site->site&timestamp=".monthForward($date); ?>" class="next">&gt;</a>
-		<a href="?<?php echo "site=$site->site&timestamp=".yearForward($date); ?>" class="next">&raquo;</a>  
-	</div>
+		<a class="btn" href="?<?php echo "site=$site->site&timestamp=".monthForward($date); ?>" class="next">&gt;</a>
+		<a class="btn" href="?<?php echo "site=$site->site&timestamp=".yearForward($date); ?>" class="next">&raquo;</a>  
+	</menu>
 	<div class="head">
 		<div class="day headline">Mon</div>
 		<div class="day headline">Die</div>

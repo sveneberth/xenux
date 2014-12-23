@@ -22,15 +22,17 @@ if($num < 1) {
 	return;
 }
 while($row = $result->fetch_object()) {
-	if(contains($row->site, 'impressum', 'kontakt', 'home')) {
+	$text_shortened = shortstr(strip_tags($row->text), 300);
+	
+	if(contains($row->site, 'imprint', 'contact', 'home')) {
 		echo "	<div class=\"searchresult\">
 					<b><a href=\"?site=$row->site\">$row->title</a></b><br />
-					".nl2br(maxlines($row->text,5))."
+					$text_shortened
 				</div>";
 	} else {
 		echo "	<div class=\"searchresult\">
 					<b><a href=\"?site=page&page_id=$row->id\">$row->title</a></b><br />
-					".nl2br($row->text)."<br />
+					$text_shortened
 				</div>";
 	}
 }

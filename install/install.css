@@ -1,140 +1,243 @@
+@charset "UTF-8";
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,300,400,600,700,800|Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic);
+
+/* ##############################################
+** BASIC HTML TAGS
+** ############################################*/
 html, body {
-    background-color: #ddd;
-    font-family: Arial;
-    font-size: 17px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
 	margin: 0;
 	padding: 0;
+	color: #333;
+    background: #444;
 }
 
-input, textarea {
-	font-family: Arial;
-    font-size: 100%;
-    border: #AAAAAA 1px solid;
-    color: #3A2B16;
-    padding: 2px 3px;
+* {
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: top;
+	margin: 0;
+}
+
+input, textarea, select {
+	font-family: inherit;
+    font-size: 90%;
+    border: 1px solid #999;
+    color: inherit;
+    padding: 8px 10px;
 	resize: none;
+	background: #fff;
+	width: 400px;
+	box-sizing: border-box;
+	max-width: 100%;
+	margin: 8px 0;
+	display: block;
+	transition: ease border .4s, ease background .2s;
+}
+input:focus, textarea:focus, select:focus {
+	border-color: #244394;
+}
+input.wrong,
+textarea.wrong,
+select.wrong {
+	border: 1px solid #D00D0D;
+	-webkit-animation: wrong .7s 1;
+	-moz-animation: wrong .7s 1;
+}
+@-webkit-keyframes wrong { 
+    0% {
+		transform: scale(0.1, 0.1);
+		opacity: 0;
+	}
+	70% {
+		transform: scale(1.2, 1.2);
+		opacity: 1;
+	}
+	100% {
+		transform: scale(1, 1);
+	}
+}
+@-moz-keyframes wrong { 
+	0% {
+		-moz-transform: scale(0.1, 0.1);
+		opacity: 0;
+	}
+	70% {
+		-moz-transform: scale(1.2, 1.2);
+		opacity: 1;
+	}
+	100% {
+		-moz-transform: scale(1, 1); 
+	}
+}
+label {
+	margin-bottom: -6px;
+	display: block;
+	font-size: 95%;
+}
+textarea {
+	height: 150px;
 }
 
-input[type="text"],
-input[type="password"],
-input[type="email"] {
-	width: 300px;
+input[type="submit"] {
+	margin-top: 2em;
 }
+input[type="color"] {
+	height: calc(1.5rem + 18px);
+}
+input[type="submit"],
+input[type="checkbox"],
+input[type="radio"],
+input[type="button"],
+input[type="reset"] {
+	background: #333;
+	color: #e5e5e5;
+	width: auto;
+	cursor: pointer;
+}
+input[type="submit"]:hover,
+input[type="checkbox"]:hover,
+input[type="radio"]:hover,
+input[type="button"]:hover,
+input[type="reset"]:hover {
+	background: #2580a2;
+}
+input[type="radio"],
+input[type="checkbox"] {
+	height: auto;
+}
+input[readonly] {
+	cursor: no-drop;
+}
+
+.clickable,
+a,
+label,
+input[type=button],
+input[type=submit],
+input[type=file] {
+	cursor: pointer;
+}
+
+h1 {
+    font-size: 2em;
+    color: #444;
+    border-bottom: 1px solid #ddd;
+	margin: 0 0 20px 0;
+	font-weight: bold;
+}
+
+p { 
+	margin: 16px 0;
+}
+
 .clear {
     clear: both;
 }
 
-h2 {
-    font-size: 20px;
-    color: #666666;
-    border-bottom: 1px solid #DADADA;
-    padding: 0 0 7px 0;
-}
 
-#main {
-    margin: 30px 5px 5px;
-}
-
-#content {
-    width: 900px;
-    margin: auto;
-    background: #FFFFFF;
-    border: 1px solid #947D24;
-    border-radius: 8px;
-    font-size: 90%;
-    line-height: 1.5em;
+/* ####################################
+** BASIC LAYOUT
+** ##################################*/
+.wrapper {
+    width: 70%;
+	min-width: 800px;
+	max-width: 1200px;
+    margin: 30px auto;
+    background: #fff;
+    border: 1px solid #666;
+	box-shadow: 0 0 10px 1px #ddd;
+    border-radius: 10px;
     padding: 10px;
+	box-sizing: border-box;
 }
 
-#header {
-	height: 80px;
-	padding: 0px;
-	width: 100%
+header {
+	padding: 20px;
+	width: 100%;
+    font-family: 'Ubuntu', inherit;
+	box-sizing: border-box;
 }
-
-.topic {
-	font-family: 'Comic Sans MS';
+header .title {
 	font-size: 50px;
-	color: #744520;
-	position: relative;
-	left: 0px;
-	top: 20px;
+	line-height: 50px;
+	color: #003DA1;
+	display: block;
 }
-
-.motto {
-	font-family: 'Comic Sans MS';
-	font-size: 15px;
-	color: #8F2525;
-	position: relative;
-	left: 40px;
-	top: 15px;
+header .slogan {
+	font-size: 18px;
+	line-height: 18px;
+	color: #548BE7;
+	display: block;
+	margin-left: 20px;
 }
 
 
-#steps {
+ul.steps {
     float: left;
-    margin-left: -10px;
     width: 20%;
     list-style-type: decimal;
+	padding: 10px 10px 10px 40px;
+	box-sizing: border-box;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	background: #fafafa;
 }
+ul.steps:before {
+	content: 'Schritte';
+	display: block;
+	font-size: 1.5em;
+	font-weight: bold;
+	color: #444;
+    border-bottom: 1px solid #ddd;
+	margin: 0 0 5px -25px;
+}
+ul.steps li.last-step		{color: #333;}
+ul.steps li.active-step	{color: #333; font-weight: bold;}
+ul.steps li.next-step		{color: #777;}
 
-#install {
+main {
     width: 75%;
     float: right;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	box-sizing: border-box;
+	background: #fafafa;
+	padding: 10px;
 }
 
-.lastStep {
-    color: #008000;
-}
-
-.actStep {
-    font-weight: bold;
-}
-
-.nextStep {
-    color: #FFA864;
-}
-
-.error {
-    color: red;
-    font-size: 100%;
-    font-weight: bold;
-    border: 2px solid #FF0000;
-    width: 600px;
-    padding: 10px;
-    margin: 10px 0;
-}
-
+.last,
 .next {
 	text-decoration: none;
-	color: #707070;
-	font-size: 130%;
-	float: right;
-	margin: 15px 30px 10px 0;
-	background: #BBBBBB;
-	border: 1px solid #888;
-	border-radius: 3px;
-	padding: 3px 5px;
-	cursor: pointer;
-}
-
-.last {
-	text-decoration: none;
-	color: #707070;
-	font-size: 130%;
-	float: left;
-	margin: 15px 0 10px 0;
-	background: #BBBBBB;
-	border: 1px solid #888;
-	border-radius: 3px;
-	padding: 3px 5px;
+	font-family: inherit;
+    font-size: 90%;
+    border: 1px solid #999;
+    padding: 8px 10px;
+	box-sizing: border-box;
+	max-width: 100%;
+	margin: 8px 0;
+	display: inline-block;
+	transition: ease border .4s, ease background .2s;
+	background: #333;
+	color: #e5e5e5;
+	width: auto;
 	cursor: pointer;
 }
 .last:hover,
 .next:hover {
-	background: #ddd;
+	background: #2580a2;
+	border-color: #244394;
 }
-
-.notfill {
-	background: #FFA3A3;
+.last {
+	float: left;
+	margin: 30px 0 10px 10px;
+}
+.next {
+	float: right;
+	margin: 30px 10px 10px 0;
 }

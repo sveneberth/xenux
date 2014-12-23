@@ -1,4 +1,14 @@
 <?php
+/**
+ * @package    Xenux
+ *
+ * @link       http://www.xenux.bplaced.net
+ * @version    1.4-beta
+ * @author     Sven Eberth <mail@sven-eberth.de.hm>
+ * @copyright  Copyright (c) 2013 - 2014, Sven Eberth.
+ * @license    GNU General Public License version 3, see LICENSE.txt
+ */
+
 if(!file_exists("mysql.conf")) {
 	header("Location: ./install/");
 }
@@ -18,7 +28,7 @@ $num = $result->num_rows;
 if($num > 0) { //if site exists, than readout all the site informations
 	$site = $result->fetch_object();
 	if($site->site == 'page') {
-		$result = $db->query("SELECT * FROM XENUX_sites WHERE id = '$get->page_id' LIMIT 1;");
+		$result = $db->query("SELECT * FROM XENUX_sites WHERE id = '$get->page_id' AND site = '' LIMIT 1;");
 		$num = $result->num_rows;
 		if($num > 0) {
 			$page = $result->fetch_object();
@@ -50,6 +60,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' and isset($_POST['loginform'])) { // if 
 				$_SESSION["login_xenux"] = 1;
 				$_SESSION['userid_xenux'] = $row->id;
 				$loginsuccess = true;
+				$result = $db->query("UPDATE XENUX_users SET lastlogin_date = NOW(), lastlogin_ip = '{$_SERVER['REMOTE_ADDR']}' WHERE id = '{$_SESSION['userid_xenux']}';");
 				$result = $db->query("SELECT * FROM XENUX_users WHERE id = '{$_SESSION['userid_xenux']}';");
 				$login = $result->fetch_object();
 			} else {
@@ -88,135 +99,169 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 	<!-- http://xenux.bplaced.net -->
 	<meta name="generator" content="Xenux - das kostenlose CMS" />
 	<meta name="robots" content="index, follow, noarchive" />
-	<link rel="shortcut icon" href="./core/images/<?php echo $main->favicon_src; ?>" />
+	<link rel="shortcut icon" href="<?php echo (substr($main->favicon_src, 0, 1)=='/') ? '.'.$main->favicon_src : $main->favicon_src; ?>" />
 	<link rel="stylesheet" type="text/css" href="core/css/style.css" media="all"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<script src="core/js/jquery-2.1.1.min.js"></script>
 	<script src="core/js/jquery-migrate-1.2.1.min.js"></script>
 	<script src="core/js/jquery-ui.js"></script>
+	<script src="core/js/jquery.ui.touch-punch.min.js"></script>
 	<script src="core/js/jquery.cookie.js"></script>
-	<script src="core/js/colResizable-1.3.min.js"></script>
 	<script src="core/js/functions.js?from=https://code-snippets-se.googlecode.com/"></script>
 	<script src="core/js/main.js"></script>
 	<style>
-	html, body {
-		background: <?php echo $main->bgcolor; ?>;
-		color: <?php echo $main->fontcolor; ?>;
-	}
+		html, body {
+			background: <?php echo $main->bgcolor; ?>;
+			color: <?php echo $main->fontcolor; ?>;
+		}
 	</style>
 </head>
-<body>
+<body id="top">
+	<a href="#top" class="toTop"></a>
 	<div class="headWrapper">
 		<header> 
-			<div class="logo">
-				<a href="./">
-					<img src="./core/images/<?php echo $main->logo_src; ?>" />
-				</a>
-			</div>
-			<ul id="topmenu" class="mobilemenu">
-				<li><a href="javascript:openmobilemenu()">Menu</a></li>
-				<li><a href="?site=news_list">News</a></li>
-				<li><a href="?site=event_list">Termine</a></li>
+			<a href="javascript:openmobilemenu();" class="menu-icon"></a>
+			<a class="logo" href="./">
+				<img src="<?php echo (substr($main->logo_src, 0, 1)=='/') ? '.'.$main->logo_src : $main->logo_src; ?>" class="nojsload" />
+			</a>
+			<ul class="topmenu mobilemenu">
 				<li><a href="./edit?site=login">Login</a></li>
 			</ul>
-			<ul id="topmenu" class="mainmenu">
+			<ul class="topmenu mainmenu">
 				<li><a href='./'>Home</a></li>
-				<?php
-					$read_category = array();
+<?php
+					$menu_order = "position_left ASC";
 					
-					$result = $db->query("SELECT DISTINCT category FROM XENUX_sites WHERE category != '';");
-					while($row = $result->fetch_object()) {
-						$menu_category = $row->category;
-						echo "<li><a";
-						$InnerResult = $db->query("SELECT * FROM XENUX_sites WHERE title = '$menu_category' AND category  = '$menu_category' LIMIT 1;");
-						$thispage = $InnerResult->fetch_object();
-						if($InnerResult->num_rows > 0) {
-							echo " href=\"?site=page&page_id=$thispage->id\"";
-						}
-						echo ">$menu_category</a><ul>";
+					$result1 = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = 0 ORDER BY $menu_order;");
+					while($rank1 = $result1->fetch_object()) {
+						if(in_array($rank1->site, $special_sites) || $rank1->site == 'home')
+							continue;
+						echo "<li>\n\t<a href=\"?site=page&page_id=$rank1->id\">".nbsp($rank1->title)."</a>\n";
 						
-						$result_point = $db->query("SELECT * FROM XENUX_sites WHERE category = '$menu_category' AND category != '' ORDER by title ASC");
-						while($row_point = $result_point->fetch_object()) {
-							if(strtolower($menu_category) != strtolower($row_point->title)) {
-								echo "<li><a href=\"?site=page&page_id=$row_point->id\">$row_point->title</a></li>";
+						$result2 = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = $rank1->id ORDER BY $menu_order;");
+						if($result2->num_rows > 0) {
+							echo "\t<ul>";
+							while($rank2 = $result2->fetch_object()) {
+								echo "\n\t\t<li>\n\t\t\t<a href=\"?site=page&page_id=$rank2->id\">".nbsp($rank2->title)."</a>\n";
+								
+								$result3 = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = $rank2->id ORDER BY $menu_order;");
+								if($result3->num_rows > 0) {
+									echo "\t\t\t<ul>";
+									while($rank3 = $result3->fetch_object()) {
+										echo "\n\t\t\t\t<li>\n\t\t\t\t\t<a href=\"?site=page&page_id=$rank3->id\">".nbsp($rank3->title)."</a>\n\t\t\t\t</li>\n";
+									}
+									echo "\t\t\t</ul>";
+								}
+								echo "\n\t\t</li>";
+								
 							}
+							echo "\n\t</ul>";
 						}
-						echo "</ul></li>";
-					}
-					$result = $db->query("SELECT * from XENUX_sites WHERE category = '' ORDER by title ASC;");
-					while($row = $result->fetch_object()) {
-						if(!in_array($row->site, $special_sites) && $row->site != 'home') {
-							echo "<li><a href=\"?site=page&page_id=$row->id\">$row->title</a></li>";
-						}
+						
+						echo "\n</li>\n";
 					}
 				?>
 				<li class="search">
 					<div id="sb-search" class="sb-search">
 						<form action="" method="GET">
 							<input type="hidden" name="site" value="search" />
-							<input onkeyup="if($(this).val()==''){$('.sb-search-submit').css('z-index', 11);}else{$('.sb-search-submit').css('z-index', 99);}" type="search" class="sb-search-input" name="q" placeholder="Suche" value="<?php if($get->site =='search')echo @$get->q; ?>" />
+							<input onkeyup="if($(this).val()==''){$('.sb-search-submit').css('z-index', 11);}else{$('.sb-search-submit').css('z-index', 99);}" type="search" class="sb-search-input" name="q" placeholder="Suche" value="<?php if($site->site =='search')echo @$get->q; ?>" />
 							<input type="submit" class="sb-search-submit" value="" />
 							<span onclick="$('div#sb-search').toggleClass('sb-search-open');" class="sb-icon-search"></span>
 						</form>
 					</div>
 				</li>
+				<li class="mobilemenu"><a href="?site=news_list">News</a></li>
+				<li class="mobilemenu"><a href="?site=event_list">Termine</a></li>
 			</ul>
 		</header>
 	</div>
 	<div class="wrapper">
+		<noscript>
+			<div class="warning-noscript">
+				<div>
+					In deinem Browser ist JavaScript deaktiviert. Um den vollen Funktionsumfang dieser Webseite zu nutzen, benötigst du JavaScript.
+				</div>
+			</div>
+		</noscript>
 		<div class="fontsize">
-			Schrift
-			&nbsp;<a title="Schrift kleiner" href="javascript:fontsizedecrease()">-</a>
-			&nbsp;<a title="Schrift normal" href="javascript:fontsizereset()">O</a>
-			&nbsp;<a title="Schrift größer" href="javascript:fontsizerecrease()">+</a>
+			&nbsp;<a title="Schrift kleiner" class="decrease"></a>
+			&nbsp;<a title="Schrift normal" class="reset"></a>
+			&nbsp;<a title="Schrift größer" class="recrease"></a>
 		</div>
 		<div class="leftboxes">
 			<?php
-			$result = $db->query("SELECT * FROM XENUX_news LIMIT 5;");
-			$number = $result->num_rows;
-			if($number > 0) {
-				?>
-				<ul class="news">
-					<h3>News:</h3>
-					<?php
+			/* news */
+			?>
+			<ul class="news">
+				<h3>News:</h3>
+				<?php
+				$result = $db->query("SELECT * FROM XENUX_news ORDER by create_date DESC, title ASC LIMIT 5;");
+				$number = $result->num_rows;
+				if($number > 0) {
 					while($row = $result->fetch_object()) {
 						if(!empty($row->title) && !empty($row->text)) {
-							echo "<li><span class=\"title\">$row->title" . /*((isset($login))?"<a id=\"edit_href\" href=\"edit/?site=news_edit&token=edit_news&news_id=$row->id\">Bearbeiten</a>":'') . */"</span>";
-							if(strlen($row->text) > 70) {
-								echo htmlentities(substr($row->text, 0, strpos($row->text, " ", 70)));
-							} else {
-								echo htmlentities($row->text);
-							}
-							echo "...<br /><a href=\"?site=news_view&news_id=$row->id\">&raquo;weiterlesen</a></li>";
+							echo "	<li>
+										<span class=\"title\">$row->title" . ((isset($login))?"<a class=\"edit-btn\" style=\"height: 1.2em;width:1.2em;\" href=\"edit/?site=news_edit&task=edit&id=$row->id&backbtn\"></a>":'') . "</span>
+										<span class=\"date\">".pretty_date($row->create_date)."</span>".
+										shortstr(strip_tags($row->text), 50)."<br />
+										<a href=\"?site=news_view&news_id=$row->id\">&raquo;weiterlesen</a>
+									</li>";
 						}
 					}
-					?>
-				</ul>
-			<?php
-			}
-			
-			$result = $db->query("SELECT *, DATE_FORMAT(date,'%d.%m.%Y %H:%i') as date_formatted FROM XENUX_dates WHERE date >= NOW() ORDER by date LIMIT 5;");
-			$number = $result->num_rows;
-			if($number > 0) {
-				echo "<ul class=\"dates\">
-						<h3>Termine:</h3>";
-				while($row = $result->fetch_object()) {
-					echo "<li><span class=\"title\">$row->name" . ((isset($login))?"<a id=\"edit_href\" href=\"edit/?site=events_edit&token=edit_event&id=$row->id\">Bearbeiten</a>":'') . "</span>
-					$row->date_formatted<br/>
-					".htmlentities(substr($row->text, 0, 70))."<br />
-					<a href=\"?site=event_view&id=$row->id\">&raquo;Termin anzeigen</a></li>";
+				} else {
+					echo "<p style=\"margin:5px 0;\">keine News vorhanden!</p>";
 				}
-				echo "<a href=\"?site=event_list\">alle Termine anzeigen</a>
-				</ul>";
-			} else {
-				echo "<p>keine Anstehenden Termine vorhanden!</p>";
-			}
+				?>
+				<a href="?site=news_list">alle News anzeigen</a>
+			</ul>
+			<?php			
+			
+			/* dates */
+			?>
+			<ul class="dates">
+				<h3>Termine:</h3>
+				<?php
+				$result = $db->query("SELECT *, DATE_FORMAT(date,'%d.%m.%Y %H:%i') as date_formatted FROM XENUX_dates WHERE date >= NOW() ORDER by date LIMIT 5;");
+				$number = $result->num_rows;
+				if($number > 0) {
+					while($row = $result->fetch_object()) {
+						echo "	<li>
+									<span class=\"title\">$row->name" . ((isset($login))?"<a class=\"edit-btn\" style=\"height: 1.2em;width:1.2em;\" href=\"edit/?site=event_edit&task=edit&id=$row->id&backbtn\"></a>":'') . "</span>
+									<span class=\"date\">$row->date_formatted</span>".
+									shortstr(strip_tags($row->text), 50)."<br />
+									<a href=\"?site=event_view&event_id=$row->id\">&raquo;Termin anzeigen</a>
+								</li>";
+					}
+				} else {
+					echo "<p style=\"margin:5px 0;\">keine anstehenden Termine vorhanden!</p>";
+				}
+				?>
+				<a href="?site=event_list">alle Termine anzeigen</a>
+			</ul>
+			<?php
+			
 			
 			/* newest sites */
-			$result = $db->query("SELECT * FROM XENUX_sites ORDER by create_date DESC LIMIT 5;");
+			$result = $db->query("SELECT * FROM XENUX_sites WHERE
+			(
+						site	!=		'home'
+				AND		site	!=		'event_view'
+				AND		site	!=		'event_list'
+				AND		site	!=		'page'
+				AND		site	!=		'news_list'
+				AND		site	!=		'news_view'
+				AND		site	!=		'error'
+				AND		site	!=		'search'
+				AND		site	!=		'contact'
+				AND		site	!=		'imprint'
+			)
+			ORDER BY create_date DESC LIMIT 5;");
+			if(!$result)
+				echo $db->error;
 			$num = $result->num_rows;
 			if($num > 0) {
-				echo "<ul class=\"newest sites\">
+				echo "<ul class=\"newest-sites\">
 						<h3>neuste Seiten:</h3>";
 				while($row = $result->fetch_object()) {
 					echo "	<li>
@@ -226,23 +271,26 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 				echo "</ul>";
 			}
 			
+			
 			/* contact persons */
-			$result = $db->query("	SELECT * FROM XENUX_site_contactperson
-									LEFT JOIN XENUX_sites ON XENUX_site_contactperson.site_id = XENUX_sites.id
-									LEFT JOIN XENUX_contactpersons ON XENUX_site_contactperson.contactperson_id = XENUX_contactpersons.id
-									WHERE site_id = '".(($site->site == 'page')?$page->id:$site->id)."';");
-			$num = $result->num_rows;
-			if($num > 0) {
-				echo "<ul class=\"contactpersons\">
-						<h3>Ansprechpartner:</h3>";
-				while($row = $result->fetch_object()) {
-					echo "	<li>
-								<span class=\"title\">$row->name</span>
-								$row->position<br/>
-								".escapemail($row->email)."
-							</li>";
+			if($site->site != 'error' && @$page->site != 'error') {
+				$result = $db->query("	SELECT * FROM XENUX_site_contactperson
+										LEFT JOIN XENUX_sites ON XENUX_site_contactperson.site_id = XENUX_sites.id
+										LEFT JOIN XENUX_contactpersons ON XENUX_site_contactperson.contactperson_id = XENUX_contactpersons.id
+										WHERE site_id = '".(($site->site == 'page')?$page->id:$site->id)."';");
+				$num = $result->num_rows;
+				if($num > 0) {
+					echo "<ul class=\"contactpersons\">
+							<h3>Ansprechpartner:</h3>";
+					while($row = $result->fetch_object()) {
+						echo "	<li>
+									<span class=\"title\">$row->name</span>
+									$row->position<br/>
+									".escapemail($row->email)."
+								</li>";
+					}
+					echo "</ul>";
 				}
-				echo "</ul>";
 			}
 			?>
 			<ul>
@@ -257,13 +305,14 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 						<?php echo @$returnlogin; ?>
 						<input style="margin: 5px 0;" type="submit" value="Einloggen">
 						<a href="edit/?site=forgotpassword">Passwort vergessen?</a><br />
-						<a href="edit/?site=forgotusername">Benutzernamen vergessen?</a><br />
+						<a href="edit/?site=forgotusername">Benutzername vergessen?</a><br />
 						<a href="edit/?site=register">Registrieren</a>
 					</form>
 					<?php
 				} else {
 					?>
 					Hallo <?php echo $login->firstname; ?>, du bist erfolgreich eingeloggt!<br />
+					<a href="./edit/">&raquo;zum Editroom</a>
 					<input type="button" onclick="window.location='?<?php foreach($_GET as $key => $val){if($key!="do")echo "$key=$val&";} ?>do=logout'" value="Logout" />
 					<?php
 				}
@@ -272,16 +321,16 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 		</div>
 		<main>
 			<?php
-			if($site->site != 'page') {
+			if(!contains($site->site, 'page', 'news_view')) {
 				echo "<h1>$site->title";
 				if(isset($login)) {
 					if(!in_array($site->site, $special_sites) || contains($site->site, 'home', 'imprint', 'contact')) {
-						echo "<a id=\"edit_href\" href=\"edit/?site=site_edit&token=edit_site&site_id=$site->id\">Bearbeiten</a>";
+						echo "<a class=\"edit-btn\" title=\"bearbeiten\" href=\"edit/?site=site_edit&token=edit_site&site_id=$site->id&backbtn&gotosite\"></a>";
 					}
 				}
 				echo "</h1>";
 			}
-			if(in_array($site->site, $special_sites)) {
+			if(in_array($site->site, $special_sites) && $site->site != 'imprint') {
 				if(file_exists("core/pages/$site->site.php")) {
 					include("core/pages/$site->site.php");
 				} else {
@@ -295,8 +344,8 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 			?>
 		</main>
 		<footer>
-			This Side was made with <a href="http://xenux.bplaced.net">Xenux</a>
-			<div class="href">
+			this site was made with <a href="http://xenux.bplaced.net">Xenux</a>
+			<div class="links">
 				<a href="./edit/">Editroom</a>
 				<a href="./?site=contact">Kontakt</a>
 				<a href="./?site=imprint">Impressum</a>

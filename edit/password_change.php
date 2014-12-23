@@ -18,11 +18,11 @@ if(!empty($_POST['form'])) {
 ?>
 <p>Hier kannst du dein Passwort ändern.</p>
 <form action="" method="post">
-	<input <?php if(empty($password0) && isset($_POST['form'])) echo 'class="wrong"'; ?> type="password" placeholder="altes Passwort" name="password0" />
+	<input <?php if(empty($post->password0) && isset($_POST['form'])) echo 'class="wrong"'; ?> type="password" placeholder="altes Passwort" name="password0" />
 	
-	<input <?php if(empty($password) && isset($_POST['form'])) echo 'class="wrong"'; ?> type="password" placeholder="neues Passwort" name="password" />
+	<input <?php if(empty($post->password) && isset($_POST['form'])) echo 'class="wrong"'; ?> type="password" placeholder="neues Passwort" name="password" />
 	
-	<input <?php if(empty($password1) && isset($_POST['form'])) echo 'class="wrong"'; ?> type="password" placeholder="Passwort bestätigen" name="password1" />
+	<input <?php if(empty($post->password1) && isset($_POST['form'])) echo 'class="wrong"'; ?> type="password" placeholder="Passwort bestätigen" name="password1" />
 	
 	<input type="hidden" name="form" value="form" />
 	<input type="submit" value="ändern" />

@@ -1,6 +1,4 @@
 <?php
-include("../core/inc/config.php");
-
 if(isset($_POST['submit_register'])) {
 	if(preg_match("/[^a-zA-Z0-9_-]/", $post->username)) {
 		echo "<p>Der Benutzername enthält unerlaubte Zeichen, zulässig sind nur Buchstaben, Zahlen und (Unter-)Strich.</p>";
@@ -29,7 +27,7 @@ if(isset($_POST['submit_register'])) {
 			}
 		} else {
 				echo "<p>Alle Felder müssen richtig ausgefüllt sein!</p>";
-				if($$post->password != $post->passwordre) {
+				if($post->password != $post->passwordre) {
 					echo "<p>Die eingeben Passwörter stimmen nicht überein!</p>";
 				}
 		}
@@ -37,12 +35,18 @@ if(isset($_POST['submit_register'])) {
 }
 ?>
 <form action="" method="POST" name="form">
-	<input type="text" name="firstname" placeholder="Vorname" />
-	<input type="text" name="lastname" placeholder="Nachname" />
-	<input type="email" name="email" placeholder="E-Mail" />
-	<input type="text" name="username" placeholder="Benutzername" />
-	<input type="password" name="password" placeholder="Passwort" />
-	<input type="password" name="passwordre" placeholder="Passwort wiederholen" />
+	<input <?php if(empty(@$post->firstname) && isset($post->firstname)) echo 'class="wrong"'; ?> type="text" name="firstname" placeholder="Vorname" value="<?php echo @$post->firstname; ?>" />
+	
+	<input <?php if(empty(@$post->lastname) && isset($post->lastname)) echo 'class="wrong"'; ?> type="text" name="lastname" placeholder="Nachname" value="<?php echo @$post->lastname; ?>" />
+	
+	<input <?php if(empty(@$post->email) && isset($post->email)) echo 'class="wrong"'; ?> type="email" name="email" placeholder="E-Mail" value="<?php echo @$post->email; ?>" />
+	
+	<input <?php if(empty(@$post->username) && isset($post->username)) echo 'class="wrong"'; ?> type="text" name="username" placeholder="Benutzername" value="<?php echo @$post->username; ?>" />
+	
+	<input <?php if(empty(@$post->password) && isset($post->password)) echo 'class="wrong"'; ?> type="password" name="password" placeholder="Passwort" />
+	
+	<input <?php if(empty(@$post->passwordre) && isset($post->passwordre)) echo 'class="wrong"'; ?> type="password" name="passwordre" name="passwordre" placeholder="Passwort wiederholen" />
+	
 	<input type="hidden" name="submit_register" value="true" />
 	<input type="submit" value="Registrieren" />
 </form>

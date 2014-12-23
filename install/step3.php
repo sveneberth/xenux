@@ -1,18 +1,3 @@
-<p>Nun müssen sie hier die Datenbank einrichten.</p>
-	<form action="" method="post">
-	Datenbank-Server<br />
-	<input type="text" name="host" value="localhost" /><br /><br />
-	Benutzer<br />
-	<input type="text" name="username" value="" /><br /><br />
-	Passwort<br />
-	<input type="password" name="password" value="" /><br /><br />
-	Datenbankname<br />
-	<input type="text" name="dbname" value="" /><br /><br />
-	Tabellen-Prefix<br />
-	<input type="text" value="XENUX_" readonly /><br /><br />
-	<input type="hidden" name="submit"  value="submit" />
-	<input type="submit" value="speichern" />
-</form>
 <?php
 if(isset($_POST["submit"])) {
 	foreach($_POST as $key => $val) {
@@ -55,7 +40,9 @@ define('MYSQL_DB',		'$dbname');
 											`password` varchar(200) NOT NULL,
 											`confirmed` tinyint(1) NOT NULL DEFAULT '0',
 											`role` int(2) NOT NULL DEFAULT '1',
-											`verifykey` varchar(200) NOT NULL
+											`verifykey` varchar(200) NOT NULL,
+											`lastlogin_date` timestamp NOT NULL,
+											`lastlogin_ip` varchar(100) NOT NULL
 										);
 									");
 			if (!$result) {
@@ -71,9 +58,10 @@ define('MYSQL_DB',		'$dbname');
 											`id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 											`site` varchar(150) NOT NULL,
 											`title` varchar(300) NOT NULL,
-											`category` varchar(150) NOT NULL,
 											`text` text NOT NULL,
-											`create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+											`create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+											`parent_id` int(10) NOT NULL,
+											`position_left` int(10) NOT NULL
 										);
 									");
 			if (!$result) {
@@ -83,7 +71,7 @@ define('MYSQL_DB',		'$dbname');
 			$result = $db->query	("	INSERT INTO `XENUX_sites` (`site`, `title`, `text`) VALUES
 											('home', 'Home', 'Die Installation von Xenux hat geklappt!\nIch wünsche ihnen viel Spaß bei der Nutzung von Xenux'),
 											('contact', 'Kontakt', ''),
-											('imprint', 'Impressum', '<p>Eine gute Seite zum erstellen eines Impressum: <a href=\"http://www.e-recht24.de/impressum-generator.html\">www.e-recht24.de</a></p>'),
+											('imprint', 'Impressum', ''),
 											('news_view', 'News', ''),
 											('news_list', 'News', 'alle News im Überblick'),
 											('event_view', 'Termin', ''),
@@ -103,7 +91,8 @@ define('MYSQL_DB',		'$dbname');
 			$result = $db->query	("	CREATE TABLE IF NOT EXISTS `XENUX_news` (
 											`id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 											`title` varchar(200) NOT NULL,
-											`text` text NOT NULL
+											`text` text NOT NULL,
+											`create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 										);
 									");
 			if (!$result) {
@@ -126,7 +115,7 @@ define('MYSQL_DB',		'$dbname');
 											`id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 											`name` varchar(150) NOT NULL,
 											`text` text NOT NULL,
-											`date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+											`date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 										);
 									");
 			if (!$result) {
@@ -164,15 +153,15 @@ define('MYSQL_DB',		'$dbname');
 										('hp_name', 'Meine Homepage', 'text', 'Homepagename'),
 										('meta_desc', 'Hier die Beschreibung der Homepage, die in den Meta-Tags angezeigt wird', 'textarea', 'Beschreibung der Homepage(Meta-Tag)'),
 										('meta_keys', 'Schlüsselwörter der Homepage, die in den Meta-Tags angezeigt werden', 'textarea', 'Schlüsselwörter Homepage (Meta-Tag)'),
-										('contact_form_email', 'mail@me.com', 'email', 'E-Mail Adresse (für das Kontaktformular)'),
-										('favicon_src', 'logo.ico', 'text', 'Link zum Favicon'),
-										('logo_src', 'logo.png', 'text', 'Link zum Logo'),
-										('noreplay_email', 'noreplay@localhost', 'email', 'E-Mail Adresse als Absender');
+										('contact_form_email', 'contact@localhost', 'email', 'E-Mail Adresse (Empfänger für das Kontaktformular)'),
+										('favicon_src', '/core/images/logo.ico', 'text', 'Link zum Favicon'),
+										('logo_src', '/core/images/logo.png', 'text', 'Link zum Logo'),
+										('reply_email', 'noreply@localhost', 'email', 'E-Mail Adresse als Absender (bei Registrierungen o.Ä.)');
 								");
 			if (!$result) {
 				printf("Errormessage: %s\n", $db->error);
 			}
-					#############################################################################
+			#############################################################################
 			// table
 			$result = $db->query	("	DROP TABLE IF EXISTS `XENUX_contactpersons`;");
 			if (!$result) {
@@ -204,11 +193,53 @@ define('MYSQL_DB',		'$dbname');
 			if (!$result) {
 				printf("Errormessage: %s\n", $db->error);
 			}
+			#############################################################################
+			// table
+			$result = $db->query	("	DROP TABLE IF EXISTS `XENUX_files`;");
+			if (!$result) {
+				printf("Errormessage: %s\n", $db->error);
+			}
+			$result = $db->query	("		CREATE TABLE `XENUX_files` (
+												`id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+												`type` varchar(50) NOT NULL,
+												`mime_type` varchar(200) DEFAULT NULL,
+												`data` longblob,
+												`filename` varchar(200) DEFAULT NULL,
+												`size` int(20) NOT NULL,
+												`lastModified` timestamp NULL DEFAULT NULL,
+												`parent_folder_id` int(10) NOT NULL
+											);
+									");
+			if (!$result) {
+				printf("Errormessage: %s\n", $db->error);
+			}
 			
 			echo '<p>Es wurden alle Tabellen erstellt!</p>';
-			$db->close(); //close the connection to the db
 			$next = true;
+			
+			$db->close(); //close the connection to the db
+			return false;
 		}
 	}
 }
 ?>
+<p>Nun müssen sie hier die Datenbank einrichten.</p>
+<form action="" method="post">
+	<label for="host">Datenbank-Server</label>
+	<input type="text" <?php if(empty(@$post->host) && isset($post->host)) echo 'class="wrong"'; ?> id="host" name="host" placeholder="Datenbank-Server" value="localhost" />
+	
+	<label for="username">Benutzer</label>
+	<input type="text" <?php if(empty(@$post->username) && isset($post->username)) echo 'class="wrong"'; ?> id="username" name="username" placeholder="Benutzer" value="" />
+	
+	<label for="password">Passwort</label>
+	<input type="password" <?php if(empty(@$post->password) && isset($post->password)) echo 'class="wrong"'; ?> id="password" name="password" placeholder="Passwort" value="" />
+	
+	<label for="dbname">Datenbankname</label>
+	<input type="text" <?php if(empty(@$post->dbname) && isset($post->dbname)) echo 'class="wrong"'; ?> id="dbname" name="dbname" placeholder="Datenbankname" value="" />
+	
+	<label for="prefix">Tabellen-Prefix</label>
+	<input type="text" id="prefix" name="prefix" value="XENUX_" readonly />
+	
+	<input type="hidden" name="submit" value="submit" />
+	<input type="submit" value="speichern" />
+</form>
