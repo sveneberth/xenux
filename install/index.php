@@ -51,8 +51,8 @@ $next = false;
 <body>
 	<div class="wrapper">
 		<header>
-			<span class="topic">Xenux</span>
-			<span class="motto">das kostenlose CMS</span>
+			<span class="title">Xenux</span>
+			<span class="slogan">das kostenlose CMS</span>
 		</header>
 		<ul class="steps">
 			<?php

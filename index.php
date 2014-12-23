@@ -1,4 +1,14 @@
 <?php
+/**
+ * @package    Xenux
+ *
+ * @link       http://www.xenux.bplaced.net
+ * @version    1.4-beta
+ * @author     Sven Eberth <mail@sven-eberth.de.hm>
+ * @copyright  Copyright (c) 2013 - 2014, Sven Eberth.
+ * @license    GNU General Public License version 3, see LICENSE.txt
+ */
+
 if(!file_exists("mysql.conf")) {
 	header("Location: ./install/");
 }

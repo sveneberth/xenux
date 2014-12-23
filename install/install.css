@@ -163,13 +163,13 @@ header {
     font-family: 'Ubuntu', inherit;
 	box-sizing: border-box;
 }
-header .topic {
+header .title {
 	font-size: 50px;
 	line-height: 50px;
 	color: #003DA1;
 	display: block;
 }
-header .motto {
+header .slogan {
 	font-size: 18px;
 	line-height: 18px;
 	color: #548BE7;
