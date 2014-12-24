@@ -4,6 +4,7 @@ if(!empty($_POST["submit_login"])) {
 	$num = $result->num_rows;
 	if($num > 0) {
 		$login = $result->fetch_object();
+		$result = $db->query("UPDATE XENUX_users SET lastlogin_date = NOW(), lastlogin_ip = '{$_SERVER['REMOTE_ADDR']}' WHERE id = '{$_SESSION['userid_xenux']}';");
 		echo "<p>Der Login war erfolgreich.</p>";
 		$_SESSION["login_xenux"] = 1;
 		$_SESSION['userid_xenux'] = $login->id;
