@@ -69,7 +69,7 @@ if(isset($get->token)) {
 					CKEDITOR.config.extraPlugins = 'simple-image-browser';
 					CKEDITOR.config.simpleImageBrowserURL = '../ajax/images.php';
 
-					CKEDITOR.replace('text', {
+					var editor = CKEDITOR.replace('text', {
 						toolbar: [
 							{ name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates' ] },
 							{ name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
@@ -84,8 +84,17 @@ if(isset($get->token)) {
 							{ name: 'colors', items: [ 'TextColor', 'BGColor' ] },
 							{ name: 'tools', items: [ 'Maximize', 'ShowBlocks' ] },
 							{ name: 'Simple Image Browser', items: [ 'Simple Image Browser' ] },
-						]
+						],
+						extraAllowedContent: {
+							img: {
+								attributes: [ '!src', 'alt', 'width', 'height' , 'data-*' ],
+								classes: { tip: true }
+							},
+						},
 					});
+					editor.on( 'instanceReady', function() {
+						console.log( editor.filter.allowedContent );
+					} );
 				});
 				</script>
 				<form action="" method="post" name="form">

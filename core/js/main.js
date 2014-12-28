@@ -167,7 +167,7 @@ $(document).ready(function ($) {
 	var numImages = $("main img").length;
 	$("main img").each(function (i) {
 		gallery[i] = {
-			href: $(this).attr("src"),
+			href: $(this).hasClass('cloud-image') ? $(this).attr("data-src") : $(this).attr("src"),
 			title: "Bild " + (i+1) + " von " + numImages
 		};
 		$(this).bind("click", function () {
@@ -178,6 +178,6 @@ $(document).ready(function ($) {
 				cyclic: true
 			});
 			return false;
-		});
+		}).css('cursor', 'pointer');
 	});
 });
