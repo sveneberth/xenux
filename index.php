@@ -110,6 +110,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 	<script src="core/js/jquery-ui.js"></script>
 	<script src="core/js/jquery.ui.touch-punch.min.js"></script>
 	<script src="core/js/jquery.cookie.js"></script>
+	<script src="core/js/jquery.mousewheel.js"></script>
 	
 	<!-- fancybox -->
 	<script type="text/javascript" src="core/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
