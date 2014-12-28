@@ -81,14 +81,12 @@ CKEDITOR.plugins.add('simple-image-browser', {
       var dialog;
       dialog = event.data;
       if (dialog.getName() === 'simple-image-browser-dialog') {
-        $.get(CKEDITOR.config.simpleImageBrowserURL, function(images) {
-          var json;
-          console.log(images);
-          json = images;
-          images = '';
+        $.get(CKEDITOR.config.simpleImageBrowserURL, function(json) {
+          console.log(json);
+          var images = '';
           $.each(json, function(key, value) {
             if (CKEDITOR.config.simpleImageBrowserListType === 'thumbnails') {
-              images = images + '<div onclick="CKEDITOR.tools.simpleimagebrowserinsertpicture(\'' + value.url + '\');" style="position:relative;width:75px;height:75px;margin:5px;background-image:url(\'' + value.url + '\');background-repeat:no-repeat;background-size:125%;background-position:center center;float:left;"></div>';
+              images = images + '<div onclick="CKEDITOR.tools.simpleimagebrowserinsertpicture(\'' + value.url + '\');" style="position:relative;width:75px;height:75px;margin:5px;background-image:url(\'' + value.url + '&size=75\');background-repeat:no-repeat;background-size:125%;background-position:center center;float:left;"></div>';
             } else {
               images = 'link';
             }
@@ -111,7 +109,7 @@ CKEDITOR.plugins.add('simple-image-browser', {
       console.log(event);
       editor = CKEDITOR.currentInstance;
       dialog = CKEDITOR.dialog.getCurrent();
-      html = '<img src="' + event + '" data-cke-saved-src="' + event + '" alt="' + event + '" />';
+      html = '<img class="cloud-image" src="' + event + '&size=200" data-src="' + event + '" alt="' + event + '" />';
       editor.config.allowedContent = true;
       editor.insertHtml(html.trim());
       dialog.hide();
