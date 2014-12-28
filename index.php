@@ -352,7 +352,6 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 				echo $row->text;
 			}
 			?>
-			<img src="http://localhost/xenux_testing/files/output.php?id=902ba3cda1883801594b6e1b452790cc53948fda" data-href="http://localhost/xenux_testing/files/output.php?id=902ba3cda1883801594b6e1b452790cc53948fda" />
 		</main>
 		<footer>
 			this site was made with <a href="http://xenux.bplaced.net">Xenux</a>
