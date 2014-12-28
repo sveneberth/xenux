@@ -326,8 +326,8 @@ main {
 	padding: 0 5px;
 	float: right;
 	width: 75%;
-	overflow: auto;
 	box-sizing: border-box;
+	overflow-wrap: break-word;
 }
 main:after {
 	display: block;

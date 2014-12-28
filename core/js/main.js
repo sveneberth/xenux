@@ -158,3 +158,26 @@ $(window).scroll(function () {
 		$('.toTop').fadeOut();
 	}
 });
+
+
+
+//--- open fancybox for images in main ----------------------------------------
+var gallery = [];
+$(document).ready(function ($) {
+	var numImages = $("main img").length;
+	$("main img").each(function (i) {
+		gallery[i] = {
+			href: $(this).attr("src"),
+			title: "Bild " + (i+1) + " von " + numImages
+		};
+		$(this).bind("click", function () {
+			$.fancybox(gallery, {
+			type: "image",
+			padding: 10,
+			index: i,
+				cyclic: true
+			});
+			return false;
+		});
+	});
+});
