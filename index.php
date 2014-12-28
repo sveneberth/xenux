@@ -88,7 +88,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 <!DOCTYPE html>
 <html lang="de">
 <head>
-	<title><?php echo "$main->hp_name | ".(($site->site=='page')?$page->title:$site->title); ?></title>
+	<title><?php echo ($site->site=='page' ? $page->title : $site->title) . " | $main->hp_name"; ?></title>
 	<meta charset="UTF-8" />
 	<meta name="language" content="de"/>
 	<meta name="description" content="<?php echo $main->meta_desc; ?>" />
@@ -100,15 +100,25 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 	<meta name="generator" content="Xenux - das kostenlose CMS" />
 	<meta name="robots" content="index, follow, noarchive" />
 	<link rel="shortcut icon" href="<?php echo (substr($main->favicon_src, 0, 1)=='/') ? '.'.$main->favicon_src : $main->favicon_src; ?>" />
-	<link rel="stylesheet" type="text/css" href="core/css/style.css" media="all"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+	<link rel="stylesheet" type="text/css" href="core/css/style.css" media="all"/>
+	
+	<!-- jquery + plugins -->
 	<script src="core/js/jquery-2.1.1.min.js"></script>
 	<script src="core/js/jquery-migrate-1.2.1.min.js"></script>
 	<script src="core/js/jquery-ui.js"></script>
 	<script src="core/js/jquery.ui.touch-punch.min.js"></script>
 	<script src="core/js/jquery.cookie.js"></script>
+	
+	<!-- fancybox -->
+	<script type="text/javascript" src="core/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+	<link rel="stylesheet" type="text/css" href="core/fancybox/jquery.fancybox.css?v=2.1.5" media="screen" />
+	
+	<!-- own scripts -->
 	<script src="core/js/functions.js?from=https://code-snippets-se.googlecode.com/"></script>
 	<script src="core/js/main.js"></script>
+	
 	<style>
 		html, body {
 			background: <?php echo $main->bgcolor; ?>;
