@@ -22,7 +22,7 @@ function escapemail($email) {
 		$JS = "";
 		
 		foreach($emailArr as $val) {
-			$JS .= ((strlen($JS)==0) ? '' : ' + ') . "'$val'";
+			$JS .= (strlen($JS)==0 ? '' : ' + ') . "'$val'";
 		}
 		
 		return "<script>document.write($JS);</script>";
@@ -76,7 +76,7 @@ function nbsp($str) {
 	return str_replace(" ", "&nbsp;", $str);
 }
 
-/* fucntion from http://simbo.de/blog/2009/12/pretty-date-relative-zeitangaben-in-worten/ */
+/* function from http://simbo.de/blog/2009/12/pretty-date-relative-zeitangaben-in-worten/ */
 function pretty_date( $datestr='' ) {
 	$now = time();
 	$date = strtotime($datestr);
