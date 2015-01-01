@@ -1326,22 +1326,40 @@ div.add.backend .close:hover {
 	margin-right: 10px;
 	display: inline-block;
 }
-progress {
+.upload-progress {
 	position: fixed;
-	bottom: 100px;
+	bottom: 0px;
+	width: 100%;
+	left: 0;
+	max-height: 200px;
+	display: block;
+	overflow: auto;
+	background: #fff;
+	transition: .5s linear all;
+}
+.upload-progress > progress {
+	position: relative;
+	margin-top: 10px;
 	width: 30%;
 	left: 35%;
 	height: 50px;
+	transition: .5s linear all;
+	display: block;
 }
-progress.uploading:before {
-	content: 'Uploading';
+.upload-progress > progress:before {
 	position: absolute;
 	line-height: 1.5em;
 	font-size: 2em;
 	text-align: center;
 	width: 100%;
 }
-progress[value]::-webkit-progress-value {
+.upload-progress > progress.uploading:before {
+	content: 'hochladen - ' attr(value) '%';
+}
+.upload-progress > progress[value="100"]:before {
+	content: 'hochladen abgeschlossen';
+}
+.upload-progress > progress[value]::-webkit-progress-value {
 	transition: .5s linear all;
 }
 .ajax-loader {

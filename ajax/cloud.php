@@ -12,7 +12,7 @@ switch($_REQUEST['task']) {
 	case 'upload':
 		$parent_folder	= $_REQUEST['parent_folder'];
 		foreach($_FILES as $key => $file) {
-			$name			= $file['name'];
+			$name			= $db->real_escape_string($file['name']);
 			$tmpname		= $file['tmp_name'];
 			$mime_type		= $file['type'];
 			$size			= $file['size'];
