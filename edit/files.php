@@ -26,6 +26,7 @@ if(!isset($site)) die("You can not open this file individually/Sie k&ouml;nnen d
 	<button class="move" mytitle="Verschieben" />
 	<button class="rename" mytitle="Unbenennen" />
 </div>
+<div class="upload-progress"></div>
 <div class="move-target popup-editor">
 	<span>Verschieben nach</span>
 	<select class="nolabel" size="1"></select>

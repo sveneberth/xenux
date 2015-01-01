@@ -50,7 +50,7 @@ $(document).ready(function() {
 		var container = $(".popup-editor");
 		if(!$('.actions > button.rename').is(e.target) && !container.is(e.target) && container.has(e.target).length === 0) {
 			container.fadeOut(50);
-			console.log("popup-editor hide");
+		//	console.log("popup-editor hide");
 		}
 	});
 	
@@ -170,33 +170,40 @@ $(document).ready(function() {
 		upload($('input.file')[0].files);
 	});
 });
+var numUpload = 0;
 function upload(files) {
-	$('.actions progress.upload').remove();
-	$('.actions').append('<progress class="upload uploading" value="0" max="100"></progress>');
+	// counter
+	numUpload += 1;
+	var thisUpload = numUpload;
+	console.log('Number of Upload: ' + numUpload);
+	
+	$('.upload-progress').append('<progress data-upload-num="' + thisUpload + '" class="upload uploading" value="0" max="100"></progress>');
+	
+	console.log('files: %o', files);
+	
 	var FileData = new FormData();
 	$.each(files, function(key, value) {
 		FileData.append(key, value);
-		console.log("File "+key+": %o", value);
 	});
 
 	$.ajax({
 		xhr: function() {
-			// FIXME: add a progressbar for each upload
 			var xhr = new window.XMLHttpRequest();
 			xhr.upload.addEventListener("progress", function(evt) {
+				console.log('Number of this Upload: ' + thisUpload);
 				if(evt.lengthComputable) {
 					var percentComplete = evt.loaded / evt.total;
 					percentComplete=parseInt(percentComplete*100);
 					console.log(percentComplete);
-					$('.actions > progress').attr('value', percentComplete);
+					$('.upload-progress > progress.upload[data-upload-num="' + thisUpload + '"]').attr('value', percentComplete);
 
 					if(percentComplete === 100) {
 						dir_list(getFolder()); // refresh
-						$('.actions progress.upload').removeClass('uploading');
+						$('.upload-progress > progress.upload[data-upload-num="' + thisUpload + '"]').removeClass('uploading');
 						setTimeout(function() {
-							$('.actions progress.upload').fadeOut(500);
+							$('.upload-progress > progress.upload[data-upload-num="' + thisUpload + '"]').height(0);
 							setTimeout(function() {
-								$('.actions progress.upload').remove();
+								$('.upload-progress > progress.upload[data-upload-num="' + thisUpload + '"]').remove();
 							}, 500);
 						}, 3000);
 					}
