@@ -10,7 +10,7 @@ while($row = $result->fetch_object()) {
 	$typeCategory = substr($row->mime_type, 0, strpos($row->mime_type, "/"));
 	
 	if($typeCategory == 'image') {
-		$images[]['url'] = XENUX_URL."/files/output.php?id=".SHA1($row->id);
+		$images[]['url'] = XENUX_URL."/files?id=".SHA1($row->id);
 	}
 }
 
