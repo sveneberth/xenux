@@ -66,7 +66,7 @@ $(document).ready(function() {
 		var rowID = $(this).attr('id');
 		console.info("opened file: "+rowID);
 		
-		window.open('../files/output.php?id='+SHA1(rowID)+'','File','width=800,height=600,location=0,menubar=0,scrollbars=0,status=0,toolbar=0,resizable=0');
+		window.open('../files?id='+SHA1(rowID)+'','File','width=800,height=600,location=0,menubar=0,scrollbars=0,status=0,toolbar=0,resizable=0');
 	});
 	
 	// action events
@@ -345,7 +345,7 @@ function dir_list(folder) {
 						} else {
 							var typeCategory = entry.mime_type.substr(0, entry.mime_type.search("/"));
 							if(typeCategory == 'image') {
-								rows += "<img src=\"../files/output.php?id="+SHA1(entry.id)+"&size=32&format=square\" class=\"image\" />";
+								rows += "<img src=\"../files?id="+SHA1(entry.id)+"&size=32&format=square\" class=\"image\" />";
 							} else {
 								rows += "<img src=\"../core/images/document_grey.svg\" class=\"image\" />";
 							}
