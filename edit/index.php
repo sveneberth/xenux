@@ -58,7 +58,7 @@ ob_start();
 <!DOCTYPE html>
 <html lang="de">
 <head>
-	<title><?php echo "$main->hp_name Administration | ".$sites[$site]; ?></title>
+	<title><?php echo $sites[$site]." | $main->hp_name Administration"; ?></title>
 	<meta charset="UTF-8" />
 	<meta name="description" content="<?php echo $main->meta_desc; ?>" />
 	<meta name="keywords" content="<?php echo $main->meta_keys; ?>" />
