@@ -44,7 +44,7 @@ $next = false;
 <!DOCTYPE html>
 <html lang="de">
 <head>
-	<meta charset="UTF-8" >
+	<meta charset="UTF-8" />
 	<title>Xenux Installation | Schritt <?php echo $step; ?></title>
 	<link rel="stylesheet" type="text/css" href="install.css" />
 </head>
