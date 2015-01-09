@@ -27,7 +27,6 @@ if(isset($_GET['verifykey']) && isset($_GET['user'])) {
 EOF;
 	return false;
 }
-$verifykey = base64_encode(time());
 if(isset($_POST['resetusername'])) {
 	$username = $db->real_escape_string($_POST['resetusername']);
 	if(!empty($username)) {
@@ -36,6 +35,7 @@ if(isset($_POST['resetusername'])) {
 		if($num == 0) {
 			echo "<p>Es konnte keinem Account der Benutzername <i>$username</i> zugeordnet werden. Bitte stelle sicher, das der Benutzername stimmt, und ob du dich bereits registriert hast.</p>";
 		} else {
+			$verifykey = generateRandomString();
 			$result = $db->query("SELECT * FROM XENUX_users WHERE username = '$username' LIMIT 1;");
 			$user = $result->fetch_object();
 			$result = $db->query("UPDATE XENUX_users Set verifykey = '$verifykey' WHERE username = '$username';");

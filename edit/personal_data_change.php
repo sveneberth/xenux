@@ -23,17 +23,14 @@ if(isset($_POST['submit_form'])) {
 </form>
 <script>
 function delacc() {
-	messagebox(30,20,'Meldung',"Möchtest du wirklich deinen Account löschen? Das löschen kann nicht rückgängig gemacht werden!<br /><input type=\"button\" id=\"confirmdelacc\" value=\"löschen bestätigen\"/>");
-	$("#confirmdelacc").click(function() {
-		$(".transparent").remove();
-		$(".message").remove();
+	if(confirm("Möchtest du deinen Account wirklich löschen?\nDas löschen kann nicht rückgängig gemacht werden!")) {
 		$.ajax({
 			url: "macros/delete_acc.php",
 			success: function(content) {
-				messagebox(30,20,'Meldung',content);
+				alert("Dein Account wurde gelöscht!");
 			}
 		});
-	})
+	};
 }
 </script>
 <p><a href="javascript:delacc();">Account löschen</a></p>
