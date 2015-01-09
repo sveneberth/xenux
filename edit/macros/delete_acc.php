@@ -10,6 +10,5 @@ if(ini_get("session.use_cookies")) {
 	);
 }
 session_destroy();
-echo "Dein Account wurde gelöscht!";
 $db->close(); //close the connection to the db
 ?>
