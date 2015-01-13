@@ -11,5 +11,5 @@
 	<InputEncoding>UTF-8</InputEncoding>
 	<Language>*</Language>
 	<Image width="16" height="16" type="image/x-icon"><?php echo (substr($main->favicon_src, 0, 1)=='/') ?  XENUX_URL . $main->favicon_src : $main->favicon_src; ?></Image>
-	<Url type="text/html" method="get" template="<?php echo XENUX_URL; ?>/?site=search&amp;q={searchTerms}"/>
+	<Url type="text/html" template="<?php echo XENUX_URL; ?>/?site=search&amp;q={searchTerms}"/>
 </OpenSearchDescription>
