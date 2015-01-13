@@ -11,7 +11,7 @@ $url .= "://" . $_SERVER["SERVER_NAME"];
 if ($_SERVER["SERVER_PORT"] != "80") {
 	$url .= ":" . $_SERVER["SERVER_PORT"];
 }
-$url .= $_SERVER["SCRIPT_NAME"] != '/' ? ( !isset($index) ? dirname($_SERVER["SCRIPT_NAME"]) : ( @$index == 'frontend' ? dirname($_SERVER["SCRIPT_NAME"]) : dirname(dirname($_SERVER["SCRIPT_NAME"])))) : '';
+$url .= dirname($_SERVER["SCRIPT_NAME"]) != '/' ? ( !isset($index) ? dirname($_SERVER["SCRIPT_NAME"]) : ( @$index == 'frontend' ? dirname($_SERVER["SCRIPT_NAME"]) : dirname(dirname($_SERVER["SCRIPT_NAME"])))) : '';
 
 
 define('BASEDIR', dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR);
