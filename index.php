@@ -9,7 +9,7 @@
  * @license    GNU General Public License version 3, see LICENSE.txt
  */
 
-if(!file_exists("mysql.conf")) {
+if(!file_exists("mysql.conf.php")) {
 	header("Location: ./install/");
 }
 
