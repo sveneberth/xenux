@@ -13,6 +13,7 @@ if(!file_exists("mysql.conf")) {
 	header("Location: ./install/");
 }
 
+$index = 'frontend';
 include_once('core/inc/config.php'); // include config
 
 if(!isset($_GET['site'])) { //read the site
@@ -115,6 +116,9 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 	<!-- fancybox -->
 	<script type="text/javascript" src="core/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
 	<link rel="stylesheet" type="text/css" href="core/fancybox/jquery.fancybox.css?v=2.1.5" media="screen" />
+	
+	<!-- search -->
+	<link rel="search" type="application/opensearchdescription+xml" title="Xenux Suche" href="<?php echo XENUX_URL; ?>/search.xml.php" />
 	
 	<!-- own scripts -->
 	<script src="core/js/functions.js?from=https://code-snippets-se.googlecode.com/"></script>

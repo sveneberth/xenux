@@ -5,7 +5,7 @@ if(isset($_POST['submit'])) {
 	$result = $db->query("SELECT * FROM XENUX_users WHERE email = '$post->email';");
 	$number = $result->num_rows;
 	if($number == 0) {
-		$result = "Es konnte keinem Account die E-Mail-Adresse <i>$post->email</i> zugeordnet werden.";
+		echo "<p>Es konnte keinem Account die E-Mail-Adresse <i>$post->email</i> zugeordnet werden.</p>";
 	} else {
 		$row = $result->fetch_object();
 		$message =
@@ -27,7 +27,7 @@ if(isset($_POST['submit'])) {
 		$header		.= 'MIME-Version: 1.0' . "\r\n";
 		$header		.= 'Content-type: text/html; charset=utf-8' . "\r\n";
 		mail($row->email, 'Benutzername vergessen', $message, $header);
-		$result = 'Dein Benutzername wurde dir soeben per E-Mail zugeschickt!';
+		echo '<p>Dein Benutzername wurde dir soeben per E-Mail zugeschickt!</p>';
 	}
 }
 ?>
