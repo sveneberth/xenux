@@ -7,12 +7,12 @@ if($_SERVER['HTTP_HOST'] == 'localhost') {
 
 $url = 'http';
 if (@$_SERVER["HTTPS"] == "on") $url .= "s";
-$url .= "://";
+$url .= "://" . $_SERVER["SERVER_NAME"];
 if ($_SERVER["SERVER_PORT"] != "80") {
-	$url .= $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"] . dirname(dirname($_SERVER["SCRIPT_NAME"]));
-} else {
-	$url .= $_SERVER["SERVER_NAME"] . dirname(dirname($_SERVER["SCRIPT_NAME"]));
+	$url .= ":" . $_SERVER["SERVER_PORT"];
 }
+$url .= $_SERVER["SCRIPT_NAME"] != '/' ? ( !isset($index) ? dirname($_SERVER["SCRIPT_NAME"]) : ( @$index == 'frontend' ? dirname($_SERVER["SCRIPT_NAME"]) : dirname(dirname($_SERVER["SCRIPT_NAME"])))) : '';
+
 
 define('BASEDIR', dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR);
 define('XENUX_URL', $url);
