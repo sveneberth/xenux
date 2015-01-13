@@ -19,7 +19,7 @@ define('XENUX_URL', $url);
 
 include_once(BASEDIR.'core/inc/arrays.php'); // include arrays
 include_once(BASEDIR.'core/inc/functions.php'); // include functions
-include_once(BASEDIR.'mysql.conf'); // include Config for MySQL
+include_once(BASEDIR.'mysql.conf.php'); // include Config for MySQL
 
 
 $db = new MySQLi(MYSQL_HOST, MYSQL_USER, MYSQL_PW, MYSQL_DB); // connect with database

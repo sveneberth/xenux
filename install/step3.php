@@ -13,7 +13,7 @@ if(isset($_POST["submit"])) {
 		} else {
 			echo "<p>Verbindung zur Datenbank erfolgreich!</p>";
 			$db->query("SET NAMES 'utf8'"); // define database as utf-8
-			$file = fopen("../mysql.conf","w");
+			$file = fopen("../mysql.conf.php","w");
 			$text = "<?php
 define('MYSQL_HOST',	'$host');
 define('MYSQL_USER',	'$username');
