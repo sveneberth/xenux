@@ -198,6 +198,15 @@ function upload(files) {
 					$('.upload-progress > progress.upload[data-upload-num="' + thisUpload + '"]').attr('value', percentComplete);
 
 					if(percentComplete === 100) {
+						notifyMe(
+							'Upload abgeschlossen',
+							'Der Upload in der Xenux-Cloud wurde erfolgreich abgeschlossen',
+							function() {
+								window.open().close()
+								window.focus()
+							}
+						)
+						
 						dir_list(getFolder()); // refresh
 						$('.upload-progress > progress.upload[data-upload-num="' + thisUpload + '"]').removeClass('uploading');
 						setTimeout(function() {
