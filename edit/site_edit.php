@@ -66,6 +66,9 @@ if(isset($get->token)) {
 				<script src="../wysiwyg/plugins/simple-image-browser/plugin.js"></script>
 				<script>
 				$(document).ready(function() {
+					window.onbeforeunload = function() {
+						return 'Alle nicht gespeicherte Daten gehen verloren!';
+					}
 					CKEDITOR.config.extraPlugins = 'simple-image-browser';
 					CKEDITOR.config.simpleImageBrowserURL = '../ajax/images.php';
 
