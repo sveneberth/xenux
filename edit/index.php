@@ -95,6 +95,7 @@ ob_start();
 			switch (String.fromCharCode(event.which).toLowerCase()) {
 			case 's':
 				event.preventDefault();
+				$(window).off('beforeunload');
 				document.forms[0].submit();
 				break;
 			}
