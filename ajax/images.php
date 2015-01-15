@@ -1,4 +1,5 @@
 <?php
+$index = "backend";
 include_once('../core/inc/config.php'); // include config
 error_reporting(0);
 

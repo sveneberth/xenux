@@ -7,7 +7,7 @@ $fileid		= @$_GET['id'];
 $result = $db->query("SELECT *, DATE_FORMAT(lastModified, '%D, %d %M %Y %H:%i:%s') as lastModified_formatted FROM XENUX_files WHERE type = 'file' AND (filename = '$filename' OR SHA1(id) = '$fileid') LIMIT 1;");
 if(!$result) {
 	header("Status: 500 Internal server error");
-	die("<!DOCTYPE HTML>
+	die("<!DOCTYPE html>
 <html>
 	<head>
 		<meta charset=\"UTF-8\" />
@@ -23,7 +23,7 @@ if(!$result) {
 }
 if($result->num_rows == 0) {
 	header("Status: 404 Not Found");
-	die("<!DOCTYPE HTML>
+	die("<!DOCTYPE html>
 <html>
 	<head>
 		<meta charset=\"UTF-8\" />
