@@ -348,7 +348,8 @@ function dir_list(folder) {
 				var rows = "";
 				if(response.data != "no entrys"){
 					response.data.forEach(function(entry) { // as dataset
-						rows += "<div class=\"item "+entry.type+"\" id=\""+entry.id+"\" data-filename=\""+entry.filename+"\">";
+						var filename = entry.filename.replace(/"/g, '&quot;');
+						rows += "<div class=\"item "+entry.type+"\" id=\""+entry.id+"\" data-filename=\""+filename+"\">";
 						if(entry.type == 'folder') {
 							rows += "<img src=\"../core/images/folder_grey.svg\" class=\"image\" />";
 						} else {
@@ -359,7 +360,7 @@ function dir_list(folder) {
 								rows += "<img src=\"../core/images/document_grey.svg\" class=\"image\" />";
 							}
 						}
-							rows += "<span class=\"file filename\">"+entry.filename+"</span>";
+							rows += "<span class=\"file filename\">"+filename+"</span>";
 						rows += "</div>";
 					});
 				}
