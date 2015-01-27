@@ -1,14 +1,7 @@
 <?php
-if ($_SESSION["login"] == 1) {
-$_SESSION = array();
-/* if (ini_get("session.use_cookies")) {
-    $params = session_get_cookie_params();
-    setcookie(session_name(), '', time() - 42000, $params["path"],
-        $params["domain"], $params["secure"], $params["httponly"]
-    );
-} */
-session_destroy();
-$deletet = 'true';
+if(isset($login)) {
+	$_SESSION = array();
+	session_destroy();
 }
 ?>
 <p>Du wurdest erfolgreich abgemeldet!</p>

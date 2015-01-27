@@ -1,343 +1,374 @@
 <?php
-SESSION_START();
-function contains($var) {
-	$array = func_get_args();
-	unset($array[0]);
-	return in_array($var, $array); 
+/**
+ * @package    Xenux
+ *
+ * @link       http://www.xenux.bplaced.net
+ * @version    1.4-beta
+ * @author     Sven Eberth <mail@sven-eberth.de.hm>
+ * @copyright  Copyright (c) 2013 - 2015, Sven Eberth.
+ * @license    GNU General Public License version 3, see LICENSE.txt
+ */
+
+if(!file_exists("mysql.conf.php")) {
+	header("Location: ./install/");
 }
-function maxlines($str, $num=10) {
-    $lines = explode("\n", $str);
-    $firsts = array_slice($lines, 0, $num);
-    return implode("\n", $firsts);
+
+$index = 'frontend';
+include_once('core/inc/config.php'); // include config
+
+if(!isset($_GET['site'])) { //read the site
+	$site = 'home';
+} elseif(empty($_GET['site'])) {
+	$site = 'home';
+} else {
+	$site = $db->real_escape_string($_GET['site']);
 }
-if(@$_SESSION["login"] == 1 and !empty($_POST['session_delete'])) {
-	$_SESSION = array();
-	if (ini_get("session.use_cookies")) {
-		$params = session_get_cookie_params();
-		setcookie(session_name(), '', time() - 42000, $params["path"],
-			$params["domain"], $params["secure"], $params["httponly"]
-		);
+
+$result = $db->query("SELECT * FROM XENUX_sites WHERE site = '$site'"); //read site information
+$num = $result->num_rows;
+if($num > 0) { //if site exists, than readout all the site informations
+	$site = $result->fetch_object();
+	if($site->site == 'page') {
+		$result = $db->query("SELECT * FROM XENUX_sites WHERE id = '$get->page_id' AND site = '' LIMIT 1;");
+		$num = $result->num_rows;
+		if($num > 0) {
+			$page = $result->fetch_object();
+		} else { //if page not exists, than set site as error
+			$page = new stdClass();
+			$page->site = "error";
+			$page->title = "Error 404 - Seite nicht gefunden";
+		}
 	}
-	session_destroy();
-	$del = 'Du wurdest erfolgreich ausgelogt!<br />';
+} else { //if site not exists, than set site as error
+	$site = new stdClass();
+	$site->site = "error";
+	$site->title = "Error 404 - Seite nicht gefunden";
 }
-if(!file_exists('config.php')) {
-	header('Location: ./install/index.php');
-}
-if(!isset($_GET['site'])) {
-	$filename = 'home';
-}elseif(empty($_GET['site'])){
-	$filename = 'home';
-}else{
-	$filename = $_GET['site'];
-}
-include('config.php');
-include('core/macros/colortext.php');
-include('core/macros/escape_mail.php');
-include('core/macros/hex2rgb.php');
-$link = mysql_connect($MYSQL_HOST, $MYSQL_BENUTZER, $MYSQL_KENNWORT);
-$db_selected = mysql_select_db($MYSQL_DATENBANK, $link);
-if(!$db_selected) {
-	die('Es ist keine Verbindung zur Datenbank möglich!');
-}
-mysql_query('SET NAMES "utf8"');
-$sql = "SELECT * FROM XENUX_pages WHERE filename = '".mysql_real_escape_string($filename)."'";
-$erg = mysql_query($sql);
-$row = mysql_fetch_assoc($erg);
-$fullname = $row['fullname'];
-$siteid = $row['id'];
-$category = $row['category'];
-mysql_free_result($erg);
-if($fullname == '') {
-	$filename = 'error';
-	$fullname = 'Error 404 - Seite nicht gefunden';
-}
-if(isset($_POST["username"])) {
-	$username = mysql_real_escape_string($_POST["username"]);
-	$password = mysql_real_escape_string($_POST["password"]);
-	$sql = "SELECT * FROM XENUX_users WHERE username='".$username."' AND pw='xkanf".md5($password)."v4sf5w' AND admin = 'yes' LIMIT 1";
-	$res = mysql_query($sql);
-	$anzahl = mysql_num_rows($res);
-	$erg = mysql_fetch_array($res);
-	if($anzahl > 0) {
-		$_SESSION["login"] = 1;
-		$_SESSION["userid"] = $erg['id'];
-	} else{
-		$result1 = "<p>Deine Logindaten sind nicht korrekt, oder du wurdest noch nicht freigeschaltet.</p>";
+
+if($_SERVER['REQUEST_METHOD'] == 'POST' and isset($_POST['loginform'])) { // if loginform submit
+	$username = $db->real_escape_string($_POST["username"]);
+	$password = $db->real_escape_string($_POST["password"]);
+	$result = $db->query("SELECT * FROM XENUX_users WHERE username = '$username' LIMIT 1;");
+	$number = $result->num_rows;
+	if($number > 0) {
+		$row = $result->fetch_object();
+		if(!$row->confirmed) { // if user not confirmed
+			$loginsuccess = false;
+			$returnlogin = "Du bist noch nicht freigeschaltet!";
+		} else {
+			if(SHA1($password) == $row->password) {
+				# Password valid
+				$_SESSION["login_xenux"] = 1;
+				$_SESSION['userid_xenux'] = $row->id;
+				$loginsuccess = true;
+				$result = $db->query("UPDATE XENUX_users SET lastlogin_date = NOW(), lastlogin_ip = '{$_SERVER['REMOTE_ADDR']}' WHERE id = '{$_SESSION['userid_xenux']}';");
+				$result = $db->query("SELECT * FROM XENUX_users WHERE id = '{$_SESSION['userid_xenux']}';");
+				$login = $result->fetch_object();
+			} else {
+				# Password invalid!
+				$loginsuccess = false;
+				$returnlogin = "Passwort und Benutzername stimmen nicht überein!";
+			}
+		}
+	} else {
+		$loginsuccess = false;
+		$returnlogin = "Es wurde kein Account mit diesem Benutzernamen gefunden!";
 	}
 }
-if (@$_SESSION['login'] == 1) {
-	$sql = "SELECT * FROM XENUX_users WHERE id = '".$_SESSION["userid"]."'";
-	$erg = mysql_query($sql);
-	$login = mysql_fetch_array($erg);
-}
-$sql = "SELECT * FROM XENUX_main";
-$erg = mysql_query($sql);
-while($row = mysql_fetch_array($erg)) {
-	foreach($row as $key => $val) {
-		$$key = $val;
+if(isset($login)) {
+	if(@$_GET['do'] == "logout") {
+		$_SESSION = array();
+		session_destroy();
+		unset($login);
+		$donelogout = true;
 	}
-	$$name = $value;
 }
-$HP_URL = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT'].substr($_SERVER['SCRIPT_NAME'],0,-9);
+
+define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-9));
 ?>
 <!DOCTYPE html>
 <html lang="de">
 <head>
-	<title><?php echo "$hp_name | $fullname"; ?></title>
+	<title><?php echo ($site->site=='page' ? $page->title : $site->title) . " | $main->hp_name"; ?></title>
 	<meta charset="UTF-8" />
 	<meta name="language" content="de"/>
-	<meta name="description" content="<?php echo $meta_desc; ?>" />
-	<meta name="keywords" content="<?php echo $meta_keys; ?>" />
-	<meta name="auhor" content="<?php echo $meta_auhor; ?>" />
-	<meta name="publisher" content="<?php echo $meta_auhor; ?>" />
-	<meta name="copyright" content="<?php echo $meta_auhor; ?>" />
+	<meta name="description" content="<?php echo $main->meta_desc; ?>" />
+	<meta name="keywords" content="<?php echo $main->meta_keys; ?>" />
+	<meta name="auhor" content="<?php echo $main->meta_auhor; ?>" />
+	<meta name="publisher" content="<?php echo $main->meta_auhor; ?>" />
+	<meta name="copyright" content="<?php echo $main->meta_auhor; ?>" />
 	<!-- http://xenux.bplaced.net -->
 	<meta name="generator" content="Xenux - das kostenlose CMS" />
 	<meta name="robots" content="index, follow, noarchive" />
-	<link rel="shortcut icon" href="./core/images/<?php echo $favicon_src; ?>"/>
-	<link rel="stylesheet" type="text/css" href="core/css/style.css" media="all"/>
+	<link rel="shortcut icon" href="<?php echo (substr($main->favicon_src, 0, 1)=='/') ? '.'.$main->favicon_src : $main->favicon_src; ?>" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+	<link rel="stylesheet" type="text/css" href="core/css/style.css" media="all"/>
+	
+	<!-- jquery + plugins -->
 	<script src="core/js/jquery-2.1.1.min.js"></script>
 	<script src="core/js/jquery-migrate-1.2.1.min.js"></script>
 	<script src="core/js/jquery-ui.js"></script>
+	<script src="core/js/jquery.ui.touch-punch.min.js"></script>
 	<script src="core/js/jquery.cookie.js"></script>
+	<script src="core/js/jquery.mousewheel.js"></script>
+	
+	<!-- fancybox -->
+	<script type="text/javascript" src="core/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+	<link rel="stylesheet" type="text/css" href="core/fancybox/jquery.fancybox.css?v=2.1.5" media="screen" />
+	
+	<!-- search -->
+	<link rel="search" type="application/opensearchdescription+xml" title="Xenux Suche" href="<?php echo XENUX_URL; ?>/search.xml.php" />
+	
+	<!-- own scripts -->
+	<script src="core/js/functions.js?from=https://code-snippets-se.googlecode.com/"></script>
 	<script src="core/js/main.js"></script>
+	
 	<style>
-	html,body{
-		background:<?php echo $bgcolor; ?>;
-		color:<?php echo $fontcolor; ?>;
-	}
-	a:focus,a:hover{color: <?php
-	echo lighter(hex2RGB($fontcolor)['red'],hex2RGB($fontcolor)['green'],hex2RGB($fontcolor)['blue']);
-	?>;
-	}
+		html, body {
+			background: <?php echo $main->bgcolor; ?>;
+			color: <?php echo $main->fontcolor; ?>;
+		}
 	</style>
 </head>
-<body>
-	<div id="headWrapper">
-		<div id="head"> 
-			<div class="logo">
-				<a href="./">
-					<img src="./core/images/<?php echo $logo_src; ?>" />
-				</a>
-			</div>
-			<ul id="topmenu" class="mobilemenu">
-				<li><a href="javascript:openmobilemenu()">Menu</a></li>
-				<li><a href="?site=newslist">News</a></li>
-				<li><a href="?site=termine">Termine</a></li>
+<body id="top">
+	<a href="#top" class="toTop"></a>
+	<div class="headWrapper">
+		<header> 
+			<a href="javascript:openmobilemenu();" class="menu-icon"></a>
+			<a class="logo" href="./">
+				<img src="<?php echo (substr($main->logo_src, 0, 1)=='/') ? '.'.$main->logo_src : $main->logo_src; ?>" class="nojsload" />
+			</a>
+			<ul class="topmenu mobilemenu">
 				<li><a href="./edit?site=login">Login</a></li>
 			</ul>
-			<ul id="topmenu" class="mainmenu">
+			<ul class="topmenu mainmenu">
 				<li><a href='./'>Home</a></li>
-				<?php
-					$unallowedsites = array	(
-												"impressum",
-												"kontakt",
-												"home",
-												"news",
-												"newslist",
-												"termine",
-												"terminview",
-												"page",
-												"search",
-											);
-					$read_category = array();
-					$sql = "SELECT DISTINCT category FROM XENUX_pages WHERE category != '';";
-					$erg = mysql_query($sql) or die(mysql_error());
-					while($row = mysql_fetch_array($erg)) {
-						$menu_category = $row['category'];
-						$catergorypoint = $menu_category;
-						echo "<li><img src=\"core/images/right.png\" class=\"".strtolower(preg_replace("/[^a-zA-Z0-9_]/" , "" , $menu_category))." openpoints\" onclick=\"javascript:openmenupoints('".strtolower(preg_replace("/[^a-zA-Z0-9_]/" , "" , $menu_category))."')\"><a";
-						$thissql = mysql_query("SELECT * FROM XENUX_pages WHERE fullname = '$menu_category' AND category  = '$menu_category' LIMIT 1;");
-						$thispage = mysql_fetch_object($thissql);
-						if(mysql_num_rows($thissql) > 0) {
-							echo " href=\"?site=page&page_id=$thispage->id\"";
-						}
-						echo ">$menu_category</a><ul id=\"".strtolower(preg_replace("/[^a-zA-Z0-9_]/" , "" , $menu_category))."\">";
-						$sql1 = "SELECT * FROM XENUX_pages WHERE category = '$menu_category' AND category != '' ORDER by fullname";
-						$erg1 = mysql_query($sql1);
-						while($row1 = mysql_fetch_array($erg1)) {
-							foreach($row1 as $key1 => $val1) {
-								$a = "menu_$key1";
-								$$a = $val1;
+<?php
+					$menu_order = "position_left ASC";
+					
+					$result1 = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = 0 ORDER BY $menu_order;");
+					while($rank1 = $result1->fetch_object()) {
+						if(in_array($rank1->site, $special_sites) || $rank1->site == 'home')
+							continue;
+						echo "<li>\n\t<a href=\"?site=page&page_id=$rank1->id\">".nbsp($rank1->title)."</a>\n";
+						
+						$result2 = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = $rank1->id ORDER BY $menu_order;");
+						if($result2->num_rows > 0) {
+							echo "\t<ul>";
+							while($rank2 = $result2->fetch_object()) {
+								echo "\n\t\t<li>\n\t\t\t<a href=\"?site=page&page_id=$rank2->id\">".nbsp($rank2->title)."</a>\n";
+								
+								$result3 = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = $rank2->id ORDER BY $menu_order;");
+								if($result3->num_rows > 0) {
+									echo "\t\t\t<ul>";
+									while($rank3 = $result3->fetch_object()) {
+										echo "\n\t\t\t\t<li>\n\t\t\t\t\t<a href=\"?site=page&page_id=$rank3->id\">".nbsp($rank3->title)."</a>\n\t\t\t\t</li>\n";
+									}
+									echo "\t\t\t</ul>";
+								}
+								echo "\n\t\t</li>";
+								
 							}
-							if(strtolower($catergorypoint) != strtolower(@$menu_fullname)) {
-								echo "<li><a href=\"?site=page&page_id=$menu_id\">$menu_fullname</a></li>";
-							}
+							echo "\n\t</ul>";
 						}
-						echo "</ul></li>";
-					}
-					$sql = "SELECT * from XENUX_pages WHERE category = '' ORDER by fullname";
-					$erg = mysql_query($sql);
-					while($row = mysql_fetch_array($erg)) {
-						foreach($row as $key => $val) {
-							$a = "menu_$key";
-							$$a = $val;
-						}
-						if(!in_array($menu_filename, $unallowedsites)) {
-							echo "<li><a href=\"?site=page&page_id=$menu_id\">$menu_fullname</a></li>";
-						}
+						
+						echo "\n</li>\n";
 					}
 				?>
+				<li class="search">
+					<div id="sb-search" class="sb-search">
+						<form action="" method="GET">
+							<input type="hidden" name="site" value="search" />
+							<input onkeyup="if($(this).val()==''){$('.sb-search-submit').css('z-index', 11);}else{$('.sb-search-submit').css('z-index', 99);}" type="search" class="sb-search-input" name="q" placeholder="Suche" value="<?php if($site->site =='search')echo @$get->q; ?>" />
+							<input type="submit" class="sb-search-submit" value="" />
+							<span onclick="$('div#sb-search').toggleClass('sb-search-open');" class="sb-icon-search"></span>
+						</form>
+					</div>
+				</li>
+				<li class="mobilemenu"><a href="?site=news_list">News</a></li>
+				<li class="mobilemenu"><a href="?site=event_list">Termine</a></li>
 			</ul>
-		</div>
+		</header>
 	</div>
-<div id="wrapper">
-	<div class="fontsize">
-		Schrift
-		&nbsp;<a title="Schrift kleiner" href="javascript:fontsizedecrease()">-</a>
-		&nbsp;<a title="Schrift normal" href="javascript:fontsizereset()">O</a>
-		&nbsp;<a title="Schrift größer" href="javascript:fontsizerecrease()">+</a>
-	</div>
-	<div id="leftboxes">
-		<div id="box">
-			<h3>Suche:</h3>
-			<form action="" method="GET">
-				<input type="hidden" name="site" value="search" />
-				<input type="text" name="searchtxt" placeholder="Suche">
-			</form>
+	<div class="wrapper">
+		<noscript>
+			<div class="warning-noscript">
+				<div>
+					In deinem Browser ist JavaScript deaktiviert. Um den vollen Funktionsumfang dieser Webseite zu nutzen, benötigst du JavaScript.
+				</div>
+			</div>
+		</noscript>
+		<div class="fontsize">
+			&nbsp;<a title="Schrift kleiner" class="decrease"></a>
+			&nbsp;<a title="Schrift normal" class="reset"></a>
+			&nbsp;<a title="Schrift größer" class="recrease"></a>
 		</div>
-		<?php
-		$sql = "SELECT * FROM XENUX_news;";
-		$result = mysql_query($sql);
-		$number = mysql_num_rows($result);
-		if($number > 0) {
+		<div class="leftboxes">
+			<?php
+			/* news */
 			?>
-			<ul id="box">
+			<ul class="news">
 				<h3>News:</h3>
 				<?php
-				$sql = "SELECT * FROM XENUX_news LIMIT 5;";
-				$erg = mysql_query($sql);
-				while ($zeile = mysql_fetch_array($erg)) {
-					$id = $zeile['id'];
-					$title = $zeile['title'];
-					$text = $zeile['text'];
-					if($title != '' and $text != '') {
-						echo '<li><span class="title">'.$title;
-						if (@$_SESSION["login"] == 1) {
-							echo '<a id="edit_href" href="edit/?site=news_edit&id='.$id.'">Bearbeiten</a>';
+				$result = $db->query("SELECT * FROM XENUX_news ORDER by create_date DESC, title ASC LIMIT 5;");
+				$number = $result->num_rows;
+				if($number > 0) {
+					while($row = $result->fetch_object()) {
+						if(!empty($row->title) && !empty($row->text)) {
+							echo "	<li>
+										<span class=\"title\">$row->title" . ((isset($login))?"<a class=\"edit-btn\" style=\"height: 1.2em;width:1.2em;\" href=\"edit/?site=news_edit&task=edit&id=$row->id&backbtn\"></a>":'') . "</span>
+										<span class=\"date\">".pretty_date($row->create_date)."</span>".
+										shortstr(strip_tags($row->text), 50)."<br />
+										<a href=\"?site=news_view&news_id=$row->id\">&raquo;weiterlesen</a>
+									</li>";
 						}
-						echo '</span>';
-						if(strlen($text) > 70) {
-							echo htmlentities(substr($text, 0, strpos($text, " ", 70)));
-						} else {
-							echo htmlentities($text);
-						}
-						echo '...<br /><a href="?site=news&id='.$id.'">&raquo;weiterlesen</a></li>';
 					}
+				} else {
+					echo "<p style=\"margin:5px 0;\">keine News vorhanden!</p>";
 				}
-				mysql_free_result($erg);
 				?>
+				<a href="?site=news_list">alle News anzeigen</a>
 			</ul>
-		<?php
-		}
-		$sql = "SELECT * FROM XENUX_dates;";
-		$erg = mysql_query($sql);
-		$anzahl = mysql_num_rows($erg);
-		if($anzahl > 0) {
-			echo '<ul class="dates" id="box"><h3>Termine:</h3>';
-			$sql1 = "SELECT *, DATE_FORMAT(date,'%d.%m.%Y %H:%i') as dat FROM XENUX_dates WHERE date >= NOW() ORDER by date LIMIT 5;";
-			$erg1 = mysql_query($sql1);
-			if(mysql_num_rows($erg1) == 0) {
-				echo "<p>keine Anstehenden Termine vorhanden!</p>";
-			}
-			while($row1 = mysql_fetch_array($erg1)) {
-				echo '<li><span class="title">'.$row1['name'];
-				if (@$_SESSION["login"] == 1) {
-					echo '<a id="edit_href" href="edit/?site=dates_edit&id='.$row1['id'].'">Bearbeiten</a>';
+			<?php			
+			
+			/* dates */
+			?>
+			<ul class="dates">
+				<h3>Termine:</h3>
+				<?php
+				$result = $db->query("SELECT *, DATE_FORMAT(date,'%d.%m.%Y %H:%i') as date_formatted FROM XENUX_dates WHERE date >= NOW() ORDER by date LIMIT 5;");
+				$number = $result->num_rows;
+				if($number > 0) {
+					while($row = $result->fetch_object()) {
+						echo "	<li>
+									<span class=\"title\">$row->name" . ((isset($login))?"<a class=\"edit-btn\" style=\"height: 1.2em;width:1.2em;\" href=\"edit/?site=event_edit&task=edit&id=$row->id&backbtn\"></a>":'') . "</span>
+									<span class=\"date\">$row->date_formatted</span>".
+									shortstr(strip_tags($row->text), 50)."<br />
+									<a href=\"?site=event_view&event_id=$row->id\">&raquo;Termin anzeigen</a>
+								</li>";
+					}
+				} else {
+					echo "<p style=\"margin:5px 0;\">keine anstehenden Termine vorhanden!</p>";
 				}
-				echo '</span>';
-				echo $row1['dat'].'<br/>'.htmlentities(substr($row1['text'],0,70)).'<br /><a href="?site=terminview&id='.$row1['id'].'">&raquo;Termin anzeigen</a></li>';
-			}
-			echo '<a href="?site=termine">alle Termine anzeigen</a></ul>';
-		}
-		
-		$sql = "SELECT * FROM XENUX_pages WHERE filename = '$filename';";
-		$erg = mysql_query($sql);
-		$row = mysql_fetch_array($erg);
-		if(!empty($row['ansprechpartner'])) {
-			echo '<ul id="box"><h3>Ansprechpartner:</h3>';
-			$zerlegen = explode("|", $row['ansprechpartner']);
-			for($i=1;isset($zerlegen[$i]);$i++) {
-				$sql1 = "SELECT * FROM XENUX_ansprechpartner WHERE id = '$zerlegen[$i]'";
-				$erg1 = mysql_query($sql1);
-				$row1 = mysql_fetch_array($erg1);
-				echo '<li><span class="title">'.$row1['name'].'</span>';
-				echo $row1['position'].'<br/>';
-				escapemail($row1['email']);
-				echo '</a></li>';
-			};
-			echo '</ul>';
-		}
-		?>
-		<div id="box">
-			<h3>Login:</h3>
+				?>
+				<a href="?site=event_list">alle Termine anzeigen</a>
+			</ul>
 			<?php
-			if(isset($del)){
-				echo $del;
+			
+			
+			/* newest sites */
+			$result = $db->query("SELECT * FROM XENUX_sites WHERE
+			(
+						site	!=		'home'
+				AND		site	!=		'event_view'
+				AND		site	!=		'event_list'
+				AND		site	!=		'page'
+				AND		site	!=		'news_list'
+				AND		site	!=		'news_view'
+				AND		site	!=		'error'
+				AND		site	!=		'search'
+				AND		site	!=		'contact'
+				AND		site	!=		'imprint'
+			)
+			ORDER BY create_date DESC LIMIT 5;");
+			if(!$result)
+				echo $db->error;
+			$num = $result->num_rows;
+			if($num > 0) {
+				echo "<ul class=\"newest-sites\">
+						<h3>neuste Seiten:</h3>";
+				while($row = $result->fetch_object()) {
+					echo "	<li>
+								<a href=\"?site=page&page_id=$row->id\">$row->title</a>
+							</li>";
+				}
+				echo "</ul>";
 			}
-			if (@$_SESSION["login"] == 0) {
-				?>
-				<form action="" method="POST">
-				<input type="text" name="username" placeholder="Benutzername"><br />
-				<a href="edit/?site=forgotusername">Benutzernamen vergessen?</a><br />
-				<input type="password" name="password" placeholder="Passwort"><br />
-				<a href="edit/?site=forgotpassword">Passwort vergessen?</a><br />
-				<?php echo @$result1; ?>
-				<input type="submit" name="submit" value="Einloggen"><br />
-				<a href="edit/?site=registrieren">Registrieren</a>
-				</form>
-				<?php
-			} else {
-				?>
-				Hallo <?php echo $login['vorname']; ?>, du bist erfolgreich eingeloggt!<br />
-				<form action="" method="POST">
-					<input type="submit" name="session_delete" value="Logout">
-				</form>	
-				<?php
+			
+			
+			/* contact persons */
+			if($site->site != 'error' && @$page->site != 'error') {
+				$result = $db->query("	SELECT * FROM XENUX_site_contactperson
+										LEFT JOIN XENUX_sites ON XENUX_site_contactperson.site_id = XENUX_sites.id
+										LEFT JOIN XENUX_contactpersons ON XENUX_site_contactperson.contactperson_id = XENUX_contactpersons.id
+										WHERE site_id = '".(($site->site == 'page')?$page->id:$site->id)."';");
+				$num = $result->num_rows;
+				if($num > 0) {
+					echo "<ul class=\"contactpersons\">
+							<h3>Ansprechpartner:</h3>";
+					while($row = $result->fetch_object()) {
+						echo "	<li>
+									<span class=\"title\">$row->name</span>
+									$row->position<br/>
+									".escapemail($row->email)."
+								</li>";
+					}
+					echo "</ul>";
+				}
 			}
 			?>
-		</div>
-	</div>
-	<div id="content">
-		<?php
-		if($filename != 'page') {
-			echo "<h1>$fullname";
-			if (@$_SESSION["login"] == 1) {
-				if(!contains($filename, 'search', 'news', 'error', 'termine', 'terminview', 'page')) {
-					echo '<a id="edit_href" href="edit/?site=site_edit&id='.$siteid.'">Bearbeiten</a>';
+			<ul>
+				<h3>Login:</h3>
+				<?php
+				if(!isset($login)) {
+					?>
+					<form action="?<?php foreach($_GET as $key => $val){if($key!="do")echo "$key=$val&";} ?>do=login" method="POST">
+						<input type="hidden" name="loginform" value="true">
+						<input type="text" name="username" placeholder="Benutzername">
+						<input type="password" name="password" placeholder="Passwort">
+						<?php echo @$returnlogin; ?>
+						<input style="margin: 5px 0;" type="submit" value="Einloggen">
+						<a href="edit/?site=forgotpassword">Passwort vergessen?</a><br />
+						<a href="edit/?site=forgotusername">Benutzername vergessen?</a><br />
+						<a href="edit/?site=register">Registrieren</a>
+					</form>
+					<?php
+				} else {
+					?>
+					Hallo <?php echo $login->firstname; ?>, du bist erfolgreich eingeloggt!<br />
+					<a href="./edit/">&raquo;zum Editroom</a>
+					<input type="button" onclick="window.location='?<?php foreach($_GET as $key => $val){if($key!="do")echo "$key=$val&";} ?>do=logout'" value="Logout" />
+					<?php
 				}
-			}
-			echo "</h1>";
-		}
-		if(contains($filename, 'newslist', 'news', 'error', 'termine', 'terminview', 'page', 'search')) {
-			include('core/pages/'.$filename.'.php');
-		} else {
-			$sql = "SELECT * FROM XENUX_pages WHERE filename = '$filename' LIMIT 1;";
-			$erg = mysql_query($sql);
-			$row = mysql_fetch_object($erg);
-			echo /*nl2br*/($row->text);
-		}
-		if($filename == 'kontakt') {
-			include('core/macros/ansprechpartner.php');
-		}
-		if($filename == 'kontakt' and !empty($contact_form_email)) {
-			include ('core/macros/kontakt_formular.php');
-		}
-		?>
-	</div>
-	<div id="footer">
-		This Side was made with <a href="http://xenux.bplaced.net">Xenux</a>
-		<div class="href">
-			<a href="./edit/">Editroom</a>
-			<a href="./?site=kontakt">Kontakt</a>
-			<a href="./?site=impressum">Impressum</a>
+				?>
+			</ul>
 		</div>
+		<main>
+			<?php
+			if(!contains($site->site, 'page', 'news_view')) {
+				echo "<h1>$site->title";
+				if(isset($login)) {
+					if(!in_array($site->site, $special_sites) || contains($site->site, 'home', 'imprint', 'contact')) {
+						echo "<a class=\"edit-btn\" title=\"bearbeiten\" href=\"edit/?site=site_edit&token=edit_site&site_id=$site->id&backbtn&gotosite\"></a>";
+					}
+				}
+				echo "</h1>";
+			}
+			if(in_array($site->site, $special_sites) && $site->site != 'imprint') {
+				if(file_exists("core/pages/$site->site.php")) {
+					include("core/pages/$site->site.php");
+				} else {
+					request_failed();
+				};
+			} else {
+				$result = $db->query("SELECT * FROM XENUX_sites WHERE site = '$site->site' LIMIT 1;");
+				$row = $result->fetch_object();
+				echo $row->text;
+			}
+			?>
+		</main>
+		<footer>
+			this site was made with <a href="http://xenux.bplaced.net">Xenux</a>
+			<div class="links">
+				<a href="./edit/">Editroom</a>
+				<a href="./?site=contact">Kontakt</a>
+				<a href="./?site=imprint">Impressum</a>
+			</div>
+		</footer>
 	</div>
-</div>
 </body>
 </html>
 <?php
-mysql_close($link);
+$db->close(); //close the connection to the db
 ?>

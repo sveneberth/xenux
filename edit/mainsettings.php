@@ -1,34 +1,28 @@
 <?php
 if(!isset($site)) die("You can not open this file individually/Sie k&ouml;nnen diese Datei nicht einzeln &ouml;ffnen!");
-if($login['role'] < 2) {
+if($login->role < 2) {
 	echo '<p>Du bist nicht berechtigt, diese Seite zu öffnen!</p>';
-	return;
+	return false;
 }
-if(isset($_POST['sumbit'])) {
-	foreach($_POST as $key => $val) {
-		$$key = $val;
-		$sql = "UPDATE XENUX_main Set value = '".mysql_real_escape_string($val)."' WHERE name = '$key'";
-		$erg = mysql_query($sql);
+if(isset($post->sumbit)) {
+	foreach($post as $key => $val) {
+		$db->query("UPDATE XENUX_main Set value = '$val' WHERE name = '$key'");
 	}
+	header("Location: ./?site=mainsettings&updated=success");
+}
+if(@$get->updated == 'success') {
 	echo 'Die Einstellungen wurden geändert!';
 }
 ?>
 <p>Hier kannst du die Grundeinstellungen der Homepage und des Systems ändern.</p>
 <form action="" method="post">
 	<?php
-	$sql = "SELECT * FROM XENUX_main";
-	$erg = mysql_query($sql);
-	while($row = mysql_fetch_array($erg)) {
-		foreach($row as $key => $val) {
-			$$key = $val;
-		}
-		echo "<span ";
-		if(empty($value) and $_SERVER['REQUEST_METHOD'] == "POST") echo 'style="color:#cc0000;"';
-		echo ">$label</span><br />";
-		if($type == "textarea") {
-			echo "<textarea name=\"$name\" placeholder=\"$label\">$value</textarea><br /><br />";
+	$result = $db->query("SELECT * FROM XENUX_main;");
+	while($row = $result->fetch_object()) {
+		if($row->type == "textarea") {
+			echo "<textarea ".(empty($row->value)&&isset($post->sumbit)?'class="wrong"':'')." name=\"$row->name\" placeholder=\"$row->label\">$row->value</textarea>";
 		} else {
-			echo "<input type=\"$type\" name=\"$name\" value=\"$value\" placeholder=\"$label\" /><br /><br />";
+			echo "<input type=\"$row->type\" name=\"$row->name\" value=\"$row->value\" placeholder=\"$row->label\" />";
 		}
 	}
 	?>

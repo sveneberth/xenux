@@ -1,6 +1,6 @@
 //---Popup---------------------------------------------------------------------
 $(document).ready(function() {
-	$("body").append("<div id=\"transparent\"></div>");
+	$("body").append("<div class=\"transparent\"></div>");
 })
 function popupopen() {
 	$( ".popup").show();
@@ -17,63 +17,55 @@ function popupclosewithoutcontent() {
 	$( ".transparent" ).hide();
 }
 
+
+
 //---Menu----------------------------------------------------------------------
 function openmobilemenu() {
 	$('html,body').animate({
 		scrollTop: 0
 	}, 500);
-	$( ".mainmenu" ).toggle("fast");
-	if($("#transparent").is(":visible")) {
-		$( "#transparent" ).fadeOut("fast");
-	} else {
-		$( "#transparent" ).fadeIn("fast");
-	}
+	$(".topmenu.mainmenu").toggle("fast");
+	$(".topmenu.mobilemenu").fadeToggle("fast");
+	$(".logo").fadeToggle("fast");
 }
-function openmenupoints(name) {
-	console.log("toggle mobilemenu point "+name);
-	if($("ul#"+name).is(':visible')) {
-		if($(".openpoints."+name).attr('src') != "../core/images/down.png") {
-			$(".openpoints."+name).attr("src","core/images/right.png");
-		} else {
-			$(".openpoints."+name).attr("src","../core/images/right.png");
-		}
-	} else {
-		if($(".openpoints."+name).attr('src') != "../core/images/right.png") {
-			$(".openpoints."+name).attr("src","core/images/down.png");
-		} else {
-			$(".openpoints."+name).attr("src","../core/images/down.png");
-		}
-	}
-	$( "#"+name ).slideToggle("fast");
-}
-$(window).scroll(function(){
-    $('.mainmenu').css('top', 60 - $(this).scrollTop());
+
+$(window).scroll(function() { // scroll -> move menu
+    $('.mainmenu').css('top', 50 - $(this).scrollTop());
 });
-$(window).resize(function () {
-	if($( window ).width() > 600) {
-		$( "#mobilemenu" ).hide();
-		$( "#transparent" ).hide();
-		$("tr.head").show();
+
+$(window).resize(function () { // resize window
+	if($(window).width() > 600) { // normal view
+		$(".topmenu.mobilemenu, .transparent").hide();
+		$(".logo").show();
+		$(".topmenu.mainmenu, tr.head").show();
+		$(".topmenu.mainmenu li span:not(.sb-icon-search)").remove();
+		$(".topmenu.mainmenu").css('min-height', '');
+	} else { // responsive view
+		$(".topmenu.mobilemenu").show();
+		$(".topmenu.mainmenu").hide();
+		
+		$(".topmenu.mainmenu").css('min-height', $(document).height() - 50);
+		
+		if($(".topmenu.mainmenu li a span").length == 0) { 
+			$(".topmenu.mainmenu li").has("ul").children("a").append("<span></span>");
+		}
 	}
 });
 
-//---Messagebox----------------------------------------------------------------
-function messagebox(width, height, topic, text) {
-	$("body").append("<div class=\"transparent\"></div>");
-	$("body").append("<div class=\"message\"></div>");
-	$(".message").append("<a id=\"closemessage\" href=\"javascript:void(0)\">&times;</a>");
-	$(".message").append("<h3>"+topic+"</h3>");
-	$(".message").append("<div class=\"content\">"+text+"</h3>");
-	$(".message").css("height", height+"%");
-	$(".message").css("width", width+"%");
-	$(".message").css("top", ((100-height)/2-10)+"%");
-	$(".message").css("left", ((100-width)/2)+"%");
-	$( ".message" ).draggable();
-	$("#closemessage").click(function() {
-		$(".transparent").remove();
-		$(".message").remove();
+$(document).ready(function () { // after DOM load
+	if($(window).width() <= 600) {
+		$(".topmenu.mainmenu li").has("ul").children("a").append("<span></span>");
+		$(".topmenu.mainmenu").css('min-height', $(document).height() - 50);
+	}
+	
+	$(".topmenu.mainmenu li span").live('click', function(e) {
+		$(this).parent().parent().children('ul').slideToggle('fast');
+		e.preventDefault();
+		return false;
 	})
-}
+});
+
+
 
 //---FontSize------------------------------------------------------------------
 $(document).ready(function() {
@@ -82,8 +74,14 @@ $(document).ready(function() {
 	}
 	var actfontsize = $.cookie("fontsize");
 	var actfontsize = parseInt(actfontsize.replace(/[^0-9]/g, ''));
-	$("body").css("font-size", actfontsize+"px")
-})
+	$("body").css("font-size", actfontsize+"px");
+	
+	// click events
+	$('.fontsize .decrease').click(fontsizedecrease);
+	$('.fontsize .reset')	.click(fontsizereset);
+	$('.fontsize .recrease').click(fontsizerecrease);
+});
+
 function fontsizerecrease() {
 	var actfontsize = $.cookie("fontsize");
 	var actfontsize = parseInt(actfontsize.replace(/[^0-9]/g, ''));
@@ -105,4 +103,77 @@ function fontsizedecrease() {
 		$("body").css("font-size", newfontsize+"px");
 		$.cookie("fontsize", newfontsize);
 	}
+}
+
+
+
+//---add label before input, textarea, select----------------------------------
+$(document).ready(function() {
+	var i = 1;
+	$('input[type="text"], input[type="email"], input[type="number"], input[type="password"], input[type="color"], textarea, select').each(function() {
+		if(!$(this).hasClass('nolabel')) {
+			if(typeof $(this).attr('id') !== 'undefined') {
+				var id = $(this).attr('id');
+			} else {
+				$(this).attr('id', 'input'+i);
+				var id = $(this).attr('id');
+				i++;	
+			}
+			var placeholder = $(this).attr('placeholder');
+			$(this).before('<label for="'+id+'">'+placeholder+'</label>');
+		}
+	})
+})
+
+
+
+//--- Scroll to Top -----------------------------------------------------------
+$(window).scroll(function () {
+	var top = $('#top').offset().top;
+	var scroll_top = $(window).scrollTop();
+	if(scroll_top > top) {
+		$('.toTop').fadeIn();
+	} else {
+		$('.toTop').fadeOut();
+	}
+});
+
+
+
+//--- open fancybox for images in main ----------------------------------------
+var gallery = [];
+$(document).ready(function ($) {
+	var numImages = $("main img").length;
+	$("main img").each(function (i) {
+		gallery[i] = {
+			href: $(this).hasClass('cloud-image') ? $(this).attr("data-src") : $(this).attr("src"),
+			title: "Bild " + (i+1) + " von " + numImages
+		};
+		$(this).bind("click", function () {
+			$.fancybox(gallery, {
+			type: "image",
+			padding: 10,
+			index: i,
+				cyclic: true
+			});
+			return false;
+		}).css('cursor', 'pointer');
+	});
+});
+
+function notifyMe(title, text, click) {
+	if(!Notification) {
+		console.error('Notification are not supported in this browser');
+		return false;
+	}
+
+	if (Notification.permission !== "granted")
+		Notification.requestPermission();
+
+	var notification = new Notification(title, {
+	icon: $('link[rel="shortcut icon"]').attr('href'),
+	body: text,
+	});
+
+	notification.onclick = click;
 }

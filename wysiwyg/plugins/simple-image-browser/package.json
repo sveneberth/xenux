@@ -1,0 +1,14 @@
+{
+  "name": "simple-image-browser",
+  "version": "0.0.0",
+  "description": "simple-image-browser",
+  "main": "Gruntfile.js",
+  "private": true,
+  "devDependencies": {
+    "grunt-clear": "~0.2.1",
+    "grunt-contrib-uglify": "~0.6.0"
+  },
+  "repository": "",
+  "author": "Rob van der Lee",
+  "license": "MIT"
+}

@@ -1,73 +1,52 @@
 <?php
-include("../config.php");
-$link = mysql_connect($MYSQL_HOST, $MYSQL_BENUTZER, $MYSQL_KENNWORT);
-$db_selected = mysql_select_db($MYSQL_DATENBANK, $link);
-if(!$db_selected){
-	echo 'Es ist keine Verbindung zur Datenbank möglich!';
-	exit;
-}
-$pw_stimmt = true;
-$username_exist = false;
-$email_exist = false;
-if(isset($_POST['submit'])) {
-	foreach($_POST as $key => $val) {
-		$$key = mysql_real_escape_string($val);
-	}
-	if($password == $password1) {
-		$pw_stimmt = true;
+if(isset($_POST['submit_register'])) {
+	if(preg_match("/[^a-zA-Z0-9_-]/", $post->username)) {
+		echo "<p>Der Benutzername enthält unerlaubte Zeichen, zulässig sind nur Buchstaben, Zahlen und (Unter-)Strich.</p>";
 	} else {
-		$pw_stimmt = false;
-	}
-
-	if(!empty($FirstName) and !empty($LastName) and !empty($email) and !empty($username) and !empty($password) and $pw_stimmt){
-		$sql = "SELECT COUNT(username) AS anzahl FROM XENUX_users WHERE username = '$username'";
-		$erg = mysql_query($sql);
-		$row = mysql_fetch_array($erg);
-		if($row["anzahl"] >= 1) {
-			$username_exist = true;
+		if(!empty($post->firstname) and !empty($post->lastname) and !empty($post->email) and !empty($post->username) and !empty($post->password) and $post->password == $post->passwordre) {
+			$result = $db->query("SELECT * FROM XENUX_users WHERE username = '$post->username';");
+			if($result->num_rows >= 1) {
+				$username_exist = true;
+			} else {
+				$username_exist = false;
+			}
+			$result = $db->query("SELECT * FROM XENUX_users WHERE email = '$post->email';");
+			if($result->num_rows >= 1) {
+				$email_exist = true;
+			} else {
+				$email_exist = false;
+			}
+			if(!$username_exist and !$email_exist) {
+				$db->query("INSERT INTO XENUX_users(firstname, lastname, email, username, password, confirmed, role) VALUES ('$post->firstname', '$post->lastname', '$post->email', '$post->username', SHA1('$post->password'), true, 3);");
+				echo "<p>Du wurdest erfolgreich registriert!</p>";
+				$next = true;
+				$db->close(); //close the connection to the db
+				return;
+			} else {
+				echo "<p>Es existiert bereits ein Account mit dem Benutzernamen oder der E-Mail-Adresse!</p>";
+			}
 		} else {
-			$username_exist = false;
+				echo "<p>Alle Felder müssen richtig ausgefüllt sein!</p>";
+				if($post->password != $post->passwordre) {
+					echo "<p>Die eingeben Passwörter stimmen nicht überein!</p>";
+				}
 		}
-		$sql = "SELECT COUNT(email) AS anzahl FROM XENUX_users WHERE email = '$email'";
-		$erg = mysql_query($sql);
-		$row = mysql_fetch_array($erg);
-		if($row["anzahl"] >= 1) {
-			$email_exist = true;
-		} else {
-			$email_exist = false;
-		}
-		if(!$username_exist and !$email_exist) {
-			$sql = "INSERT INTO XENUX_users (nachname, vorname, email, username, pw, admin, role) VALUES ('$LastName', '$FirstName', '$email', '$username', 'xkanf".md5($password)."v4sf5w', 'yes', '3');";
-			$erg = mysql_query($sql) or die("Anfrage fehlgeschlagen.");
-			echo "<p>Du wurdest erfolgreich registriert!</p>";
-			$next = true;
-		}
-		mysql_close($link);
 	}
 }
 ?>
-<form action="" method="post">
-	<span <?php if (empty($FirstName) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Vorname</span><br />
-	<input type="text" name="FirstName" value="<?php echo @$FirstName; ?>" /><br /><br />
-	<span <?php if (empty($LastName) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Nachname</span><br />
-	<input type="text" name="LastName" value="<?php echo @$LastName; ?>" /><br /><br />
-	<span <?php if (empty($email) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>E-Mail</span><br />
-	<input type="email" name="email" value="<?php echo @$email; ?>" /><br />
-	<?php
-	if($email_exist){echo 'Ein Account mit dieser E-Mail-Adresse existiert schon, zwei Accounts über eine E-Mail Adresse sind nicht zulässig!<br />';}
-	?><br />
-	<span <?php if (empty($username) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Benutzername</span><br />
-	<input type="text" name="username" value="<?php echo @$username; ?>" /><br />
-	<?php
-	if($username_exist){echo 'Der Benutzername ist schon vergeben, bitte wähle einen anderen!<br />';}
-	?><br />
-	<span <?php if (empty($password) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Passwort</span><br />
-	<input type="password" name="password" value="<?php echo @$password; ?>" /><br /><br />
-	<span <?php if (empty($password1) and $_SERVER['REQUEST_METHOD'] == "POST"){echo 'style="color:#cc0000;"';} ?>>Passwort bestätigen</span><br />
-	<input type="password" name="password1" value="<?php echo @$password1; ?>" /><br /><br />
-	<?php
-	if(!$pw_stimmt){echo '<p>Die angegebenen Passwörter stimmen nicht überein!</p>';}
-	?>
-	<input type="hidden" name="submit" value="submit" />
-	<input type="submit" value="speichern"/>
+<form action="" method="POST" name="form">
+	<input <?php if(empty(@$post->firstname) && isset($post->firstname)) echo 'class="wrong"'; ?> type="text" name="firstname" placeholder="Vorname" value="<?php echo @$post->firstname; ?>" />
+	
+	<input <?php if(empty(@$post->lastname) && isset($post->lastname)) echo 'class="wrong"'; ?> type="text" name="lastname" placeholder="Nachname" value="<?php echo @$post->lastname; ?>" />
+	
+	<input <?php if(empty(@$post->email) && isset($post->email)) echo 'class="wrong"'; ?> type="email" name="email" placeholder="E-Mail" value="<?php echo @$post->email; ?>" />
+	
+	<input <?php if(empty(@$post->username) && isset($post->username)) echo 'class="wrong"'; ?> type="text" name="username" placeholder="Benutzername" value="<?php echo @$post->username; ?>" />
+	
+	<input <?php if(empty(@$post->password) && isset($post->password)) echo 'class="wrong"'; ?> type="password" name="password" placeholder="Passwort" />
+	
+	<input <?php if(empty(@$post->passwordre) && isset($post->passwordre)) echo 'class="wrong"'; ?> type="password" name="passwordre" name="passwordre" placeholder="Passwort wiederholen" />
+	
+	<input type="hidden" name="submit_register" value="true" />
+	<input type="submit" value="Registrieren" />
 </form>

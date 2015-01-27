@@ -1,67 +1,44 @@
 <?php
-SESSION_START();
-function logger($value) {
-	echo "<script>console.log('".$value."');</script>";
-};
-function contains($var) {
-	$array = func_get_args();
-	unset($array[0]);
-	return in_array($var, $array); 
+$index = 'backend';
+include_once('../core/inc/config.php'); // include config
+
+if(!isset($_GET['site'])) { //read the site
+	$site = 'editroom';
+} elseif(empty($_GET['site'])) {
+	$site = 'editroom';
+} else {
+	$site = $db->real_escape_string($_GET['site']);
 }
-include('../config.php');
-include('../core/macros/colortext.php');
-include('../core/macros/escape_mail.php');
-$link = mysql_connect($MYSQL_HOST, $MYSQL_BENUTZER, $MYSQL_KENNWORT);
-$db_selected = mysql_select_db($MYSQL_DATENBANK, $link);
-if(!$db_selected){
-	die('Es ist keine Verbindung zur Datenbank möglich!');
-}
-mysql_query('SET NAMES "utf8"');
-if(@$_SESSION['login'] == 1) {
-	$sql = "SELECT * FROM XENUX_users WHERE id = '".$_SESSION["userid"]."'";
-	$erg = mysql_query($sql);
-	$login = mysql_fetch_array($erg);
-}
-if(!isset($_GET['site'])) {
-	$site = 'home';
-}elseif(empty($_GET['site'])){
-	$site = 'home';
-}else {
-	$site = $_GET['site'];
-}
-if(!isset($_GET['site']) or !file_exists($_GET['site'].".php") or empty($_GET['site'])){
-	$_GET['site'] = "editroom";
-}
-$all_sites = array(
-					"editroom" => "Editroom",
-					"Seiten" => array (
-										"site_new" => "Neue Seite erstellen",
-										"site_edit" => "Seiten bearbeiten",
-										"mainsettings" => "Grundeinstellungen",
-										),
-					"Sonstiges" => array (
-										"news_edit" => "News bearbeiten",
-										"dates_edit" => "Termine bearbeiten",
-										"files" => "Dateien",
-										"contact" => "Ansprechpartner",
-										),
-					"Account" => array (
-										"personal_data_change" => "Persönliche Daten ändern",
-										"password_change" => "Passwort ändern",
-										"rights_show" => "Meine Rechte anzeigen",
-										"rights_edit" => "Rechte ändern",
-										"mail" => "Mail senden",
-										"logout" => "Logout",
-										),
-					/* Login etc */
-						"login" => "Login",
-						"registrieren" => "Registrieren",
-						"forgotusername" => "Benutzername vergessen",
-						"forgotpassword" => "Passwort vergessen",
-						"freigabe" => "Freigabe",
-						"delete_acc" => "Account löschen",
-					/* Login etc */
-					);
+
+$all_sites = array
+(
+	"editroom"	=> "Editroom",
+	"Seiten"	=> array	(
+								"site_edit" => "Seiten bearbeiten",
+								"mainsettings" => "Grundeinstellungen",
+							),
+	"Sonstiges"	=> array	(
+								"news_edit" => "News bearbeiten",
+								"event_edit" => "Termine bearbeiten",
+								"files" => "Dateien",
+								"contact" => "Ansprechpartner",
+							),
+	"Account"	=> array	(
+								"personal_data_change" => "Persönliche Daten ändern",
+								"password_change" => "Passwort ändern",
+								"rights_show" => "Meine Rechte anzeigen",
+								"rights_edit" => "Rechte ändern",
+								"mail" => "Mail senden",
+								"logout" => "Logout",
+							),
+	/* login etc */
+	"login"				=> "Login",
+	"register"			=> "Registrieren",
+	"forgotusername" 	=> "Benutzername vergessen",
+	"forgotpassword"	=> "Passwort vergessen",
+	"confirm"			=> "Freigabe",
+	"delete_acc"		=> "Account löschen",
+);
 $sites = array();
 foreach($all_sites as $key => $val) {
 	if(is_array($val)) {
@@ -72,125 +49,150 @@ foreach($all_sites as $key => $val) {
 		$sites[$key] = $val;
 	}
 }
-if (!array_key_exists($site, $sites)) {
+if(!array_key_exists($site, $sites)) {
 	$site = "editroom";
 }
-$HP_URL = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-14);
-$sql = "SELECT * FROM XENUX_main";
-$erg = mysql_query($sql);
-while($row = mysql_fetch_array($erg)) {
-	foreach($row as $key => $val) {
-		$$key = $val;
-	}
-	$$name = $value;
-}
+
+define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'],0,-14));
+ob_start();
 ?>
-<!Doctype html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
-	<title><?php if(!empty($HP_Prefix)){echo $HP_Prefix." | ";}; echo $sites[$site]; if(!empty($HP_Sufix)){echo " | ".$HP_Sufix;}; ?></title>
-	<meta charset="UTF-8" >
-	<meta name="description" content="<?php echo $meta_desc; ?>" />
-	<meta name="keywords" content="<?php echo $meta_keys; ?>" />
-	<meta name="auhor" content="<?php echo $meta_auhor; ?>" />
-	<meta name="publisher" content="<?php echo $meta_auhor; ?>" />
-	<meta name="copyright" content="<?php echo $meta_auhor; ?>" />
+	<title><?php echo $sites[$site]." | $main->hp_name Administration"; ?></title>
+	<meta charset="UTF-8" />
+	<meta name="description" content="<?php echo $main->meta_desc; ?>" />
+	<meta name="keywords" content="<?php echo $main->meta_keys; ?>" />
+	<meta name="auhor" content="<?php echo $main->meta_auhor; ?>" />
+	<meta name="publisher" content="<?php echo $main->meta_auhor; ?>" />
+	<meta name="copyright" content="<?php echo $main->meta_auhor; ?>" />
+	<!-- http://xenux.bplaced.net -->
 	<meta name="generator" content="Xenux - das kostenlose CMS" />
+	<meta name="robots" content="noindex, nofollow, noarchive" />
 	<link rel="stylesheet" type="text/css" href="../core/css/style.css" media="all"/>
-	<link rel="shortcut icon" href="../core/images/<?php echo $favicon_src; ?>" />
+	<link rel="shortcut icon" href="<?php echo (substr($main->favicon_src, 0, 1)=='/') ? '..'.$main->favicon_src : $main->favicon_src; ?>" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<script src="../core/js/jquery-2.1.1.min.js"></script>
 	<script src="../core/js/jquery-migrate-1.2.1.min.js"></script>
 	<script src="../core/js/jquery-ui.js"></script>
+	<script src="../core/js/jquery.ui.touch-punch.min.js"></script>
 	<script src="../core/js/jquery.cookie.js"></script>
-	<script src="../core/js/formatierungen.js"></script>
+	<script src="../wysiwyg/ckeditor.js"></script>
+	<script src="../core/js/jquery.mjs.nestedSortable.js"></script>
+	<script src="../core/js/functions.js?from=https://code-snippets-se.googlecode.com/"></script>
 	<script src="../core/js/main.js"></script>
 	<style>
-	html,body{
-		background:<?php echo $bgcolor; ?>;
-		color:<?php echo $fontcolor; ?>;
-	}
+		html, body {
+			background: <?php echo $main->bgcolor; ?>;
+			color: <?php echo $main->fontcolor; ?>;
+		}
 	</style>
 </head>
-<body>
-<script>
-$(window).bind('keydown', function(event) {
-	if (event.ctrlKey || event.metaKey) {
-		switch (String.fromCharCode(event.which).toLowerCase()) {
-		case 's':
-			event.preventDefault();
-			document.forms[0].submit();
-			break;
+<body id="top">
+	<script>
+	$(window).bind('keydown', function(event) {
+		if (event.ctrlKey || event.metaKey) {
+			switch (String.fromCharCode(event.which).toLowerCase()) {
+			case 's':
+				event.preventDefault();
+				$(window).off('beforeunload');
+				document.forms[0].submit();
+				break;
+			}
 		}
-	}
-});
-</script>
-<div id="headWrapper">
-		<div id="head"> 
-			<div class="logo">
-				<a href="../">
-					<img src="../core/images/<?php echo $logo_src; ?>" />
-				</a>
-			</div>
-			<ul id="topmenu" class="mobilemenu">
-				<li><a href="javascript:openmobilemenu()">Menu</a></li>
+	});
+	</script>
+	<div class="headWrapper">
+		<header>
+			<a href="javascript:openmobilemenu();" class="menu-icon"></a>
+			<a class="logo" href="../">
+				<img src="<?php echo (substr($main->logo_src, 0, 1)=='/') ? '..'.$main->logo_src : $main->logo_src; ?>" class="nojsload" />
+			</a>
+			<ul class="topmenu mobilemenu">
 				<?php
-				if(@$_SESSION['login'] == 1) {
-				?>
+				if(isset($login)) {
+					?>
 					<li><a href="?site=logout">Logout</a></li>
-				<?php
+					<?php
 				} else {
-				?>
-				<li><a href="?site=login">Login</a></li>
-				<?php
+					?>
+					<li><a href="?site=login">Login</a></li>
+					<?php
 				}
 				?>
 			</ul>
-			<ul id="topmenu" class="mainmenu">
-				<li><a href="./">Editroom</a></li>
-				<?php
+			<ul class="topmenu mainmenu">
+				<li>
+					<a href="./">Editroom</a>
+				</li>
+<?php
 				foreach($all_sites as $key => $val) {
 					if(is_array($val)) {
-						echo "<li><img src=\"../core/images/right.png\" class=\"".strtolower(preg_replace("/[^a-zA-Z0-9_]/" , "" , $key))." openpoints\" onclick=\"javascript:openmenupoints('".strtolower(preg_replace("/[^a-zA-Z0-9_]/" , "" , $key))."')\"><a>$key</a><ul id=\"".strtolower(preg_replace("/[^a-zA-Z0-9_]/" , "" , $key))."\">";
+						echo "\n<li>\n\t<a>$key</a>\n\t<ul>";
 						foreach($val as $key => $val) {
-							echo "<li><a href=\"./?site=$key\">$val</a></li>";
+							echo "\n\t\t<li>\n\t\t\t<a href=\"./?site=$key\">".nbsp($val)."</a>\n\t\t</li>";
 						}
-						echo "</ul></li>";
+						echo "\n\t</ul>\n</li>";
 					};
 				}
 				?>
 			</ul>
+		</header>
+	</div>
+	<div class="wrapper">
+		<noscript>
+			<div class="warning-noscript">
+				<div>
+					In deinem Browser ist JavaScript deaktiviert. Um den vollen Funktionsumfang dieser Webseite zu nutzen, benötigst du JavaScript.
+				</div>
+			</div>
+		</noscript>
+		<div class="fontsize">
+			&nbsp;<a title="Schrift kleiner" class="decrease"></a>
+			&nbsp;<a title="Schrift normal" class="reset"></a>
+			&nbsp;<a title="Schrift größer" class="recrease"></a>
 		</div>
+		<main style="width:100%;float:none;">
+			<h1><?php echo $sites[$site]; ?></h1>
+			<?php
+				if(isset($_GET['backbtn'])) {
+					echo "<a style=\"float: right;\" href=\"./?site=$site\">Schließen</a>";
+				}
+				
+				###### get output ######
+				$page_output = ob_get_contents();
+				ob_end_clean();
+				########################
+
+				
+				ob_start();
+					if(isset($login) or $site == "forgotusername" or $site == "forgotpassword" or $site == "register" or $site == "confirm") {
+						include($site.".php");
+					} else {
+						include("login.php");
+					}	
+				$output = ob_get_contents();
+				ob_end_clean();
+				
+				if(strpos($output, "<!DOCTYPE html>") === false) {
+					echo $page_output;
+				}
+				
+				echo $output;
+			?>
+		</main>
+		
+		<footer>
+			this site was made with <a href="http://xenux.bplaced.net">Xenux</a>
+			<div class="links">
+				<a href="../">Homepage</a>
+				<a href="../?site=contact">Kontakt</a>
+				<a href="../?site=imprint">Impressum</a>
+			</div>
+		</footer>
 	</div>
-<div id="wrapper">
-	<div class="fontsize">
-		Schrift <a href="javascript:fontsizedecrease()">-</a> <a href="javascript:fontsizereset()">O</a> <a href="javascript:fontsizerecrease()">+</a>
-	</div>
-	<div id="content" style="width: calc(100% - 10px);float:none;">
-		<h1><?php echo $sites[$site]; ?></h1>
-		<?php
-			if(isset($_GET['id'])) {
-				echo "<a style=\"float: right;\" href=\"./?site=$site\">zur Auswahl</a>";
-			}
-			if(@$_SESSION['login'] == 1 or $site == "forgotusername" or $site == "forgotpassword" or $site == "registrieren" or $site == "freigabe") {
-				include($site.".php");
-			} else {
-				include("login.php");
-			}
-		?>
-	</div>
-	
-	<div id="footer">
-		This Side was made with <a href="http://xenux.bplaced.net">Xenux</a>
-		<div class="href">
-			<a href="../">Homepage</a>
-			<a href="../?site=kontakt">Kontakt</a>
-			<a href="../?site=impressum">Impressum</a>
-		</div>
-	</div>
-</div>
 </body>
 </html>
 <?php
-mysql_close($link);
+$db->close(); //close the connection to the db
 ?>
