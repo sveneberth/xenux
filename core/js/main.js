@@ -143,8 +143,13 @@ $(window).scroll(function () {
 //--- open fancybox for images in main ----------------------------------------
 var gallery = [];
 $(document).ready(function ($) {
-	var numImages = $("main img").length;
+	var numImages = $("main img")
+					.filter(function() {
+						return ($(this).parent().prop("tagName") != 'A');
+					})
+					.length;
 	$("main img").each(function (i) {
+		if($(this).parent().prop("tagName") == 'A') return true;
 		gallery[i] = {
 			href: $(this).hasClass('cloud-image') ? $(this).attr("data-src") : $(this).attr("src"),
 			title: "Bild " + (i+1) + " von " + numImages
