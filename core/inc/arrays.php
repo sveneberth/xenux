@@ -16,26 +16,6 @@ $daysDE = array( // days in german
 //	7	=> 'Sonntag'
 );
 
-$mysql_data_type = array(
-    1	=>	'tinyint',
-	2	=>	'smallint',
-    3	=>	'int',
-    4	=>	'float',
-    5	=>	'double',
-    7	=>	'timestamp',
-    8	=>	'bigint',
-    9	=>	'mediumint',
-    10	=>	'date',
-    11	=>	'time',
-    12	=>	'datetime',
-	13	=>	'year',
-	16	=>	'bit',
-    252	=>	'text',
-    253	=>	'varchar',
-    254	=>	'char',
-    246	=>	'decimal'
-);
-
 $special_sites = array(
 	'news_list',
 	'news_view',

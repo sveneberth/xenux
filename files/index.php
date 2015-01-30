@@ -61,6 +61,8 @@ if(isset($_GET['size']) && is_numeric($_GET['size']) && $typeCategory == 'image'
 	}
 
 	$new = imagecreatetruecolor($desired_width, $desired_height);
+	imagealphablending($new, FALSE);
+	imagesavealpha($new, TRUE);
 	imagecopyresampled($new, $image, 0, 0, 0, 0, $desired_width, $desired_height, $x, $y);
 	imagedestroy($image);
 	
