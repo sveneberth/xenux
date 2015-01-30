@@ -123,6 +123,13 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 	<!-- own scripts -->
 	<script src="core/js/functions.js?from=https://code-snippets-se.googlecode.com/"></script>
 	<script src="core/js/main.js"></script>
+
+	<style>
+		html, body {
+			background: <?php echo $main->bgcolor; ?>;
+			color: <?php echo $main->fontcolor; ?>;
+		}
+	</style>
 </head>
 <body id="top">
 	<a href="#top" class="toTop"></a>
