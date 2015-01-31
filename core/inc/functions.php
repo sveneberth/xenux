@@ -11,21 +11,21 @@ function maxlines($str, $num=10) {
     return implode("\n", $firsts);
 }
 
-function escapemail($email) {
+function escapemail($email, $Arr = array()) {
 	if (empty($email)) {
 		return false;
 	} else {
-		$link = "<a href=\"mailto:$email\">$email</a>";
+		$link = "<a " . (isset($Arr['class']) ? 'class="' . $Arr['class'] . '"' : '') . " " . (isset($Arr['id']) ? 'id="' . $Arr['id'] . '"' : '') . " href=\"mailto:$email\">" . (isset($Arr['text']) ? $Arr['text'] : $email) . "</a>";
 		
 		$emailArr	= str_split($link, 1);
 		
 		$JS = "";
 		
 		foreach($emailArr as $val) {
-			$JS .= (strlen($JS)==0 ? '' : ' + ') . "'$val'";
+			$JS .= ((strlen($JS)==0) ? '' : ' + ') . "'$val'";
 		}
 		
-		return "<script>document.write($JS);</script>";
+		return "<script>document.write($JS);</script><noscript>" . (isset($Arr['text']) ? "\"" . $Arr['text'] . "\" &lt;" . str_replace(array('@', '.'), array(' [at] ', ' [dot] '), $email) . "&gt;" : str_replace(array('@', '.'), array(' [at] ', ' [dot] '), $email)) . "</noscript>";
 	}
 }
 
