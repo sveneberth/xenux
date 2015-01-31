@@ -59,7 +59,7 @@ if(!empty($main->contact_form_email)) {
 	<?php
 }
 
-$result = $db->query("SELECT * FROM XENUX_contactpersons;");
+$result = $db->query("SELECT * FROM XENUX_contactpersons ORDER BY name ASC;");
 $num = $result->num_rows;
 if($num > 0) {
 	echo "<h3>Ansprechpartner</h3>";

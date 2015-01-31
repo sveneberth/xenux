@@ -182,7 +182,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 							<input type="hidden" name="site" value="search" />
 							<input onkeyup="if($(this).val()==''){$('.sb-search-submit').css('z-index', 11);}else{$('.sb-search-submit').css('z-index', 99);}" type="search" class="sb-search-input" name="q" placeholder="Suche" value="<?php if($site->site =='search')echo @$get->q; ?>" />
 							<input type="submit" class="sb-search-submit" value="" />
-							<span onclick="$('div#sb-search').toggleClass('sb-search-open');" class="sb-icon-search"></span>
+							<span onclick="$('div#sb-search').toggleClass('sb-search-open');$('.sb-search-input').focus();" class="sb-icon-search"></span>
 						</form>
 					</div>
 				</li>
@@ -292,7 +292,8 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 				$result = $db->query("	SELECT * FROM XENUX_site_contactperson
 										LEFT JOIN XENUX_sites ON XENUX_site_contactperson.site_id = XENUX_sites.id
 										LEFT JOIN XENUX_contactpersons ON XENUX_site_contactperson.contactperson_id = XENUX_contactpersons.id
-										WHERE site_id = '".(($site->site == 'page')?$page->id:$site->id)."';");
+										WHERE site_id = '".(($site->site == 'page')?$page->id:$site->id)."'
+										ORDER BY name ASC;");
 				$num = $result->num_rows;
 				if($num > 0) {
 					echo "<ul class=\"contactpersons\">

@@ -111,7 +111,7 @@ if(isset($get->token)) {
 					<div class="contact-persons">
 						<h3>Ansprechpartner</h3>
 						<?php
-						$result = $db->query("SELECT * FROM XENUX_contactpersons;");
+						$result = $db->query("SELECT * FROM XENUX_contactpersons ORDER BY name ASC;");
 						while($row = $result->fetch_object()) {
 							echo "<input ";
 							if(isset($edit_site)) {

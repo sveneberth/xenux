@@ -4,6 +4,7 @@ if(!isset($site)) die("You can not open this file individually/Sie k&ouml;nnen d
 $skelName = "Ansprechpartner";
 $skelTable = "XENUX_contactpersons";
 $canAddNew = true;
+$order = "name ASC";
 $skel = array (
 	'name' => array(
 		'title' => 'Name',
