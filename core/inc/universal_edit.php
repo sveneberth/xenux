@@ -133,7 +133,7 @@ if(isset($_REQUEST['task'])) {
 ?>
 
 <div style="display: block;overflow: auto;width:100%;"> 
-	<table id="table1" class="responsive-table">
+	<table class="table1 responsive-table">
 	<tr class="head">
 	<?php
 		foreach($skel as $name => $props) {

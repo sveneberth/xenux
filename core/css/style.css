@@ -906,11 +906,11 @@ footer a:hover {
 ** TABLE STYLING
 ** #############################################*/
 /* table */
-#table1 {
+.table1 {
 	border: 2px solid #000000;
 	border-collapse: collapse;
 }
-#table1 th, #table1 td {
+.table1 th, .table1 td {
 	vertical-align: top;
 	text-align: left;
 	padding: 3px 15px;
@@ -1505,7 +1505,7 @@ footer a:hover {
 	.responsive-table tr {
 		border: 1px solid #ccc;
 	}
-	#table1 th, #table1 td {
+	.table1 th, .table1 td {
 		padding: .5% .5% .5% 40%;
 		border: none;
 		border-bottom: 1px solid #eee; 
