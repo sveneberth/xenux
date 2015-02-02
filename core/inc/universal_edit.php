@@ -98,7 +98,7 @@ if(isset($_REQUEST['task'])) {
 										echo "<input type=\"time\" placeholder=\"{$props['title']} (Zeit)\" value=\"".(isset($row->$name)?date("H:i:s", strtotime(@$row->$name)):'')."\" name=\"".$name."_time\" ".(($props['required']==true)?'required':'')." />";
 										break;
 									case 'text':
-										echo "<textarea ".(($props['wysiwyg-editor'])?'id="ckeditor" class="ckeditor nolabel"':'')." placeholder=\"{$props['title']}\"  name=\"$name\" ".(($props['required']==true)?'required':'').">".@$row->$name."</textarea>";
+										echo "<textarea ".(($props['wysiwyg-editor'])?'id="ckeditor" class="ckeditor nolabel"':'')." placeholder=\"{$props['title']}\"  name=\"$name\" ".(($props['required']==true)?'required':'').">".htmlentities(@$row->$name)."</textarea>";
 										break;
 									case 'bool':
 										echo "{$props['title']}:

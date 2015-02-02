@@ -106,7 +106,7 @@ if(isset($get->token)) {
 				</script>
 				<form action="" method="post" name="form">
 					<input <?php if(empty($post->title) && isset($post->title))echo 'class="wrong"'; ?> type="text" placeholder="Seitenname" name="title" value="<?php echo @$edit_site->title; ?>">
-					<textarea class="ckeditor nolabel" placeholder="Seiteninhalt" name="text" id="text"><?php echo @$edit_site->text ?></textarea>
+					<textarea class="ckeditor nolabel" placeholder="Seiteninhalt" name="text" id="text"><?php echo htmlentities(@$edit_site->text); ?></textarea>
 					
 					<div class="contact-persons">
 						<h3>Ansprechpartner</h3>

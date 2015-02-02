@@ -92,7 +92,7 @@ if(isset($post->submit_mail)) {
 		?>
 	</select>
 	<input type="text" placeholder="Betreff" name="subject" value="<?php echo @$post->subject; ?>" />
-	<textarea name="message" placeholder="Nachricht" id="ckeditor" class="ckeditor nolabel"><?php echo @$post->message ?></textarea>
+	<textarea name="message" placeholder="Nachricht" id="ckeditor" class="ckeditor nolabel"><?php echo htmlentities(@$post->message); ?></textarea>
 	
 	<input type="hidden" name="submit_mail" value="senden">
 	<input type="submit" value="senden">
