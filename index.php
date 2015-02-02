@@ -3,7 +3,7 @@
  * @package    Xenux
  *
  * @link       http://www.xenux.bplaced.net
- * @version    1.4.5
+ * @version    1.4.6
  * @author     Sven Eberth <mail@sven-eberth.de.hm>
  * @copyright  Copyright (c) 2013 - 2015, Sven Eberth.
  * @license    GNU General Public License version 3, see LICENSE.txt
@@ -142,8 +142,8 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 			<ul class="topmenu mobilemenu">
 				<li><a href="./edit?site=login">Login</a></li>
 			</ul>
-			<ul class="topmenu mainmenu">
-				<nobr>
+			<nobr>
+				<ul class="topmenu mainmenu">
 					<li><a href="./">Home</a></li>
 <?php
 						$menu_order = "position_left ASC";
@@ -189,8 +189,8 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 					</li>
 					<li class="mobilemenu"><a href="?site=news_list">News</a></li>
 					<li class="mobilemenu"><a href="?site=event_list">Termine</a></li>
+				</ul>
 			</nobr>
-			</ul>
 		</header>
 	</div>
 	<div class="wrapper">
