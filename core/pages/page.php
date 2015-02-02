@@ -1,11 +1,11 @@
 <?php
 if($page->site == 'error') {
-	echo "	<h1>Error 404 - Seite nicht gefunden</h1>
+	echo "	<h1 class=\"page-headline\">Error 404 - Seite nicht gefunden</h1>
 			<p>Bei der Anfrage trat ein Fehler auf, möglicherweise haben sie auf einen fehlerhaften Link geklickt...</p>";
 	return false;
 }
 
-echo "<h1>$page->title" . ((isset($login))?"<a class=\"edit-btn\" title=\"bearbeiten\" href=\"edit/?site=site_edit&token=edit_site&site_id=$page->id&backbtn&gotosite\"></a>":'') . "</h1>";
+echo "<h1 class=\"page-headline\">$page->title" . ((isset($login))?"<a class=\"edit-btn\" title=\"bearbeiten\" href=\"edit/?site=site_edit&token=edit_site&site_id=$page->id&backbtn&gotosite\"></a>":'') . "</h1>";
 echo $page->text;
 
 if($page->parent_id != 0) {

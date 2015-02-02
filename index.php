@@ -3,7 +3,7 @@
  * @package    Xenux
  *
  * @link       http://www.xenux.bplaced.net
- * @version    1.4.3
+ * @version    1.4.4
  * @author     Sven Eberth <mail@sven-eberth.de.hm>
  * @copyright  Copyright (c) 2013 - 2015, Sven Eberth.
  * @license    GNU General Public License version 3, see LICENSE.txt
@@ -143,51 +143,53 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 				<li><a href="./edit?site=login">Login</a></li>
 			</ul>
 			<ul class="topmenu mainmenu">
-				<li><a href="./">Home</a></li>
+				<nobr>
+					<li><a href="./">Home</a></li>
 <?php
-					$menu_order = "position_left ASC";
-					
-					$result1 = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = 0 ORDER BY $menu_order;");
-					while($rank1 = $result1->fetch_object()) {
-						if(in_array($rank1->site, $special_sites) || $rank1->site == 'home')
-							continue;
-						echo "<li>\n\t<a href=\"?site=page&page_id=$rank1->id\">".nbsp($rank1->title)."</a>\n";
+						$menu_order = "position_left ASC";
 						
-						$result2 = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = $rank1->id ORDER BY $menu_order;");
-						if($result2->num_rows > 0) {
-							echo "\t<ul>";
-							while($rank2 = $result2->fetch_object()) {
-								echo "\n\t\t<li>\n\t\t\t<a href=\"?site=page&page_id=$rank2->id\">".nbsp($rank2->title)."</a>\n";
-								
-								$result3 = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = $rank2->id ORDER BY $menu_order;");
-								if($result3->num_rows > 0) {
-									echo "\t\t\t<ul>";
-									while($rank3 = $result3->fetch_object()) {
-										echo "\n\t\t\t\t<li>\n\t\t\t\t\t<a href=\"?site=page&page_id=$rank3->id\">".nbsp($rank3->title)."</a>\n\t\t\t\t</li>\n";
+						$result1 = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = 0 ORDER BY $menu_order;");
+						while($rank1 = $result1->fetch_object()) {
+							if(in_array($rank1->site, $special_sites) || $rank1->site == 'home')
+								continue;
+							echo "<li>\n\t<a href=\"?site=page&page_id=$rank1->id\">$rank1->title</a>\n";
+							
+							$result2 = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = $rank1->id ORDER BY $menu_order;");
+							if($result2->num_rows > 0) {
+								echo "\t<ul>";
+								while($rank2 = $result2->fetch_object()) {
+									echo "\n\t\t<li>\n\t\t\t<a href=\"?site=page&page_id=$rank2->id\">$rank2->title</a>\n";
+									
+									$result3 = $db->query("SELECT * FROM XENUX_sites WHERE parent_id = $rank2->id ORDER BY $menu_order;");
+									if($result3->num_rows > 0) {
+										echo "\t\t\t<ul>";
+										while($rank3 = $result3->fetch_object()) {
+											echo "\n\t\t\t\t<li>\n\t\t\t\t\t<a href=\"?site=page&page_id=$rank3->id\">$rank3->title</a>\n\t\t\t\t</li>\n";
+										}
+										echo "\t\t\t</ul>";
 									}
-									echo "\t\t\t</ul>";
+									echo "\n\t\t</li>";
+									
 								}
-								echo "\n\t\t</li>";
-								
+								echo "\n\t</ul>";
 							}
-							echo "\n\t</ul>";
+							
+							echo "\n</li>\n";
 						}
-						
-						echo "\n</li>\n";
-					}
-				?>
-				<li class="search">
-					<div id="sb-search" class="sb-search">
-						<form action="" method="GET">
-							<input type="hidden" name="site" value="search" />
-							<input onkeyup="if($(this).val()==''){$('.sb-search-submit').css('z-index', 11);}else{$('.sb-search-submit').css('z-index', 99);}" type="search" class="sb-search-input" name="q" placeholder="Suche" value="<?php if($site->site =='search')echo @$get->q; ?>" />
-							<input type="submit" class="sb-search-submit" value="" />
-							<span onclick="$('div#sb-search').toggleClass('sb-search-open');$('.sb-search-input').focus();" class="sb-icon-search"></span>
-						</form>
-					</div>
-				</li>
-				<li class="mobilemenu"><a href="?site=news_list">News</a></li>
-				<li class="mobilemenu"><a href="?site=event_list">Termine</a></li>
+					?>
+					<li class="search">
+						<div id="sb-search" class="sb-search">
+							<form action="" method="GET">
+								<input type="hidden" name="site" value="search" />
+								<input onkeyup="if($(this).val()==''){$('.sb-search-submit').css('z-index', 11);}else{$('.sb-search-submit').css('z-index', 99);}" type="search" class="sb-search-input" name="q" placeholder="Suche" value="<?php if($site->site =='search')echo @$get->q; ?>" />
+								<input type="submit" class="sb-search-submit" value="" />
+								<span onclick="$('div#sb-search').toggleClass('sb-search-open');$('.sb-search-input').focus();" class="sb-icon-search"></span>
+							</form>
+						</div>
+					</li>
+					<li class="mobilemenu"><a href="?site=news_list">News</a></li>
+					<li class="mobilemenu"><a href="?site=event_list">Termine</a></li>
+			</nobr>
 			</ul>
 		</header>
 	</div>
@@ -338,7 +340,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 		<main>
 			<?php
 			if(!contains($site->site, 'page', 'news_view')) {
-				echo "<h1>$site->title";
+				echo "<h1 class=\"page-headline\">$site->title";
 				if(isset($login)) {
 					if(!in_array($site->site, $special_sites) || contains($site->site, 'home', 'imprint', 'contact')) {
 						echo "<a class=\"edit-btn\" title=\"bearbeiten\" href=\"edit/?site=site_edit&token=edit_site&site_id=$site->id&backbtn&gotosite\"></a>";

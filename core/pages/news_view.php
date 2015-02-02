@@ -13,7 +13,7 @@ if($num < 1) {
 
 $news = $result->fetch_object();
 echo	"<span class=\"news-view-date\">".date("d.m.Y H:i", strtotime($news->create_date))."</span>
-		<h1>$news->title" . ((isset($login))?"<a class=\"edit-btn\" title=\"bearbeiten\" href=\"edit/?site=news_edit&task=edit&id=$news->id&backbtn\"></a>":'') . "</h1>
+		<h1 class=\"page-headline\">$news->title" . ((isset($login))?"<a class=\"edit-btn\" title=\"bearbeiten\" href=\"edit/?site=news_edit&task=edit&id=$news->id&backbtn\"></a>":'') . "</h1>
 		$news->text";
 ?>
 <br />

@@ -153,7 +153,7 @@ ob_start();
 			&nbsp;<a title="Schrift größer" class="recrease"></a>
 		</div>
 		<main style="width:100%;float:none;">
-			<h1><?php echo $sites[$site]; ?></h1>
+			<h1 class="page-headline"><?php echo $sites[$site]; ?></h1>
 			<?php
 				if(isset($_GET['backbtn'])) {
 					echo "<a style=\"float: right;\" href=\"./?site=$site\">Schließen</a>";
