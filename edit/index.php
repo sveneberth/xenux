@@ -59,19 +59,27 @@ ob_start();
 <!DOCTYPE html>
 <html lang="de">
 <head>
-	<title><?php echo $sites[$site]." | $main->hp_name Administration"; ?></title>
 	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="robots" content="index, follow, noarchive" />
+
+	<title><?php echo $sites[$site]." | $main->hp_name Administration"; ?></title>
+
 	<meta name="description" content="<?php echo $main->meta_desc; ?>" />
 	<meta name="keywords" content="<?php echo $main->meta_keys; ?>" />
 	<meta name="auhor" content="<?php echo $main->meta_auhor; ?>" />
 	<meta name="publisher" content="<?php echo $main->meta_auhor; ?>" />
 	<meta name="copyright" content="<?php echo $main->meta_auhor; ?>" />
+
 	<!-- http://xenux.bplaced.net -->
 	<meta name="generator" content="Xenux - das kostenlose CMS" />
-	<meta name="robots" content="noindex, nofollow, noarchive" />
-	<link rel="stylesheet" type="text/css" href="../core/css/style.css" media="all"/>
+
 	<link rel="shortcut icon" href="<?php echo (substr($main->favicon_src, 0, 1)=='/') ? '..'.$main->favicon_src : $main->favicon_src; ?>" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+	<!-- css -->
+	<link rel="stylesheet" type="text/css" href="../core/css/style.css" media="all"/>
+	
+	<!-- jquery + plugins + ckeditor -->
 	<script src="../core/js/jquery-2.1.1.min.js"></script>
 	<script src="../core/js/jquery-migrate-1.2.1.min.js"></script>
 	<script src="../core/js/jquery-ui.js"></script>
@@ -79,8 +87,11 @@ ob_start();
 	<script src="../core/js/jquery.cookie.js"></script>
 	<script src="../wysiwyg/ckeditor.js"></script>
 	<script src="../core/js/jquery.mjs.nestedSortable.js"></script>
+
+	<!-- scripts -->
 	<script src="../core/js/functions.js?from=https://code-snippets-se.googlecode.com/"></script>
 	<script src="../core/js/main.js"></script>
+	
 	<style>
 		html, body {
 			background: <?php echo $main->bgcolor; ?>;

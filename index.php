@@ -3,7 +3,7 @@
  * @package    Xenux
  *
  * @link       http://www.xenux.bplaced.net
- * @version    1.4.6
+ * @version    1.4.7
  * @author     Sven Eberth <mail@sven-eberth.de.hm>
  * @copyright  Copyright (c) 2013 - 2015, Sven Eberth.
  * @license    GNU General Public License version 3, see LICENSE.txt
@@ -89,20 +89,24 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 <!DOCTYPE html>
 <html lang="de">
 <head>
-	<title><?php echo ($site->site=='page' ? $page->title : $site->title) . " | $main->hp_name"; ?></title>
 	<meta charset="UTF-8" />
-	<meta name="language" content="de"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="robots" content="index, follow, noarchive" />
+
+	<title><?php echo ($site->site=='page' ? $page->title : $site->title) . " | $main->hp_name"; ?></title>
+	
 	<meta name="description" content="<?php echo $main->meta_desc; ?>" />
 	<meta name="keywords" content="<?php echo $main->meta_keys; ?>" />
 	<meta name="auhor" content="<?php echo $main->meta_auhor; ?>" />
 	<meta name="publisher" content="<?php echo $main->meta_auhor; ?>" />
 	<meta name="copyright" content="<?php echo $main->meta_auhor; ?>" />
+	
 	<!-- http://xenux.bplaced.net -->
 	<meta name="generator" content="Xenux - das kostenlose CMS" />
-	<meta name="robots" content="index, follow, noarchive" />
-	<link rel="shortcut icon" href="<?php echo (substr($main->favicon_src, 0, 1)=='/') ? '.'.$main->favicon_src : $main->favicon_src; ?>" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
+	<link rel="shortcut icon" href="<?php echo (substr($main->favicon_src, 0, 1)=='/') ? '.'.$main->favicon_src : $main->favicon_src; ?>" />
+	
+	<!-- css -->
 	<link rel="stylesheet" type="text/css" href="core/css/style.css" media="all"/>
 	
 	<!-- jquery + plugins -->
@@ -120,7 +124,7 @@ define('BASEURL', $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].subst
 	<!-- search -->
 	<link rel="search" type="application/opensearchdescription+xml" title="Xenux Suche" href="<?php echo XENUX_URL; ?>/search.xml.php" />
 	
-	<!-- own scripts -->
+	<!-- scripts -->
 	<script src="core/js/functions.js?from=https://code-snippets-se.googlecode.com/"></script>
 	<script src="core/js/main.js"></script>
 

@@ -1,6 +1,8 @@
 <?php
 session_start(); // start php session
 
+header('Content-Type: text/html, charset=utf-8');
+
 if($_SERVER['HTTP_HOST'] == 'localhost') {
 	error_reporting(E_ALL);
 }
