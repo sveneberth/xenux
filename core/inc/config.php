@@ -10,7 +10,7 @@ if($_SERVER['HTTP_HOST'] == 'localhost') {
 $url = 'http';
 if (@$_SERVER["HTTPS"] == "on") $url .= "s";
 $url .= "://" . $_SERVER["SERVER_NAME"];
-if ($_SERVER["SERVER_PORT"] != "80") {
+if ($_SERVER["SERVER_PORT"] != "80" && $_SERVER["SERVER_PORT"] != "443") {
 	$url .= ":" . $_SERVER["SERVER_PORT"];
 }
 $url .= dirname($_SERVER["SCRIPT_NAME"]) != '/' ? ( !isset($index) ? dirname($_SERVER["SCRIPT_NAME"]) : ( @$index == 'frontend' ? dirname($_SERVER["SCRIPT_NAME"]) : dirname(dirname($_SERVER["SCRIPT_NAME"])))) : '';
