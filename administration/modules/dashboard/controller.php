@@ -14,6 +14,9 @@ class dashboardController extends AbstractController
 	{
 		global $XenuxDB, $app;
 
+		// append translations
+		translator::appendTranslations(PATH_ADMIN . '/modules/dashboard/translations/');
+
 		$template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout.php");
 	
 		$template->setVar("count_users", $this->_getCountUsers());
@@ -32,7 +35,7 @@ class dashboardController extends AbstractController
 		
 		echo $template->render();
 
-		$this->page_name = "Dashboard";
+		$this->page_name = __("dashboard");
 
 		return true;
 	}

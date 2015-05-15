@@ -149,7 +149,8 @@ class app
 			$template->setVar("headline", $this->page_name);
 
 			$num_active_module = array_search($this->site, $this->getAdminModule());
-			$template->setVar("num_active_module", $num_active_module ? $num_active_module : 0);
+			log::writeLog(serialize(array_search($this->site, $this->getAdminModule())));
+			$template->setVar("num_active_module", $num_active_module !== false ? $num_active_module+1 : 0);
 			
 			echo $template->render();	
 		}
@@ -169,7 +170,7 @@ class app
 		{
 			$module = str_replace(PATH_ADMIN.'/modules/', '', $module);
 
-			if($module == 'login' && $all == false)
+			if(($module == 'login' || $module == 'dashboard') && $all == false)
 				continue;
 
 			$return[] = $module;

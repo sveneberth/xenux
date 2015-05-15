@@ -33,7 +33,7 @@ class form
 	{
 		global $app;
 
-		$formTemplate = new template(PATH_MAIN."/core/form/form.php");
+		$formTemplate = new template(PATH_MAIN."/core/template/form/form.php");
 		
 		$formTemplate->setVar("class", $this->class);
 		$formTemplate->setVar("action", $this->action);
@@ -137,12 +137,12 @@ class form
 		$messages = '';
 		foreach($this->error_msg as $message)
 		{
-			$msgTemplate = new template(PATH_MAIN."/core/form/_form_error_msg.php");
+			$msgTemplate = new template(PATH_MAIN."/core/template/form/_form_error_msg.php");
 			$msgTemplate->setVar("err_message", $message);
 			$messages .= $msgTemplate->render();
 		}
 
-		$errTemplate = new template(PATH_MAIN."/core/form/_form_error.php");
+		$errTemplate = new template(PATH_MAIN."/core/template/form/_form_error.php");
 		$errTemplate->setVar("error_messages", $messages);
 
 		return $errTemplate->render();
@@ -193,28 +193,28 @@ class form
 		switch(strtolower($props['type']))
 		{
 			case 'text':
-				return $fieldTemplate->render(PATH_MAIN."/core/form/_form_text.php");
+				return $fieldTemplate->render(PATH_MAIN."/core/template/form/_form_text.php");
 				break;
 			case 'password':
-				return $fieldTemplate->render(PATH_MAIN."/core/form/_form_password.php");
+				return $fieldTemplate->render(PATH_MAIN."/core/template/form/_form_password.php");
 				break;
 			case 'email':
-				return $fieldTemplate->render(PATH_MAIN."/core/form/_form_email.php");
+				return $fieldTemplate->render(PATH_MAIN."/core/template/form/_form_email.php");
 				break;
 			case 'textarea':
 				if($props['wysiwyg'])
 					$fieldTemplate->setVar("class", $class.' ckeditor');
-				return $fieldTemplate->render(PATH_MAIN."/core/form/_form_textarea.php");
+				return $fieldTemplate->render(PATH_MAIN."/core/template/form/_form_textarea.php");
 				break;
 			case 'select':
 				$props['options'] = isset($props['options']) ? $props['options'] : '';
 				$fieldTemplate->setVar("options", $this->getSelectOptions($props['options'], $value));
-				return $fieldTemplate->render(PATH_MAIN."/core/form/_form_select.php");
+				return $fieldTemplate->render(PATH_MAIN."/core/template/form/_form_select.php");
 				break;
 			case 'radio':
 				$props['options'] = isset($props['options']) ? $props['options'] : '';
 				$fieldTemplate->setVar("radios", $this->getRadioOptions($props['options'], $fieldname, $value, $class));
-				return $fieldTemplate->render(PATH_MAIN."/core/form/_form_radio_fieldset.php");
+				return $fieldTemplate->render(PATH_MAIN."/core/template/form/_form_radio_fieldset.php");
 				break;
 			case 'bool_radio':
 				$props['value'] = $value ? 'true' : 'false';
@@ -236,32 +236,32 @@ class form
 				break;
 			case 'checkbox':
 				$fieldTemplate->setVar("checked", $this->isChecked($props['checked']));
-				return $fieldTemplate->render(PATH_MAIN."/core/form/_form_checkbox.php");
+				return $fieldTemplate->render(PATH_MAIN."/core/template/form/_form_checkbox.php");
 				break;
 			case 'number':
 				$props['min_number'] = isset($props['min_number']) ? $props['min_number'] : '';
 				$props['max_number'] = isset($props['max_number']) ? $props['max_number'] : '';
 				$fieldTemplate->setVar("min_number", $props['min_number']);
 				$fieldTemplate->setVar("max_number", $props['max_number']);		
-				return $fieldTemplate->render(PATH_MAIN."/core/form/_form_number.php");
+				return $fieldTemplate->render(PATH_MAIN."/core/template/form/_form_number.php");
 				break;
 			case 'date':
-				return $fieldTemplate->render(PATH_MAIN."/core/form/_form_date.php");
+				return $fieldTemplate->render(PATH_MAIN."/core/template/form/_form_date.php");
 				break;
 			case 'time':
-				return $fieldTemplate->render(PATH_MAIN."/core/form/_form_time.php");
+				return $fieldTemplate->render(PATH_MAIN."/core/template/form/_form_time.php");
 				break;
 			case 'readonly':
-				return $fieldTemplate->render(PATH_MAIN."/core/form/_form_text_readonly.php");
+				return $fieldTemplate->render(PATH_MAIN."/core/template/form/_form_text_readonly.php");
 				break;
 			case 'hidden':
-				return $fieldTemplate->render(PATH_MAIN."/core/form/_form_hidden.php");
+				return $fieldTemplate->render(PATH_MAIN."/core/template/form/_form_hidden.php");
 				break;
 			case 'html':
 				return $props['value'];
 				break;
 			case 'submit':
-				return $fieldTemplate->render(PATH_MAIN."/core/form/_form_submit.php");
+				return $fieldTemplate->render(PATH_MAIN."/core/template/form/_form_submit.php");
 				break;
 		}
 
@@ -278,7 +278,7 @@ class form
 		{
 			$option['disabled'] = isset($props['disabled']) ? $props['disabled'] : '';
 
-			$optionTemplate = new template(PATH_MAIN."/core/form/_form_select_option.php");
+			$optionTemplate = new template(PATH_MAIN."/core/template/form/_form_select_option.php");
 		
 			$optionTemplate->setVar("value", $option['value']);
 			$optionTemplate->setVar("label", $option['label']);
@@ -301,7 +301,7 @@ class form
 		{
 			$option['disabled'] = isset($props['disabled']) ? $props['disabled'] : '';
 
-			$optionTemplate = new template(PATH_MAIN."/core/form/_form_radio.php");
+			$optionTemplate = new template(PATH_MAIN."/core/template/form/_form_radio.php");
 		
 			$optionTemplate->setVar("value", $option['value']);
 			$optionTemplate->setVar("name", $fieldname);

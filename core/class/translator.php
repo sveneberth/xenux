@@ -1,23 +1,33 @@
 <?php
 class translator
 {	
+	public static $translations = array();
+	public static $putBasicTranslations = false;
+
+
 	public static function translate($str)
 	{
-		$translations = self::getTranslations(self::getLanguage());
+		if(self::$putBasicTranslations === false)
+		{
+			self::$translations = self::getTranslations(self::getLanguage());
+			self::$putBasicTranslations = true;
+		}
+		
+		$translations = self::$translations;	
+		#var_dump($translations);
 
-		if(!isset($translations->$str))
+		if(!isset($translations[$str]))
 			return $str;
 
 		$args = func_get_args(); // get arguments
 		unset($args[0]); // unset varname
 		
-		$translationStr = $translations->$str; // set string
+		$translationStr = $translations[$str]; // set string
 		
 		foreach($args as $key => $val)
 		{
 			$translationStr = str_replace("%".$key, $val, $translationStr); // replace vars
 		}
-		
 		return $translationStr;
 	}
 
@@ -35,17 +45,36 @@ class translator
 		}
 	}
 
-	private static function getTranslations($lang)
+	private static function getTranslations($lang, $path=PATH_MAIN."/translation/")
 	{
 		return
-			json_decode(file_get_contents(PATH_MAIN."/translation/{$lang}.json"));
+			(array) json_decode(file_get_contents($path . $lang . '.json'));
 	}
 
-	private function translationExists($lang)
+	public static function appendTranslations($path)
+	{
+		if(self::$putBasicTranslations === false)
+		{
+			self::$translations = self::getTranslations(self::getLanguage());
+			self::$putBasicTranslations = true;
+		}
+
+		$lang = self::getLanguage();
+		if(self::translationExists($lang, $path))
+		{
+			self::$translations = array_merge(self::$translations, self::getTranslations($lang, $path));
+
+			return true;
+		}
+		
+		return false;
+	}
+
+	private function translationExists($lang, $path=PATH_MAIN.'/translation/')
 	{
 		return
-			file_exists(PATH_MAIN.'/translation/'.$lang.'.json') && 
-			is_json(file_get_contents(PATH_MAIN.'/translation/'.$lang.'.json')) && 
+			file_exists($path . $lang . '.json') && 
+			is_json(file_get_contents($path . $lang . '.json')) && 
 			isset(self::getLanguages()->{$lang});
 	}
 

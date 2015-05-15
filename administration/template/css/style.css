@@ -347,6 +347,32 @@ menu.main-menu-left .ui-state-active { /* header: active */
 	color: #eee;
 }
 
+menu.main-menu-left > a {
+	display: block;
+	cursor: pointer;
+	position: relative;
+	margin: 0;
+	padding: .2em .5em .2em .7em;
+	min-height: 0;
+	font-weight: bold;
+	border-radius: 0;
+	font-size: 1.10em;
+	background: #333;
+	font-weight: bold;
+	color: #eee;
+	text-decoration: none;
+}
+menu.main-menu-left > a:hover {
+	font-weight: bold;
+	background: #222;
+}
+menu.main-menu-left > a.active {
+	border-color: blue;
+	font-weight: bold;
+	background: #1B7CAE;
+	color: #eee;
+}
+
 menu.main-menu-left ul {
 	padding: 0;
 	list-style: none;

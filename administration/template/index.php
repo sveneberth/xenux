@@ -33,13 +33,11 @@
 <body id="top">
 	<header>
 
-		<!-- <a href="{{URL_ADMIN}}" class="header-title">Xenux Backend</a> -->
 		<a href="{{URL_MAIN}}" target="_blank" class="header-title"><?= $app->getOption('hp_name') ?></a>
 
 		<div class="profile">
 			<?= __('helloUser', $user->userInfo->username) ?>
 			<div class="profile-sub">
-				<!-- <img class="profile-image" src="http://www.clker.com/cliparts/5/7/4/8/13099629981030824019profile.svg.thumb.png" /> -->
 				<img class="profile-image" src="{{TEMPLATE_PATH}}/images/profile.svg" />
 				
 				<a class="profile-button" href="{{URL_ADMIN}}/users/profile">Profil</a>
@@ -49,8 +47,10 @@
 	</header>
 	
 	<menu class="main-menu-left">
-		<a class="dashboard <?= $app->url[0]=='dashboard'?'active':'' ?>" href="https://localhost/xenux_dev/administration/dashboard">Dashboard</a>
-		<div class="no-content never-show"></div>
+		<h2><?= __('dashboard') ?></h2>
+		<ul>
+			<li class="<?= $app->url[0]=='dashboard'?'active':'' ?>"><a href="https://localhost/xenux_dev/administration/dashboard"><?= __('home') ?></a></li>
+		</ul>
 		<?php
 			$modules = $app->getAdminModule();
 			foreach($modules as $module) // for module in modules
@@ -64,7 +64,9 @@
 
 					if($json = is_json($filecontent, true)) // if file is a valid json-file
 					{
-						echo "<h2>{$json->headline}</h2>\n";
+						$headline = substr($json->headline, 0, 2) === '__' ? __(substr($json->headline, 2)) : $json->headline;
+
+						echo "<h2>$headline</h2>\n";
 						echo "<ul>\n";
 
 						foreach($json->links as $label => $link)
