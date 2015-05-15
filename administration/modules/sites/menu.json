@@ -1,0 +1,9 @@
+{
+	"headline": "Seiten",
+	"links":
+	{
+		"Home": "/home",
+		"Neu": "/new",
+		"Bearbeiten": "/edit"
+	}
+}

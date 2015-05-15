@@ -5,11 +5,6 @@ function contains($var) {
 	return in_array($var, $array); 
 }
 
-function maxlines($str, $num=10) {
-    $lines = explode("\n", $str);
-    $firsts = array_slice($lines, 0, $num);
-    return implode("\n", $firsts);
-}
 
 function escapemail($email, $Arr = array()) {
 	if (empty($email)) {
@@ -25,57 +20,25 @@ function escapemail($email, $Arr = array()) {
 			$JS .= ((strlen($JS)==0) ? '' : ' + ') . "'$val'";
 		}
 		
-		return "<script>document.write($JS);</script><noscript>" . (isset($Arr['text']) ? "\"" . $Arr['text'] . "\" &lt;" . str_replace(array('@', '.'), array(' [at] ', ' [dot] '), $email) . "&gt;" : str_replace(array('@', '.'), array(' [at] ', ' [dot] '), $email)) . "</noscript>";
+		return
+			"<script>document.write($JS);</script>".
+			"<noscript>" . (isset($Arr['text']) ? "\"" . $Arr['text'] . "\" &lt;" . str_replace(array('@', '.'), array(' [at] ', ' [dot] '), $email) . "&gt;" : str_replace(array('@', '.'), array(' [at] ', ' [dot] '), $email)) . "</noscript>";
 	}
 }
-
-function hex2RGB($hexStr, $returnAsString = false, $seperator = ',') {
-	$hexStr = preg_replace("/[^0-9A-Fa-f]/", '', $hexStr); // Gets a proper hex string
-	$rgbArray = array();
-	if (strlen($hexStr) == 6) { //If a proper hex code, convert using bitwise operation. No overhead... faster
-		$colorVal = hexdec($hexStr);
-		$rgbArray['red'] = 0xFF & ($colorVal >> 0x10);
-		$rgbArray['green'] = 0xFF & ($colorVal >> 0x8);
-		$rgbArray['blue'] = 0xFF & $colorVal;
-	} elseif (strlen($hexStr) == 3) { //if shorthand notation, need some string manipulations
-		$rgbArray['red'] = hexdec(str_repeat(substr($hexStr, 0, 1), 2));
-		$rgbArray['green'] = hexdec(str_repeat(substr($hexStr, 1, 1), 2));
-		$rgbArray['blue'] = hexdec(str_repeat(substr($hexStr, 2, 1), 2));
-	} else {
-		return false; //Invalid hex color code
-	}
-	return $returnAsString ? implode($seperator, $rgbArray) : $rgbArray; // returns the rgb string or the associative array
-}
-
-function lighter($red = 0, $green = 0, $blue = 0) {
-	if(255-$red > 50) {
-		$red = $red+50;
-	}
-	if(255-$green > 50) {
-		$green = $green+50;
-	}
-	if(255-$blue > 50) {
-		$blue = $blue+50;
-	}
-	return "rgb($red,$green,$blue)";
-}
-
-function logger($value) {
-	echo "<script>console.log('".$value."');</script>";
-};
 
 function request_failed() {
 	echo "Bei der Anfrage trat ein Fehler auf, möglicherweise haben sie auf einen fehlerhaften Link geklickt...";
 	return false;
 }
 
-function nbsp($str) {
+function whitespace2nbsp($str) {
 	if(empty($str) || !isset($str))
 		return false;
 		
 	return str_replace(" ", "&nbsp;", $str);
 }
 
+#FIXME: translation
 /* function from http://simbo.de/blog/2009/12/pretty-date-relative-zeitangaben-in-worten/ */
 function pretty_date( $datestr='' ) {
 	$now = time();
@@ -152,12 +115,17 @@ function pretty_date( $datestr='' ) {
 	return 'vor '.$d.' Jahren';
 }
 
-function shortstr($str, $size = 100) {
-	if(strlen($str) > $size) {
+function shortstr($str, $size=100, $max=200)
+{
+	if(strlen($str) > $size)
+	{
 		$spacePos = strpos($str, " ", $size);
-		$spacePos = ($spacePos==0) ? strlen($str) : $spacePos;
-		return substr($str, 0, $spacePos)." ...";
-	} else {
+		$spacePos = $spacePos==0 ? strlen($str) : $spacePos;
+		$spacePos = $spacePos<=$max ? $spacePos : $max;
+		return substr($str, 0, $spacePos) . "...";
+	}
+	else
+	{
 		return $str;
 	}
 }
@@ -199,7 +167,8 @@ function FileSizeConvert($bytes) {
     return $result;
 }
 
-function generateRandomString($length = 10) {
+function generateRandomString($length = 10)
+{
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $charactersLength = strlen($characters);
     $randomString = '';
@@ -207,5 +176,127 @@ function generateRandomString($length = 10) {
         $randomString .= $characters[rand(0, $charactersLength - 1)];
     }
     return $randomString;
+}
+
+function mysql2date($format, $date)
+{
+	if(empty($format) || empty($date))
+		return false;
+
+	$unixtime = strtotime($date);
+
+	/*
+	needet??? standardly in function date integrated
+	if('U' == $format)
+	return $unixtime;
+	*/
+
+	return date($format, $unixtime);
+}
+
+function date2mysql($date, $isUnixtime=false)
+{
+	if(!$isUnixtime)
+		$date = strtotime($date);
+
+	return date('Y-m-d H:i:s', $date);
+}
+
+
+function getPreparedLink($id, $title='')
+{
+	return $id . (!empty($title) ? "-".urlencode($title) : '');
+}
+function getPageLink($id, $title='')
+{
+	return URL_MAIN."/page/" . getPreparedLink($id, $title);
+}
+
+function inludeExists($file)
+{
+	if(file_exists($file))
+	{
+		include_once($file);
+		return true;
+	}
+
+	return false;
+}
+
+function is_json($string, $return_data = false)
+{
+	$data = json_decode($string);
+	return (json_last_error() == JSON_ERROR_NONE) ? ($return_data ? $data : TRUE) : FALSE;
+}
+
+/*function __($str) // translate
+{
+	$lang = app::getLanguage(); // get language
+			
+	$translationFile = file_get_contents(PATH_MAIN."/translation/{$lang}.json"); // get translation file
+	if(!is_json($translationFile)) // invalid translationfile: return string
+		return $str;
+		
+	$translation = json_decode($translationFile); // parse json
+
+	$args = func_get_args(); // get arguments
+	unset($args[0]); // unset varname
+	
+	$translationStr = @$translation->$str; // set string
+	
+	foreach($args as $key => $val)
+	{
+		$translationStr = str_replace("%".$key, $val, $translationStr); // replace vars
+	}
+	
+	return isset($translationStr) ? $translationStr : $str; // return translation or string
+}*/
+
+function getMenuBarMultiSites($absolutenumber, $start, $amount)
+{
+	ob_start();
+
+		if($absolutenumber > $amount)
+		{
+			echo "<div class=\"sitenavi\">\n";
+			$b = ceil($absolutenumber/$amount);
+			for($a = ceil($absolutenumber/$amount); $a > 0; $a--)
+			{
+				$thissite = $b - $a + 1;
+				$limit = $amount * ($b - $a);
+				echo "\t<a class=\"sitenavi";
+				if($limit == $start)
+					echo " active";
+				echo "\" href=\"{{SITE_PATH}}?";
+				foreach ($_GET as $key => $value)
+				{
+					if($key != 'url' && $key != 'start' && $key != 'amount')					
+						echo $key . '=' . $value . '&';
+				}
+				echo "start=$limit&amount=$amount\">$thissite</a>\n";
+			}
+			echo "</div>\n";
+		}
+
+	return ob_get_clean();
+}
+
+function parse_bool($value)
+{
+	return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+}
+
+/**
+* function full
+* @param str: value to check
+* opposite of PHP's default function `empty`
+* but better support for objects
+*/
+function full($str)
+{
+	if(is_object($str))
+		$str = (array) $str;
+
+	return !empty($str);
 }
 ?>

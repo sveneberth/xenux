@@ -1,1 +1,6 @@
-/mysql.conf.php
+# ignore xenux config
+xenux-conf.php
+
+# ignore debugging folders
+/logs/
+/mails/

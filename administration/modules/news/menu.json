@@ -1,0 +1,9 @@
+{
+	"headline": "News",
+	"links":
+	{
+		"Home": "/home",
+		"Neu": "/new",
+		"Bearbeiten": "/edit"
+	}
+}

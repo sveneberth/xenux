@@ -1,0 +1,10 @@
+{
+	"headline": "Nutzer",
+	"links":
+	{
+		"Home": "/home",
+		"Neu": "/new",
+		"Bearbeiten": "/edit",
+		"Profil": "/profile"
+	}
+}

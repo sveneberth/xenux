@@ -24,3 +24,7 @@ Official Xenux Website: [www.xenux.bplaced.net](http://xenux.bplaced.net/)
  
 ### Who do I talk to? ###
 * [Sven Eberth](mailto:mail@sven-eberth.de.hm)
+
+
+## INFO TO THIS BRANCH: ##
+This Branch `dev` is designated for the development. It's not recommend to use this Versions for a public website.

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="robots" content="index, follow, noarchive" />
+
+	<title>{{page_title}} | {{homepage_name}}</title>
+	
+	<meta name="description" content="{{meta_desc}}" />
+	<meta name="keywords" content="{{meta_keys}}" />
+	<meta name="auhor" content="{{meta_author}}" />
+	<meta name="publisher" content="{{meta_author}}" />
+	<meta name="copyright" content="{{meta_author}}" />
+	
+	<!-- http://xenux.bplaced.net -->
+	<meta name="generator" content="Xenux v{{XENUX_VERSION}} - das kostenlose CMS" />
+	
+	<link rel="shortcut icon" href="{{TEMPLATE_PATH}}/img/logo.ico" /> <!-- FIXME: use favicon.png -->
+	
+	<!-- css -->
+	<link rel="stylesheet" type="text/css" href="{{TEMPLATE_PATH}}/css/style.css" media="all"/>
+	
+	<!-- jquery + plugins -->
+	<script src="{{TEMPLATE_PATH}}/js/jquery-2.1.1.min.js"></script>
+	<script src="{{TEMPLATE_PATH}}/js/jquery-migrate-1.2.1.min.js"></script>
+	<script src="{{TEMPLATE_PATH}}/js/jquery-ui.min.js"></script>
+	<script src="{{TEMPLATE_PATH}}/js/jquery.ui.touch-punch.min.js"></script>
+	<script src="{{TEMPLATE_PATH}}/js/jquery.cookie.js"></script>
+	<script src="{{TEMPLATE_PATH}}/js/jquery.mousewheel.js"></script>
+	
+	<!-- fancybox -->
+	<script src="{{TEMPLATE_PATH}}/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+	<link rel="stylesheet" type="text/css" href="{{TEMPLATE_PATH}}/fancybox/jquery.fancybox.css?v=2.1.5" media="screen" />
+	
+	<!-- search -->
+	<link rel="search" type="application/opensearchdescription+xml" title="Xenux Suche" href="{{URL_MAIN}}/search.xml.php" />
+
+	<!-- links -->
+	<link rel="canonical" href="{{canonical_URL}}" />
+	#if(prev_URL):<link rel="prev" href="{{prev_URL}}" />#endif
+	#if(next_URL):<link rel="next" href="{{next_URL}}" />#endif
+
+	<!-- scripts -->
+	<script>
+		var XENUX = {
+			translation: {
+				pictureXofY: '<?= __('picture x of y') ?>'
+			},
+			path: {
+				baseurl: '{{URL_MAIN}}'
+			}
+		}
+	</script>
+	<script src="{{TEMPLATE_PATH}}/js/functions.js"></script>
+	<script src="{{TEMPLATE_PATH}}/js/script.js"></script>
+
+	<noscript>
+		<style>
+			.fontsize {display: none;}
+			.sb-search {width: 100%;}
+			.sb-search .sb-search-submit {z-index: 100;}
+		</style>
+	</noscript>
+</head>
+<body id="top">
+	<a href="#top" class="toTop"></a>
+	<div class="headWrapper">
+		<header> 
+			<a href="javascript:openmobilemenu();" class="menu-icon"></a>
+			<a class="logo" href="{{URL_MAIN}}">
+				<img src="{{TEMPLATE_PATH}}/img/logo.png" class="nojsload" />
+			</a>
+			<ul class="topmenu mobilemenu">
+				<li><a href="{{URL_MAIN}}/administration/login"><?= __('login') ?></a></li>
+			</ul>
+			<nobr>
+				<ul class="topmenu mainmenu">
+<?php
+#var_dump($app);
+$sites = $XenuxDB->getList('sites', [
+			'order' => 'sortindex ASC',
+			'where' => [
+				'AND' => [
+					'parent_id' => 0,
+					'public' => true
+				]
+			],
+		]);
+if($sites)
+{
+	foreach($sites as $site)
+	{
+		echo "<li>\n\t<a href=\"".getPageLink($site->id, $site->title)."\">".$site->title."</a>\n";
+		
+		$subsites = $XenuxDB->getList('sites', [
+			'order' => 'sortindex ASC',
+			'where' => [
+				'AND' => [
+					'parent_id' => $site->id,
+					'public' => true
+				]
+			],
+		]);
+		if($subsites)
+		{
+			echo "\t<ul>\n";
+			foreach($subsites as $subsite)
+			{
+				echo "\t\t<li>\n\t\t\t<a href=\"".getPageLink($subsite->id, $subsite->title)."\">".$subsite->title."</a>\n";
+				$subsubsites = $XenuxDB->getList('sites', [
+					'order' => 'sortindex ASC',
+					'where' => [
+						'AND' => [
+							'parent_id' => $subsite->id,
+							'public' => true
+						]
+					],
+				]);
+				if($subsubsites)
+				{
+					echo "\t\t\t<ul>\n";
+					foreach($subsubsites as $subsubsite)
+					{
+						echo "\t\t\t\t<li>\n\t\t\t\t\t<a href=\"".getPageLink($subsubsite->id, $subsubsite->title)."\">".$subsubsite->title."</a>\n\t\t\t\t</li>\n";
+					}
+					echo "\t\t\t</ul>\n";
+				}
+				echo "\t\t</li>\n";
+			}
+			echo "\t</ul>\n";
+		}
+		
+		echo "</li>\n";
+	}
+}
+?>
+					<li class="search">
+						<div id="sb-search" class="sb-search">
+							<form action="{{URL_MAIN}}/search/" method="GET">
+								<input onkeyup="$('.sb-search-submit').css('z-index', ($(this).val() == '' ? 11 : 99));" type="search" class="sb-search-input" name="q" placeholder="<?= __("search") ?>" value="" />
+								<input type="submit" class="sb-search-submit" value="" />
+								<span onclick="$('div#sb-search').toggleClass('sb-search-open');$('.sb-search-input').focus();" class="sb-icon-search"></span>
+							</form>
+						</div>
+					</li>
+					<li class="mobilemenu"><a href="{{URL_MAIN}}/news/list">News</a></li>
+					<li class="mobilemenu"><a href="{{URL_MAIN}}/event/list">Termine</a></li>
+				</ul>
+			</nobr>
+		</header>
+	</div>
+
+	<div class="wrapper">
+		<noscript>
+			<div class="warning-noscript">
+				<div>
+					<?= __("noscript-message") ?> 
+				</div>
+			</div>
+		</noscript>
+		<div class="fontsize">
+			<a title="<?= __('fontSizeDecrease') ?>" class="decrease"></a>
+			<a title="<?= __('fontSizeReset') ?>" class="reset"></a>
+			<a title="<?= __('fontSizeIncrease') ?>" class="increase"></a>
+		</div>
+		<div class="leftboxes">
+			<ul class="news">
+				<h3><?= __('news_Pl') ?>:</h3><?php
+				$newsList = $XenuxDB->getList('news', [
+					'limit' => 3,
+					'order' => 'create_date DESC'
+				]);
+				if($newsList)
+				{
+					foreach($newsList as $news)
+					{
+						echo "	<li>
+									<span class=\"title\">$news->title</span>
+									<span class=\"date\">".pretty_date($news->create_date)."</span>".
+									shortstr(strip_tags($news->text), 50)."<br />
+									<a href=\"{{URL_MAIN}}/news/view/".getPreparedLink($news->id, $news->title)."\">&raquo;".__("showNews")."</a>
+								</li>";
+					}
+				}
+				else
+				{
+					echo "<p style=\"margin:5px 0;\">" . __("noNews") . "</p>";
+				}
+				?>
+				<a href="{{URL_MAIN}}/news/list"><?= __("showAllNews") ?></a>
+			</ul>
+			<?php			
+			
+			/* events */
+			?>
+			<ul class="events">
+				<h3><?= __('events') ?>:</h3>
+				<?php
+				$eventList = $XenuxDB->getList('events', [
+					'limit' => 3,
+					'order' => 'start_date DESC',
+					'where' => [
+						'##start_date[>=]' => 'CURDATE()'
+					]
+				]);
+				if($eventList)
+				{
+					foreach($eventList as $event)
+					{
+						echo "	<li>
+									<span class=\"title\">$event->title</span>
+									<span class=\"date\">".mysql2date("d.m.Y H:i", $event->start_date)."</span>".
+									shortstr(strip_tags($event->text), 50)."<br />
+									<a href=\"{{URL_MAIN}}/event/view/".getPreparedLink($event->id, $event->title)."\">&raquo;".__("showEvent")."</a>
+								</li>";
+					}
+				}
+				else
+				{
+					echo "<p style=\"margin:5px 0;\">" . __("noEvents") . "</p>";
+				}
+				?>
+				<a href="{{URL_MAIN}}/event/calendar"><?= __("gotoEventCalendar") ?></a>
+			</ul>
+			<?php
+			/* newest sites */
+			$newestSitesList = $XenuxDB->getList('sites', [
+				'limit' => 5,
+				'order' => 'create_date DESC'
+			]);
+			if($newestSitesList)
+			{
+				echo "<ul class=\"newest-sites\">";
+				echo "<h3>". __('newestSites') . ":</h3>";
+				
+				foreach($newestSitesList as $site)
+				{
+					echo "	<li>
+								<a href=\"".getPageLink($site->id, $site->title)."\">$site->title</a>
+							</li>";
+				}
+				
+				echo "</ul>";
+			}
+			?>
+
+			<ul> "*" #FIXME: don't use ul "*"
+				<h3><?= __("login") ?>:</h3>
+<?php
+				if(!$user->isLogin()) {
+?>
+				<form action="{{URL_ADMIN}}/login" method="POST">
+					<input type="text" name="username" placeholder="<?= __("username") ?>">
+					<input type="password" name="password" placeholder="<?= __("password") ?>">
+					<input style="margin: 5px 0;" type="submit" value="<?= __("login") ?>">
+
+					<a href="{{URL_ADMIN}}/login?task=forgotpassword"><?= __("forgotPassword") ?>?</a><br />
+					<a href="{{URL_ADMIN}}/login?task=forgotusername"><?= __("forgotUsername") ?>?</a><br />
+					<a href="{{URL_ADMIN}}/login?task=register"><?= __("register") ?></a>
+				</form>
+<?php
+				} else {
+?>
+				<?= __("successLogin", $user->userInfo->firstname) ?>!<br />
+				<a href="{{URL_ADMIN}}">&raquo;zur Administration</a>
+				<a href="{{URL_ADMIN}}/login?task=logout" class="btn"><?= __("logout") ?></a>
+<?php
+				}
+?>
+			</ul>
+			<ul>
+				<p style="margin: 5px 0;">Change language:</p>
+				<?php
+				$langs = translator::getLanguages();
+				if(count((array)$langs) > 1):
+					?>
+					<select onchange="window.location.href = '{{SITE_PATH}}?lang=' + $(this).val();" class="language-selector">
+						<option disabled="disabled" data-option-class="label" data-style="background-image:none;">Select Language</option>
+						<?php
+							foreach ($langs as $short => $options)
+							{
+								echo '<option value="' . $short . '" data-style="background-image: url(\''.URL_MAIN. $options->flag.'\');" ' . ($short == translator::getLanguage() ? 'selected' : '') . ' >' . $options->label . '</option>';
+							}
+						?>
+					</select>
+					<script>
+						$(function() {
+							$(".language-selector")
+							.iconselectmenu({
+								change: function( event, data ) {
+									window.location.href = '{{SITE_PATH}}?lang=' + $(this).val();
+								}
+							})
+							.iconselectmenu( "menuWidget")
+							.addClass('language-selector-menu');
+						})
+					</script>
+					<?php
+				endif;
+			?>
+			</ul>
+		</div>
+		
+		<main>
+			{{page_content}}
+		</main>
+
+		<footer>
+			this site was made with <a target="_blank" href="<?= XENUX_URL_HP ?>">Xenux</a>
+
+			<div class="links">
+				<a href="{{URL_MAIN}}/sitemap"><?= __('sitemap') ?></a>
+				<a href="{{URL_MAIN}}/administration">Administration</a>
+				
+				<a href="{{URL_MAIN}}/contact"><?= __('contact') ?></a>
+				<a href="{{URL_MAIN}}/imprint"><?= __('imprint') ?></a>
+			</div>
+		</footer>
+
+	</div>
+</body>
+</html>

@@ -1,0 +1,14 @@
+Order Deny,Allow
+Allow from all
+
+# Deny Access for Log-files
+<Files ~ "^(.*)\.log|mail-(.*)\.txt$">
+	Deny from All
+</Files>
+
+RewriteEngine On
+
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule (^.*)$ index.php/?url=$1 [QSA,NC,L]
