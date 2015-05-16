@@ -110,7 +110,7 @@ class sitemapController extends AbstractController
 		$eventsList = $XenuxDB->getList('events', [
 			'columns' => [
 				'id',
-				'name'
+				'title'
 			],
 			'order' => 'create_date DESC'
 		]);
