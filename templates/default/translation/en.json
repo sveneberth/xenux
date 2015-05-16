@@ -1,0 +1,14 @@
+{
+	"info":
+	{
+		"author": "Sven Eberth"
+	},
+	"translations":
+	{
+		"fontSizeDecrease":"font smaller",
+		"fontSizeReset":"font normal",
+		"fontSizeIncrease":"font greater",
+
+		"placeholder":""
+	}
+}

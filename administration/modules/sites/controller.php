@@ -16,6 +16,9 @@ class sitesController extends AbstractController
 	{
 		global $XenuxDB, $app;
 
+		// append translations
+		translator::appendTranslations(PATH_ADMIN . '/modules/sites/translation/');
+
 		if(@$this->url[1] == "home")
 		{
 			$this->sitesHome();
@@ -266,8 +269,6 @@ class sitesController extends AbstractController
 		if($form->isSend() && $form->isValid())
 		{
 			$data = $form->getInput();
-			#var_dump($data);
-			log::writeLog(print_r($data, true));
 
 			$title = preg_replace($_allowedTitleChars, '' , $data['title']);
 			$title = htmlentities($title);

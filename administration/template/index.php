@@ -49,7 +49,7 @@
 	<menu class="main-menu-left">
 		<h2><?= __('dashboard') ?></h2>
 		<ul>
-			<li class="<?= $app->url[0]=='dashboard'?'active':'' ?>"><a href="https://localhost/xenux_dev/administration/dashboard"><?= __('home') ?></a></li>
+			<li class="<?= $app->url[0]=='dashboard'?'active':'' ?>"><a href="https://localhost/xenux_dev/administration/dashboard"><?= __('dashboard') ?></a></li>
 		</ul>
 		<?php
 			$modules = $app->getAdminModule();
@@ -64,7 +64,7 @@
 
 					if ($json = is_json($filecontent, true)) // if file is a valid json-file
 					{
-						$headline = substr($json->headline, 0, 2) === '__' ? __(substr($json->headline, 2)) : $json->headline;
+						$headline = __($json->headline);
 
 						echo "<h2>$headline</h2>\n";
 						echo "<ul>\n";

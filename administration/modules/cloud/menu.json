@@ -1,7 +1,7 @@
 {
-	"headline": "__cloud",
+	"headline": "cloud",
 	"links":
 	{
-		"Home": "/home"
+		"cloud": "/cloud"
 	}
 }

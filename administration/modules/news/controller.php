@@ -206,7 +206,6 @@ class newsController extends AbstractController
 		if($form->isSend() && $form->isValid())
 		{
 			$data = $form->getInput();
-			log::writeLog(print_r($data, true));
 
 			$title = preg_replace('/[^a-zA-Z0-9_üÜäÄöÖ$€&#,.()\s]/' , '' , $data['title']);
 

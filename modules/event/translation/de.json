@@ -1,0 +1,36 @@
+{
+	"info":
+	{
+		"author": "Sven Eberth"
+	},
+	"translations":
+	{
+		"###### weekdays_short #######":"",
+		"Mon":"Mon",
+		"Tue":"Die",
+		"Wed":"Mit",
+		"Thu":"Don",
+		"Fri":"Fre",
+		"Sat":"Sam",
+		"Sun":"Son",
+
+		"###### months short #######":"",
+		"Jan":"Jan",
+		"Feb":"Feb",
+		"Mar":"Mär",
+		"Apr":"Apr",
+		"May":"Mai",
+		"Jun":"Jun",
+		"Jul":"Jul",
+		"Aug":"Aug",
+		"Sep":"Sep",
+		"Oct":"Okt",
+		"Nov":"Nov",
+		"Dec":"Dez",
+		
+		"prevMonth": "Voriger Monat",
+		"nextMonth": "Nächster Monat",
+
+		"placeholder":""
+	}
+}

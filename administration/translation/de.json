@@ -1,0 +1,25 @@
+{
+	"info":
+	{
+		"author": "Sven Eberth"
+	},
+	"translations":
+	{
+		"isWrong":"%1 ist falsch",
+		"savedSuccessful": "erfolgreich gespeichert",
+		"savingFailed": "speichern Fehlgeschlagen",
+
+		"save":"speichern",
+		"save&stay":"speichern",
+		"save&close":"speichern und schließen",
+		"cancel":"abbrechen",
+
+		"show":"Anzeigen",
+
+		"dashboard":"Dashboard",
+		"cloud":"Cloud",
+
+
+		"placeholder":""
+	}
+}

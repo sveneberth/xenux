@@ -38,7 +38,7 @@ class sitemapController extends AbstractController
 				]
 			],
 		]);
-		if($sites)
+		if ($sites)
 		{
 			foreach($sites as $site)
 			{
@@ -53,7 +53,7 @@ class sitemapController extends AbstractController
 						]
 					],
 				]);
-				if($subsites)
+				if ($subsites)
 				{
 					echo "\t<ul>\n";
 					foreach($subsites as $subsite)
@@ -68,7 +68,7 @@ class sitemapController extends AbstractController
 								]
 							],
 						]);
-						if($subsubsites)
+						if ($subsubsites)
 						{
 							echo "\t\t\t<ul>\n";
 							foreach($subsubsites as $subsubsite)
@@ -147,7 +147,7 @@ class sitemapController extends AbstractController
   xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">';
 		
 			$sites = $XenuxDB->getList('sites', ['orderBy' => 'sortindex', 'orderDir' => 'ASC', 'where' => "public = true"]);
-			if($sites)
+			if ($sites)
 			{
 				foreach($sites as $site)
 				{
@@ -165,12 +165,12 @@ class sitemapController extends AbstractController
 
 		$fileExists = file_exists(PATH_MAIN.'/'.'sitemap.xml');
 
-		if(file_exists(PATH_MAIN.'/'.'sitemap.xml'))
+		if (file_exists(PATH_MAIN.'/'.'sitemap.xml'))
 		{
 			// file exists
 			$fileData = file_get_contents(PATH_MAIN.'/'.'sitemap.xml');
 
-			if($fileData != $buffer || $overwrite)
+			if ($fileData != $buffer || $overwrite)
 			{
 				$this->writeXMLFileData($buffer);
 			}

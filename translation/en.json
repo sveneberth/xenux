@@ -1,78 +1,56 @@
 {
-	"search":"Search",
-	"noSearchResult":"no search results for <i>\"%1\"</i> ...",
-	
-	"writtenInfo":"written by %1 on %2 at %3 o'clock.",
+	"info":
+	{
+		"label": "English",
+		"flag": "/translation/flags/United_Kingdom.png",
+		"author": "Sven Eberth"
+	},
+	"translations":
+	{
+		"search":"Search",
+		"noSearchResult":"no search results for <i>\"%1\"</i> ...",
+		
+		"writtenInfo":"written by %1 on %2 at %3 o'clock.",
 
-	"news_Sg":"news",
-	"news_Pl":"news",
-	"readNews":"read news",
-	"showNews":"show news",
-	"showAllNews":"show all news",
-	"noNews":"no news available!",
-	"gotoNewsList":"go to news Overview",
+		"news_Sg":"news",
+		"news_Pl":"news",
+		"readNews":"read news",
+		"showNews":"show news",
+		"showAllNews":"show all news",
+		"noNews":"no news available!",
+		"gotoNewsList":"go to news Overview",
 
-	"events":"events",
-	"readEvent":"read event",
-	"showEvent":"show event",
-	"noEvents":"no events available!",
-	"gotoEventList":"go to event Overview",
-	"gotoEventCalendar":"go to event calendar",
-	"calendar":"event calendar",
-	
-	"login":"login",
-	"logout":"logout",
-	"password":"password",
-	"username":"username",
-	"forgotPassword":"forgot password",
-	"forgotUsername":"forgot username",
-	"register":"register",
-	"successLogin":"Hello %1, you're successfully logged in",
-	"helloUser":"Hello %1!",
-	
-	"sitemap":"Sitemap",
-	"contact":"Contact",
-	"imprint":"Imprint",
-	
-	"newestSites":"newest sites",
+		"events":"events",
+		"readEvent":"read event",
+		"showEvent":"show event",
+		"noEvents":"no events available!",
+		"gotoEventList":"go to event Overview",
+		"gotoEventCalendar":"go to event calendar",
+		"calendar":"event calendar",
+		
+		"login":"login",
+		"logout":"logout",
+		"password":"password",
+		"username":"username",
+		"forgotPassword":"forgot password",
+		"forgotUsername":"forgot username",
+		"register":"register",
+		"successLogin":"Hello %1, you're successfully logged in",
+		"helloUser":"Hello %1!",
+		
+		"sitemap":"Sitemap",
+		"contact":"Contact",
+		"imprint":"Imprint",
+		
+		"newestSites":"newest sites",
 
-	"noscript-message":"In your browser is JavaScript disabled. please activate JavaScript to use the full range of functions of the website.",
+		"noscript-message":"In your browser is JavaScript disabled. please activate JavaScript to use the full range of functions of the website.",
 
-	"contactpersons":"contactpersons",
-	"showContactperson":"show contactperson",
-	"gotocontactpersonList":"go to contactperson list",
-
-	"fontSizeDecrease":"font smaller",
-	"fontSizeReset":"font normal",
-	"fontSizeIncrease":"font greater",
-
-	"###### weekdays short #######":"",
-	"Mon":"Mon",
-	"Tue":"Tue",
-	"Wed":"Wed",
-	"Thu":"Thu",
-	"Fri":"Fri",
-	"Sat":"Sat",
-	"Sun":"Sun",
-
-	"###### months short #######":"",
-	"Jan":"Jan",
-	"Feb":"Feb",
-	"Mar":"Mar",
-	"Apr":"Apr",
-	"May":"May",
-	"Jun":"Jun",
-	"Jul":"Jul",
-	"Aug":"Aug",
-	"Sep":"Sep",
-	"Oct":"Oct",
-	"Nov":"Nov",
-	"Dec":"Dec",
-
-	"prevMonth": "Prev Month",
-	"nextMonth": "Next Month",
+		"contactpersons":"contactpersons",
+		"showContactperson":"show contactperson",
+		"gotocontactpersonList":"go to contactperson list",
 
 
-
-	"placeholder":""
+		"placeholder":""
+	}
 }

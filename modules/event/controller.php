@@ -9,6 +9,9 @@ class eventController extends AbstractController
 	
 	public function run()
 	{
+		// append translations
+		translator::appendTranslations(PATH_MAIN . '/modules/event/translation/');
+
 		if (@$this->url[1] == "calendar")
 		{
 			$this->eventCalendar();

@@ -1,0 +1,22 @@
+{
+	"info":
+	{
+		"author": "Sven Eberth"
+	},
+	"translations":
+	{
+		"writtenInfo":"Verfasst von %1 am %2 um %3 Uhr.",
+
+		"newestSites":"neuste Seiten",
+		"go to administration":"zur Administration",
+
+		"fontSizeDecrease":"Schrift kleiner",
+		"fontSizeReset":"Schrift normal",
+		"fontSizeIncrease":"Schrift größer",
+
+		"picture x of y": "Bild x von y",
+		
+
+		"placeholder":""
+	}
+}

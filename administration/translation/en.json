@@ -1,0 +1,23 @@
+{
+	"info":
+	{
+		"author": "Sven Eberth"
+	},
+	"translations":
+	{
+
+		"isWrong":"%1 is wrong",
+		"savedSuccessful": "saved successful",
+		"savingFailed": "saving failed",
+
+		"save":"save",
+		"save&stay":"save",
+		"save&close":"save and close",
+		"cancel":"cancel",
+
+		"show":"show",
+
+
+		"placeholder":""
+	}
+}

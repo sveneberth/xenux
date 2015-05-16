@@ -13,6 +13,9 @@ class optionsController extends AbstractController
 	public function run()
 	{
 		global $XenuxDB, $app;
+		
+		// append translations
+		translator::appendTranslations(PATH_ADMIN . '/modules/'.$this->modulename.'/translation/');
 
 		$template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout.php");
 	

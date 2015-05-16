@@ -1,0 +1,21 @@
+{
+	"info":
+	{
+		"author": "Sven Eberth"
+	},
+	"translations":
+	{
+		"users_can_register": "Jeder darf sich Registrieren",
+		"homepage_offline": "Homepage Offline",
+		"admin_email": "Administrator E-Mail",
+		"meta_desc": "Meta Beschreibung",
+		"meta_keys": "Meta Schlüsselwörter",
+		"meta_author": "Meta Autor",
+		"hp_name": "Hompage Name",
+		"template": "Template",
+		"default_language": "Standard Sprache",
+
+
+		"placeholder":""
+	}
+}

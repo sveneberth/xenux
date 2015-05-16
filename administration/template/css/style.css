@@ -250,11 +250,14 @@ header {
 header * {
 	color: inherit !important;
 }
-header .header-title {
+header a.header-title {
 	line-height: 30px;
 	font-size: 18px;
 	margin-left: 10px;
 	text-decoration: none;
+}
+header a.header-title:hover {
+	color: #999 !important;
 }
 header .profile {
 	font-size: 16px;

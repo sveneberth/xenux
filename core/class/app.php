@@ -110,6 +110,9 @@ class app
 	{
 		$this->site = $this->url[0];
 		
+		// append translations
+		translator::appendTranslations(PATH_ADMIN . '/translation/');
+
 		if ($this->site == 'login' || $this->site == 'logout')
 		{
 			if (inludeExists(PATH_ADMIN."/modules/login/controller.php"))

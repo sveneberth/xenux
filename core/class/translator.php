@@ -46,10 +46,16 @@ class translator
 		}
 	}
 
+	public static function getTranslationFile($lang, $path=PATH_MAIN."/translation/")
+	{
+		return
+			json_decode(file_get_contents($path . $lang . '.json'));
+	}
+
 	private static function getTranslations($lang, $path=PATH_MAIN."/translation/")
 	{
 		return
-			(array) json_decode(file_get_contents($path . $lang . '.json'));
+			(array) self::getTranslationFile($lang, $path)->translations;
 	}
 
 	public static function appendTranslations($path)
@@ -61,6 +67,8 @@ class translator
 		}
 
 		$lang = self::getLanguage();
+
+		// check if currently language available
 		if(self::translationExists($lang, $path))
 		{
 			self::$translations = array_merge(self::$translations, self::getTranslations($lang, $path));
@@ -76,18 +84,32 @@ class translator
 		return
 			file_exists($path . $lang . '.json') && 
 			is_json(file_get_contents($path . $lang . '.json')) && 
-			isset(self::getLanguages()->{$lang});
+			isset(self::getLanguages()[$lang]);
 	}
 
-	public function getLanguages()
+	public function getLanguages($path=PATH_MAIN.'/translation/')
 	{
-		$content = file_get_contents(PATH_MAIN."/translation/index.json");
-		if($json = is_json($content, true))
+		$languages = array();
+
+		if ($handle = opendir($path))
 		{
-			return $json->languages;
+			while (false !== ($file = readdir($handle)))
+			{
+				if (is_dir($path . $file)) 
+					continue;
+
+				$content = file_get_contents($path . $file);
+				if($json = is_json($content, true))
+				{
+					$language = str_replace('.'. end(explode('.', $file)), '', $file);
+					$languages[$language] = $json->info;
+				}
+			}
+
+			closedir($handle);
 		}
 
-		return false;
+		return $languages;
 	}
 }
 

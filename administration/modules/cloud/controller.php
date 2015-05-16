@@ -7,7 +7,7 @@ class cloudController extends AbstractController
 		$this->modulename = str_replace('Controller', '', get_class());
 
 		if(!isset($this->url[1]) || empty($this->url[1]))
-			header("Location: ".URL_ADMIN.'/'.$this->modulename.'/home');
+			header("Location: ".URL_ADMIN.'/'.$this->modulename.'/cloud');
 	}
 	
 	public function run()
