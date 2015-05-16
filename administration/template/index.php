@@ -55,14 +55,14 @@
 			$modules = $app->getAdminModule();
 			foreach($modules as $module) // for module in modules
 			{
-				if($module == 'dashboard') // skip dashboard
+				if ($module == 'dashboard') // skip dashboard
 					continue;
 
-				if(file_exists(PATH_ADMIN.'/modules/'.$module.'/menu.json')) // if module-menu-file exist
+				if (file_exists(PATH_ADMIN.'/modules/'.$module.'/menu.json')) // if module-menu-file exist
 				{
 					$filecontent = file_get_contents(PATH_ADMIN.'/modules/'.$module.'/menu.json');
 
-					if($json = is_json($filecontent, true)) // if file is a valid json-file
+					if ($json = is_json($filecontent, true)) // if file is a valid json-file
 					{
 						$headline = substr($json->headline, 0, 2) === '__' ? __(substr($json->headline, 2)) : $json->headline;
 
@@ -71,14 +71,14 @@
 
 						foreach($json->links as $label => $link)
 						{
-						echo "\t".'<li class="'.($app->url[0] == $module && $app->url[1]==str_replace('/','',$link)?'active':'').'"><a href="'.URL_ADMIN.'/'.$module.$link.'">'.$label.'</a></li>'."\n";
+							echo "\t".'<li class="'.($app->url[0] == $module && $app->url[1]==str_replace('/','',$link)?'active':'').'"><a href="'.URL_ADMIN.'/'.$module.$link.'">'.$label.'</a></li>'."\n";
 						}
 
 						echo "</ul>\n";
 					}
 					else
 					{
-						echo "invalid json file";
+						// invalid json file (print nothing)
 					}
 				}
 				else

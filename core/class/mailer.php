@@ -84,7 +84,7 @@ class mailer
 
 	private function buildMail()
 	{
-		if(strpos($this->charset, 'UTF') ===  0 || strpos($this->charset, 'ISO') ===  0 )
+		if (strpos($this->charset, 'UTF') ===  0 || strpos($this->charset, 'ISO') ===  0 )
 		{
 $this->mail = '<!DOCTYPE html>
 <html lang="' . $this->lang . '">
@@ -117,17 +117,15 @@ $this->mail = '<!DOCTYPE html>
 			implode("\r\n", $this->header)
 		);
 
-		if(DEBUG == true)
-		{
+		if (defined('DEBUG') && DEBUG == true)
 			$this->debugMail();
-		}
 
 		return $result;
 	}
 
 	private function debugMail()
 	{
-		if(!file_exists(PATH_MAIN . $this->debugPath))
+		if (!file_exists(PATH_MAIN . $this->debugPath))
 			mkdir(PATH_MAIN . $this->debugPath);
 
 		$txt = implode("\r\n", $this->header) . "\r\n" . $this->mail;
@@ -136,6 +134,5 @@ $this->mail = '<!DOCTYPE html>
 		fwrite($handle, $txt);
 		fclose($handle);
 	}
-
 }
 ?>

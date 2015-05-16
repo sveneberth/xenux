@@ -202,7 +202,7 @@ class app
 		}
 		catch (Exception $e)
 		{
-			if(!(defined('DEBUG') && DEBUG == true))
+			if (!(defined('DEBUG') && DEBUG == true))
 				log::setPHPError($e);
 			$this->page_name = "Error";
 			return '<p class="box-shadow info-message error">' . $e->getMessage() . '</p>';
@@ -303,7 +303,7 @@ class app
 		else
 		{
 			ErrorPage::view(404);
-			if(!(defined('DEBUG') && DEBUG == true))
+			if (!(defined('DEBUG') && DEBUG == true))
 				log::writeLog('404 - Request file "'.$param.'" not found');
 		}
 	}
