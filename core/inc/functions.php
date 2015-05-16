@@ -229,56 +229,33 @@ function is_json($string, $return_data = false)
 	return (json_last_error() == JSON_ERROR_NONE) ? ($return_data ? $data : TRUE) : FALSE;
 }
 
-/*function __($str) // translate
-{
-	$lang = app::getLanguage(); // get language
-			
-	$translationFile = file_get_contents(PATH_MAIN."/translation/{$lang}.json"); // get translation file
-	if(!is_json($translationFile)) // invalid translationfile: return string
-		return $str;
-		
-	$translation = json_decode($translationFile); // parse json
-
-	$args = func_get_args(); // get arguments
-	unset($args[0]); // unset varname
-	
-	$translationStr = @$translation->$str; // set string
-	
-	foreach($args as $key => $val)
-	{
-		$translationStr = str_replace("%".$key, $val, $translationStr); // replace vars
-	}
-	
-	return isset($translationStr) ? $translationStr : $str; // return translation or string
-}*/
-
 function getMenuBarMultiSites($absolutenumber, $start, $amount)
 {
-	ob_start();
+	$return = '';
 
-		if($absolutenumber > $amount)
+	if($absolutenumber > $amount)
+	{
+		$return .= "<div class=\"sitenavi\">\n";
+		$b = ceil($absolutenumber/$amount);
+		for($a = ceil($absolutenumber/$amount); $a > 0; $a--)
 		{
-			echo "<div class=\"sitenavi\">\n";
-			$b = ceil($absolutenumber/$amount);
-			for($a = ceil($absolutenumber/$amount); $a > 0; $a--)
+			$thissite = $b - $a + 1;
+			$limit = $amount * ($b - $a);
+			$return .= "\t<a class=\"sitenavi";
+			if($limit == $start)
+				$return .= " active";
+			$return .= "\" href=\"{{SITE_PATH}}?";
+			foreach ($_GET as $key => $value)
 			{
-				$thissite = $b - $a + 1;
-				$limit = $amount * ($b - $a);
-				echo "\t<a class=\"sitenavi";
-				if($limit == $start)
-					echo " active";
-				echo "\" href=\"{{SITE_PATH}}?";
-				foreach ($_GET as $key => $value)
-				{
-					if($key != 'url' && $key != 'start' && $key != 'amount')					
-						echo $key . '=' . $value . '&';
-				}
-				echo "start=$limit&amount=$amount\">$thissite</a>\n";
+				if($key != 'url' && $key != 'start' && $key != 'amount')					
+					$return .= $key . '=' . $value . '&';
 			}
-			echo "</div>\n";
+			$return .= "start=$limit&amount=$amount\">$thissite</a>\n";
 		}
+		$return .= "</div>\n";
+	}
 
-	return ob_get_clean();
+	return $return;
 }
 
 function parse_bool($value)

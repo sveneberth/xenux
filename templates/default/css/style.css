@@ -495,6 +495,7 @@ footer a:hover {
 	box-sizing: border-box;
 }
 
+.leftboxes div,
 .leftboxes ul {
 	padding: 2px 2px 5px 2px;
 	margin: 0;
@@ -510,21 +511,24 @@ footer a:hover {
 	padding: 5px 0;
 	overflow: hidden;
 }
+.leftboxes div:last-child,
 .leftboxes ul:last-child,
 .leftboxes ul li:last-child {
 	border-bottom-width: 0px;
 }
+.leftboxes div .title,
 .leftboxes ul .title {
 	font-weight: bold;
 	display: block;
 	margin-bottom: 2px;
 }
+.leftboxes div .date,
 .leftboxes ul .date {
 	color: #666;
 	font-size: .8em;
 	display: block;
 }
-.leftboxes h3{
+.leftboxes h3 {
 	margin: 2px 0 0 0;
 	font-size: 115%;
 	font-weight: bold;

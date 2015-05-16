@@ -46,6 +46,7 @@ include_once(PATH_MAIN.'/core/class/controller.abstract.php');
 include_once(PATH_MAIN.'/core/class/user.php');
 include_once(PATH_MAIN.'/core/class/form.php');
 include_once(PATH_MAIN.'/core/class/mailer.php');
+include_once(PATH_MAIN.'/core/class/ErrorPage.php');
 
 /** divider for a new page call */
 log::writeLog("\r\n\r\n");

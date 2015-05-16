@@ -1,4 +1,5 @@
 <?php
+#FIXME: make class tidy
 class translator
 {	
 	public static $translations = array();

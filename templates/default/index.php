@@ -16,7 +16,7 @@
 	<!-- http://xenux.bplaced.net -->
 	<meta name="generator" content="Xenux v{{XENUX_VERSION}} - das kostenlose CMS" />
 	
-	<link rel="shortcut icon" href="{{TEMPLATE_PATH}}/img/logo.ico" /> <!-- FIXME: use favicon.png -->
+	<link rel="shortcut icon" href="{{TEMPLATE_PATH}}/img/logo.ico" /> "*" FIXME: use favicon.png (redesign favicon) "*"
 	
 	<!-- css -->
 	<link rel="stylesheet" type="text/css" href="{{TEMPLATE_PATH}}/css/style.css" media="all"/>
@@ -77,7 +77,7 @@
 			<nobr>
 				<ul class="topmenu mainmenu">
 <?php
-#var_dump($app);
+// get sites lebel 2 (only public sites)
 $sites = $XenuxDB->getList('sites', [
 			'order' => 'sortindex ASC',
 			'where' => [
@@ -87,12 +87,13 @@ $sites = $XenuxDB->getList('sites', [
 				]
 			],
 		]);
-if($sites)
+if ($sites)
 {
-	foreach($sites as $site)
+	foreach ($sites as $site)
 	{
 		echo "<li>\n\t<a href=\"".getPageLink($site->id, $site->title)."\">".$site->title."</a>\n";
 		
+		// get sites level 2 (only public sites)
 		$subsites = $XenuxDB->getList('sites', [
 			'order' => 'sortindex ASC',
 			'where' => [
@@ -102,12 +103,14 @@ if($sites)
 				]
 			],
 		]);
-		if($subsites)
+		if ($subsites)
 		{
 			echo "\t<ul>\n";
-			foreach($subsites as $subsite)
+			foreach ($subsites as $subsite)
 			{
 				echo "\t\t<li>\n\t\t\t<a href=\"".getPageLink($subsite->id, $subsite->title)."\">".$subsite->title."</a>\n";
+				
+				// get sites level 3 (only public sites)
 				$subsubsites = $XenuxDB->getList('sites', [
 					'order' => 'sortindex ASC',
 					'where' => [
@@ -117,10 +120,10 @@ if($sites)
 						]
 					],
 				]);
-				if($subsubsites)
+				if ($subsubsites)
 				{
 					echo "\t\t\t<ul>\n";
-					foreach($subsubsites as $subsubsite)
+					foreach ($subsubsites as $subsubsite)
 					{
 						echo "\t\t\t\t<li>\n\t\t\t\t\t<a href=\"".getPageLink($subsubsite->id, $subsubsite->title)."\">".$subsubsite->title."</a>\n\t\t\t\t</li>\n";
 					}
@@ -144,8 +147,8 @@ if($sites)
 							</form>
 						</div>
 					</li>
-					<li class="mobilemenu"><a href="{{URL_MAIN}}/news/list">News</a></li>
-					<li class="mobilemenu"><a href="{{URL_MAIN}}/event/list">Termine</a></li>
+					<li class="mobilemenu"><a href="{{URL_MAIN}}/news/list"><?= __('news_Pl') ?></a></li>
+					<li class="mobilemenu"><a href="{{URL_MAIN}}/event/calendar"><?= __('events') ?></a></li>
 				</ul>
 			</nobr>
 		</header>
@@ -165,15 +168,21 @@ if($sites)
 			<a title="<?= __('fontSizeIncrease') ?>" class="increase"></a>
 		</div>
 		<div class="leftboxes">
+
 			<ul class="news">
-				<h3><?= __('news_Pl') ?>:</h3><?php
+				<h3><?= __('news_Pl') ?>:</h3>
+				<?php
+				// get news (only public news)
 				$newsList = $XenuxDB->getList('news', [
 					'limit' => 3,
-					'order' => 'create_date DESC'
+					'order' => 'create_date DESC',
+					'where' => [
+						'public' => true
+					]
 				]);
-				if($newsList)
+				if ($newsList)
 				{
-					foreach($newsList as $news)
+					foreach ($newsList as $news)
 					{
 						echo "	<li>
 									<span class=\"title\">$news->title</span>
@@ -190,13 +199,12 @@ if($sites)
 				?>
 				<a href="{{URL_MAIN}}/news/list"><?= __("showAllNews") ?></a>
 			</ul>
-			<?php			
-			
-			/* events */
-			?>
+
+
 			<ul class="events">
 				<h3><?= __('events') ?>:</h3>
 				<?php
+				// get events
 				$eventList = $XenuxDB->getList('events', [
 					'limit' => 3,
 					'order' => 'start_date DESC',
@@ -204,9 +212,9 @@ if($sites)
 						'##start_date[>=]' => 'CURDATE()'
 					]
 				]);
-				if($eventList)
+				if ($eventList)
 				{
-					foreach($eventList as $event)
+					foreach ($eventList as $event)
 					{
 						echo "	<li>
 									<span class=\"title\">$event->title</span>
@@ -223,18 +231,24 @@ if($sites)
 				?>
 				<a href="{{URL_MAIN}}/event/calendar"><?= __("gotoEventCalendar") ?></a>
 			</ul>
+
+
 			<?php
-			/* newest sites */
+			// newest sites (only public sites)
 			$newestSitesList = $XenuxDB->getList('sites', [
 				'limit' => 5,
-				'order' => 'create_date DESC'
+				'order' => 'create_date DESC',
+				'where' => [
+					'public' => true
+				]
 			]);
-			if($newestSitesList)
+
+			if ($newestSitesList)
 			{
 				echo "<ul class=\"newest-sites\">";
 				echo "<h3>". __('newestSites') . ":</h3>";
 				
-				foreach($newestSitesList as $site)
+				foreach ($newestSitesList as $site)
 				{
 					echo "	<li>
 								<a href=\"".getPageLink($site->id, $site->title)."\">$site->title</a>
@@ -245,10 +259,12 @@ if($sites)
 			}
 			?>
 
-			<ul> "*" #FIXME: don't use ul "*"
+
+			<div>
 				<h3><?= __("login") ?>:</h3>
 <?php
-				if(!$user->isLogin()) {
+				if (!$user->isLogin())
+				{
 ?>
 				<form action="{{URL_ADMIN}}/login" method="POST">
 					<input type="text" name="username" placeholder="<?= __("username") ?>">
@@ -260,20 +276,24 @@ if($sites)
 					<a href="{{URL_ADMIN}}/login?task=register"><?= __("register") ?></a>
 				</form>
 <?php
-				} else {
+				}
+				else
+				{
 ?>
 				<?= __("successLogin", $user->userInfo->firstname) ?>!<br />
-				<a href="{{URL_ADMIN}}">&raquo;zur Administration</a>
-				<a href="{{URL_ADMIN}}/login?task=logout" class="btn"><?= __("logout") ?></a>
+				<a href="{{URL_ADMIN}}">&raquo;<?= __('go to administration') ?></a><br />
+				<a href="{{URL_ADMIN}}/login?task=logout"><?= __("logout") ?></a>
 <?php
 				}
 ?>
-			</ul>
-			<ul>
+			</div>
+
+
+			<div>
 				<p style="margin: 5px 0;">Change language:</p>
 				<?php
 				$langs = translator::getLanguages();
-				if(count((array)$langs) > 1):
+				if (count((array)$langs) > 1):
 					?>
 					<select onchange="window.location.href = '{{SITE_PATH}}?lang=' + $(this).val();" class="language-selector">
 						<option disabled="disabled" data-option-class="label" data-style="background-image:none;">Select Language</option>
@@ -299,7 +319,8 @@ if($sites)
 					<?php
 				endif;
 			?>
-			</ul>
+			</div>
+
 		</div>
 		
 		<main>
@@ -311,7 +332,7 @@ if($sites)
 
 			<div class="links">
 				<a href="{{URL_MAIN}}/sitemap"><?= __('sitemap') ?></a>
-				<a href="{{URL_MAIN}}/administration">Administration</a>
+				<a href="{{URL_MAIN}}/administration"><?= __('administration') ?></a>
 				
 				<a href="{{URL_MAIN}}/contact"><?= __('contact') ?></a>
 				<a href="{{URL_MAIN}}/imprint"><?= __('imprint') ?></a>

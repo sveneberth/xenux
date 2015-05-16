@@ -6,7 +6,7 @@ if(!(defined('DEBUG') && DEBUG == true))
 	error_reporting(0);
 
 if(!$app->user->isLogin())
-	die($app->getErrorPage(401));
+	ErrorPage::view(404);
 
 $return = array();
 

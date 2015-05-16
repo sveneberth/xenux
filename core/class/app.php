@@ -22,7 +22,7 @@ class app
 		$this->siteurl	= URL_MAIN.'/'.$url;
 		$this->url		= explode('/', $url);
 
-		if(isset($_GET['lang']))
+		if (isset($_GET['lang']))
 		{
 			translator::setLanguage($_GET['lang']);
 			header("Location: " . URL_REQUEST);
@@ -39,7 +39,7 @@ class app
 			]
 		]);
 
-		if($result !== false)
+		if ($result !== false)
 		{
 			return $result->value;
 		}
@@ -76,7 +76,7 @@ class app
 	{
 		$this->site = empty($this->url[0]) ? 'home' : $this->url[0];
 	
-		if($this->site == 'file')
+		if ($this->site == 'file')
 		{
 			echo $this->getFile(@$this->url[1]);
 		}
@@ -110,9 +110,9 @@ class app
 	{
 		$this->site = $this->url[0];
 		
-		if($this->site == 'login' || $this->site == 'logout')
+		if ($this->site == 'login' || $this->site == 'logout')
 		{
-			if(inludeExists(PATH_ADMIN."/modules/login/controller.php"))
+			if (inludeExists(PATH_ADMIN."/modules/login/controller.php"))
 			{
 				$controller = new loginController($this->url);
 				
@@ -125,9 +125,9 @@ class app
 				return "404 - controller not found";
 			}
 		}
-		elseif($this->user->isLogin())
+		elseif ($this->user->isLogin())
 		{
-			if(empty($this->site))
+			if (empty($this->site))
 			{
 				header('Location: '.URL_ADMIN.'/dashboard/home');
 				return false;
@@ -149,7 +149,6 @@ class app
 			$template->setVar("headline", $this->page_name);
 
 			$num_active_module = array_search($this->site, $this->getAdminModule());
-			log::writeLog(serialize(array_search($this->site, $this->getAdminModule())));
 			$template->setVar("num_active_module", $num_active_module !== false ? $num_active_module+1 : 0);
 			
 			echo $template->render();	
@@ -166,11 +165,11 @@ class app
 		$return = Array();
 
 		$modules = array_filter(glob(PATH_ADMIN.'/modules/*'), 'is_dir');
-		foreach($modules as $module)
+		foreach ($modules as $module)
 		{
 			$module = str_replace(PATH_ADMIN.'/modules/', '', $module);
 
-			if(($module == 'login' || $module == 'dashboard') && $all == false)
+			if (($module == 'login' || $module == 'dashboard') && $all == false)
 				continue;
 
 			$return[] = $module;
@@ -183,7 +182,7 @@ class app
 	{
 		try
 		{
-			if(inludeExists(($administration ? PATH_ADMIN : PATH_MAIN)."/modules/".$this->site."/controller.php"))
+			if (inludeExists(($administration ? PATH_ADMIN : PATH_MAIN)."/modules/".$this->site."/controller.php"))
 			{
 				$classname = $this->site."Controller";
 				$controller = new $classname($this->url);
@@ -201,9 +200,10 @@ class app
 				throw new Exception("404 - controller \"$this->site\" not found");
 			}
 		}
-		catch(Exception $e)
+		catch (Exception $e)
 		{
-			log::setPHPError($e);
+			if(!(defined('DEBUG') && DEBUG == true))
+				log::setPHPError($e);
 			$this->page_name = "Error";
 			return '<p class="box-shadow info-message error">' . $e->getMessage() . '</p>';
 		}
@@ -240,7 +240,7 @@ class app
 						]
 					]
 				]);
-		if($file)
+		if ($file)
 		{
 			$lastModified = mysql2date('D, d M Y H:i:s', $file->lastModified);
 			$typeCategory = substr($file->mime_type, 0, strpos($file->mime_type, "/"));
@@ -248,22 +248,21 @@ class app
 			header("Content-Disposition: ".(isset($options['d']) ? 'attachment' : 'inline')."; filename=\"{$file->filename}\"");
 			header("Cache-Control: public, max-age=3600");
 			header("Last-Modified: {$lastModified} GMT");
-			header("Status: 200 OK");
 
-			if($typeCategory == 'image' && $file->mime_type != "image/svg+xml" && (isset($options['c']) || isset($options['r']) || isset($options['s'])))
+			if ($typeCategory == 'image' && $file->mime_type != "image/svg+xml" && (isset($options['c']) || isset($options['r']) || isset($options['s'])))
 			{
 				$image = imagecreatefromstring($file->data);
 
-				if(isset($options['r']) && is_numeric($options['r']))
+				if (isset($options['r']) && is_numeric($options['r']))
 					$image = imagerotate($image, $options['r'],  imagecolorallocate($image, 255, 255, 255));
 
 				$x = imagesx($image);
 				$y = imagesy($image);
 
-				if(isset($options['s']))
+				if (isset($options['s']))
 					$options['s'] = $options['s'] > $x ? $x : $options['s'];
 				
-				if(isset($options['c']))
+				if (isset($options['c']))
 				{
 					$desired_height	= $desired_width = isset($options['s']) && is_numeric($options['s']) ? $options['s'] : $y;
 				}
@@ -279,15 +278,15 @@ class app
 				imagecopyresampled($new, $image, 0, 0, 0, 0, $desired_width, $desired_height, $x, $y);
 				imagedestroy($image);
 				
-				if($file->mime_type == "image/jpeg")
+				if ($file->mime_type == "image/jpeg")
 				{
 					header("Content-type: image/jpeg");
 					imagejpeg($new);
 				}
-				elseif($file->mime_type == "image/gif")
+				elseif ($file->mime_type == "image/gif")
 				{
 					header("Content-type: image/gif");
-					imagegif($new);
+					imagegif ($new);
 				}
 				else
 				{
@@ -303,40 +302,10 @@ class app
 		}
 		else
 		{
-			header("Status: 404 - Request file not found");
-			echo $this->getErrorPage(404);
-			log::writeLog('404 - Request file "'.$param.'" not found');
+			ErrorPage::view(404);
+			if(!(defined('DEBUG') && DEBUG == true))
+				log::writeLog('404 - Request file "'.$param.'" not found');
 		}
-	}
-
-	public function getErrorPage($statuscode)
-	{
-		$template = new template(PATH_MAIN."/templates/".$this->template."/error.php");
-		$template->setVar('errorcode', $statuscode);
-
-		switch ($statuscode)
-		{
-			case 401:
-				$template->setVar('status',	"Unauthorized");
-				$template->setVar('message', "You don't have permission to access this file. Please login.");
-				break;
-			case 403:
-				$template->setVar('status',	"Forbidden");
-				$template->setVar('message', "You don't have permission to access this file.");
-				break;
-			case 404:
-				$template->setVar('status',	"Not Found");
-				$template->setVar('message', "The request file doesn't exist on this server.");
-				break;
-			case 500:
-				$template->setVar('status',	"Internal server error");
-				$template->setVar('message', "The request failed.");
-				break;
-		}
-
-		header("HTTP/1.0 {$statuscode} ".$template->getVar('status'));
-
-		return $template->render();
 	}
 }
 ?>

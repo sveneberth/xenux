@@ -1,7 +1,13 @@
 <?php
 class ErrorPage
 {
-	public function __construct($statuscode = 404)
+	public static function view($statuscode = 404)
+	{
+		echo self::get($statuscode);
+		exit;
+	}
+
+	public static function get($statuscode = 404)
 	{
 		$template = new template(PATH_MAIN."/core/template/error.php");
 		$template->setVar('errorcode', $statuscode);
@@ -26,7 +32,7 @@ class ErrorPage
 				break;
 		}
 
-		header("HTTP/1.0 {$statuscode} ".$template->getVar('status'));
+		header("HTTP/1.1 {$statuscode} ".$template->getVar('status'));
 
 		return $template->render();
 	}
