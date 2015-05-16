@@ -105,14 +105,14 @@ INSERT INTO `%PREFIX%main` (`id`, `name`, `value`, `label`) VALUES
 (4, 'hp_name', 'Meine Homepage', 'Homepagename'),
 (5, 'meta_desc', 'Hier die Beschreibung der Homepage, die in den Meta-Tags angezeigt wird', 'Beschreibung der Homepage(Meta-Tag)'),
 (6, 'meta_keys', 'Schlüsselwörter der Homepage, die in den Meta-Tags angezeigt werden', 'Schlüsselwörter Homepage (Meta-Tag)'),
-(10, 'admin_email', 'mail@sven-eberth.de.hm', 'E-Mail Adresse als Absender (bei Registrierungen o.Ä.)'),
-(11, 'HomePage_ID', '15', 'Home Seite'),
-(12, 'users_can_register', 'true', 'Nutzer können sich registrieren'),
+(10, 'admin_email', 'mail@xenux', 'E-Mail Adresse als Absender (bei Registrierungen o.Ä.)'),
+(11, 'HomePage_ID', '', 'Home Seite'),
+(12, 'users_can_register', 'false', 'Nutzer können sich registrieren'),
 (13, 'homepage_offline', 'false', 'Wartungsarbeiten'),
 (14, 'template', 'default', 'Template'),
 (15, 'ImprintPage_ID', '', 'Impressum Seite'),
 (16, 'ContactPage_ID', '', 'Kontakt Seite'),
-(17, 'default_language', 'de', 'Standart sprache');
+(17, 'default_language', 'de', 'Standard Sprache');
 
 -- --------------------------------------------------------
 
