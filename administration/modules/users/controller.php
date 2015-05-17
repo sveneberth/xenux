@@ -237,7 +237,6 @@ class usersController extends AbstractController
 		if($form->isSend() && $form->isValid())
 		{
 			$data = $form->getInput();
-			log::writeLog(print_r($data, true));
 
 			$username		= preg_replace('/[^a-zA-Z0-9_\-\.]/' , '' , $data['username']);
 			$homepage		= (preg_match('/^([a-zA-Z]*)\:\/\//', $data['homepage']) && !empty($data['homepage'])) ? $data['homepage'] : 'http://'.$data['homepage'];
@@ -332,7 +331,8 @@ class usersController extends AbstractController
 
 			if($success === true)
 			{
-				log::writeLog('saved successfull');
+				if (!(defined('DEBUG') && DEBUG == true))
+					log::writeLog('user saved successfull');
 				$this->messages[] = '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>';
 
 				if(isset($data['submit_close']))
@@ -345,8 +345,9 @@ class usersController extends AbstractController
 			}
 			else
 			{
+				if (!(defined('DEBUG') && DEBUG == true))
+					log::writeLog('user saving failed');
 				$this->messages[] = '<p class="box-shadow info-message error">'.__('savingFailed').'</p>';
-				log::writeLog('saving failed');
 
 				if(isset($data['submit_close']))
 				{

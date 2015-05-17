@@ -29,7 +29,8 @@ class XenuxDB
 			$statement .= ';';
 
 			$this->setLastQuery($statement);
-			log::writeLog('DB Query: ' . $statement);
+			if (!(defined('DEBUG') && DEBUG == true))
+				log::writeLog('DB Query: ' . $statement);
 
 			$result = $this->db->query($statement);
 		

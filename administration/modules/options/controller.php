@@ -148,11 +148,11 @@ class optionsController extends AbstractController
 
 			if($success)
 			{
-				$template->setVar("messages", "saved successfull");
+				$template->setVar("messages", __("saved successful"));
 			}
 			else
 			{
-				$template->setVar("messages", "saving failed");
+				$template->setVar("messages", __("saving failed"));
 			}
 			
 		}
