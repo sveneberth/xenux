@@ -5,9 +5,16 @@
 	},
 	"translations":
 	{
+		"writtenInfo":"written by %1 on %2 at %3 o'clock.",
+		
+		"newestSites":"newest sites",
+		"go to administration":"go to administration",
+		
 		"fontSizeDecrease":"font smaller",
 		"fontSizeReset":"font normal",
 		"fontSizeIncrease":"font greater",
+		
+		"picture x of y": "Picture x of y",
 
 		"placeholder":""
 	}

@@ -119,7 +119,7 @@ input, textarea, select {
 	width: 400px;
 	box-sizing: border-box;
 	max-width: 100%;
-	margin: 8px 0;
+	margin: 0 0 8px 0;
 	display: block;
 	transition: ease border .4s, ease background .2s;
 }
@@ -135,7 +135,7 @@ select.wrong {
 }
 
 label {
-	margin-bottom: -6px;
+	margin-bottom: 2px;
 	display: block;
 	font-size: 95%;
 }
@@ -1157,7 +1157,9 @@ div.sitenavi > a.sitenavi.active {
 		font-size: 16px;
 	}
 	
-	.topmenu.mainmenu li.search {display:none} /* FIXME: show search in resposive view */
+	.topmenu.mainmenu li.search {
+		display:none;
+	}
 	
 	main {
 		float: left;

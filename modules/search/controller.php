@@ -14,15 +14,53 @@ class searchController extends AbstractController
 	
 	public function run()
 	{
-		if(!empty($this->searchString))
+
+		echo "<h1 class=\"page-headline\">" . __("search") . "</h1>";
+
+		echo
+"<style>
+	.float {
+		float: left;
+		display: inline-block;
+		margin: 0 !important;
+	}
+	.input {
+		width:84%;
+	}
+	.submit {
+		margin-left: 1% !important;
+		width: 15% !important;
+	}
+</style>";
+		
+		$formFields = array
+		(
+			'q' => array
+			(
+				'type' => 'text',
+				'required' => true,
+				'label' => __('searchString'),
+				'value' => @$_GET['q'],
+				'class' => 'float input'
+			),
+			'search' => array
+			(
+				'type' => 'submit',
+				'label' => __('search'),
+				'class' => 'float submit'
+			)
+		);
+		$form = new form($formFields, null, null, 'GET');
+		$form->disableRequiredInfo();
+		
+		echo $form->getForm();
+		echo '<div class="clear" style="margin-bottom: 2em;"></div>';
+
+		if($form->isSend() && $form->isValid() && !empty($this->searchString))
 		{
 			$this->search();
 		}
-		else
-		{
-			echo "empty searchstring"; 
-		}
-		
+
 		$this->page_name = __("search");
 
 		return true;
@@ -32,8 +70,6 @@ class searchController extends AbstractController
 	private function search()
 	{
 		global $XenuxDB;
-	
-		echo "<h1 class=\"page-headline\">" . __("search") . "</h1>";
 	
 		$start			= is_numeric(@$_GET['start']) ? floor($_GET['start']) : 0;
 		$amount			= (is_numeric(@$_GET['amount']) && floor(@$_GET['amount']) != 0) ? floor($_GET['amount']) : 10;

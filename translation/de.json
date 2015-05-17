@@ -10,6 +10,7 @@
 		"noscript-message":"In deinem Browser ist JavaScript deaktiviert. Um den vollen Funktionsumfang dieser Webseite zu nutzen, benötigst du JavaScript.",
 		
 		"search":"Suche",
+		"searchString":"Suchtext",
 		"noSearchResult":"keine Suchergebnisse zu <i>\"%1\"</i> ...",
 		
 		"news_Sg":"Nachricht",
@@ -55,6 +56,7 @@
 		"gotocontactpersonList":"alle Ansprechpartner anzeigen",
 				
 		"If you don't want to change the password, leave the fields blank":"Falls du das Passwort nicht ändern möchtest, lass die Felder leer",
+		"usernames cannot be changed":"Benutzernamen können nicht geändert werden",
 
 		"### form ###":"",
 		"please fill field": "Bitte Feld \"%1\" ausfüllen",
@@ -65,9 +67,6 @@
 		"only number in field": "Es dürfen nur Zahlen im Feld \"%1\" verwendet werden!",
 		"with a star marked fields are mandatory fields": "Alle mit einem Stern gekennzeichnete Felder sind Pflichtfelder.",
 		"you cannot change this value": "Du kannst diesen Wert nicht ändern",
-
-		
-		"usernames cannot be changed":"Benutzernamen können nicht geändert werden",
 
 		"yes":"Ja",
 		"no":"Nein",

@@ -149,6 +149,7 @@ if ($sites)
 					</li>
 					<li class="mobilemenu"><a href="{{URL_MAIN}}/news/list"><?= __('news_Pl') ?></a></li>
 					<li class="mobilemenu"><a href="{{URL_MAIN}}/event/calendar"><?= __('events') ?></a></li>
+					<li class="mobilemenu"><a href="{{URL_MAIN}}/search"><?= __('search') ?></a></li>
 				</ul>
 			</nobr>
 		</header>

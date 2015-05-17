@@ -8,7 +8,7 @@ class app
 	public $page_name;
 	public $user;
 	
-	private $cssfiles;
+	private $cssfiles = array();
 
 	public $canonical_URL = null;
 	public $prev_URL = null;
@@ -84,6 +84,9 @@ class app
 		}
 		else
 		{
+			// append translations
+			translator::appendTranslations(PATH_MAIN."/templates/".$this->template."/translation/");
+
 			$template = new template(PATH_MAIN."/templates/".$this->template."/index.php");
 			
 			$template->setVar("page_content", $this->getPageContent());

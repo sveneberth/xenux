@@ -7,10 +7,11 @@
 	},
 	"translations":
 	{
-		"search":"Search",
-		"noSearchResult":"no search results for <i>\"%1\"</i> ...",
+		"noscript-message":"In your browser is JavaScript disabled. please activate JavaScript to use the full range of functions of the website.",
 		
-		"writtenInfo":"written by %1 on %2 at %3 o'clock.",
+		"search":"Search",
+		"searchString":"Searchtext",
+		"noSearchResult":"no search results for <i>\"%1\"</i> ...",
 
 		"news_Sg":"news",
 		"news_Pl":"news",
@@ -41,14 +42,24 @@
 		"sitemap":"Sitemap",
 		"contact":"Contact",
 		"imprint":"Imprint",
-		
-		"newestSites":"newest sites",
-
-		"noscript-message":"In your browser is JavaScript disabled. please activate JavaScript to use the full range of functions of the website.",
+		"administration":"administration",
 
 		"contactpersons":"contactpersons",
 		"showContactperson":"show contactperson",
 		"gotocontactpersonList":"go to contactperson list",
+
+		"### form ###":"",
+		"please fill field": "Please fill field \"%1\"",
+		"password to short. minlength": "Password in field is \"%1\" to short. Minlength %2 Chars!",
+		"please fill in a valid eMail-adress": "Please fill in \"%1\" a valid eMail-adress!",
+		"please fill in a valid date": "Please fill in field \"%1\" a valid date!",
+		"please fill in a valid time": "please fill in field \"%1\" a valid time!",
+		"only number in field": "Only numbers are allowed in field \"%1\"!",
+		"with a star marked fields are mandatory fields": "All with a star marked fields are mandatory fields.",
+		"you cannot change this value": "You cannot change this value.",
+
+		"yes":"Yes",
+		"no":"No",
 
 
 		"placeholder":""
