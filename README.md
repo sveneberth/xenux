@@ -14,7 +14,7 @@ Official Xenux Website: [www.xenux.bplaced.net](http://xenux.bplaced.net/)
  
 ### How do I get set up? ###
 
-* You must have installaed an Apache and MySQL Server on your System.
+* You must have installed an Apache and MySQL Server on your System.
 * You must have access to the file management (mostly via ftp) to load xenux on the server
 * open your project-path, you will redirect automatically to the Xenux Installer 
  
