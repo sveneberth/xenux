@@ -5,7 +5,7 @@
 */
 
 
-#/** MySQL Settings*/#
+/** ### MySQL Settings ### */
 /** MySQL Hostname */
 define('MYSQL_HOST',    'localhost');
 
@@ -23,9 +23,9 @@ define('MYSQL_PREFIX',	'XENUX_');
 
 
 /** Salt for User-Login  */
-define('SALT', 'aRa0mStrIng');
+define('SALT', 'aRan0mStrIng');
 
 
 /** enable (true) or disable (false) debugging mode  */
-define('DEBUG', true);
+define('DEBUG', false);
 ?>
