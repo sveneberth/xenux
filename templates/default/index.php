@@ -273,7 +273,9 @@ if ($sites)
 
 					<a href="{{URL_ADMIN}}/login?task=forgotpassword"><?= __("forgotPassword") ?>?</a><br />
 					<a href="{{URL_ADMIN}}/login?task=forgotusername"><?= __("forgotUsername") ?>?</a><br />
-					<a href="{{URL_ADMIN}}/login?task=register"><?= __("register") ?></a>
+					<?php if (parse_bool($app->getOption('users_can_register'))): ?>
+						<a href="{{URL_ADMIN}}/login?task=register"><?= __("register") ?></a>
+					<?php endif; ?>
 				</form>
 <?php
 				}

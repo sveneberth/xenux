@@ -19,6 +19,13 @@
 		"dashboard":"Dashboard",
 		"cloud":"Cloud",
 
+		"headline":"Überschrift",
+		"title":"Titel",
+		"createDate":"Erstelldatum",
+		"author":"Autor",
+		"ID":"ID",
+		
+
 
 		"placeholder":""
 	}

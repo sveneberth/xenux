@@ -15,7 +15,7 @@ class dashboardController extends AbstractController
 		global $XenuxDB, $app;
 
 		// append translations
-		translator::appendTranslations(PATH_ADMIN . '/modules/dashboard/translations/');
+		translator::appendTranslations(PATH_ADMIN . '/modules/'.$this->modulename.'/translation/');
 
 		$template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout.php");
 	
@@ -97,7 +97,7 @@ class dashboardController extends AbstractController
 		return $XenuxDB->Count('news', [
 			'where' => [
 				'AND' => [
-					'create_date[>=]' => date2mysql(strtotime("-1 week +1 day"), true),
+					'create_date[>=]' => date2mysql("-1 week +1 day"),
 					'public' => true
 				]
 			]

@@ -14,6 +14,11 @@ class cloudController extends AbstractController
 	{
 		global $XenuxDB, $app;
 
+		// append translations
+		translator::appendTranslations(PATH_ADMIN . '/modules/'.$this->modulename.'/translation/');
+
+		$app->addCSS(URL_ADMIN . '/modules/'.$this->modulename.'/cloud.css');
+
 		$template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout.php");
 	
 		$template->setVar("messages", '');

@@ -1,0 +1,29 @@
+{
+	"info":
+	{
+		"author": "Sven Eberth"
+	},
+	"translations":
+	{
+		"filename":"Dateiname",
+		"mimetype":"MIME-Type",
+		"size":"Größe",
+		"lastModified":"zuletzt geändert",
+		"author":"Autor",
+		"open":"Öffnen",
+		"download":"Downloaden",
+		"move":"Verschieben",
+		"move to":"Verschieben nach",
+		"rename":"Unbenennen",
+		"rename to":"Unbenennen nach",
+		"remove":"Löschen",
+		"properties":"Eigenschaften",
+		"drag files to uplaod here":"Dateien zum hochladen hier ablegen",
+		"create folder":"Ordner erstellen",
+		"upload":"hochladen",
+		"file":"Datei",
+
+
+		"placeholder":""
+	}
+}

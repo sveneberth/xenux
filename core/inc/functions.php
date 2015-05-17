@@ -194,6 +194,11 @@ function mysql2date($format, $date)
 	return date($format, $unixtime);
 }
 
+/**
+* date2mysql
+* @param date: date as string or unixtime
+* @param isUnixtime: is @param date unixtime (optional)
+*/ 
 function date2mysql($date, $isUnixtime=false)
 {
 	if(!$isUnixtime)

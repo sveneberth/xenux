@@ -158,6 +158,12 @@ class LoginController extends AbstractController
 	{
 		global $app, $XenuxDB;
 
+		if (!parse_bool($app->getOption('users_can_register')))
+		{
+			$template->setVar("message", '<p class="info">Es ist dir nicht erlaubt, dich zu regstieren. Bitte wende dich an den Administrator</p>');
+			return false;
+		}
+
 		$formFields = array
 		(
 			'firstname' => array

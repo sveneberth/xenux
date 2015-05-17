@@ -15,6 +15,9 @@ class newsController extends AbstractController
 	public function run()
 	{
 		global $XenuxDB, $app;
+		
+		// append translations
+		translator::appendTranslations(PATH_ADMIN . '/modules/'.$this->modulename.'/translation/');
 
 		if(@$this->url[1] == "home")
 		{

@@ -54,18 +54,6 @@
 		"showContactperson":"Ansprechpartner anzeigen",
 		"gotocontactpersonList":"alle Ansprechpartner anzeigen",
 				
-		"title":"Titel",
-		"createDate":"Erstelldatum",
-		"author":"Autor",
-		"ID":"ID",
-		"newsPreview":"Nachrichten Vorschau",
-		"headline":"Überschrift",
-		"newsContent":"Nachrichteninhalt",
-		"newsPublic":"Nachricht veröffentlicht",
-		"deleteNews":"Nachricht löschen",
-		"click to edit news":"Klicken, um die Nachricht zu bearbeiten",
-		"here can you add a new news":"Hier kannst du eine neue Nachricht anlegen.",
-		"here can you edit the news":"Hier kannst du die Nachricht bearbeiten.",
 		"If you don't want to change the password, leave the fields blank":"Falls du das Passwort nicht ändern möchtest, lass die Felder leer",
 
 		"### form ###":"",

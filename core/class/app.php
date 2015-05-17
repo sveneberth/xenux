@@ -7,6 +7,8 @@ class app
 	public $url;
 	public $page_name;
 	public $user;
+	
+	private $cssfiles;
 
 	public $canonical_URL = null;
 	public $prev_URL = null;
@@ -153,6 +155,8 @@ class app
 
 			$num_active_module = array_search($this->site, $this->getAdminModule());
 			$template->setVar("num_active_module", $num_active_module !== false ? $num_active_module+1 : 0);
+
+			$template->setVar("CSS-FILES", $this->getCSS());
 			
 			echo $template->render();	
 		}
@@ -210,6 +214,22 @@ class app
 			$this->page_name = "Error";
 			return '<p class="box-shadow info-message error">' . $e->getMessage() . '</p>';
 		}
+	}
+
+	public function addCSS($file)
+	{
+		$this->cssfiles[] = $file;
+	}
+	
+	public function getCSS()
+	{
+		$css = '';
+		foreach ($this->cssfiles as $file)
+		{
+			$css .= '<link rel="stylesheet" href="' . $file . '" />';
+		}
+
+		return $css;
 	}
 
 

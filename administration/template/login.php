@@ -36,7 +36,7 @@
 				<a class="forgotusername" href="{{URL_ADMIN}}/login?task=forgotusername"><?= __("forgotUsername") ?>?</a> |
 				<a class="forgotpassword" href="{{URL_ADMIN}}/login?task=forgotpassword"><?= __("forgotPassword") ?>?</a>
 			</p>
-			<?php if($app->getOption('users_can_register')): ?>
+			<?php if(parse_bool($app->getOption('users_can_register'))): ?>
 				<a class="center register" href="{{URL_ADMIN}}/login?task=register"><?= __('register') ?></a>
 			<?php endif; ?>
 		<?php endif; ?>

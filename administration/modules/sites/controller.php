@@ -17,7 +17,7 @@ class sitesController extends AbstractController
 		global $XenuxDB, $app;
 
 		// append translations
-		translator::appendTranslations(PATH_ADMIN . '/modules/sites/translation/');
+		translator::appendTranslations(PATH_ADMIN . '/modules/'.$this->modulename.'/translation/');
 
 		if(@$this->url[1] == "home")
 		{

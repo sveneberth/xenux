@@ -16,6 +16,7 @@
 	<!-- css -->
 	<link rel="stylesheet" type="text/css" href="{{TEMPLATE_PATH}}/css/style.css" media="all"/>
 	<!-- <link rel="stylesheet" type="text/css" href="{{TEMPLATE_PATH}}/css/jquery-ui.css" media="all"/> -->
+	{{CSS-FILES}}
 	
 	<!-- jquery + plugins -->
 	<script src="{{TEMPLATE_PATH}}/js/jquery-2.1.1.min.js"></script>
