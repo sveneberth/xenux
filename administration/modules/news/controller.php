@@ -255,7 +255,7 @@ class newsController extends AbstractController
 
 			if($return === true)
 			{
-				if (!(defined('DEBUG') && DEBUG == true))
+				if ((defined('DEBUG') && DEBUG == true))
 					log::writeLog('news saved successful');
 				$template->setVar("messages", '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>');
 
@@ -269,7 +269,7 @@ class newsController extends AbstractController
 			}
 			else
 			{
-				if (!(defined('DEBUG') && DEBUG == true))
+				if ((defined('DEBUG') && DEBUG == true))
 					log::writeLog('news saving failed');
 				$template->setVar("messages", '<p class="box-shadow info-message error">'.__('savingFailed').'</p>');
 

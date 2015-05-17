@@ -346,7 +346,7 @@ class sitesController extends AbstractController
 
 			if(count(array_unique($return)) === 1)
 			{
-				if (!(defined('DEBUG') && DEBUG == true))
+				if (defined('DEBUG') && DEBUG == true)
 					log::writeLog('site saved successful');
 
 				if(isset($data['submit_close']))
@@ -359,7 +359,7 @@ class sitesController extends AbstractController
 			}
 			else
 			{
-				if (!(defined('DEBUG') && DEBUG == true))
+				if (defined('DEBUG') && DEBUG == true)
 					log::writeLog('site saving failed');
 
 				if(isset($data['submit_close']))

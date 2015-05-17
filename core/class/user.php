@@ -29,7 +29,7 @@ class user
 			}
 			else
 			{
-				if (!(defined('DEBUG') && DEBUG == true))
+				if (defined('DEBUG') && DEBUG == true)
 					log::writeLog("Session stolen ???");
 				$this->setLogout();
 				return false;

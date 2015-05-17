@@ -49,7 +49,7 @@ include_once(PATH_MAIN.'/core/class/mailer.php');
 include_once(PATH_MAIN.'/core/class/ErrorPage.php');
 
 /** divider for a new page call */
-if (!(defined('DEBUG') && DEBUG == true))
+//if (defined('DEBUG') && DEBUG == true)
 	log::writeLog("\r\n\r\n");
 
 /** Build a Database and App Handler */
