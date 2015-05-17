@@ -348,7 +348,6 @@ class sitesController extends AbstractController
 			{
 				if (!(defined('DEBUG') && DEBUG == true))
 					log::writeLog('site saved successful');
-				$template->setVar("messages", '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>');
 
 				if(isset($data['submit_close']))
 				{
@@ -362,7 +361,6 @@ class sitesController extends AbstractController
 			{
 				if (!(defined('DEBUG') && DEBUG == true))
 					log::writeLog('site saving failed');
-				$template->setVar("messages", '<p class="box-shadow info-message error">'.__('savingFailed').'</p>');
 
 				if(isset($data['submit_close']))
 				{

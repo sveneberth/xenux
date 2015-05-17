@@ -21,10 +21,16 @@ class optionsController extends AbstractController
 	
 		$template->setVar("messages", '');
 		$template->setVar("form", $this->getForm($template));
+
+		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == true)
+			$template->setVar("messages", '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>');
+		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == false)
+			$template->setVar("messages", '<p class="box-shadow info-message error">'.__('savingFailed').'</p>');
+		
 		
 		echo $template->render();
 
-		$this->page_name = "Einstellungen";
+		$this->page_name = __('settings');
 
 		return true;
 	}
@@ -73,14 +79,16 @@ class optionsController extends AbstractController
 			(
 				'type' => 'textarea',
 				'label' => __('meta_desc'),
-				'value' => $app->getOption('meta_desc')
+				'value' => $app->getOption('meta_desc'),
+				'info' => __('description of the homepage for meta tags')
 			),
 			'meta_keys' => array
 			(
-				'type' => 'textarea', #FIXME: textarea or text ???
+				'type' => 'textarea',
 				'required' => true,
 				'label' => __('meta_keys'),
-				'value' => $app->getOption('meta_keys')
+				'value' => $app->getOption('meta_keys'),
+				'info' => __('keywords of the homepage for meta tags')
 			),
 			'admin_email' => array
 			(
@@ -148,11 +156,11 @@ class optionsController extends AbstractController
 
 			if($success)
 			{
-				$template->setVar("messages", __("saved successful"));
+				header('Location: '.URL_ADMIN.'/options/basic/?savingSuccess=true');
 			}
 			else
 			{
-				$template->setVar("messages", __("saving failed"));
+				header('Location: '.URL_ADMIN.'/options/basic/?savingSuccess=false');
 			}
 			
 		}

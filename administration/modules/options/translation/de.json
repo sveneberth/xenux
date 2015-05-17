@@ -15,6 +15,9 @@
 		"template": "Template",
 		"default_language": "Standard Sprache",
 
+		"description of the homepage for meta tags":"Beschreibung der Homepage, die in den Meta-Tags angezeigt wird",
+		"keywords of the homepage for meta tags":"Schlüsselwörter der Homepage, die in den Meta-Tags angezeigt werden",
+
 
 		"placeholder":""
 	}
