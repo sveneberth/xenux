@@ -5,6 +5,8 @@
 	},
 	"translations":
 	{
+		"cloud":"Cloud",
+
 		"filename":"Dateiname",
 		"mimetype":"MIME-Type",
 		"size":"Größe",

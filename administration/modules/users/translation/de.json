@@ -1,0 +1,23 @@
+{
+	"info":
+	{
+		"author": "Sven Eberth"
+	},
+	"translations":
+	{
+		"users":"Nutzer",
+		"home":"Nutzerverzeichnis",
+		"new":"Neu",
+		"edit":"Bearbeiten",
+		"profile":"Profil",
+
+		"here can you add a new user":"Hier kannst du eine neuen Nutzer anlegen.",
+		"here can you edit the user":"Hier kannst du den Nutzer bearbeiten.",
+
+		"homepage":"Homepage",
+		"bio":"Bio",
+
+
+		"placeholder":""
+	}
+}

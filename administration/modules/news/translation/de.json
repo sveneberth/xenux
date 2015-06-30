@@ -5,6 +5,11 @@
 	},
 	"translations":
 	{
+		"news":"News",
+		"home":"alle News",
+		"new":"Neu",
+		"edit":"Bearbeiten",
+
 		"newsPreview":"Nachrichten Vorschau",
 		"newsContent":"Nachrichteninhalt",
 		"newsPublic":"Nachricht veröffentlicht",

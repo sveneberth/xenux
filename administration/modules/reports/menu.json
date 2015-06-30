@@ -2,6 +2,7 @@
 	"headline": "Reports",
 	"links":
 	{
-		"Home":	"/logs"
+		"systemlogs": "/logs",
+		"maillogs": "/mails"
 	}
 }

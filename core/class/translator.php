@@ -60,6 +60,8 @@ class translator
 
 	public static function appendTranslations($path)
 	{
+		log::writeLog(self::$translations);
+		
 		if(self::$putBasicTranslations === false)
 		{
 			self::$translations = self::getTranslations(self::getLanguage());

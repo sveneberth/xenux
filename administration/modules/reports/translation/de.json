@@ -1,0 +1,15 @@
+{
+	"info":
+	{
+		"author": "Sven Eberth"
+	},
+	"translations":
+	{
+		"systemlogs":"Reports",
+		"maillogs":"Mails",
+
+		"choose a logfile":"Wähle eine Report-Datei",
+
+		"placeholder":""
+	}
+}

@@ -15,8 +15,10 @@ class usersController extends AbstractController
 	
 	public function run()
 	{
-		#FIXME: build profile
 		global $XenuxDB, $app;
+
+		// append translations
+		translator::appendTranslations(PATH_ADMIN . '/modules/'.$this->modulename.'/translation/');
 
 		if(@$this->url[1] == "home")
 		{
@@ -31,8 +33,17 @@ class usersController extends AbstractController
 			}
 			else
 			{
+				#header("Location: ".URL_ADMIN.'/'.$this->modulename.'/home');
 				throw new Exception(__('isWrong', 'users ID'));
 			}
+		}
+		elseif(@$this->url[1] == "profile")
+		{
+			$this->editUserID = $app->user->userInfo->id;
+			$this->userEdit();
+
+
+			$this->page_name = "users:profile";
 		}
 		elseif(@$this->url[1] == "new")
 		{
@@ -239,7 +250,7 @@ class usersController extends AbstractController
 			$data = $form->getInput();
 
 			$username		= preg_replace('/[^a-zA-Z0-9_\-\.]/' , '' , $data['username']);
-			$homepage		= (preg_match('/^([a-zA-Z]*)\:\/\//', $data['homepage']) && !empty($data['homepage'])) ? $data['homepage'] : 'http://'.$data['homepage'];
+			$homepage		= full($data['homepage']) ? (preg_match('/^([a-zA-Z]*)\:\/\//', $data['homepage']) ? $data['homepage'] : 'http://'.$data['homepage']) : '';
 
 			$success = true;
 

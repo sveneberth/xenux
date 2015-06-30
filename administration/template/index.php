@@ -61,18 +61,21 @@
 
 				if (file_exists(PATH_ADMIN.'/modules/'.$module.'/menu.json')) // if module-menu-file exist
 				{
+					// append translations
+					translator::appendTranslations(PATH_ADMIN."/modules/".$module."/translation/");
+
 					$filecontent = file_get_contents(PATH_ADMIN.'/modules/'.$module.'/menu.json');
 
 					if ($json = is_json($filecontent, true)) // if file is a valid json-file
 					{
 						$headline = __($json->headline);
 
-						echo "<h2>$headline</h2>\n";
+						echo "<h2>" . __($headline) . "</h2>\n";
 						echo "<ul>\n";
 
 						foreach($json->links as $label => $link)
 						{
-							echo "\t".'<li class="'.($app->url[0] == $module && $app->url[1]==str_replace('/','',$link)?'active':'').'"><a href="'.URL_ADMIN.'/'.$module.$link.'">'.$label.'</a></li>'."\n";
+							echo "\t".'<li class="'.($app->url[0] == $module && $app->url[1]==str_replace('/','',$link)?'active':'').'"><a href="'.URL_ADMIN.'/'.$module.$link.'">'.__($label).'</a></li>'."\n";
 						}
 
 						echo "</ul>\n";

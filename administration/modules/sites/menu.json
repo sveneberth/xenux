@@ -1,9 +1,9 @@
 {
-	"headline": "Seiten",
+	"headline": "sites",
 	"links":
 	{
-		"Home": "/home",
-		"Neu": "/new",
-		"Bearbeiten": "/edit"
+		"home": "/home",
+		"new": "/new",
+		"edit": "/edit"
 	}
 }

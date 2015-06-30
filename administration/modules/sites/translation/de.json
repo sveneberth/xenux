@@ -5,6 +5,12 @@
 	},
 	"translations":
 	{
+		"sites":"Seiten",
+		"home":"alle Seiten",
+		"new":"Neu",
+		"edit":"Bearbeiten",
+
+
 		"here can you add a new site":"Hier kannst du eine neue Seite anlegen.",
 		"here can you edit the site":"Hier kannst du die Seite bearbeiten.",
 		
@@ -20,6 +26,7 @@
 		"selectAsHomePage":"als Home-Seite auswählen",
 		"selectAsContactPage":"als Kontakt-Seite auswählen",
 		"selectAsImprintPage":"als Impressum-Seite auswählen",
+
 
 
 		"placeholder":""

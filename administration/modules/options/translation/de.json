@@ -5,6 +5,9 @@
 	},
 	"translations":
 	{
+		"options":"Einstellungen",
+		"basic":"System",
+
 		"users_can_register": "Jeder darf sich Registrieren",
 		"homepage_offline": "Homepage Offline",
 		"admin_email": "Administrator E-Mail",

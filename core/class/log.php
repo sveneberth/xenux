@@ -18,6 +18,12 @@ class log
 
 	public static function writeLog($msg)
 	{
+		// if message an array, convert them into a JSON-String
+		if(is_array($msg))
+		{
+			$msg = json_encode($msg);
+		}
+
 		$msg = date("[d-M-Y H:i:s]")." ".$msg."\r\n";
 		
 		if(!file_exists(PATH_MAIN."/logs/"))
