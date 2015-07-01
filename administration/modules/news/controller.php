@@ -74,7 +74,7 @@ class newsController extends AbstractController
 		
 		echo $template->render();
 
-		$this->page_name = "news:home";
+		$this->page_name = __('home');
 	}
 
 	private function getNewsTable()
@@ -122,7 +122,7 @@ class newsController extends AbstractController
 		
 		echo $template->render();
 
-		$this->page_name = "news:".($new ? 'new' : 'edit');
+		$this->page_name = $new ? __('new') : __('edit');
 	}
 
 	private function getEditForm(&$template, $new=false)

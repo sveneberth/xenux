@@ -43,7 +43,7 @@ class usersController extends AbstractController
 			$this->userEdit();
 
 
-			$this->page_name = "users:profile";
+			$this->page_name = __('profile');
 		}
 		elseif(@$this->url[1] == "new")
 		{
@@ -86,7 +86,7 @@ class usersController extends AbstractController
 
 		echo $template->render();
 
-		$this->page_name = "users:home";
+		$this->page_name = __('home');
 	}
 
 	private function getUserTable()
@@ -135,7 +135,7 @@ class usersController extends AbstractController
 
 		echo $template->render();
 
-		$this->page_name = "users:".($new ? 'new' : 'edit');
+		$this->page_name = $new ? __('new') : __('edit');
 	}
 
 	private function getEditForm(&$template, $new=false)

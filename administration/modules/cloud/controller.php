@@ -25,7 +25,7 @@ class cloudController extends AbstractController
 		
 		echo $template->render();
 
-		$this->page_name = "Xenux Cloud";
+		$this->page_name = __('cloud');
 
 		return true;
 	}

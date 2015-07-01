@@ -184,6 +184,7 @@ class app
 
 			$return[] = $module;
 		}
+		log::writeLog($return);
 
 		return $return;
 	}

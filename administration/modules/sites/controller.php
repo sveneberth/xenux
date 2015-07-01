@@ -61,7 +61,7 @@ class sitesController extends AbstractController
 		
 		echo $template->render();
 
-		$this->page_name = "Sites:home";
+		$this->page_name = __('home');
 	}
 
 	private function getMenu()
@@ -157,7 +157,7 @@ class sitesController extends AbstractController
 		
 		echo $template->render();
 
-		$this->page_name = "Sites:".($new ? 'new' : 'edit');
+		$this->page_name = $new ? __('new') : __('edit');
 	}
 
 	private function getEditForm(&$template, $new=false)

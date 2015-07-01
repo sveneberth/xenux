@@ -30,7 +30,7 @@ class optionsController extends AbstractController
 		
 		echo $template->render();
 
-		$this->page_name = __('settings');
+		$this->page_name = __('options');
 
 		return true;
 	}

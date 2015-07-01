@@ -4,7 +4,6 @@
 	{
 		"home": "/home",
 		"new": "/new",
-		"edit": "/edit",
 		"profile": "/profile"
 	}
 }

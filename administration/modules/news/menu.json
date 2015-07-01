@@ -3,7 +3,6 @@
 	"links":
 	{
 		"home": "/home",
-		"new": "/new",
-		"edit": "/edit"
+		"new": "/new"
 	}
 }
