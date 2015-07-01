@@ -22,6 +22,7 @@
 		"cloud statistics":"Cloud Statistiken",
 		"amount files":"Anzahl Dateien",
 		"amount pictures":"Davon Bilder",
-		"amount other files":"Sonstige Dateien"
+		"amount other files":"Sonstige Dateien",
+		"total size of all files":"Gesamtgröße aller Dateien"
 	}
 }

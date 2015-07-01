@@ -32,6 +32,7 @@ class dashboardController extends AbstractController
 		$template->setVar("count_cloud_files", $this->_getCountCloudFiles());
 		$template->setVar("count_cloud_images", $this->_getCountCloudImages());
 		$template->setVar("count_cloud_others", $this->_getCountCloudOthers());
+		$template->setVar("total_size_files", FileSizeConvert($this->_getTotalSizeCloudFiles()));
 		
 		echo $template->render();
 
@@ -128,6 +129,16 @@ class dashboardController extends AbstractController
 	private function _getCountCloudOthers()
 	{
 		return $this->_getCountCloudFiles() - $this->_getCountCloudImages();
+	}
+
+	private function _getTotalSizeCloudFiles()
+	{
+		global $XenuxDB, $app;
+		return $XenuxDB->getEntry('files', [
+			'columns' => [
+				'#SUM(size)(totalsize)'
+			]
+		])->totalsize;
 	}
 }
 ?>

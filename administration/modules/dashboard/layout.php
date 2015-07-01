@@ -22,4 +22,5 @@
 	<p><?= __('amount files') ?>: {{count_cloud_files}}</p>
 	<p><?= __('amount pictures') ?>: {{count_cloud_images}}</p>
 	<p><?= __('amount other files') ?>: {{count_cloud_others}}</p>
+	<p><?= __('total size of all files') ?>: {{total_size_files}}</p>
 </section>
