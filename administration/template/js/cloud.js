@@ -4,9 +4,10 @@
 var ajaxURL = '../modules/cloud/ajax.php';
 var imageURL = baseurl+'/administration/template/images/';
 var defaultDisabled = ['remove', 'move', 'rename'];
+
 $(document).ready(function() {
 	dir_list(0); // load root
-	$('.explorer').height($(window).height() - 260); // FIXME: use a right value
+	$('.explorer').height($(window).height() - 254);
 	$('.explorer').selectable({
 		filter: " > div",
 		distance: 10, // needed for doublick events
@@ -39,9 +40,12 @@ $(document).ready(function() {
 		return false;
 	});
 	
+
 	// click events
-		$('.explorer .item').live('click', function() {
-		$('.explorer .item').removeClass('ui-selected');
+	$('.explorer .item').live('click', function(e) {
+		if(!e.ctrlKey) { // if ctrl is pressed don't unselect the other items
+			$('.explorer .item').removeClass('ui-selected');
+		}
 		$(this).addClass('ui-selected');
 		$('.actions > button').removeClass('disabled');
 	});
@@ -53,7 +57,7 @@ $(document).ready(function() {
 	});
 	$(document).click(function(e) {
 		var container = $(".popup-editor, #info-popup");
-		if(/*!$('#info-popup').is(e.target) && */!$('#contextmenu > *').is(e.target) && !$('.actions > button.rename').is(e.target) && !container.is(e.target) && container.has(e.target).length === 0) {
+		if(!$('#contextmenu > *').is(e.target) && !$('.actions > button.rename').is(e.target) && !container.is(e.target) && container.has(e.target).length === 0) {
 			container.fadeOut(50);
 			console.log("popup hide");
 		}
@@ -172,7 +176,7 @@ $(document).ready(function() {
 				console.log(response);
 				if(response.success == true) {
 					var options = "";
-					for(key in response.data) { // as dataset,
+					for(key in response.data) { // as dataset
 						options += "<option value=\""+key+"\">"+response.data[key]+"</option>";
 					};
 					console.debug(options);
@@ -188,8 +192,6 @@ $(document).ready(function() {
 
 		$('#contextmenu').hide();
 	});
-
-
 
 
 	// action events
@@ -295,7 +297,10 @@ $(document).ready(function() {
 		upload($('input.file')[0].files);
 	});
 });
+
+
 var numUpload = 0;
+
 function upload(files) {
 	// counter
 	numUpload += 1;

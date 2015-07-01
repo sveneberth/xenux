@@ -1,11 +1,8 @@
 <?php
 class user
 {
-	#FIXME: remove userID - its bullshit
-
 	private $session;
 	public $userInfo;
-	public $userID;
 	private $userIsLoggedIn;
 	
 	public function __construct()
@@ -14,7 +11,6 @@ class user
 
 		if($this->isLogin()) {
 			$this->userInfo	= $this->getUserInfo($this->session['userID']);
-			$this->userID	= $this->userInfo->id;
 		}
 	}
 	
@@ -40,10 +36,8 @@ class user
 	
 	public function checkPassword($password)
 	{
-		$userInfo = $this->getUserInfo($this->userID);
-
-		$stored = $userInfo->password;
-		$username = $userInfo->username;
+		$stored = $this->userInfo->password;
+		$username = $this->userInfo->username;
 
 	    $string = hash_hmac ( "whirlpool", str_pad ( $password, strlen ( $password ) * 4, sha1 ( $username ), STR_PAD_BOTH ), SALT, true );
 	    return crypt ( $string, substr ( $stored, 0, 30 ) ) == $stored;
@@ -70,7 +64,6 @@ class user
 
 		if($user)
 		{
-			$this->userID = $user->id;
 			return $user;
 		}
 		else
@@ -92,7 +85,7 @@ class user
 
 		if($user)
 		{
-			$this->userID = $user->id;
+			$this->userInfo = $this->getUserInfo($user->id);
 			return $user->id;
 		}
 		else
@@ -114,7 +107,7 @@ class user
 
 		if($user)
 		{
-			$this->userID = $user->id;
+			$this->userInfo = $this->getUserInfo($user->id);
 			return $user->id;
 		}
 		else
@@ -146,17 +139,17 @@ class user
 	{
 		global $XenuxDB;
 
-		$_SESSION['_LOGIN']['userID'] = $this->userID;
+		$_SESSION['_LOGIN']['userID'] = $this->userInfo->id;
 
 		$XenuxDB->Update('users', [
 			'lastlogin_ip'		=> $_SERVER['REMOTE_ADDR'],
 			'lastlogin_date'	=> date('Y-m-d H:i:s'),
 		],
 		[
-			'id' => $this->userID
+			'id' => $this->userInfo->id
 		]);
 
-		$this->setSessionFingerprint($this->userID);
+		$this->setSessionFingerprint($this->userInfo->id);
 	
 		return true;
 	}
@@ -166,7 +159,7 @@ class user
 		$_SESSION['_LOGIN'] = '';
 		$this->session = @$_SESSION['_LOGIN'];
 
-		$this->clearSessionFingerprint($this->userID);
+		$this->clearSessionFingerprint($this->userInfo->id);
 		return true;
 	}
 	

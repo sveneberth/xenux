@@ -106,7 +106,7 @@ class LoginController extends AbstractController
 			{
 				if($app->user->checkPassword($data['password']))
 				{
-					$userInfo = $app->user->getUserInfo($app->user->userID);
+					$userInfo = $app->user->userInfo;
 
 					if(parse_bool($userInfo->confirmed) !== true)
 					{
@@ -323,7 +323,7 @@ um deine Registrierung auf ' . $_SERVER['SERVER_NAME'] . ' abzuschließen klicke
 
 			if($userFoundByEmail) // check if user exists
 			{
-				$userinfo = $app->user->getUserInfo($app->user->userID);
+				$userinfo = $app->user->userInfo;
 
 				$mail = new mailer;
 				$mail->setSender(XENUX_MAIL);
@@ -383,7 +383,7 @@ Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: '
 
 			if($userFoundByUsername) // check if user exists
 			{
-				$userinfo = $app->user->getUserInfo($app->user->userID);
+				$userinfo = $app->user->userInfo;
 
 				$token = generateRandomString();
 
@@ -391,7 +391,7 @@ Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: '
 					'verifykey' => $token
 				],
 				[
-					'id' => $app->user->userID
+					'id' => $userinfo->id
 				]);
 				if(!$result)
 				{
@@ -399,7 +399,7 @@ Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: '
 					return false;
 				}
 
-				$url = URL_ADMIN . '/login?task=resetpassword&id=' . $app->user->userID . '&token=' . $token;
+				$url = URL_ADMIN . '/login?task=resetpassword&id=' . $userinfo->id . '&token=' . $token;
 
 				$mail = new mailer;
 				$mail->setSender(XENUX_MAIL);
