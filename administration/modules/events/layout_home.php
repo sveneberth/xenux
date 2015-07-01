@@ -14,11 +14,11 @@ ul.data-table > li.non-public {
 ul.data-table > li > .data-column.event-create-date,
 ul.data-table > li > .data-column.event-start-date,
 ul.data-table > li > .data-column.event-end-date {
-	width: 150px;
+	width: 160px;
 }
 ul.data-table > li > .data-column.event-title {
-	width: 20%;
-	min-width: 200px;
+	width: 25%;
+	min-width: 250px;
 	max-width: 500px;
 }
 ul.data-table > li > .data-column.event-id {

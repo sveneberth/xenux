@@ -32,7 +32,7 @@ class eventsController extends AbstractController
 			}
 			else
 			{
-				throw new Exception(__('isWrong', 'NEWS ID'));
+				throw new Exception(__('isWrong', 'EVENT ID'));
 			}
 		}
 		elseif(@$this->url[1] == "new")
@@ -98,7 +98,7 @@ class eventsController extends AbstractController
 	<span class="data-column event-start-date">'.$event->start_date.'</span>
 	<span class="data-column event-end-date">'.$event->end_date.'</span>
 	<a class="data-column show" target="_blank" href="{{URL_MAIN}}/event/view/'.getPreparedLink($event->id, $event->title).'">'.__('show').'</a>
-	<a href="{{URL_ADMIN}}/events/home/?remove='.$event->id.'" title="'.__('deleteNews').'" class="remove remove-icon clickable"></a>
+	<a href="{{URL_ADMIN}}/events/home/?remove='.$event->id.'" title="'.__('deleteEvent').'" class="remove remove-icon clickable"></a>
 </li>';
 			}
 		}

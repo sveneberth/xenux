@@ -49,6 +49,8 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%events` (
   `start_date` timestamp NULL DEFAULT NULL,
   `end_date` timestamp NULL DEFAULT NULL,
   `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `public` tinyint(1) DEFAULT '0' COMMENT '1=public;0=private',
+  `author_id` int(11) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -98,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%news` (
   `text` text NOT NULL,
   `create_date` timestamp NULL DEFAULT NULL,
   `lastModified_date` timestamp NULL DEFAULT NULL,
-  `public` tinyint(4) NOT NULL DEFAULT '0',
+  `public` tinyint(1) DEFAULT '0' COMMENT '1=public;0=private',
   `author_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
@@ -117,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%sites` (
   `lastModified_date` timestamp NULL DEFAULT NULL,
   `parent_id` int(10) NOT NULL,
   `sortindex` int(10) NOT NULL,
-  `public` tinyint(1) DEFAULT '1' COMMENT '1=public;0=private',
+  `public` tinyint(1) DEFAULT '0' COMMENT '1=public;0=private',
   `author_id` int(11) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=170 DEFAULT CHARSET=latin1;
 
