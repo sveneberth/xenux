@@ -247,25 +247,29 @@ class eventsController extends AbstractController
 
 			$text = strip_tags($data['text'], $_allowedTags);
 
+			$start_date	= $data['startDate']	. ' ' . $data['startTime'];
+			$end_date	= $data['endDate']		. ' ' . $data['endTime'];
+
 			$public = parse_bool($data['public']);
 
-			$author = $app->user->userID;
+			$author = $app->user->userInfo->id;
 
 			if($new)
 			{
-				$news = $XenuxDB->Insert('news', [
+				$event = $XenuxDB->Insert('events', [
 					'title'				=> $title,
 					'text'				=> $text,
 					'public'			=> $public,
 					'author_id'			=> $author,
 					'create_date'		=> date('Y-m-d H:i:s'),
-					'lastModified_date'	=> date('Y-m-d H:i:s')
+					'start_date'		=> $start_date,
+					'end_date'			=> $end_date
 				]);
 
-				if($news)
+				if($event)
 				{
 					$return = true;
-					$this->editID = $news;
+					$this->editID = $event;
 				}
 				else
 				{
@@ -275,11 +279,12 @@ class eventsController extends AbstractController
 			else
 			{
 				// update it
-				$return = $XenuxDB->Update('news', [
+				$return = $XenuxDB->Update('events', [
 					'title'				=> $title,
 					'text'				=> $text,
 					'public'			=> $public,
-					'lastModified_date'	=> date('Y-m-d H:i:s')
+					'start_date'		=> $start_date,
+					'end_date'			=> $end_date
 				],
 				[
 					'id' => $this->editID
@@ -304,6 +309,7 @@ class eventsController extends AbstractController
 			{
 				if ((defined('DEBUG') && DEBUG == true))
 					log::writeLog('event saving failed');
+
 				$template->setVar("messages", '<p class="box-shadow info-message error">'.__('savingFailed').'</p>');
 
 				if(isset($data['submit_close']))

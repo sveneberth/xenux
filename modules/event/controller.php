@@ -59,7 +59,7 @@ class eventController extends AbstractController
 		{
 			$template = new template(PATH_MAIN."/modules/".$this->modulename."/layout_view.php");
 	
-			$template->setVar("event_content", nl2br(htmlentities($event->text)));
+			$template->setVar("event_content", $event->text);
 			$template->setVar("event_title", $event->title);
 			$template->setVar("event_start", mysql2date("d.m.Y H:i", $event->start_date));
 			$template->setVar("event_end", mysql2date("d.m.Y H:i", $event->end_date));

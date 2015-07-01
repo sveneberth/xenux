@@ -216,7 +216,7 @@ class newsController extends AbstractController
 
 			$public = parse_bool($data['public']);
 
-			$author = $app->user->userID;
+			$author = $app->user->userInfo->id;
 
 			if($new)
 			{

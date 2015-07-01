@@ -99,11 +99,10 @@ class form
 						}
 						break;
 					case "time":
-						if(!preg_match("/(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])?/", $this->data[$name]))
+						if(!preg_match("/(2[0-3]|[01][0-9]):([0-5][0-9])(:[0-5][0-9])?/", $this->data[$name]))
 						{
 							$this->setErrorMsg(__('please fill in a valid time', $props['label']));
 							$this->setFieldInvalid($name);
-							echo 'wring';
 						}
 						break;
 				}

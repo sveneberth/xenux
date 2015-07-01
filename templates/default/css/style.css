@@ -686,6 +686,7 @@ footer a:hover {
 	color: #fff;
 	font-size: .8em;
 	line-height: 1.2em;
+	box-shadow: inset 0px 0px 3px 0px rgba(0,0,0,.5);
 }
 .calendar .calendar_dates .calendar_day ul.events li.event .event-time {
 }

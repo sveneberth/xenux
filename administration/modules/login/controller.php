@@ -637,7 +637,7 @@ Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: '
 		]);
 		if($user)
 		{
-			$app->user->userID = $user->id;
+			$app->user->userInfo->id = $user->id;
 
 			$return = $XenuxDB->Update('users', [
 				'verifykey' => NULL,
