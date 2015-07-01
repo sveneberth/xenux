@@ -295,33 +295,33 @@ if ($sites)
 			<div>
 				<p style="margin: 5px 0;">Change language:</p>
 				<?php
-				$langs = translator::getLanguages();
-				if (count((array)$langs) > 1):
-					?>
-					<select onchange="window.location.href = '{{SITE_PATH}}?lang=' + $(this).val();" class="language-selector">
-						<option disabled="disabled" data-option-class="label" data-style="background-image:none;">Select Language</option>
-						<?php
-							foreach ($langs as $short => $options)
-							{
-								echo '<option value="' . $short . '" data-style="background-image: url(\''.URL_MAIN. $options->flag.'\');" ' . ($short == translator::getLanguage() ? 'selected' : '') . ' >' . $options->label . '</option>';
-							}
+					$langs = translator::getLanguages();
+					if (count((array)$langs) > 1):
 						?>
-					</select>
-					<script>
-						$(function() {
-							$(".language-selector")
-							.iconselectmenu({
-								change: function( event, data ) {
-									window.location.href = '{{SITE_PATH}}?lang=' + $(this).val();
+						<select onchange="window.location.href = '{{SITE_PATH}}?lang=' + $(this).val();" class="language-selector">
+							<option disabled="disabled" data-option-class="label" data-style="background-image:none;">Select Language</option>
+							<?php
+								foreach ($langs as $short => $options)
+								{
+									echo '<option value="' . $short . '" data-style="background-image: url(\''.URL_MAIN. $options->flag.'\');" ' . ($short == translator::getLanguage() ? 'selected' : '') . ' >' . $options->label . '</option>';
 								}
+							?>
+						</select>
+						<script>
+							$(function() {
+								$(".language-selector")
+								.iconselectmenu({
+									change: function( event, data ) {
+										window.location.href = '{{SITE_PATH}}?lang=' + $(this).val();
+									}
+								})
+								.iconselectmenu( "menuWidget")
+								.addClass('language-selector-menu');
 							})
-							.iconselectmenu( "menuWidget")
-							.addClass('language-selector-menu');
-						})
-					</script>
-					<?php
-				endif;
-			?>
+						</script>
+						<?php
+					endif;
+				?>
 			</div>
 
 		</div>

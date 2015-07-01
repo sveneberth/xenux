@@ -5,10 +5,11 @@
 	},
 	"translations":
 	{
-		"systemlogs":"Reports",
+		"logs":"Logs",
+		"systemlogs":"Logs",
 		"maillogs":"Mails",
 
-		"choose a logfile":"Wähle eine Report-Datei",
+		"choose a logfile":"Wähle eine Log-Datei",
 
 		"placeholder":""
 	}

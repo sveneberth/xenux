@@ -5,6 +5,23 @@
 	},
 	"translations":
 	{
-		"dashboard": "Dashboard"
+		"dashboard": "Dashboard",
+
+		"user statistics":"Nutzer Statistiken",
+		"user registered":"Nutzer Registriert",
+		"active today":"Davon heute aktiv",
+		
+		"site statistics":"Seiten Statistiken",
+		"amount sites":"Anzahl Seiten",
+		"amount public":"Davon öffentlich",
+
+		"news statistics":"News Statistiken",
+		"amount news":"Anzahl News",
+		"amount last week":"Davon aus der letzten Woche",
+		
+		"cloud statistics":"Cloud Statistiken",
+		"amount files":"Anzahl Dateien",
+		"amount pictures":"Davon Bilder",
+		"amount other files":"Sonstige Dateien"
 	}
 }

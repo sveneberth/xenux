@@ -145,7 +145,7 @@ class app
 			
 			$template->setVar("page_content", $this->getPageContent(true));
 
-			$template->setVar("SITE_PATH", $this->siteurl);
+			$template->setVar("SITE_PATH", URL_ADMIN.'/'.implode('/', $this->url));
 			$template->setVar("TEMPLATE_PATH", URL_MAIN.'/administration/template');
 			
 			$template->setVar("meta_author", $this->getOption('meta_author'));

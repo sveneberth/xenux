@@ -36,6 +36,7 @@
 
 		<a href="{{URL_MAIN}}" target="_blank" class="header-title"><?= $app->getOption('hp_name') ?></a>
 
+
 		<div class="profile">
 			<?= __('helloUser', $user->userInfo->username) ?>
 			<div class="profile-sub">
@@ -44,6 +45,27 @@
 				<a class="profile-button" href="{{URL_ADMIN}}/users/profile">Profil</a>
 				<a class="logout-button" href="{{URL_ADMIN}}/login?task=logout">Logout</a>
 			</div>
+		</div>
+
+
+		<div class="languageSelector">
+			<p>Change language:</p>
+			<?php
+				$langs = translator::getLanguages();
+				if (count((array)$langs) > 1):
+					?>
+					<select onchange="window.location.href = '{{SITE_PATH}}?lang=' + $(this).val();" class="language-selector">
+						<option disabled="disabled" data-option-class="label" data-style="background-image:none;">Select Language</option>
+						<?php
+							foreach ($langs as $short => $options)
+							{
+								echo '<option value="' . $short . '" ' . ($short == translator::getLanguage() ? 'selected' : '') . ' >' . $options->label . '</option>';
+							}
+						?>
+					</select>
+					<?php
+				endif;
+			?>
 		</div>
 	</header>
 	

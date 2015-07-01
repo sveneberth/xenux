@@ -1,4 +1,5 @@
 @charset "UTF-8";
+/*@import url(jquery-ui.css);*/
 
 /* ##############################################
 ** BASIC HTML TAGS
@@ -260,6 +261,26 @@ header a.header-title {
 }
 header a.header-title:hover {
 	color: #999 !important;
+}
+header .languageSelector,
+header .languageSelector > p,
+header .languageSelector > select.language-selector {
+	display: inline-block;
+}
+header .languageSelector {
+	float: right;
+	margin-right: 10px;
+}
+header .languageSelector > p {
+	margin: 6px 0;
+	font-size: 90%;
+}
+header .languageSelector > .language-selector {
+	width: 100px;
+	margin: 2px 0;
+	padding: 2px 4px;
+	background: #333;
+	border-color: #666;
 }
 header .profile {
 	font-size: 16px;
