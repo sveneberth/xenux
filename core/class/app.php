@@ -19,7 +19,7 @@ class app
 		$this->user		= new User;
 
 		$this->setTemplate($this->getOption('template'));
-		if(isset($_GET['useTemplate']) && full($_GET['useTemplate']))
+		if(isset($_GET['useTemplate']) && full($_GET['useTemplate']) && defined('DEBUG') && DEBUG == true)
 			$this->setTemplate($_GET['useTemplate']);
 
 		$url			= strtolower($url);
