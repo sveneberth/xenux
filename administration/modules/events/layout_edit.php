@@ -65,9 +65,9 @@ $(document).ready(function() {
 
 <section class="box-shadow floating one-column-box no-margin">
 	#if(new):
-		<p><?= __('here can you add a new news') ?></p>
+		<p><?= __('here can you add a new event') ?></p>
 	#else:
-		<p><?= __('here can you edit the news') ?></p>
+		<p><?= __('here can you edit the event') ?></p>
 	#endif
 
 	<div class="form">

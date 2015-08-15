@@ -7,20 +7,18 @@
 	{
 		"events":"Termine",
 		"home":"alle Termine",
-		"new":"Neu",
-		"edit":"Bearbeiten",
 
 		"eventPreview":"Termin Vorschau",
-		"startDate":"Start Datum",
-		"startTime":"Start Zeit",
-		"endDate":"End Datum",
-		"endTime":"End Zeit",
+		"startDate":"Startdatum",
+		"startTime":"Startzeit",
+		"endDate":"Enddatum",
+		"endTime":"Endzeit",
 		"eventDesc":"Termin Beschreibung",
 		"eventPublic":"Termin veröffentlicht",
 		"deleteEvent":"Termin löschen",
 
-		"click to edit news":"Klicken, um die Termin zu bearbeiten",
-		"here can you add a new news":"Hier kannst du eine neue Termin anlegen.",
-		"here can you edit the news":"Hier kannst du die Termin bearbeiten."
+		"click to edit event":"Klicken, um den Termin zu bearbeiten",
+		"here can you add a new event":"Hier kannst du eine neuen Termin anlegen.",
+		"here can you edit the event":"Hier kannst du den Termin bearbeiten."
 	}
 }

@@ -93,7 +93,7 @@ class eventsController extends AbstractController
 				$return .= '
 <li '.($event->public == false ? 'class="non-public"' : '').'>
 	<span class="data-column event-id">'.$event->id.'</span>
-	<a class="data-column event-title edit" href="{{URL_ADMIN}}/events/edit/'.$event->id.'" title="'.__('click to edit events').'">'.$event->title.'</a>
+	<a class="data-column event-title edit" href="{{URL_ADMIN}}/events/edit/'.$event->id.'" title="'.__('click to edit event').'">'.$event->title.'</a>
 	<span class="data-column event-create-date">'.$event->create_date.'</span>
 	<span class="data-column event-start-date">'.$event->start_date.'</span>
 	<span class="data-column event-end-date">'.$event->end_date.'</span>

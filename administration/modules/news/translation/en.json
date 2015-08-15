@@ -5,8 +5,15 @@
 	},
 	"translations":
 	{
-		
+		"news":"News",
+		"home":"all news",
 
-		"placeholder":""
+		"newsPreview":"news preview",
+		"newsContent":"news content",
+		"newsPublic":"news public",
+		"deleteNews":"delete news",
+		"click to edit news":"Click, to edit news.",
+		"here can you add a new news":"Here can you add a new news.",
+		"here can you edit the news":"Here can you edit the news."
 	}
 }

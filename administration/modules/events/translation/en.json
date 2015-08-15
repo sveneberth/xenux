@@ -5,8 +5,20 @@
 	},
 	"translations":
 	{
-		
+		"events":"Events",
+		"home":"all events",
 
-		"placeholder":""
+		"eventPreview":"event preview",
+		"startDate":"startdate",
+		"startTime":"starttime",
+		"endDate":"enddate",
+		"endTime":"endtime",
+		"eventDesc":"event description",
+		"eventPublic":"event public",
+		"deleteEvent":"delete event",
+
+		"click to edit event":"Click, to edit event",
+		"here can you add a new event":"Here can you add a new event.",
+		"here can you edit the event":"Here can you edit the event."
 	}
 }

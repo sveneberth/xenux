@@ -5,8 +5,15 @@
 	},
 	"translations":
 	{
-		
+		"users":"Users",
+		"home":"user dictionary",
+		"profile":"profile",
 
-		"placeholder":""
+		"here can you add a new user":"Here can you add a new user.",
+		"here can you edit the user":"Here can you edit the user.",
+		"click to edit user":"Click, to edit user",
+
+		"homepage":"homepage",
+		"bio":"bio"
 	}
 }

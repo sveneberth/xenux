@@ -7,17 +7,13 @@
 	{
 		"users":"Nutzer",
 		"home":"Nutzerverzeichnis",
-		"new":"Neu",
-		"edit":"Bearbeiten",
 		"profile":"Profil",
 
 		"here can you add a new user":"Hier kannst du eine neuen Nutzer anlegen.",
 		"here can you edit the user":"Hier kannst du den Nutzer bearbeiten.",
+		"click to edit user":"Klicken, um den Nutzer zu bearbeiten",
 
 		"homepage":"Homepage",
-		"bio":"Bio",
-
-
-		"placeholder":""
+		"bio":"Bio"
 	}
 }

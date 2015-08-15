@@ -62,6 +62,38 @@
 		"no":"No",
 
 
+		"### function:pretty_date ###":"",
+		"ago": "%1 ago",
+		"one second": "one second",
+		"seconds": "seconds",
+		"one minute": "one minute",
+		"minutes": "minutes",
+		"one hour": "one hour",
+		"hours": "hours",
+		"one day": "one day",
+		"days": "days",
+		"one week": "one week",
+		"weeks": "weeks",
+		"one month": "one month",
+		"months": "months",
+		"one year": "one year",
+		"years": "years",
+		"a quarter of an hour": "a quarter of an hour",
+		"half an hour ago": "half an hour ago",
+		"three-quarters of an hour ago": "three-quarters of an hour ago",
+		"today": "today",
+		"yesterday": "yesterday",
+		"two days ago": "two days ago",
+		"last night": "last night",
+		"night": "night",
+		"morning": "morning",
+		"before noon": "before noon",
+		"noon": "noon",
+		"afternoon": "afternoon",
+		"evening": "evening",
+		"a year and a half": "a year and a half",
+
+
 		"placeholder":""
 	}
 }

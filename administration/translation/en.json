@@ -5,9 +5,9 @@
 	},
 	"translations":
 	{
-
 		"isWrong":"%1 is wrong",
 		"savedSuccessful": "saved successful",
+		"removedSuccessful": "removed successful",
 		"savingFailed": "saving failed",
 
 		"save":"save",
@@ -16,6 +16,18 @@
 		"cancel":"cancel",
 
 		"show":"show",
+		"new":"new",
+		"edit":"edit",
+
+		"dashboard":"Dashboard",
+		"cloud":"cloud",
+
+		"headline":"headline",
+		"title":"title",
+		"createDate":"createdate",
+		"author":"author",
+		"ID":"ID",
+
 
 
 		"placeholder":""

@@ -5,6 +5,9 @@
 	},
 	"translations":
 	{
+		"options":"Options",
+		"basic":"basic",
+
 		"users_can_register": "everyone can register",
 		"homepage_offline": "homepage offline",
 		"admin_email": "administrator eMail",
@@ -16,8 +19,6 @@
 		"default_language": "default language",
 		
 		"description of the homepage for meta tags":"description of the homepage for the meta tags",
-		"keywords of the homepage for meta tags":"keywords of the homepage for the meta tags",
-
-		"placeholder":""
+		"keywords of the homepage for meta tags":"keywords of the homepage for the meta tags"
 	}
 }

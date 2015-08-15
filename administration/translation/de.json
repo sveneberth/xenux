@@ -16,9 +16,11 @@
 		"cancel":"abbrechen",
 
 		"show":"Anzeigen",
+		"new":"Neu",
+		"edit":"Bearbeiten",
 
 		"dashboard":"Dashboard",
-		"-----cloud":"Cloud",
+		"cloud":"Cloud",
 
 		"headline":"Überschrift",
 		"title":"Titel",

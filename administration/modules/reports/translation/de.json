@@ -9,8 +9,6 @@
 		"systemlogs":"Logs",
 		"maillogs":"Mails",
 
-		"choose a logfile":"Wähle eine Log-Datei",
-
-		"placeholder":""
+		"choose a logfile":"Wähle eine Log-Datei"
 	}
 }

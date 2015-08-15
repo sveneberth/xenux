@@ -5,8 +5,10 @@
 	},
 	"translations":
 	{
-		
+		"logs":"Logs",
+		"systemlogs":"logs",
+		"maillogs":"mails",
 
-		"placeholder":""
+		"choose a logfile":"Choose a logfile"
 	}
 }
