@@ -15,7 +15,7 @@ class searchController extends AbstractController
 	public function run()
 	{
 
-		echo "<h1 class=\"page-headline\">" . __("search") . "</h1>";
+		echo '<div class="page-header"><h1>' . __('search') . '</h1></div>';
 
 		echo
 "<style>
@@ -54,7 +54,7 @@ class searchController extends AbstractController
 		$form->disableRequiredInfo();
 		
 		echo $form->getForm();
-		echo '<div class="clear" style="margin-bottom: 2em;"></div>';
+		echo '<div class="clear clearfix" style="margin-bottom: 2em;"></div>';
 
 		if($form->isSend() && $form->isValid() && !empty($this->searchString))
 		{

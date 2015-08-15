@@ -125,10 +125,6 @@ class pageController extends AbstractController
 			$template->setVar("list", $list);
 			$return[] = $template->render();
 		}
-		else
-		{
-			$return[] = "%%% " . __('nocontactpersons') . " %%%"; #FIXME: print nothing, only for development
-		}
 		
 		
 		return implode('', $return);

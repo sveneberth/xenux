@@ -28,7 +28,7 @@ class newsController extends AbstractController
 	{
 		global $XenuxDB;
 		
-		echo "<h1 class=\"page-headline\">" . __('news_Pl') . "</h1>";
+		echo '<div class="page-header"><h1>' . __('news_Pl') . '</h1></div>';
 		
 		$start			= is_numeric(@$_GET['start']) ? floor($_GET['start']) : 0;
 		$amount			= (is_numeric(@$_GET['amount']) && floor(@$_GET['amount']) != 0) ? floor($_GET['amount']) : 10;
@@ -45,7 +45,7 @@ class newsController extends AbstractController
 			{
 				$template = new template(PATH_MAIN."/modules/".$this->modulename."/layout_list.php");
 		
-				$template->setVar("news_content", shortstr(strip_tags($news->text)));
+				$template->setVar("news_content", shortstr(strip_tags($news->text), 200, 300));
 				$template->setVar("news_title", $news->title);
 				$template->setVar("news_title_url", urlencode($news->title));
 				$template->setVar("news_createDate", pretty_date($news->create_date));

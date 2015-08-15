@@ -28,7 +28,7 @@ class contactpersonController extends AbstractController
 	{
 		global $XenuxDB;
 		
-		echo "<h1 class=\"page-headline\">" . __('contactpersons') . "</h1>";
+		echo '<div class="page-header"><h1>' . __('contactpersons') . '</h1></div>';
 		
 		$start			= is_numeric(@$_GET['start']) ? floor($_GET['start']) : 0;
 		$amount			= (is_numeric(@$_GET['amount']) && floor(@$_GET['amount']) != 0) ? floor($_GET['amount']) : 20;

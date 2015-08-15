@@ -1,5 +1,7 @@
 <span class="meta-info">{{news_createDate}}</span>
-<h1 class="page-headline">{{news_title}}</h1>
+<div class="page-header">
+	<h1>{{news_title}}</h1>
+</div>
 {{news_content}}
 <br/>
 <br/>

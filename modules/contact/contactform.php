@@ -26,7 +26,8 @@
 		'submit' => Array
 		(
 			'type' => 'submit',
-			'label' => 'Senden'
+			'label' => 'Senden',
+			'style' => 'margin-top:1em;display:block;'
 		)
 	);
 

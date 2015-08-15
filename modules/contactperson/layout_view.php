@@ -1,4 +1,6 @@
-<h1 class="page-headline">{{name}}</h1>
+<div class="page-header">
+	<h1>{{name}}</h1>
+</div>
 <h3 class="position">{{position}}</h3>
 {{desc}}
 

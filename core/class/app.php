@@ -19,6 +19,8 @@ class app
 		$this->user		= new User;
 
 		$this->setTemplate($this->getOption('template'));
+		if(isset($_GET['useTemplate']) && full($_GET['useTemplate']))
+			$this->setTemplate($_GET['useTemplate']);
 
 		$url			= strtolower($url);
 		$this->siteurl	= URL_MAIN.'/'.$url;

@@ -60,7 +60,11 @@
 
 		"yes":"Yes",
 		"no":"No",
-
+		
+		"page":"page",
+		"writtenInfo":"written by %1 on %2 at %3 o'clock.",
+		"newestSites":"newest sites",
+		"picture x of y": "Picture x of y",
 
 		"### function:pretty_date ###":"",
 		"ago": "%1 ago",

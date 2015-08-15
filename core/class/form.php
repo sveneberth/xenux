@@ -168,6 +168,7 @@ class form
 
 		$props['type']			= isset($props['type'])			? $props['type']		: 'text';
 		$props['class']			= isset($props['class'])		? $props['class']		: '';
+		$props['style']			= isset($props['style'])		? $props['style']		: '';
 		$props['value']			= isset($props['value'])		? $props['value']		: '';
 		$props['label']			= isset($props['label'])		? $props['label']		: '';
 		$props['checked']		= isset($props['checked'])		? $props['checked']		: false;
@@ -183,6 +184,7 @@ class form
 		$fieldTemplate = new template();
 		
 		$fieldTemplate->setVar("class",		$class);
+		$fieldTemplate->setVar("style",		$props['style']);
 		$fieldTemplate->setVar("label",		$props['label'] . ($this->isRequired($props['required'] && $this->requiredInfo == true) ? '*' : ''));
 		$fieldTemplate->setVar("name",		$fieldname);
 		$fieldTemplate->setVar("value",		$value);

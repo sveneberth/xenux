@@ -77,7 +77,7 @@
 			<nobr>
 				<ul class="topmenu mainmenu">
 <?php
-// get sites lebel 2 (only public sites)
+// get sites level 1 (only public sites)
 $sites = $XenuxDB->getList('sites', [
 			'order' => 'sortindex ASC',
 			'where' => [
@@ -331,7 +331,7 @@ if ($sites)
 		</main>
 
 		<footer>
-			this site was made with <a target="_blank" href="<?= XENUX_URL_HP ?>">Xenux</a>
+			powered by <a target="_blank" href="<?= XENUX_URL_HP ?>">Xenux</a>
 
 			<div class="links">
 				<a href="{{URL_MAIN}}/sitemap"><?= __('sitemap') ?></a>

@@ -1,22 +1,28 @@
 <?php
-function contains($var) {
+function contains($var)
+{
 	$array = func_get_args();
 	unset($array[0]);
 	return in_array($var, $array); 
 }
 
 
-function escapemail($email, $Arr = array()) {
-	if (empty($email)) {
+function escapemail($email, $Arr = array())
+{
+	if (empty($email))
+	{
 		return false;
-	} else {
-		$link = "<a " . (isset($Arr['class']) ? 'class="' . $Arr['class'] . '"' : '') . " " . (isset($Arr['id']) ? 'id="' . $Arr['id'] . '"' : '') . " href=\"mailto:$email\">" . (isset($Arr['text']) ? $Arr['text'] : $email) . "</a>";
+	}
+	else
+	{
+		$link = "<a" . (isset($Arr['class']) ? ' class="' . $Arr['class'] . '"' : '') . (isset($Arr['id']) ? ' id="' . $Arr['id'] . '"' : '') . " href=\"mailto:$email\">" . (isset($Arr['text']) ? $Arr['text'] : $email) . "</a>";
 		
 		$emailArr	= str_split($link, 1);
 		
 		$JS = "";
 		
-		foreach($emailArr as $val) {
+		foreach ($emailArr as $val)
+		{
 			$JS .= ((strlen($JS)==0) ? '' : ' + ') . "'$val'";
 		}
 		
@@ -31,15 +37,16 @@ function request_failed() {
 	return false;
 }
 
-function whitespace2nbsp($str) {
-	if(empty($str) || !isset($str))
+function whitespace2nbsp($str)
+{
+	if (empty($str) || !isset($str))
 		return false;
 		
 	return str_replace(" ", "&nbsp;", $str);
 }
 
 /* function from http://simbo.de/blog/2009/12/pretty-date-relative-zeitangaben-in-worten/ */
-function pretty_date ($datestr='')
+function pretty_date($datestr = '')
 {
 	$now = time();
 	$date = strtotime($datestr);
@@ -272,7 +279,7 @@ function getMenuBarMultiSites($absolutenumber, $start, $amount)
 			$return .= "\t<a class=\"sitenavi";
 			if($limit == $start)
 				$return .= " active";
-			$return .= "\" href=\"{{SITE_PATH}}?";
+			$return .= "\" title=\"".__('page')." $thissite\" href=\"{{SITE_PATH}}?";
 			foreach ($_GET as $key => $value)
 			{
 				if($key != 'url' && $key != 'start' && $key != 'amount')					

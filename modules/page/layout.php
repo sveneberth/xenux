@@ -1,7 +1,9 @@
-<h1 class="page-headline">{{page_title}}</h1>
+<div class="page-header">
+	<h1>{{page_title}}</h1>
+</div>
 {{page_content}}
 
-<span class="meta-info footer"><?= __('writtenInfo', $author, $date, $time) ?></span>
+<span class="meta-info meta-info-footer"><?= __('writtenInfo', $author, $date, $time) ?></span>
 
 {{_PREV_NEXT}}
 

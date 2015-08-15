@@ -71,6 +71,10 @@
 		"yes":"Ja",
 		"no":"Nein",
 
+		"page":"Seite",
+		"writtenInfo":"Verfasst von %1 am %2 um %3 Uhr.",
+		"newestSites":"neuste Seiten",
+		"picture x of y": "Bild x von y",
 
 		"### function:pretty_date ###":"",
 		"ago": "vor %1",
