@@ -311,4 +311,56 @@ function full($str)
 
 	return !empty($str);
 }
+
+function full_copy ($source, $target)
+{
+	if (is_dir($source))
+	{
+		@mkdir($target);
+
+		$d = dir($source);
+
+		while (false !== ($entry = $d->read()))
+		{
+			if ($entry == '.' || $entry == '..')
+				continue;
+
+			$Entry = $source . '/' . $entry;          
+			if (is_dir($Entry))
+			{
+				full_copy ($Entry, $target . '/' . $entry);
+				continue;
+			}
+			copy ($Entry, $target . '/' . $entry);
+		}
+
+		$d->close();
+	}
+	else
+	{
+		copy( $source, $target );
+	}
+}
+
+
+function deleteDirectory($dir)
+{
+	if (!file_exists($dir))
+		return true;
+
+	if (!is_dir($dir))
+		return unlink($dir);
+
+	foreach (scandir($dir) as $item)
+	{
+		if ($item == '.' || $item == '..')
+			continue;
+
+		if (!deleteDirectory($dir . DIRECTORY_SEPARATOR . $item))
+			return false;
+	}
+
+	return rmdir($dir);
+}
+
 ?>
