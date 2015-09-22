@@ -1,0 +1,11 @@
+{
+	"info":
+	{
+		"author": "Sven Eberth"
+	},
+	"translations":
+	{
+		"modulemanager":"module-manager",
+		"modules":"module"
+	}
+}
