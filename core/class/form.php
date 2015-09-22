@@ -6,7 +6,7 @@ class form
 	private $class;
 	private $action;
 	private $method;
-	private $error_msg = array();
+	private $error_msg = Array();
 	private $requiredInfo = true;
 
 	public function __construct(array $fields, $class=null, $action=null, $method="post")
@@ -39,7 +39,7 @@ class form
 		$formTemplate->setVar("action", $this->action);
 		$formTemplate->setVar("method", $this->method);
 		$formTemplate->setVar("fields", $this->getFormFields($this->fields));
-		$formTemplate->setVar("error_msg", $this->isSend() ? $this->getErrorMsg() : '');
+		$formTemplate->setVar("error_msg", $this->GetErrorMsg());
 
 		$formTemplate->setIfCondition("requiredInfo", $this->requiredInfo);
 
@@ -52,16 +52,6 @@ class form
 		{
 			if($props['type'] == 'html')
 				continue;
-
-			if($props['type'] == 'file')
-			{
-				if(!isset($_FILES[$name]) || ($props['multiple'] ? $_FILES[$name]['error'][0] : $_FILES[$name]['error']) == 4)
-				{
-					$this->setErrorMsg(__('please select a file in field', $props['label']));
-					$this->setFieldInvalid($name);
-				}
-				continue;
-			}
 
 			$this->fields[$name]['validInput'] = true;
 			
@@ -144,9 +134,6 @@ class form
 	{
 		global $app;
 
-		$this->error_msg = array(); // no duplicates
-		$this->isValid(); // needed to get the error messages
-
 		$messages = '';
 		foreach($this->error_msg as $message)
 		{
@@ -200,8 +187,7 @@ class form
 		$fieldTemplate->setVar("style",		$props['style']);
 		$fieldTemplate->setVar("label",		$props['label'] . ($this->isRequired($props['required'] && $this->requiredInfo == true) ? '*' : ''));
 		$fieldTemplate->setVar("name",		$fieldname);
-		if($props['type'] != 'file')
-			$fieldTemplate->setVar("value",		$value);
+		$fieldTemplate->setVar("value",		$value);
 		$fieldTemplate->setVar("required",	$this->isRequired($props['required']));
 
 		$fieldTemplate->setIfCondition("showLabel",	$props['showLabel']);
@@ -275,11 +261,6 @@ class form
 				break;
 			case 'html':
 				return $props['value'];
-				break;
-			case 'file':
-				$props['multiple'] = isset($props['multiple']) ? $props['multiple'] : false;
-				$fieldTemplate->setIfCondition("multiple", $props['multiple']);
-				return $fieldTemplate->render(PATH_MAIN."/core/template/form/_form_file_upload.php");
 				break;
 			case 'submit':
 				return $fieldTemplate->render(PATH_MAIN."/core/template/form/_form_submit.php");

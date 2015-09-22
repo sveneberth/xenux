@@ -1,4 +1,4 @@
-<form action="{{action}}" method="{{method}}" class="{{class}}" enctype="multipart/form-data">
+<form action="{{action}}" method="{{method}}" class="{{class}}">
 	{{error_msg}}
 	{{fields}}
 	
