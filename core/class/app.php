@@ -43,7 +43,7 @@ class app
 			]
 		]);
 
-		if ($result !== false)
+		if ($result !== false && $result !== null)
 		{
 			return $result->value;
 		}

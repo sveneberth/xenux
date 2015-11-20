@@ -35,11 +35,11 @@
 
 	echo $form->getForm();
 
-
+/*
 	echo "<pre>";
 	var_dump($_FILES);
 	echo "</pre>";
-
+*/
 
 	if ($form->isSend() && $form->isValid())
 		{
@@ -48,41 +48,58 @@
 			if (!file_exists(PATH_MAIN."/tmp/")) // create folder, if doesn't exists
 				mkdir(PATH_MAIN."/tmp/");
 
-			$uploaddir = PATH_MAIN . '/tmp/'; // uploaddir
-			
-			$uploadfile = $uploaddir . basename($_FILES['file']['name']); // uploadfile
+			$uploaddir	= PATH_MAIN . '/tmp/'; // uploaddir
+			$uploadfile	= $uploaddir . basename($_FILES['file']['name']); // uploadfile
+			$ext		= end((explode(".",  $_FILES["file"]["name"]))); // extension
 
-			#FIXME: accept only .zip files
-			if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) // upload file
+			if($ext == 'zip')
 			{
-				echo '<p>uploading successful</p>';
-
-				$zip = new ZipArchive;
-				if ($zip->open($uploadfile)) // unzip the file
+				// OK
+				if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) // upload file
 				{
-					$zip->extractTo($uploaddir . '/module/');
-					$zip->close();
+					echo '<p>uploading successful</p>';
 
-					echo '<p>unzipping successeful</p>';
+					$zip = new ZipArchive;
+					if ($zip->open($uploadfile)) // unzip the file
+					{
+						$zip->extractTo($uploaddir . '/module/');
+						$zip->close();
 
-					$modulehelper = new modulehelper;
-					#$modulehelper->modulepath = 
-					include_once($uploaddir . '/module/install.php'); // run installer
+						echo '<p>unzipping successeful</p>';
+
+						$modulehelper = new modulehelper;
+						#$modulehelper->modulepath = 
+						include_once($uploaddir . '/module/install.php'); // run installer
 
 
-					#FIXME: it doesn't work
-					deleteDirectory(PATH_MAIN . '/tmp/'); //remove temp-folder
+						deleteDirectory(PATH_MAIN . '/tmp/'); //remove temp-folder
+					}
+					else // something went wrong
+					{
+						echo '<p>something went wrong :/</p>';
+					}
+					
 				}
-				else // something went wrong
+				else
 				{
-					echo '<p>something went wrong :/</p>';
+					echo '<p>upload failed</p>';
 				}
-				
 			}
 			else
 			{
-				echo '<p>upload failed</p>';
+				// not a zip-file
+				echo '<p>Please upload a zip-file.</p>';
 			}
+		}
+	?>
+
+	<br />
+	<h3>all modules:</h3>
+	<?php
+		$installed_modules = json_decode($app->getOption('installed_modules'));
+		foreach ($installed_modules as $name)
+		{
+			echo $name . '<br />';
 		}
 	?>
 </section>
