@@ -235,7 +235,7 @@ class eventsController extends AbstractController
 
 		if($form->isSend() && isset($form->getInput()['cancel']))
 		{
-			header('Location: '.URL_ADMIN.'/news/home');
+			header('Location: '.URL_ADMIN.'/evens/home');
 			return false;
 		}
 
