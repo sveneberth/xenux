@@ -178,6 +178,13 @@ class usersController extends AbstractController
 				'label' => __('lastname'),
 				'value' => @$user->lastname,
 			),
+			'realname_show_profile' => array
+			(
+				'type' => 'bool_radio',
+				'required' => true,
+				'label' => __('realname_show_profile'),
+				'value' => $user->realname_show_profile,
+			),
 			'email' => array
 			(
 				'type' => 'email',
@@ -186,12 +193,27 @@ class usersController extends AbstractController
 				'label' => __('email'),
 				'value' => @$user->email,
 			),
+			'email_show_profile' => array
+			(
+				'type' => 'bool_radio',
+				'required' => true,
+				'label' => __('email_show_profile'),
+				'value' => $user->email_show_profile,
+			),
 			'homepage' => array
 			(
 				'type' => 'text',
 				'required' => false,
 				'label' => __('homepage'),
 				'value' => @$user->homepage,
+			),
+			'social_media' => array
+			(
+				'type' => 'textarea',
+				'required' => false,
+				'label' => __('social_media'),
+				'value' => @$user->social_media,
+				'info' => __('social media introduction'),
 			),
 			'password' => array
 			(
@@ -252,6 +274,26 @@ class usersController extends AbstractController
 			$username		= preg_replace('/[^a-zA-Z0-9_\-\.]/' , '' , $data['username']);
 			$homepage		= full($data['homepage']) ? (preg_match('/^([a-zA-Z]*)\:\/\//', $data['homepage']) ? $data['homepage'] : 'http://'.$data['homepage']) : '';
 
+/*
+#fixme: it should return 'no'
+
+if (preg_match_all('/(.*?)\:\s?(.*?)$/m', $data['social_media']))
+		
+$input = 'Google: http://google.com
+YouTube: http://youtube.com
+wrong
+Stackoverflow: http://stackoverflow.com/';
+if (preg_match_all('/(.*?)\:\s?(.*?)$/m', $input))
+{
+	echo 'ok';
+}
+else
+{
+	echo 'no';
+}
+*/
+		return $form->getForm();
+
 			$success = true;
 
 			if($new)
@@ -279,14 +321,17 @@ class usersController extends AbstractController
 				}
 
 				$user = $XenuxDB->Insert('users', [
-					'username'			=> $username,
-					'firstname'			=> $data['firstname'],
-					'lastname'			=> $data['lastname'],
-					'email'				=> $data['email'],
-					'password'			=> $app->user->createPasswordHash($username, $data['password']),
-					'homepage'			=> $homepage,
-					'bio'				=> $data['bio'],
-					'confirmed'			=> true
+					'username'				=> $username,
+					'firstname'				=> $data['firstname'],
+					'lastname'				=> $data['lastname'],
+					'realname_show_profile'	=> parse_bool($data['realname_show_profile']),
+					'email'					=> $data['email'],
+					'email_show_profile'	=> parse_bool($data['email_show_profile']),
+					'password'				=> $app->user->createPasswordHash($username, $data['password']),
+					'homepage'				=> $homepage,
+					'bio'					=> $data['bio'],
+					'social_media'			=> $data['social_media'],
+					'confirmed'				=> true
 				]);
 
 				if($user !== false)
@@ -326,11 +371,14 @@ class usersController extends AbstractController
 
 				// update it
 				$return = $XenuxDB->Update('users', [
-					'firstname'			=> $data['firstname'],
-					'lastname'			=> $data['lastname'],
-					'email'				=> $data['email'],
-					'homepage'			=> $homepage,
-					'bio'				=> $data['bio'],
+					'firstname'				=> $data['firstname'],
+					'lastname'				=> $data['lastname'],
+					'realname_show_profile'	=> parse_bool($data['realname_show_profile']),
+					'email'					=> $data['email'],
+					'email_show_profile'	=> parse_bool($data['email_show_profile']),
+					'homepage'				=> $homepage,
+					'bio'					=> $data['bio'],
+					'social_media'			=> $data['social_media']
 				],
 				[
 					'id' => $this->editUserID

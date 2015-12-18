@@ -7,6 +7,7 @@
 	},
 	"translations":
 	{
+		"error":"Error",
 		"noscript-message":"In your browser is JavaScript disabled. please activate JavaScript to use the full range of functions of the website.",
 		
 		"search":"Search",
@@ -32,17 +33,27 @@
 		"login":"login",
 		"logout":"logout",
 		"password":"password",
-		"username":"username",
+		"resetPassword":"rest password",
+		"passwordAgain":"enter password again",
+		"username":"Username",
+		"firstname":"Firstname",
+		"lastname":"Lastname",
+		"realname":"Realname",
+		"email":"eMail",
 		"forgotPassword":"forgot password",
 		"forgotUsername":"forgot username",
+		"sendUsername":"send username",
 		"register":"register",
 		"successLogin":"Hello %1, you're successfully logged in",
 		"helloUser":"Hello %1!",
+		"bio":"Biography",
+		"social_media":"Social Media",
 		
 		"sitemap":"Sitemap",
 		"contact":"Contact",
 		"imprint":"Imprint",
 		"administration":"administration",
+		"homepage":"Homepage",
 
 		"contactpersons":"contactpersons",
 		"showContactperson":"show contactperson",
@@ -97,7 +108,6 @@
 		"evening": "evening",
 		"a year and a half": "a year and a half",
 
-
-		"placeholder":""
+		"gotoPage":"go to page"
 	}
 }

@@ -13,7 +13,9 @@
 		"here can you edit the user":"Here can you edit the user.",
 		"click to edit user":"Click, to edit user",
 
-		"homepage":"homepage",
-		"bio":"bio"
+		"realname_show_profile":"show the realname on the profile",
+		"email_show_profile":"show the eMail on the profile",
+
+		"social media introduction": "For each network use a new line, write a line like \"twitter: http://twitter.com/profile\""
 	}
 }

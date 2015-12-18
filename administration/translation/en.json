@@ -26,10 +26,6 @@
 		"title":"title",
 		"createDate":"createdate",
 		"author":"author",
-		"ID":"ID",
-
-
-
-		"placeholder":""
+		"ID":"ID"
 	}
 }

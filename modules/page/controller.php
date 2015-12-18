@@ -53,6 +53,8 @@ class pageController extends AbstractController
 				$template->setVar("page_content", $page->text);
 				$template->setVar("page_title", $page->title);
 
+				$template->setIfCondition("show_meta_info", parse_bool($app->getOption('sites_show_meta_info')));
+
 				$template->setVar("_PREV_NEXT", $this->getPrevNext($page));
 				$template->setVar("_contactPersons", $this->getContactPersons($id));
 

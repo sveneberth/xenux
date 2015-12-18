@@ -2,6 +2,7 @@
 	"headline": "options",
 	"links":
 	{
-		"basic": "/basic"
+		"basic": "/basic",
+		"sites": "/sites"
 	}
 }

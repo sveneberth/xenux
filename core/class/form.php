@@ -188,7 +188,6 @@ class form
 		$props['required']		= isset($props['required'])		? $props['required']	: false;
 		$props['wysiwyg']		= isset($props['wysiwyg'])		? $props['wysiwyg']		: false;
 		$props['showLabel']		= isset($props['showLabel'])	? $props['showLabel']	: true;
-
 		$props['label'] = (isset($props['label:before']) ? $props['label:before'].' ' : '') . $props['label'] . (isset($props['label:after']) ? ''.$props['label:after'] : '');
 		
 		$class = $props['class'] . (isset($props['validInput']) && $props['validInput'] == false ? ' wrong' : '');
@@ -229,7 +228,7 @@ class form
 				break;
 			case 'radio':
 				$props['options'] = isset($props['options']) ? $props['options'] : '';
-				$fieldTemplate->setVar("radios", $this->getRadioOptions($props['options'], $fieldname, $value, $class));
+				$fieldTemplate->setVar("radios", $this->getRadioOptions($props['options'], $fieldname, $value, $class, $props['style']));
 				return $fieldTemplate->render(PATH_MAIN."/core/template/form/_form_radio_fieldset.php");
 				break;
 			case 'bool_radio':
@@ -312,7 +311,7 @@ class form
 		return $select_options;
 	}
 
-	private function getRadioOptions(array $options, $fieldname, $value=null, $class=null)
+	private function getRadioOptions(array $options, $fieldname, $value=null, $class=null, $style=null)
 	{
 		global $app;
 
@@ -328,6 +327,7 @@ class form
 			$optionTemplate->setVar("name", $fieldname);
 			$optionTemplate->setVar("label", $option['label']);
 			$optionTemplate->setVar("class", $class);
+			$optionTemplate->setVar("style", $style);
 			$optionTemplate->setVar("checked", $this->isChecked($option['value'] == $value));
 			$optionTemplate->setVar("disabled", $this->isDisabled($option['disabled']));
 

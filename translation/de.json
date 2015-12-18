@@ -7,6 +7,7 @@
 	},
 	"translations":
 	{
+		"error":"Fehler",
 		"noscript-message":"In deinem Browser ist JavaScript deaktiviert. Um den vollen Funktionsumfang dieser Webseite zu nutzen, benötigst du JavaScript.",
 		
 		"search":"Suche",
@@ -36,6 +37,7 @@
 		"resetPassword":"Passwort zurücksetzen",
 		"passwordAgain":"Passwort wiederholen",
 		"username":"Benutzername",
+		"realname":"bürgerlicher Name",
 		"email":"E-Mail",
 		"firstname":"Vorname",
 		"lastname":"Nachname",
@@ -45,11 +47,14 @@
 		"register":"Registrieren",
 		"successLogin":"Hallo %1, du bist erfolgreich eingeloggt",
 		"helloUser":"Hallo %1!",
+		"bio":"Biografie",
+		"social_media":"Soziale Netzwerke",
 		
 		"sitemap":"Sitemap",
 		"contact":"Kontakt",
 		"imprint":"Impressum",
 		"administration":"Administration",
+		"homepage":"Homepage",
 
 		"contactpersons":"Ansprechpartner",
 		"showContactperson":"Ansprechpartner anzeigen",
@@ -72,7 +77,7 @@
 		"no":"Nein",
 
 		"page":"Seite",
-		"writtenInfo":"Verfasst von %1 am %2 um %3 Uhr.",
+		"writtenInfo":"Verfasst von <a href=\"{{URL_MAIN}}/user/view/%1\">%1</a> am %2 um %3 Uhr.",
 		"newestSites":"neuste Seiten",
 		"picture x of y": "Bild x von y",
 
@@ -106,8 +111,7 @@
 		"afternoon": "nachmittags",
 		"evening": "abends",
 		"a year and a half": "eineinhalb Jahren",
-
-
-		"placeholder":""
+		
+		"gotoPage":"gehe zur Seite"
 	}
 }

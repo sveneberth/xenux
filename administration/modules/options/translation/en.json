@@ -7,6 +7,7 @@
 	{
 		"options":"Options",
 		"basic":"basic",
+		"sites":"Sites",
 
 		"users_can_register": "everyone can register",
 		"homepage_offline": "homepage offline",
@@ -19,6 +20,8 @@
 		"default_language": "default language",
 		
 		"description of the homepage for meta tags":"description of the homepage for the meta tags",
-		"keywords of the homepage for meta tags":"keywords of the homepage for the meta tags"
+		"keywords of the homepage for meta tags":"keywords of the homepage for the meta tags",
+
+		"show_meta_info": "Show the creator and time on the site."
 	}
 }

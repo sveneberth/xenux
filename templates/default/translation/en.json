@@ -9,9 +9,6 @@
 		
 		"fontSizeDecrease":"font smaller",
 		"fontSizeReset":"font normal",
-		"fontSizeIncrease":"font greater",
-		
-		
-		"placeholder":""
+		"fontSizeIncrease":"font greater"
 	}
 }

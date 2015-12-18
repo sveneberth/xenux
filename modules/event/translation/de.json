@@ -29,8 +29,6 @@
 		"Dec":"Dez",
 		
 		"prevMonth": "Voriger Monat",
-		"nextMonth": "Nächster Monat",
-
-		"placeholder":""
+		"nextMonth": "Nächster Monat"
 	}
 }

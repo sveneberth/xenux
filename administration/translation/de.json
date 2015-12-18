@@ -26,10 +26,6 @@
 		"title":"Titel",
 		"createDate":"Erstelldatum",
 		"author":"Autor",
-		"ID":"ID",
-		
-
-
-		"placeholder":""
+		"ID":"ID"
 	}
 }

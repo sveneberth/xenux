@@ -20,7 +20,15 @@ class optionsController extends AbstractController
 		$template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout.php");
 	
 		$template->setVar("messages", '');
-		$template->setVar("form", $this->getForm($template));
+
+		if ($this->url[1] == 'basic')
+		{
+			$template->setVar("form", $this->getBasicForm($template));
+		}
+		elseif ($this->url[1] == 'sites')
+		{
+			$template->setVar("form", $this->getSitesForm($template));
+		}
 
 		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == true)
 			$template->setVar("messages", '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>');
@@ -35,9 +43,8 @@ class optionsController extends AbstractController
 		return true;
 	}
 
-	#FIXME: split options (basic, pages, etc.)
 
-	private function getForm(&$template)
+	private function getBasicForm(&$template)
 	{
 		global $XenuxDB, $app;
 
@@ -161,6 +168,62 @@ class optionsController extends AbstractController
 			else
 			{
 				header('Location: '.URL_ADMIN.'/options/basic/?savingSuccess=false');
+			}
+			
+		}
+		return $form->getForm();
+	}
+
+	private function getSitesForm(&$template)
+	{
+		global $XenuxDB, $app;
+
+		
+		$formFields = array
+		(
+			'sites_show_meta_info' => array
+			(
+				'type' => 'bool_radio',
+				'required' => true,
+				'label' => __('show_meta_info'),
+				'value' => parse_bool($app->getOption('sites_show_meta_info'))
+			),
+			
+			'submit' => array
+			(
+				'type' => 'submit',
+				'label' => __('save')
+			)
+		);
+
+		$form = new form($formFields);
+		$form->disableRequiredInfo();
+
+		if($form->isSend() && $form->isValid())
+		{
+			$data = $form->getInput();
+
+			$success = true;
+			unset($formFields['submit']); // unset, else it will "save" in the options
+			foreach ($formFields as $name => $props)
+			{
+				$return = $XenuxDB->Update('main', [
+					'value' => $data[$name]
+				],
+				[
+					'name' => $name
+				]);
+				if($return === false)
+					$success = false;
+			}
+
+			if($success)
+			{
+				header('Location: '.URL_ADMIN.'/options/sites/?savingSuccess=true');
+			}
+			else
+			{
+				header('Location: '.URL_ADMIN.'/options/sites/?savingSuccess=false');
 			}
 			
 		}
