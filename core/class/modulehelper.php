@@ -68,14 +68,13 @@ class modulehelper
 
 		if($this->get_option($name) === false)
 		{
-			// option already exists
-			return false;
+			return $XenuxDB->Insert('main', [
+				'name' => $name,
+				'value' => $value
+			]);
 		}
 
-		$XenuxDB->insert('main', [
-			'name' => $name,
-			'value' => $value
-		]);
+		return false;
 	}
 
 	/**

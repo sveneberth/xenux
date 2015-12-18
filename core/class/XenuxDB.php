@@ -576,6 +576,31 @@ class XenuxDB
 	}
 
 	/**
+	* addTable:
+	* Query successfull:
+	* 	return true
+	* Query failed:
+	* 	return false
+	*/
+	public function addTable($table, array $columns)
+	{
+		$table = $this->quoteColumn(MYSQL_PREFIX . $table);
+
+		$statement = 'CREATE TABLE IF NOT EXISTS ' . $table . ' (';
+
+		$i = 1;
+		foreach ($columns as $column => $properties)
+		{
+			$statement .= $this->quoteColumn($column) . ' ' . $properties . ($i === count($columns) ? '' : ',');
+			$i++;
+		}
+
+		$statement .= ')';
+
+		return $this->query($statement);
+	}
+
+	/**
 	* clearTable:
 	* Query successfull:
 	* 	return true
