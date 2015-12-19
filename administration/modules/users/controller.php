@@ -183,7 +183,7 @@ class usersController extends AbstractController
 				'type' => 'bool_radio',
 				'required' => true,
 				'label' => __('realname_show_profile'),
-				'value' => $user->realname_show_profile,
+				'value' => @$user->realname_show_profile,
 			),
 			'email' => array
 			(
@@ -198,7 +198,7 @@ class usersController extends AbstractController
 				'type' => 'bool_radio',
 				'required' => true,
 				'label' => __('email_show_profile'),
-				'value' => $user->email_show_profile,
+				'value' => @$user->email_show_profile,
 			),
 			'homepage' => array
 			(
