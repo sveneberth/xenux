@@ -363,4 +363,22 @@ function deleteDirectory($dir)
 	return rmdir($dir);
 }
 
+
+/**
+* turn_array
+* @param: array (for example a result of preg_match_all) 
+* @source: http://php.net/manual/de/function.preg-match-all.php#102520
+*/
+function turn_array($m) 
+{ 
+    for ($z = 0;$z < count($m);$z++) 
+    { 
+        for ($x = 0;$x < count($m[$z]);$x++) 
+        { 
+            $rt[$x][$z] = $m[$z][$x]; 
+        } 
+    }    
+    
+    return $rt; 
+} 
 ?>

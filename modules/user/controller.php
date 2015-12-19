@@ -44,8 +44,8 @@ class userController extends AbstractController
 		{
 			$template = new template(PATH_MAIN."/modules/".$this->modulename."/layout.php",
 			[
+				'socialmedia_links' => $user->social_media
 			]);
-
 			$template->setVar("username", $user->username);
 			$template->setVar("realname", $user->firstname . ' ' . $user->lastname);
 			$template->setIfCondition("realname_show_profile", $user->realname_show_profile);
@@ -53,6 +53,20 @@ class userController extends AbstractController
 			$template->setIfCondition("email_show_profile", $user->email_show_profile);
 			$template->setVar("bio", $user->bio);
 			$template->setVar("homepage", $user->homepage);
+			$template->setIfCondition("social_media_not_empty", full($user->social_media));
+			$template->setVar("amountPostings", $XenuxDB->count('sites', [
+				'where' => [
+					'author_id' => $user->id
+				]
+			]) + $XenuxDB->count('events', [
+				'where' => [
+					'author_id' => $user->id
+				]
+			]) + $XenuxDB->count('news', [
+				'where' => [
+					'author_id' => $user->id
+				]
+			]));
 			
 			echo $template->render();
 

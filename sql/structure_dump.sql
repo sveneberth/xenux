@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 15. Mai 2015 um 19:18
+-- Erstellungszeit: 2015-12-19 14:41
 -- Server Version: 5.6.21
 -- PHP-Version: 5.6.3
 
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%contactpersons` (
   `position` varchar(150) NOT NULL,
   `email` varchar(150) NOT NULL,
   `text` text NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=latin1;
 
 -- --------------------------------------------------------
 
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%events` (
   `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
   `public` tinyint(1) DEFAULT '0' COMMENT '1=public;0=private',
   `author_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%files` (
   `lastModified` timestamp NULL DEFAULT NULL,
   `parent_folder_id` int(10) NOT NULL,
   `author_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -83,9 +83,7 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%main` (
 `id` int(10) NOT NULL,
   `name` varchar(150) NOT NULL,
   `value` text NOT NULL,
-  `type` varchar(150) NOT NULL,
-  `label` varchar(200) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -102,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%news` (
   `lastModified_date` timestamp NULL DEFAULT NULL,
   `public` tinyint(1) DEFAULT '0' COMMENT '1=public;0=private',
   `author_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -121,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%sites` (
   `sortindex` int(10) NOT NULL,
   `public` tinyint(1) DEFAULT '0' COMMENT '1=public;0=private',
   `author_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=170 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -134,7 +132,7 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%site_contactperson` (
 `id` int(11) NOT NULL,
   `site_id` int(11) NOT NULL,
   `contactperson_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=363 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -148,8 +146,11 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%users` (
   `username` varchar(200) NOT NULL,
   `firstname` varchar(200) DEFAULT NULL,
   `lastname` varchar(200) DEFAULT NULL,
+  `realname_show_profile` tinyint(1) NOT NULL,
   `email` varchar(200) NOT NULL,
+  `email_show_profile` tinyint(1) NOT NULL,
   `homepage` text,
+  `social_media` text NOT NULL,
   `bio` text,
   `password` varchar(200) NOT NULL,
   `confirmed` tinyint(1) NOT NULL DEFAULT '0',
@@ -158,7 +159,7 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%users` (
   `lastlogin_ip` varchar(100) DEFAULT NULL,
   `session_fingerprint` varchar(100) DEFAULT NULL,
   `verifykey` varchar(200) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Indizes der exportierten Tabellen

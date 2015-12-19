@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 15. Mai 2015 um 19:42
+-- Erstellungszeit: 2015-12-19 14:41
 -- Server Version: 5.6.21
 -- PHP-Version: 5.6.3
 
@@ -93,26 +93,27 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%main` (
 `id` int(10) NOT NULL,
   `name` varchar(150) NOT NULL,
   `value` text NOT NULL,
-  `label` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `%PREFIX%main`
 --
 
-INSERT INTO `%PREFIX%main` (`id`, `name`, `value`, `label`) VALUES
-(3, 'meta_author', 'Xenux', 'Autor (Meta-Tag)'),
-(4, 'hp_name', 'Meine Homepage', 'Homepagename'),
-(5, 'meta_desc', 'Hier die Beschreibung der Homepage, die in den Meta-Tags angezeigt wird', 'Beschreibung der Homepage(Meta-Tag)'),
-(6, 'meta_keys', 'Schlüsselwörter der Homepage, die in den Meta-Tags angezeigt werden', 'Schlüsselwörter Homepage (Meta-Tag)'),
-(10, 'admin_email', 'mail@xenux', 'E-Mail Adresse als Absender (bei Registrierungen o.Ä.)'),
-(11, 'HomePage_ID', '', 'Home Seite'),
-(12, 'users_can_register', 'false', 'Nutzer können sich registrieren'),
-(13, 'homepage_offline', 'false', 'Wartungsarbeiten'),
-(14, 'template', 'default', 'Template'),
-(15, 'ImprintPage_ID', '', 'Impressum Seite'),
-(16, 'ContactPage_ID', '', 'Kontakt Seite'),
-(17, 'default_language', 'de', 'Standard Sprache');
+INSERT INTO `%PREFIX%main` (`name`, `value`) VALUES
+('meta_author', 'Xenux'),
+('hp_name', 'Homepage'),
+('meta_desc', 'Hier die Beschreibung der Homepage, die in den Meta-Tags angezeigt wird'),
+('meta_keys', 'Schlüsselwörter der Homepage, die in den Meta-Tags angezeigt werden'),
+('admin_email', 'mail@xenux'),
+('users_can_register', 'true'),
+('homepage_offline', 'false'),
+('template', 'default'),
+('HomePage_ID', ''),
+('ImprintPage_ID', ''),
+('ContactPage_ID', ''),
+('default_language', 'de'),
+('installed_modules', '[]'),
+('sites_show_meta_info', 'true');
 
 -- --------------------------------------------------------
 
@@ -190,8 +191,11 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%users` (
   `username` varchar(200) NOT NULL,
   `firstname` varchar(200) DEFAULT NULL,
   `lastname` varchar(200) DEFAULT NULL,
+  `realname_show_profile` tinyint(1) NOT NULL,
   `email` varchar(200) NOT NULL,
+  `email_show_profile` tinyint(1) NOT NULL,
   `homepage` text,
+  `social_media` text NOT NULL,
   `bio` text,
   `password` varchar(200) NOT NULL,
   `confirmed` tinyint(1) NOT NULL DEFAULT '0',

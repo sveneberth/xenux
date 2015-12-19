@@ -274,25 +274,8 @@ class usersController extends AbstractController
 			$username		= preg_replace('/[^a-zA-Z0-9_\-\.]/' , '' , $data['username']);
 			$homepage		= full($data['homepage']) ? (preg_match('/^([a-zA-Z]*)\:\/\//', $data['homepage']) ? $data['homepage'] : 'http://'.$data['homepage']) : '';
 
-/*
-#fixme: it should return 'no'
-
-if (preg_match_all('/(.*?)\:\s?(.*?)$/m', $data['social_media']))
-		
-$input = 'Google: http://google.com
-YouTube: http://youtube.com
-wrong
-Stackoverflow: http://stackoverflow.com/';
-if (preg_match_all('/(.*?)\:\s?(.*?)$/m', $input))
-{
-	echo 'ok';
-}
-else
-{
-	echo 'no';
-}
-*/
-		return $form->getForm();
+			$result =  trim(preg_replace('/(.*?)\:\s?(\w*?):(.*?)$/m', '', $data['social_media']));
+			$social_media_ok = ($result == '');
 
 			$success = true;
 
@@ -314,8 +297,12 @@ else
 				{
 					$this->messages[] = '<p class="box-shadow info-message warning">'.__('the passwords are not equal').'</p>';
 				}
+				if(!$social_media_ok)
+				{
+					$this->messages[] = '<p class="box-shadow info-message warning">'.__('the social media links are inacceptable').'</p>';
+				}
 
-				if($userFoundByEmail || $userFoundByUsername || !$passwordsEqual)
+				if($userFoundByEmail || $userFoundByUsername || !$passwordsEqual || !$social_media_ok)
 				{
 					return $form->getForm();
 				}
@@ -362,12 +349,18 @@ else
 					}
 					else
 					{
-
 						$this->messages[] = '<p class="box-shadow info-message warning">'.__('the passwords are not equal').'</p>';
 						return $form->getForm();
 					}
 
 				}
+
+				if(!$social_media_ok)
+				{
+					$this->messages[] = '<p class="box-shadow info-message warning">'.__('the social media links are inacceptable').'</p>';
+					return $form->getForm();
+				}
+
 
 				// update it
 				$return = $XenuxDB->Update('users', [
