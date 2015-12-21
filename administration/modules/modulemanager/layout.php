@@ -20,6 +20,7 @@
 	<h3><?= _('all installed modules') ?>:</h3>
 
 	<?php
+		#FIXME: build it prettier and move it in the controller
 		if(isset($_GET['removeModule']) && full(@$_GET['removeModule']))
 		{
 			if(isset($_GET['confirmed']) && true == @$_GET['confirmed'])

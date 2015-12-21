@@ -1,4 +1,8 @@
 <?php
+#FIXME: add descriptions/documentations for the following functions
+#FXIME:	deleteDirectionary == rrmdir ???		
+
+
 function contains($var)
 {
 	$array = func_get_args();
@@ -384,7 +388,10 @@ function turn_array($m)
 
 
 /**
-* http://php.net/manual/de/function.rmdir.php#98622
+* rrmmdir
+* this fuction delete recursive a dir 
+* @param: string, path of the to be deleted dir
+* @source: http://php.net/manual/de/function.rmdir.php#98622
 */
 function rrmdir($dir)
 {
@@ -403,6 +410,10 @@ function rrmdir($dir)
 	}
 }
 
+
+/*
+* remove_array_value
+*/
 function remove_array_value(array &$array, &$value)
 {
 	if (($key = array_search($value, $array)) !== false)
