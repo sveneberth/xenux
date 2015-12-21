@@ -5,5 +5,5 @@ xenux-conf.php
 /logs/
 /mails/
 
-#ignore temp folder
+# ignore temp folder
 /tmp/ 

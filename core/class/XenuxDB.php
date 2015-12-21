@@ -487,8 +487,10 @@ class XenuxDB
 	)
 	*/
 	
+	
 
-
+	######################################## DATA ACTIONS ########################################
+	
 	
 	/**
 	* getList:
@@ -571,47 +573,6 @@ class XenuxDB
 						$this->_group_clause(@$props['group']) .
 						$this->_order_clause(@$props['order']) .
 						$this->_limit_clause(@$props['limit']);
-
-		return $this->query($statement);
-	}
-
-	/**
-	* addTable:
-	* Query successfull:
-	* 	return true
-	* Query failed:
-	* 	return false
-	*/
-	public function addTable($table, array $columns)
-	{
-		$table = $this->quoteColumn(MYSQL_PREFIX . $table);
-
-		$statement = 'CREATE TABLE IF NOT EXISTS ' . $table . ' (';
-
-		$i = 1;
-		foreach ($columns as $column => $properties)
-		{
-			$statement .= $this->quoteColumn($column) . ' ' . $properties . ($i === count($columns) ? '' : ',');
-			$i++;
-		}
-
-		$statement .= ')';
-
-		return $this->query($statement);
-	}
-
-	/**
-	* clearTable:
-	* Query successfull:
-	* 	return true
-	* Query failed:
-	* 	return false
-	*/
-	public function clearTable($table)
-	{
-		$table = $this->quoteColumn(MYSQL_PREFIX . $table);
-
-		$statement = 'TRUNCATE TABLE ' . $table;
 
 		return $this->query($statement);
 	}
@@ -712,7 +673,72 @@ class XenuxDB
 
 		return $this->query('UPDATE ' . $table . ' SET ' . implode(', ', $fields) . $this->_where_clause($where));
 	}
+
+
+	######################################## TABLE ACTIONS ########################################
+
+
+	/**
+	* addTable:
+	* Query successfull:
+	* 	return true
+	* Query failed:
+	* 	return false
+	*/
+	public function addTable($table, array $columns)
+	{
+		$table = $this->quoteColumn(MYSQL_PREFIX . $table);
+
+		$statement = 'CREATE TABLE IF NOT EXISTS ' . $table . ' (';
+
+		$i = 1;
+		foreach ($columns as $column => $properties)
+		{
+			$statement .= $this->quoteColumn($column) . ' ' . $properties . ($i === count($columns) ? '' : ',');
+			$i++;
+		}
+
+		$statement .= ')';
+
+		return $this->query($statement);
+	}
+
+	/**
+	* clearTable:
+	* Query successfull:
+	* 	return true
+	* Query failed:
+	* 	return false
+	*/
+	public function clearTable($table)
+	{
+		$table = $this->quoteColumn(MYSQL_PREFIX . $table);
+
+		$statement = 'TRUNCATE TABLE ' . $table;
+
+		return $this->query($statement);
+	}
+
+	/**
+	* removeTable:
+	* Query successfull:
+	* 	return true
+	* Query failed:
+	* 	return false
+	*/
+	public function removeTable($table)
+	{
+		$table = $this->quoteColumn(MYSQL_PREFIX . $table);
+
+		$statement = 'DROP TABLE ' . $table;
+
+		return $this->query($statement);
+	}
 	
+
+	######################################## DATABASE ACTIONS ########################################
+
+
 	public function closeConnection()
 	{
 		$result = $this->db->close();
@@ -721,6 +747,7 @@ class XenuxDB
 	}
 
 
+	######################################## QUERY ACTIONS ########################################
 
 
 	public function setLastQuery($query)
@@ -732,6 +759,10 @@ class XenuxDB
 	{
 		return end($this->querys);
 	}
+
+
+	######################################## ESCAPE ACTIONS ########################################
+
 
 	public function escapeString($str)
 	{

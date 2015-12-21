@@ -380,5 +380,37 @@ function turn_array($m)
     }    
     
     return $rt; 
-} 
+}
+
+
+/**
+* http://php.net/manual/de/function.rmdir.php#98622
+*/
+function rrmdir($dir)
+{
+	if (is_dir($dir))
+	{
+		$objects = scandir($dir);
+		foreach ($objects as $object)
+		{
+			if ($object != "." && $object != "..")
+			{
+				if (filetype($dir."/".$object) == "dir") rrmdir($dir."/".$object); else unlink($dir."/".$object);
+			}
+		}
+		reset($objects);
+		rmdir($dir);
+	}
+}
+
+function remove_array_value(array &$array, &$value)
+{
+	if (($key = array_search($value, $array)) !== false)
+	{
+		unset($array[$value]);
+		return true;
+	}
+
+	return false;
+}
 ?>

@@ -18,7 +18,11 @@ class modulehelper
 	public function name($name)
 	{
 		$this->name = $name;
+	}
 
+
+	public function install()
+	{
 		// get installed_modules
 		$installed_modules = json_decode($this->get_option('installed_modules'));
 
@@ -35,7 +39,26 @@ class modulehelper
 		$installed_modules[] = $this->name;
 		$this->update_option('installed_modules', json_encode($installed_modules));
 
-#		return true;
+		return true;
+	}
+
+	public function uninstall()
+	{
+		// get installed_modules
+		$installed_modules = json_decode($this->get_option('installed_modules'));
+
+		if(!in_array($this->name, $installed_modules))
+		{
+			echo '<p>module not installed</p>';
+			return false;
+		}
+
+		remove_array_value($installed_modules, $this->name);
+
+		// write all the rest modules in options
+		$this->update_option('installed_modules', json_encode($installed_modules));
+
+		return true;
 	}
 
 	/**
@@ -46,6 +69,36 @@ class modulehelper
 		foreach($arr as $old => $new)
 		{
 			full_copy($this->tmppath . 'module/' . $old, str_replace('#MODULEPATH', $this->modulepath . $this->name . '/', $new));
+		}
+	}
+	
+	/**
+	* remove:
+	*/
+	public function remove(array $arr)
+	{
+		foreach($arr as $object)
+		{
+			if(empty($this->name))
+			{
+				// error
+
+				// avoid to remove the full `/modules` folder
+				// #FIXME: solve it prettier ...
+
+				continue;
+			}
+
+			$object = str_replace('#MODULEPATH', $this->modulepath . $this->name . '/', $object);
+
+			if (is_dir($object))
+			{
+				rrmdir($object);
+			}
+			else
+			{
+				unlink($object);
+			}
 		}
 	}
 
@@ -89,6 +142,21 @@ class modulehelper
 		],
 		[
 			'name' => $name
+		]);
+
+	}
+	
+	/**
+	* remove_option:
+	*/
+	public function remove_option($name)
+	{
+		global $XenuxDB;
+
+		$XenuxDB->Delete('main', [
+			'where' => [
+				'name' => $name
+			]
 		]);
 
 	}

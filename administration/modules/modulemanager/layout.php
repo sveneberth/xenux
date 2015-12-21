@@ -11,95 +11,43 @@
 {{messages}}
 
 <section class="box-shadow floating one-column-box">
-	<p>upload a module to install.</p>
+	<p><?= __('upload a zip file to install a module') ?></p>
+
+	{{upload_form}}
+</section>
+
+<section class="box-shadow floating one-column-box">
+	<h3><?= _('all installed modules') ?>:</h3>
 
 	<?php
-	$formFields = array
-		(
-			'file' => array
-			(
-				'type' => 'file',
-				'required' => true,
-				'multiple' => false,
-				'label' => __('upload file')
-			),
-			'submit' => array
-			(
-				'type' => 'submit',
-				'label' => __('upload')
-			)
-		);
-	
-	$form = new form($formFields);
-	$form->disableRequiredInfo();
-
-	echo $form->getForm();
-
-/*
-	echo "<pre>";
-	var_dump($_FILES);
-	echo "</pre>";
-*/
-
-	if ($form->isSend() && $form->isValid())
+		if(isset($_GET['removeModule']) && full(@$_GET['removeModule']))
 		{
-			echo "send";
-
-			if (!file_exists(PATH_MAIN."/tmp/")) // create folder, if doesn't exists
-				mkdir(PATH_MAIN."/tmp/");
-
-			$uploaddir	= PATH_MAIN . '/tmp/'; // uploaddir
-			$uploadfile	= $uploaddir . basename($_FILES['file']['name']); // uploadfile
-			$ext		= end((explode(".",  $_FILES["file"]["name"]))); // extension
-
-			if($ext == 'zip')
+			if(isset($_GET['confirmed']) && true == @$_GET['confirmed'])
 			{
-				// OK
-				if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) // upload file
+				$modules = json_decode($app->getOption('installed_modules'));
+				if(in_array($_GET['removeModule'], $modules))
 				{
-					echo '<p>uploading successful</p>';
+					// uninstall
 
-					$zip = new ZipArchive;
-					if ($zip->open($uploadfile)) // unzip the file
-					{
-						$zip->extractTo($uploaddir . '/module/');
-						$zip->close();
-
-						echo '<p>unzipping successeful</p>';
-
-						$modulehelper = new modulehelper;
-						#$modulehelper->modulepath = 
-						include_once($uploaddir . '/module/install.php'); // run installer
-
-
-						deleteDirectory(PATH_MAIN . '/tmp/'); //remove temp-folder
-					}
-					else // something went wrong
-					{
-						echo '<p>something went wrong :/</p>';
-					}
-					
+					$modulehelper = new modulehelper;
+					include_once(PATH_MAIN . '/modules/' . $_GET['removeModule'] . '/uninstall.php'); // run uninstaller
 				}
 				else
 				{
-					echo '<p>upload failed</p>';
+					echo 'err: module not installed';
 				}
 			}
 			else
 			{
-				// not a zip-file
-				echo '<p>Please upload a zip-file.</p>';
+				echo '<p>' . __('shure to remove?') . '</p>';
+				echo '<a href="' . URL_ADMIN . '/modulemanager/modules?removeModule=' . $_GET['removeModule'] . '&confirmed=true">' . __('yes') . '</a>';
 			}
 		}
-	?>
 
-	<br />
-	<h3>all modules:</h3>
-	<?php
 		$installed_modules = json_decode($app->getOption('installed_modules'));
 		foreach ($installed_modules as $name)
 		{
-			echo $name . '<br />';
+			echo $name . '<a href="' . URL_ADMIN . '/modulemanager/modules?removeModule=' . $name . '">X</a><br />';
 		}
 	?>
 </section>
