@@ -8,16 +8,15 @@ class translator
 
 	public static function translate($str)
 	{
-		if(self::$putBasicTranslations === false)
+		if (self::$putBasicTranslations === false)
 		{
 			self::$translations = self::getTranslations(self::getLanguage());
 			self::$putBasicTranslations = true;
 		}
 		
 		$translations = self::$translations;	
-		#var_dump($translations);
 
-		if(!isset($translations[$str]))
+		if (!isset($translations[$str]))
 			return $str;
 
 		$args = func_get_args(); // get arguments
@@ -25,7 +24,7 @@ class translator
 		
 		$translationStr = $translations[$str]; // set string
 		
-		foreach($args as $key => $val)
+		foreach ($args as $key => $val)
 		{
 			$translationStr = str_replace("%".$key, $val, $translationStr); // replace vars
 		}
@@ -40,7 +39,7 @@ class translator
 	
 	public function setLanguage($lang)
 	{
-		if(self::translationExists($lang))
+		if (self::translationExists($lang))
 		{
 			$_SESSION['language'] = $lang;
 		}
@@ -60,7 +59,7 @@ class translator
 
 	public static function appendTranslations($path)
 	{
-		if(self::$putBasicTranslations === false)
+		if (self::$putBasicTranslations === false)
 		{
 			self::$translations = self::getTranslations(self::getLanguage());
 			self::$putBasicTranslations = true;
@@ -69,7 +68,7 @@ class translator
 		$lang = self::getLanguage();
 
 		// check if currently language available
-		if(self::translationExists($lang, $path))
+		if (self::translationExists($lang, $path))
 		{
 			self::$translations = array_merge(self::$translations, self::getTranslations($lang, $path));
 
@@ -99,7 +98,7 @@ class translator
 					continue;
 
 				$content = file_get_contents($path . $file);
-				if($json = is_json($content, true))
+				if ($json = is_json($content, true))
 				{
 					$language = str_replace('.'. end(explode('.', $file)), '', $file);
 					$languages[$language] = $json->info;

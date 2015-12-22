@@ -1,14 +1,9 @@
 <?php
-if ($modulehelper->name('test') === false)
-	exit; // module already installed, exit installation
-
-$modulehelper->install();
-
 $modulehelper->move
 ([
 	'controller.php' => '#MODULEPATH/controller.php',
 	'translation' => '#MODULEPATH/translation',
-	'test.txt' => '#MODULEPATH/test.txt',
+	'info.json' => '#MODULEPATH/info.json',
 	'uninstall.php' => '#MODULEPATH/uninstall.php'
 ]);
 
@@ -20,5 +15,4 @@ $XenuxDB->addTable('test1', [
 	'column2' => 'text NOT NULL',
 	'column3' => 'timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP'
 ]);
-
 ?>

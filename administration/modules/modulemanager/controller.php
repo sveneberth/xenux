@@ -4,6 +4,7 @@ class modulemanagerController extends AbstractController
 	public function __construct($url)
 	{
 		$this->url = $url;
+		$this->template;
 		$this->modulename = str_replace('Controller', '', get_class());
 
 		if(!isset($this->url[1]) || empty($this->url[1]))
@@ -17,24 +18,25 @@ class modulemanagerController extends AbstractController
 		// append translations
 		translator::appendTranslations(PATH_ADMIN . '/modules/'.$this->modulename.'/translation/');
 
-		$template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout.php");
-		$template->setVar("messages", '');
-		$template->setVar("upload_form", $this->getUploadForm($template));
+		$this->template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout.php");
+		$this->template->setVar("messages", '');
+		$this->template->setVar("upload_form", $this->getUploadForm());
 
 		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == true)
-			$template->setVar("messages", '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>');
+			$this->template->setVar("messages", '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>');
 		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == false)
-			$template->setVar("messages", '<p class="box-shadow info-message error">'.__('savingFailed').'</p>');
+			$this->template->setVar("messages", '<p class="box-shadow info-message error">'.__('savingFailed').'</p>');
 		
+		$this->_checkRemove();
 		
-		echo $template->render();
+		echo $this->template->render();
 
 		$this->page_name = __('modules');
 
 		return true;
 	}
 
-	private function getUploadForm(&$template)
+	private function getUploadForm()
 	{
 		global $app, $XenuxDB;
 		
@@ -74,7 +76,7 @@ class modulemanagerController extends AbstractController
 				// OK
 				if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) // upload file
 				{
-				//	echo '<p>uploading successful</p>';
+					// uploading successful
 
 					$zip = new ZipArchive;
 					if ($zip->open($uploadfile)) // unzip the file
@@ -82,33 +84,85 @@ class modulemanagerController extends AbstractController
 						$zip->extractTo($uploaddir . '/module/');
 						$zip->close();
 
-						echo '<p>unzipping successeful</p>';
 
 						$modulehelper = new modulehelper;
-						include_once($uploaddir . '/module/install.php'); // run installer
+						$moduleInfo = $modulehelper->getModuleInfo($uploaddir . '/module/'); // get the module info
+						$modulehelper->name($moduleInfo->name);
+
+						if ($modulehelper->install()) // install module
+						{
+							// run module-installer
+							include_once($uploaddir . '/module/install.php'); // run installer
+							$this->template->setVar("messages", '<p class="box-shadow info-message ok">'.__('module installed successful').'</p>');
+						}
+						else
+						{
+							// module already installed: show an error-message
+							$this->template->setVar("messages", '<p class="box-shadow info-message error">'.__('module already installed').'</p>');
+						}
 
 
-						deleteDirectory(PATH_MAIN . '/tmp/'); //remove temp-folder
+						deleteDirectory(PATH_MAIN . '/tmp/'); // remove temp-folder
 					}
 					else // something went wrong
 					{
-						echo '<p>something went wrong :/</p>';
+						$this->template->setVar("messages", '<p class="box-shadow info-message error">'.__('something went wrong :/').'</p>');
 					}
 					
 				}
 				else
 				{
-					echo '<p>upload failed</p>';
+					$this->template->setVar("messages", '<p class="box-shadow info-message error">'.__('upload failed').'</p>');
 				}
 			}
 			else
 			{
 				// not a zip-file
-				echo '<p>Please upload a zip-file.</p>';
+				$this->template->setVar("messages", '<p class="box-shadow info-message warning">'.__('Please upload a zip-file.').'</p>');
 			}
 		}
 
 		return $form->getForm();
+	}
+
+	private function _checkRemove()
+	{
+		global $app, $XenuxDB;
+
+		if(isset($_GET['removeModule']) && full(@$_GET['removeModule'])) // if get parameter set
+		{
+			if(isset($_GET['confirmed']) && @$_GET['confirmed'] == true) // was the remove-process confimed ??
+			{
+				$modules = json_decode($app->getOption('installed_modules'));
+				if(in_array($_GET['removeModule'], $modules)) // check if module installed
+				{
+					// uninstall the module
+
+					$modulehelper = new modulehelper;
+					$modulehelper->name($_GET['removeModule']);
+
+					if ($modulehelper->uninstall())
+					{
+						include_once(PATH_MAIN . '/modules/' . $_GET['removeModule'] . '/uninstall.php'); // run uninstaller
+						$this->template->setVar("messages", '<p class="box-shadow info-message ok">'.__('removedSuccessful').'</p>');
+					}
+					else
+					{
+						$this->template->setVar("messages", '<p class="box-shadow info-message error">'.__('removing failed, module not installed').'</p>');
+					}
+				}
+				else
+				{
+					// error: module not installed
+					$this->template->setVar("messages", '<p class="box-shadow info-message error">'.__('removing failed, module not installed').'</p>');
+				}
+			}
+			else
+			{
+				// show confirmation
+				$this->template->setVar("messages", '<p class="box-shadow info-message warning">'.__('shure to remove?').'<br /><a class="btn" href="' . URL_ADMIN . '/modulemanager/modules?removeModule=' . $_GET['removeModule'] . '&confirmed=true">' . __('yes') . '</a></p>');
+			}
+		}
 	}
 }
 ?>
