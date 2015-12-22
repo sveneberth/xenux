@@ -11,7 +11,6 @@ class modulehelper
 	}
 
 
-	
 	/**
 	* name:
 	*/
@@ -23,14 +22,8 @@ class modulehelper
 
 	public function install()
 	{
-		// get installed_modules
-		$installed_modules = json_decode($this->get_option('installed_modules'));
-
-		if(in_array($this->name, $installed_modules))
-		{
-			echo '<p>module already installed</p>';
-			return false;
-		}
+		if ($this->module_installed())	// avoid double installation
+			return false;				// returned false, if module already installed
 
 		// create module
 		$this->create_folder($this->name, $this->modulepath);
@@ -44,15 +37,13 @@ class modulehelper
 
 	public function uninstall()
 	{
-		// get installed_modules
-		$installed_modules = json_decode($this->get_option('installed_modules'));
-
-		if(!in_array($this->name, $installed_modules))
+		if (!$this->module_installed())
 		{
 			echo '<p>module not installed</p>';
 			return false;
 		}
 
+		$installed_modules = json_decode($this->get_option('installed_modules'));
 		remove_array_value($installed_modules, $this->name);
 
 		// write all the rest modules in options
@@ -79,7 +70,7 @@ class modulehelper
 	{
 		foreach($arr as $object)
 		{
-			if(empty($this->name))
+			if (empty($this->name))
 			{
 				// error
 
@@ -119,7 +110,7 @@ class modulehelper
 	{
 		global $XenuxDB;
 
-		if($this->get_option($name) === false)
+		if ($this->get_option($name) === false)
 		{
 			return $XenuxDB->Insert('main', [
 				'name' => $name,
@@ -167,6 +158,24 @@ class modulehelper
 			mkdir($path . $name);
 	}
 
+
+	public function module_installed($name = null)
+	{
+		// get installed_modules
+		$installed_modules = json_decode($this->get_option('installed_modules'));
+
+		return
+			in_array (
+				is_null($name) ? $this->name : $name,
+				(array) $installed_modules
+			);
+	}
+
+	public function getModuleInfo($path)
+	{
+		return
+			json_decode(file_get_contents($path . '/info.json'));
+	}
 
 }
 ?>

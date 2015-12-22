@@ -1,6 +1,4 @@
 <?php
-$modulehelper->name('test');
-
 $modulehelper->remove
 ([
 	'#MODULEPATH'

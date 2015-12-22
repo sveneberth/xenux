@@ -418,7 +418,7 @@ function remove_array_value(array &$array, &$value)
 {
 	if (($key = array_search($value, $array)) !== false)
 	{
-		unset($array[$value]);
+		unset($array[$key]);
 		return true;
 	}
 
