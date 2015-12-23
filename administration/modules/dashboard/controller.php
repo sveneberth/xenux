@@ -32,7 +32,7 @@ class dashboardController extends AbstractController
 		$template->setVar("count_cloud_files", $this->_getCountCloudFiles());
 		$template->setVar("count_cloud_images", $this->_getCountCloudImages());
 		$template->setVar("count_cloud_others", $this->_getCountCloudOthers());
-		$template->setVar("total_size_files", FileSizeConvert($this->_getTotalSizeCloudFiles()));
+		$template->setVar("total_size_files", formatBytes($this->_getTotalSizeCloudFiles()));
 		
 		echo $template->render();
 

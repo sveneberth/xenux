@@ -1,9 +1,8 @@
 <?php
-$modulehelper->name('test');
-
 $modulehelper->remove
 ([
-	'#MODULEPATH'
+	'#MODULEPATH',
+	'#MODULEADMINPATH'
 ]);
 
 $modulehelper->remove_option('module_test_installed');

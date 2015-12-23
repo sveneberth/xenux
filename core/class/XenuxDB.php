@@ -730,7 +730,7 @@ class XenuxDB
 	{
 		$table = $this->quoteColumn(MYSQL_PREFIX . $table);
 
-		$statement = 'DROP TABLE ' . $table;
+		$statement = 'DROP TABLE IF EXISTS ' . $table;
 
 		return $this->query($statement);
 	}

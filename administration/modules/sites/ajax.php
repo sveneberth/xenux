@@ -10,6 +10,11 @@ if(!$app->user->isLogin())
 
 $return = array();
 
+if (!isset($_REQUEST['task']) || empty(@$_REQUEST['task']))
+{
+	ErrorPage::view(405);
+}
+
 switch($_REQUEST['task'])
 {
 	case 'site_edit_update_order':
