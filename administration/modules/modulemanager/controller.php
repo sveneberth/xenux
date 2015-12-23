@@ -62,11 +62,6 @@ class modulemanagerController extends AbstractController
 
 		if ($form->isSend() && $form->isValid())
 		{
-		//	echo "send";
-
-			if (!file_exists(PATH_MAIN."/tmp/")) // create folder, if doesn't exists
-				mkdir(PATH_MAIN."/tmp/");
-
 			$uploaddir	= PATH_MAIN . '/tmp/'; // uploaddir
 			$uploadfile	= $uploaddir . basename($_FILES['file']['name']); // uploadfile
 			$ext		= end((explode(".",  $_FILES["file"]["name"]))); // extension
@@ -74,6 +69,19 @@ class modulemanagerController extends AbstractController
 			if($ext == 'zip')
 			{
 				// OK
+
+				$hp_offline = $app->getOption('homepage_offline');
+				if($hp_offline == false)
+					$XenuxDB->Update('main', [ // set homepage in maintenance
+						'value' => true
+					],
+					[
+						'name' => 'homepage_offline'
+					]);
+
+				if (!file_exists($uploaddir)) // create folder, if doesn't exists
+					mkdir($uploaddir);
+
 				if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) // upload file
 				{
 					// uploading successful
@@ -114,6 +122,14 @@ class modulemanagerController extends AbstractController
 				{
 					$this->template->setVar("messages", '<p class="box-shadow info-message error">'.__('upload failed').'</p>');
 				}
+				
+				if($hp_offline == false)
+					$XenuxDB->Update('main', [ // set homepage out of maintenance
+						'value' => false
+					],
+					[
+						'name' => 'homepage_offline'
+					]);
 			}
 			else
 			{
@@ -138,6 +154,15 @@ class modulemanagerController extends AbstractController
 				{
 					// uninstall the module
 
+					$hp_offline = $app->getOption('homepage_offline');
+					if($hp_offline == false)
+						$XenuxDB->Update('main', [ // set homepage in maintenance
+							'value' => true
+						],
+						[
+							'name' => 'homepage_offline'
+						]);
+
 					$modulehelper = new modulehelper;
 					$modulehelper->name($_GET['removeModule']);
 
@@ -150,6 +175,14 @@ class modulemanagerController extends AbstractController
 					{
 						$this->template->setVar("messages", '<p class="box-shadow info-message error">'.__('removing failed, module not installed').'</p>');
 					}
+
+					if($hp_offline == false)
+						$XenuxDB->Update('main', [ // set homepage out of maintenance
+							'value' => false
+						],
+						[
+							'name' => 'homepage_offline'
+						]);
 				}
 				else
 				{
