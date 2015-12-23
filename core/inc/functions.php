@@ -446,4 +446,19 @@ function remove_array_value(array &$array, &$value)
 
 	return false;
 }
+
+
+/**
+* is_dir_empty
+* check if a folder is empty
+* @param string $dir: path of the folder
+* @return bool: is empty ? 
+*/
+function is_dir_empty($dir)
+{
+	if (!is_readable($dir))
+		return NULL; 
+
+	return (count(scandir($dir)) == 2);
+}
 ?>
