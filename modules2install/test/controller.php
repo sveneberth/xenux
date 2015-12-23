@@ -6,7 +6,7 @@ class testController extends AbstractController
 	public function __construct($url)
 	{
 		// append translations
-		translator::appendTranslations(PATH_MAIN . '/modules/test/translation/');
+		translator::appendTranslations(PATH_MAIN . '/modules/event/translation/');
 
 		global $XenuxDB;
 		

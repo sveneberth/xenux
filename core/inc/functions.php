@@ -1,41 +1,47 @@
 <?php
-/**
-* escapemail
-* @param string $email: the to be escaped email
-* @return string: the escaped email
-*/
-function escapemail ($email, $props = array())
+#FIXME: add descriptions/documentations for the following functions
+#FXIME:	deleteDirectionary == rrmdir ???		
+
+
+function contains($var)
+{
+	$array = func_get_args();
+	unset($array[0]);
+	return in_array($var, $array); 
+}
+
+
+function escapemail($email, $Arr = array())
 {
 	if (empty($email))
 	{
-		return null;
+		return false;
 	}
 	else
 	{
-		$link = "<a" . (isset($props['class']) ? ' class="' . $props['class'] . '"' : '') . (isset($props['id']) ? ' id="' . $props['id'] . '"' : '') . " href=\"mailto:$email\">" . (isset($props['text']) ? $props['text'] : $email) . "</a>";
+		$link = "<a" . (isset($Arr['class']) ? ' class="' . $Arr['class'] . '"' : '') . (isset($Arr['id']) ? ' id="' . $Arr['id'] . '"' : '') . " href=\"mailto:$email\">" . (isset($Arr['text']) ? $Arr['text'] : $email) . "</a>";
 		
-		$emailprops	= str_split($link, 1);
+		$emailArr	= str_split($link, 1);
 		
 		$JS = "";
 		
-		foreach ($emailprops as $val)
+		foreach ($emailArr as $val)
 		{
 			$JS .= ((strlen($JS)==0) ? '' : ' + ') . "'$val'";
 		}
 		
 		return
 			"<script>document.write($JS);</script>".
-			"<noscript>" . (isset($props['text']) ? "\"" . $props['text'] . "\" &lt;" . str_replace(array('@', '.'), array(' [at] ', ' [dot] '), $email) . "&gt;" : str_replace(array('@', '.'), array(' [at] ', ' [dot] '), $email)) . "</noscript>";
+			"<noscript>" . (isset($Arr['text']) ? "\"" . $Arr['text'] . "\" &lt;" . str_replace(array('@', '.'), array(' [at] ', ' [dot] '), $email) . "&gt;" : str_replace(array('@', '.'), array(' [at] ', ' [dot] '), $email)) . "</noscript>";
 	}
 }
 
+function request_failed() {
+	echo "Bei der Anfrage trat ein Fehler auf, möglicherweise haben sie auf einen fehlerhaften Link geklickt...";
+	return false;
+}
 
-/**
-* whitespace2nbsp
-* @param string $str: the haystack
-* @return string: the replaced value
-*/
-function whitespace2nbsp ($str)
+function whitespace2nbsp($str)
 {
 	if (empty($str) || !isset($str))
 		return false;
@@ -43,15 +49,8 @@ function whitespace2nbsp ($str)
 	return str_replace(" ", "&nbsp;", $str);
 }
 
-
-/**
-* pretty_date
-* conver a date like 1.1.1970 => x year ago
-* @param string $datestr: a date or time
-* @return string: the pretty date
-* @source: http://simbo.de/blog/2009/12/pretty-date-relative-zeitangaben-in-worten (adapted)
-*/
-function pretty_date ($datestr = '')
+/* function from http://simbo.de/blog/2009/12/pretty-date-relative-zeitangaben-in-worten/ */
+function pretty_date($datestr = '')
 {
 	$now = time();
 	$date = strtotime($datestr);
@@ -150,17 +149,9 @@ function pretty_date ($datestr = '')
 	return __('ago', $d.' '.__('years'));
 }
 
-
-/**
-* shortstr
-* @param string $str: the string to be shortened
-* @param string $size: the position on which the function starts with the search of the next whitespace
-* @param string $max: max length of the new string
-* @return string: the shortened string
-*/
-function shortstr ($str, $size=100, $max=200)
+function shortstr($str, $size=100, $max=200)
 {
-	if (strlen($str) > $size)
+	if(strlen($str) > $size)
 	{
 		$spacePos = strpos($str, " ", $size);
 		$spacePos = $spacePos==0 ? strlen($str) : $spacePos;
@@ -173,32 +164,46 @@ function shortstr ($str, $size=100, $max=200)
 	}
 }
 
+function FileSizeConvert($bytes) {
+    $bytes = floatval($bytes);
+	if($bytes == 0)
+		return "0 B";
+	$arBytes = array(
+		0 => array(
+			"UNIT" => "TiB",
+			"VALUE" => pow(1024, 4)
+		),
+		1 => array(
+			"UNIT" => "GiB",
+			"VALUE" => pow(1024, 3)
+		),
+		2 => array(
+			"UNIT" => "MiB",
+			"VALUE" => pow(1024, 2)
+		),
+		3 => array(
+			"UNIT" => "KiB",
+			"VALUE" => 1024
+		),
+		4 => array(
+			"UNIT" => "B",
+			"VALUE" => 1
+		),
+	);
 
-/**
-* formatBytes
-* @param int $size: size in bytes
-* @param int $precision: amount of decimal places
-* @return string: converted value + unit 
-* @source: http://stackoverflow.com/a/2510540/3749896
-*/
-function formatBytes ($size, $precision = 2)
-{
-	$base = log($size, 1024);
-	$suffixes = array('', 'k', 'M', 'G', 'T');
-
-	return round(pow(1024, $base - floor($base)), $precision) . ' ' . $suffixes[floor($base)] . 'B';
+    foreach($arBytes as $arItem) {
+        if($bytes >= $arItem["VALUE"]) {
+            $result = $bytes / $arItem["VALUE"];
+            $result = str_replace(".", "," , strval(round($result, 2)))." ".$arItem["UNIT"];
+            break;
+        }
+    }
+    return $result;
 }
 
-
-/**
-* generateRandomString
-* @param int $length: lenght of the random string
-* @param string $characters: the allowed characters
-* @return string: random string 
-* @source: http://stackoverflow.com/a/2510540/3749896
-*/
-function generateRandomString ($length = 10,  $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
+function generateRandomString($length = 10)
 {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $charactersLength = strlen($characters);
     $randomString = '';
     for($i = 0; $i < $length; $i++) {
@@ -207,31 +212,28 @@ function generateRandomString ($length = 10,  $characters = '0123456789abcdefghi
     return $randomString;
 }
 
-
-/**
-* mysql2date
-* @param string $format: the request format
-* @param string $date: the date
-* @return string: formatted date 
-*/
-function mysql2date ($format, $date)
+function mysql2date($format, $date)
 {
 	if(empty($format) || empty($date))
 		return false;
 
 	$unixtime = strtotime($date);
 
+	/*
+	needet??? standardly in function date integrated
+	if('U' == $format)
+	return $unixtime;
+	*/
+
 	return date($format, $unixtime);
 }
 
-
 /**
 * date2mysql
-* @param string $date: date or unixtime
-* @param $isUnixtime: is @param $date unixtime (optional)
-* @return string: formatted date
+* @param date: date as string or unixtime
+* @param isUnixtime: is @param date unixtime (optional)
 */ 
-function date2mysql ($date, $isUnixtime=false)
+function date2mysql($date, $isUnixtime=false)
 {
 	if(!$isUnixtime)
 		$date = strtotime($date);
@@ -249,13 +251,7 @@ function getPageLink($id, $title='')
 	return URL_MAIN."/page/" . getPreparedLink($id, $title);
 }
 
-
-/**
-* inludeExists
-* @param string $file: path of file
-* @return bool: file included ? 
-*/
-function inludeExists ($file)
+function inludeExists($file)
 {
 	if(file_exists($file))
 	{
@@ -266,29 +262,13 @@ function inludeExists ($file)
 	return false;
 }
 
-
-/**
-* is_json
-* @param string $string: the to be checed (json-)string
-* @param string $return_data: if json, return the checked json string ?
-* @return bool: file included ? 
-*/
-function is_json ($string, $return_data = false)
+function is_json($string, $return_data = false)
 {
 	$data = json_decode($string);
-	return (json_last_error() == JSON_ERROR_NONE) ? ($return_data ? $data : true) : false;
+	return (json_last_error() == JSON_ERROR_NONE) ? ($return_data ? $data : TRUE) : FALSE;
 }
 
-
-/**
-* getMenuBarMultiSites
-* this function build the Navigation for eg. search result which are dividet in several sites.
-* @param int $absolutenumber: the amount of entrys
-* @param int $start: the number of the entry of the actually site
-* @param int $amount: the amount of entries per site
-* @return string: the navigationbar as html 
-*/
-function getMenuBarMultiSites ($absolutenumber, $start, $amount)
+function getMenuBarMultiSites($absolutenumber, $start, $amount)
 {
 	$return = '';
 
@@ -317,24 +297,16 @@ function getMenuBarMultiSites ($absolutenumber, $start, $amount)
 	return $return;
 }
 
-
-/**
-* parse_bool
-* @param string $value: the to be parsed string
-* @return bool: true ("1", "true", "on" and "yes") or false ("0", "false", "off" and "no") else null
-*/
-function parse_bool ($value)
+function parse_bool($value)
 {
 	return filter_var($value, FILTER_VALIDATE_BOOLEAN);
 }
 
-
 /**
 * function full
+* @param str: value to check
 * opposite of PHP's default function `empty`
 * but better support for objects
-* @param mixed $str: value to check
-* @return bool: is not empty ?
 */
 function full($str)
 {
@@ -344,14 +316,6 @@ function full($str)
 	return !empty($str);
 }
 
-
-/**
-* function full_copy
-* copy a folder and subfolders
-* @param string $source: path of the source
-* @param string $target: path of the target
-* @return --
-*/
 function full_copy ($source, $target)
 {
 	if (is_dir($source))
@@ -383,33 +347,7 @@ function full_copy ($source, $target)
 }
 
 
-/**
-* turn_array
-* @param array $m: result of preg_match_all 
-* @return array: the turned array
-* @source: http://php.net/manual/de/function.preg-match-all.php#102520
-*/
-function turn_array ($m) 
-{ 
-    for ($z = 0;$z < count($m);$z++) 
-    { 
-        for ($x = 0;$x < count($m[$z]);$x++) 
-        { 
-            $rt[$x][$z] = $m[$z][$x]; 
-        } 
-    }    
-    
-    return $rt; 
-}
-
-
-/**
-* rrmmdir
-* this fuction delete recursive a dir 
-* @param string $dir: path of the to be deleted dir
-* @return bool: successful ?
-*/
-function rrmdir ($dir)
+function deleteDirectory($dir)
 {
 	if (!file_exists($dir))
 		return true;
@@ -431,16 +369,56 @@ function rrmdir ($dir)
 
 
 /**
+* turn_array
+* @param: array (for example a result of preg_match_all) 
+* @source: http://php.net/manual/de/function.preg-match-all.php#102520
+*/
+function turn_array($m) 
+{ 
+    for ($z = 0;$z < count($m);$z++) 
+    { 
+        for ($x = 0;$x < count($m[$z]);$x++) 
+        { 
+            $rt[$x][$z] = $m[$z][$x]; 
+        } 
+    }    
+    
+    return $rt; 
+}
+
+
+/**
+* rrmmdir
+* this fuction delete recursive a dir 
+* @param: string, path of the to be deleted dir
+* @source: http://php.net/manual/de/function.rmdir.php#98622
+*/
+function rrmdir($dir)
+{
+	if (is_dir($dir))
+	{
+		$objects = scandir($dir);
+		foreach ($objects as $object)
+		{
+			if ($object != "." && $object != "..")
+			{
+				if (filetype($dir."/".$object) == "dir") rrmdir($dir."/".$object); else unlink($dir."/".$object);
+			}
+		}
+		reset($objects);
+		rmdir($dir);
+	}
+}
+
+
+/*
 * remove_array_value
-* remove an key by the value
-* @param array $array: the array
-* @param mixed $value: the to be removed value
 */
 function remove_array_value(array &$array, &$value)
 {
 	if (($key = array_search($value, $array)) !== false)
 	{
-		unset($array[$key]);
+		unset($array[$value]);
 		return true;
 	}
 
