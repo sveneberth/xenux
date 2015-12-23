@@ -102,7 +102,7 @@ class modulemanagerController extends AbstractController
 						}
 
 
-						deleteDirectory(PATH_MAIN . '/tmp/'); // remove temp-folder
+						rrmdir(PATH_MAIN . '/tmp/'); // remove temp-folder
 					}
 					else // something went wrong
 					{

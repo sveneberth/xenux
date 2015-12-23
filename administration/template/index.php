@@ -75,6 +75,7 @@
 			<li class="<?= $app->url[0]=='dashboard'?'active':'' ?>"><a href="https://localhost/xenux_dev/administration/dashboard"><?= __('dashboard') ?></a></li>
 		</ul>
 		<?php
+			#FIXME: don't index a module which has an empty folder
 			$modules = $app->getAdminModule();
 			foreach($modules as $module) // for module in modules
 			{

@@ -422,7 +422,7 @@ function rrmdir ($dir)
 		if ($item == '.' || $item == '..')
 			continue;
 
-		if (!deleteDirectory($dir . DIRECTORY_SEPARATOR . $item))
+		if (!rrmdir($dir . DIRECTORY_SEPARATOR . $item))
 			return false;
 	}
 
