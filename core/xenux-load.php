@@ -50,7 +50,7 @@ include_once(PATH_MAIN.'/core/class/ErrorPage.php');
 include_once(PATH_MAIN.'/core/class/modulehelper.php');
 
 /** divider for a new page call */
-//if (defined('DEBUG') && DEBUG == true)
+//if (defined('DEBUG') && DEBUG == true) #FIXME if final
 	log::writeLog("\r\n\r\n");
 
 /** Build a Database and App Handler */
