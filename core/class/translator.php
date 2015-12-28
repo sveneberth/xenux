@@ -1,5 +1,4 @@
 <?php
-#FIXME: make class tidy
 class translator
 {	
 	public static $translations = array();
@@ -8,7 +7,7 @@ class translator
 
 	public static function translate($str)
 	{
-		if (self::$putBasicTranslations === false)
+		if (self::$putBasicTranslations === false) // check if the basic translations are already included
 		{
 			self::$translations = self::getTranslations(self::getLanguage());
 			self::$putBasicTranslations = true;

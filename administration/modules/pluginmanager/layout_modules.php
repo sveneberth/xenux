@@ -23,7 +23,7 @@
 		$installed_modules = json_decode($app->getOption('installed_modules'));
 		foreach ((array) $installed_modules as $name)
 		{
-			echo $name . '<a href="' . URL_ADMIN . '/modulemanager/modules?removeModule=' . $name . '">X</a><br />';
+			echo $name . '<a href="' . URL_ADMIN . '/pluginmanager/modules?removeModule=' . $name . '">X</a><br />';
 		}
 	?>
 </section>

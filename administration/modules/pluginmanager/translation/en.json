@@ -1,0 +1,12 @@
+{
+	"info":
+	{
+		"author": "Sven Eberth"
+	},
+	"translations":
+	{
+		"pluginmanager":"Pluginmanager",
+		"modules":"modules",
+		"templates":"templates"
+	}
+}

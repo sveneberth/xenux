@@ -546,3 +546,22 @@ ul.data-table > li > .data-column {
 	display: none !important;
 	visibility: hidden !important;
 }
+
+.warning-noscript {
+	display: block;
+	position: absolute;
+	box-sizing: border-box;
+	width: 80%;
+	margin: 0;
+	top: 30%;
+	left: 10%;
+}
+.warning-noscript div {
+	display: block;
+	box-sizing: border-box;
+	background: rgba(197, 40, 40, 0.4);
+	border: 2px dotted rgba(197, 40, 40, 1);
+	padding: 20px;
+	color: #253152;
+	text-align: center;
+}

@@ -32,6 +32,18 @@
 	<script src="{{TEMPLATE_PATH}}/js/script.js"></script>
 </head>
 <body id="top">
+
+	<noscript>
+		<div class="warning-noscript">
+			<div>
+				<?= __("noscript-message") ?> 
+			</div>
+		</div>
+		<style>
+			header, menu, .wrapper {display: none;}
+		</style>
+	</noscript>
+
 	<header>
 
 		<a href="{{URL_MAIN}}" target="_blank" class="header-title"><?= $app->getOption('hp_name') ?></a>

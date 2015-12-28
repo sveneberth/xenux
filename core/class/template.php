@@ -32,7 +32,7 @@ class template
 			}
 			else
 			{
-				throw new Exception("<p><b>Error:</b> Template <i>\"{$this->templatePath}\"</i> not found ...</p>");
+				throw new Exception("<b>Error:</b> Template <i>\"{$this->templatePath}\"</i> not found ...");
 				
 				return false;
 			}
@@ -99,6 +99,7 @@ class template
 	* <p>than</p>
 	* #endif
 	*/
+	#FIXME: allow nested ifs
 	private function replaceIfs($content)
 	{	
 	#	var_dump($this->ifVars);
@@ -123,31 +124,6 @@ class template
 		}, $content);
 
 		return $content;
-
-		/*
-		"old" version
-		foreach ($this->ifVars as $name => $condition)
-		{
-			$GLOBALS['condition'] = $condition;
-			
-			$content = preg_replace_callback('/#if\('.$name.'\)\:(.*)#endif/s', function($match)
-			{
-				list($all, $output) = $match;
-
-				if($GLOBALS['condition'] == true)
-				{
-					return $output;
-				}
-				else
-				{
-					return null;
-				}
-
-			}, $content);
-		}
-
-		return $content;
-		*/
 	}
 }
 ?>

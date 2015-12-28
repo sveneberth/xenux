@@ -100,20 +100,21 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%main` (
 --
 
 INSERT INTO `%PREFIX%main` (`name`, `value`) VALUES
-('meta_author', 'Xenux'),
 ('hp_name', 'Homepage'),
+('default_language', 'de'),
+('template', 'default'),
+('meta_author', 'Xenux'),
 ('meta_desc', 'Hier die Beschreibung der Homepage, die in den Meta-Tags angezeigt wird'),
 ('meta_keys', 'Schlüsselwörter der Homepage, die in den Meta-Tags angezeigt werden'),
 ('admin_email', 'mail@xenux'),
 ('users_can_register', 'true'),
 ('homepage_offline', 'false'),
-('template', 'default'),
 ('HomePage_ID', ''),
 ('ImprintPage_ID', ''),
 ('ContactPage_ID', ''),
-('default_language', 'de'),
-('installed_modules', '[]'),
 ('sites_show_meta_info', 'true');
+('installed_modules', '[]'),
+('installed_templates', '["default","bootstrap","simple"]'),
 
 -- --------------------------------------------------------
 

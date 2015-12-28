@@ -120,11 +120,14 @@ class usersController extends AbstractController
 
 	private function userEdit($new=false)
 	{
-		$template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout_edit.php");
+		$template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout_edit.php", [
+			"profileEdit" => @$this->url[1] == "profile"
+		]);
 	
 		$template->setVar("form", $this->getEditForm($template, $new));
 
 		$template->setIfCondition("new", $new);
+		$template->setIfCondition("profileEdit", @$this->url[1] == "profile");
 
 		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == true)
 			$this->messages[] = '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>';
