@@ -114,7 +114,7 @@ INSERT INTO `%PREFIX%main` (`name`, `value`) VALUES
 ('ContactPage_ID', ''),
 ('sites_show_meta_info', 'true');
 ('installed_modules', '[]'),
-('installed_templates', '["default","bootstrap","simple"]'),
+('installed_templates', '["default","bootstrap"]'),
 
 -- --------------------------------------------------------
 

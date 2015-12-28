@@ -51,26 +51,6 @@ class app
 		return false;
 	}
 
-	public function getTemplates()
-	{
-		$folders = array();
-
-		if ($handle = opendir(PATH_MAIN . '/templates/'))
-		{
-			while (false !== ($entry = readdir($handle)))
-			{
-				if ($entry == '.' || $entry == '..') 
-					continue;
-
-				$folders[] = $entry;
-			}
-
-			closedir($handle);
-		}
-
-		return $folders;
-	}
-
 	public function setTemplate($template)
 	{
 		$this->template = $template;

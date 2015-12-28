@@ -58,7 +58,7 @@ class optionsController extends AbstractController
 		}
 
 		$templateOption = array();
-		foreach ($app->getTemplates() as $templateFolder)
+		foreach (json_decode($app->getOption('installed_templates')) as $templateFolder)
 		{
 			$templateOption[] = [
 				'value' => $templateFolder,
