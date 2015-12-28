@@ -305,7 +305,7 @@ class pluginhelper
 		rrmdir($this->tmppath);
 
 		if(is_dir_empty(dirname($this->tmppath)))
-			rmdir(dirname($this->tmppath)); #FIXME: later use rrmdir
+			rrmdir(dirname($this->tmppath));
 
 		if($this->hp_offline == false)
 		{
