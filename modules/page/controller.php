@@ -35,6 +35,16 @@ class pageController extends AbstractController
 			'where' => [
 				'sites.id' => $id
 			],
+			'columns' => [
+				'sites.text',
+				'sites.title',
+				'sites.sortindex',
+				'sites.parent_id',
+				'sites.create_date',
+				'sites.public',
+				'sites.id(site_id)',
+				'users.username'
+			],
 			'join' => [
 				'[>]users' => ['sites.author_id' => 'users.id']
 			]
@@ -59,7 +69,7 @@ class pageController extends AbstractController
 				$template->setVar("_contactPersons", $this->getContactPersons($id));
 
 				/* next and prev url */
-				$app->canonical_URL = getPageLink($page->id, $page->title);
+				$app->canonical_URL = getPageLink($page->site_id, $page->title);
 				if($prev = $this->_getPrevSite($page->parent_id, $page->sortindex))
 				{
 					$app->prev_URL = getPageLink($prev->id, $prev->title);
