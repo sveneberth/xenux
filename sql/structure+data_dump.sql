@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `%PREFIX%contactpersons`;
 CREATE TABLE IF NOT EXISTS `%PREFIX%contactpersons` (
-`id` int(10) NOT NULL,
+`id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `name` varchar(150) NOT NULL,
   `position` varchar(150) NOT NULL,
   `email` varchar(150) NOT NULL,
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%contactpersons` (
 
 DROP TABLE IF EXISTS `%PREFIX%events`;
 CREATE TABLE IF NOT EXISTS `%PREFIX%events` (
-`id` int(10) NOT NULL,
+`id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `title` varchar(200) NOT NULL,
   `text` text NOT NULL,
   `start_date` timestamp NULL DEFAULT NULL,
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%events` (
 
 DROP TABLE IF EXISTS `%PREFIX%files`;
 CREATE TABLE IF NOT EXISTS `%PREFIX%files` (
-`id` int(11) NOT NULL,
+`id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `type` varchar(50) NOT NULL,
   `mime_type` varchar(200) DEFAULT NULL,
   `data` longblob,
@@ -90,9 +90,9 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%files` (
 
 DROP TABLE IF EXISTS `%PREFIX%main`;
 CREATE TABLE IF NOT EXISTS `%PREFIX%main` (
-`id` int(10) NOT NULL,
+`id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `name` varchar(150) NOT NULL,
-  `value` text NOT NULL,
+  `value` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -112,9 +112,9 @@ INSERT INTO `%PREFIX%main` (`name`, `value`) VALUES
 ('HomePage_ID', ''),
 ('ImprintPage_ID', ''),
 ('ContactPage_ID', ''),
-('sites_show_meta_info', 'true');
+('sites_show_meta_info', 'true'),
 ('installed_modules', '[]'),
-('installed_templates', '["default","bootstrap"]'),
+('installed_templates', '["default","bootstrap"]');
 
 -- --------------------------------------------------------
 
@@ -124,7 +124,7 @@ INSERT INTO `%PREFIX%main` (`name`, `value`) VALUES
 
 DROP TABLE IF EXISTS `%PREFIX%news`;
 CREATE TABLE IF NOT EXISTS `%PREFIX%news` (
-`id` int(10) NOT NULL,
+`id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `title` varchar(200) NOT NULL,
   `text` text NOT NULL,
   `create_date` timestamp NULL DEFAULT NULL,
@@ -146,7 +146,7 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%news` (
 
 DROP TABLE IF EXISTS `%PREFIX%sites`;
 CREATE TABLE IF NOT EXISTS `%PREFIX%sites` (
-`id` int(10) NOT NULL,
+`id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `title` varchar(300) NOT NULL,
   `text` text NOT NULL,
   `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -170,7 +170,7 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%sites` (
 
 DROP TABLE IF EXISTS `%PREFIX%site_contactperson`;
 CREATE TABLE IF NOT EXISTS `%PREFIX%site_contactperson` (
-`id` int(11) NOT NULL,
+`id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `site_id` int(11) NOT NULL,
   `contactperson_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -188,7 +188,7 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%site_contactperson` (
 
 DROP TABLE IF EXISTS `%PREFIX%users`;
 CREATE TABLE IF NOT EXISTS `%PREFIX%users` (
-`id` int(10) NOT NULL,
+`id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `username` varchar(200) NOT NULL,
   `firstname` varchar(200) DEFAULT NULL,
   `lastname` varchar(200) DEFAULT NULL,
@@ -207,105 +207,8 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%users` (
   `verifykey` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Daten für Tabelle `%PREFIX%users`
---
 
--- Indizes der exportierten Tabellen
---
 
---
--- Indizes für die Tabelle `%PREFIX%contactpersons`
---
-ALTER TABLE `%PREFIX%contactpersons`
- ADD PRIMARY KEY (`id`);
-
---
--- Indizes für die Tabelle `%PREFIX%events`
---
-ALTER TABLE `%PREFIX%events`
- ADD PRIMARY KEY (`id`);
-
---
--- Indizes für die Tabelle `%PREFIX%files`
---
-ALTER TABLE `%PREFIX%files`
- ADD PRIMARY KEY (`id`);
-
---
--- Indizes für die Tabelle `%PREFIX%main`
---
-ALTER TABLE `%PREFIX%main`
- ADD PRIMARY KEY (`id`);
-
---
--- Indizes für die Tabelle `%PREFIX%news`
---
-ALTER TABLE `%PREFIX%news`
- ADD PRIMARY KEY (`id`);
-
---
--- Indizes für die Tabelle `%PREFIX%sites`
---
-ALTER TABLE `%PREFIX%sites`
- ADD PRIMARY KEY (`id`);
-
---
--- Indizes für die Tabelle `%PREFIX%site_contactperson`
---
-ALTER TABLE `%PREFIX%site_contactperson`
- ADD PRIMARY KEY (`id`);
-
---
--- Indizes für die Tabelle `%PREFIX%users`
---
-ALTER TABLE `%PREFIX%users`
- ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT für exportierte Tabellen
---
-
---
--- AUTO_INCREMENT für Tabelle `%PREFIX%contactpersons`
---
-ALTER TABLE `%PREFIX%contactpersons`
-MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `%PREFIX%events`
---
-ALTER TABLE `%PREFIX%events`
-MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `%PREFIX%files`
---
-ALTER TABLE `%PREFIX%files`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `%PREFIX%main`
---
-ALTER TABLE `%PREFIX%main`
-MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `%PREFIX%news`
---
-ALTER TABLE `%PREFIX%news`
-MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `%PREFIX%sites`
---
-ALTER TABLE `%PREFIX%sites`
-MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `%PREFIX%site_contactperson`
---
-ALTER TABLE `%PREFIX%site_contactperson`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `%PREFIX%users`
---
-ALTER TABLE `%PREFIX%users`
-MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
