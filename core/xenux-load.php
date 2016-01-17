@@ -22,7 +22,7 @@ if(defined('DEBUG') && DEBUG == true && $_SERVER['HTTP_HOST'] == 'localhost')
 /** go to the Xenux-Installer, if config-file doesn't exists */
 if(!file_exists(PATH_MAIN."/xenux-conf.php"))
 {
-	header("Location: ".PATH_MAIN."/install/");
+	header("Location: ".URL_MAIN."/install/");
 }
 
 /** include vars */
