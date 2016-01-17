@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%contactpersons` (
   `position` varchar(150) NOT NULL,
   `email` varchar(150) NOT NULL,
   `text` text NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%events` (
   `text` text NOT NULL,
   `start_date` timestamp NULL DEFAULT NULL,
   `end_date` timestamp NULL DEFAULT NULL,
-  `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `public` tinyint(1) DEFAULT '0' COMMENT '1=public;0=private',
   `author_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -82,7 +82,7 @@ DROP TABLE IF EXISTS `%PREFIX%main`;
 CREATE TABLE IF NOT EXISTS `%PREFIX%main` (
 `id` int(10) NOT NULL,
   `name` varchar(150) NOT NULL,
-  `value` text NOT NULL,
+  `value` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -212,7 +212,7 @@ ALTER TABLE `%PREFIX%site_contactperson`
 --
 ALTER TABLE `%PREFIX%users`
  ADD PRIMARY KEY (`id`);
-s
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
