@@ -1,8 +1,0 @@
-{
-	"headline": "logs",
-	"links":
-	{
-		"systemlogs": "/logs",
-		"maillogs": "/mails"
-	}
-}
