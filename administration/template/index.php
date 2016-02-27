@@ -84,7 +84,7 @@
 	<menu class="main-menu-left">
 		<h2><?= __('dashboard') ?></h2>
 		<ul>
-			<li class="<?= $app->url[0]=='dashboard'?'active':'' ?>"><a href="https://localhost/xenux_dev/administration/dashboard"><?= __('dashboard') ?></a></li>
+			<li class="<?= $app->url[0]=='dashboard'?'active':'' ?>"><a href="{{URL_MAIN}}/administration/dashboard"><?= __('dashboard') ?></a></li>
 		</ul>
 		<?php
 			$modules = $app->getAdminModule();

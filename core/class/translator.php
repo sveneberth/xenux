@@ -99,7 +99,8 @@ class translator
 				$content = file_get_contents($path . $file);
 				if ($json = is_json($content, true))
 				{
-					$language = str_replace('.'. end(explode('.', $file)), '', $file);
+					$filename = explode('.', $file);
+					$language = str_replace('.'. end($filename), '', $file);
 					$languages[$language] = $json->info;
 				}
 			}

@@ -277,7 +277,7 @@ class sitesController extends AbstractController
 
 			$public = parse_bool($data['public']);
 
-			$author = $app->user->userID;
+			$author = $app->user->userInfo->id; #FXIME: $author = $app->user->userID; doesn't work
 
 			if($new)
 			{
@@ -336,13 +336,13 @@ class sitesController extends AbstractController
 			}
 
 			if(isset($data['selectAsHomePage']) && parse_bool($data['selectAsHomePage']))
-				$return[] = $XenuxDB->Update('main', ['value' => $site->id], ['name' => 'HomePage_ID']) !== false;
+				$return[] = $XenuxDB->Update('main', ['value' => $this->editSiteID], ['name' => 'HomePage_ID']) !== false;
 
 			if(isset($data['selectAsContactPage']) && parse_bool($data['selectAsContactPage']))
-				$return[] = $XenuxDB->Update('main', ['value' => $site->id], ['name' => 'ContactPage_ID']) !== false;
+				$return[] = $XenuxDB->Update('main', ['value' => $this->editSiteID], ['name' => 'ContactPage_ID']) !== false;
 
 			if(isset($data['selectAsImprintPage']) && parse_bool($data['selectAsImprintPage']))
-				$return[] = $XenuxDB->Update('main', ['value' => $site->id], ['name' => 'ImprintPage_ID']) !== false;
+				$return[] = $XenuxDB->Update('main', ['value' => $this->editSiteID], ['name' => 'ImprintPage_ID']) !== false;
 
 			if(count(array_unique($return)) === 1)
 			{

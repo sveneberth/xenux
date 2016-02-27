@@ -52,7 +52,9 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%events` (
   `text` text NOT NULL,
   `start_date` timestamp NULL DEFAULT NULL,
   `end_date` timestamp NULL DEFAULT NULL,
-  `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `public` tinyint(1) DEFAULT '0' COMMENT '1=public;0=private',
+  `author_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --

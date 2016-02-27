@@ -184,9 +184,9 @@ function shortstr ($str, $size=100, $max=200)
 function formatBytes ($size, $precision = 2)
 {
 	$base = log($size, 1024);
-	$suffixes = array('', 'k', 'M', 'G', 'T');
+	$suffixes = array('', 'Ki', 'Mi', 'Gi', 'Ti', 'Pi', 'Ei', 'Zi', 'Yi');
 
-	return round(pow(1024, $base - floor($base)), $precision) . ' ' . $suffixes[floor($base)] . 'iB';
+	return ($size == 0 ? 0 : round(pow(1024, $base - floor($base)), $precision)) . ' ' . $suffixes[floor($base)] . 'B';
 }
 
 
