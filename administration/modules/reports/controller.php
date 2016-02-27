@@ -74,7 +74,8 @@ class reportsController extends AbstractController
 				if (is_dir($path . $file)) 
 					continue;
 
-				$filename = str_replace('.'. end(explode('.', $file)), '', $file);
+				$filename = explode('.', $file);
+				$filename = str_replace('.' . end($filename), '', $file);
 
 				$Arr[] = $filename;
 			}

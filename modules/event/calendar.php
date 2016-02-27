@@ -141,10 +141,26 @@ class Calendar {
 			{
 				$template = new template(PATH_MAIN."/templates/".$app->template."/_calendar_day_dates.php");
 				
+				if(mysql2date("Y-m-d", $event->start_date) == mysql2date("Y-m-d", $event->end_date)) // event only one day long
+				{
+					$template->setVar("time", mysql2date("H:i", $event->start_date));
+				}
+				elseif(mysql2date("Y-m-d", $event->start_date) == mysql2date("Y-m-d", "{$this->currentYear}-{$month}-{$cellContent}")) // start day
+				{
+					$template->setVar("time", "&larr;<span style=\"width:5px;display: inline-block;\"></span>" . mysql2date("H:i", $event->start_date));
+				}
+				elseif(mysql2date("Y-m-d", $event->start_date) < mysql2date("Y-m-d", "{$this->currentYear}-{$month}-{$cellContent}") && mysql2date("Y-m-d", $event->end_date) > mysql2date("Y-m-d", "{$this->currentYear}-{$month}-{$cellContent}")) // middle day
+				{
+					$template->setVar("time", "&harr;");
+				}
+				elseif(mysql2date("Y-m-d", $event->end_date) == mysql2date("Y-m-d", "{$this->currentYear}-{$month}-{$cellContent}")) // end day
+				{
+					$template->setVar("time", "&rarr;<span style=\"width:5px;display: inline-block;\"></span>" . mysql2date("H:i", $event->end_date));
+				}
+
 				$template->setVar("ID", $event->id);
 				$template->setVar("name_url", urlencode($event->title));
 				$template->setVar("name", $event->title);
-				$template->setVar("time", mysql2date("d.m.y H:i", $event->start_date) . '-' . mysql2date("d.m.y H:i", $event->end_date));
 				
 				$dates .= $template->render();
 			}

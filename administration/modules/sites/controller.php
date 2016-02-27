@@ -277,8 +277,8 @@ class sitesController extends AbstractController
 
 			$public = parse_bool($data['public']);
 
-			$author = $app->user->userInfo->id; #FXIME: $author = $app->user->userID; doesn't work
-
+			$author = $app->user->userInfo->id;
+			
 			if($new)
 			{
 				$site = $XenuxDB->Insert('sites', [

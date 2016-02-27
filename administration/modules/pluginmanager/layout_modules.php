@@ -20,6 +20,8 @@
 	<h3><?= _('all installed modules') ?>:</h3>
 
 	<?php
+		#FIXME: style me
+
 		$installed_modules = json_decode($app->getOption('installed_modules'));
 		foreach ((array) $installed_modules as $name)
 		{

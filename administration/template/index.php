@@ -30,6 +30,12 @@
 	<script src="{{TEMPLATE_PATH}}/js/functions.js"></script>
 	<script>var default_active_menu_left = {{num_active_module}};</script>
 	<script src="{{TEMPLATE_PATH}}/js/script.js"></script>
+	<script src="http://tablesorter.com/__jquery.tablesorter.min.js"></script><script>$(document).ready(function() 
+    { 
+        $("#data-table").tablesorter(); 
+    } 
+); 
+   </script>
 </head>
 <body id="top">
 

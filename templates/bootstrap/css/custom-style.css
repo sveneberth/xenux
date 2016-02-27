@@ -3,10 +3,10 @@
 
 input, textarea, select {
 	font-family: inherit;
-    font-size: 90%;
-    border: 1px solid #ddd;
-    color: inherit;
-    padding: 6px;
+	font-size: 90%;
+	border: 1px solid #ddd;
+	color: inherit;
+	padding: 6px;
 	resize: none;
 	background: #fff;
 	width: 400px;
@@ -98,6 +98,18 @@ input[readonly] {
 	cursor: no-drop;
 }
 
+img {
+	max-width: 100%;
+}
+
+blockquote
+{
+	font-style: italic;
+	font-family: Georgia, Times, "Times New Roman", serif;
+	padding: 10px 20px;
+	border-left: 5px solid #ccc;
+	margin: 2em 0 2em 40px
+}
 
 .contactpersons {
 	margin-top: 25px;
@@ -238,7 +250,7 @@ footer  .links {
 
 div.sitenavi {
 	margin: 10px 0 0 0;
-    padding-bottom: 1px;
+	padding-bottom: 1px;
 }
 div.sitenavi:after {
 	content: '';
@@ -334,8 +346,8 @@ div.sitenavi > a.sitenavi.active {
 	box-sizing: border-box;
 }
 .calendar .calendar_dates li.week-line {
-  display: block;
-  clear: both;
+	display: block;
+	clear: both;
 }
 .calendar .calendar_dates .calendar_day {
 	margin-right: 5px;
@@ -352,11 +364,11 @@ div.sitenavi > a.sitenavi.active {
 
 .calendar .calendar_dates .calendar_day .day-date {
 	display: block;
- 	text-align: right;
+	text-align: right;
 }
 .calendar .calendar_dates .calendar_day.today {
 	/*background-color: #CC6699;*/
- 	border: 3px solid #124C7D;
+	border: 3px solid #124C7D;
 }
 .calendar .calendar_dates .calendar_day.before,
 .calendar .calendar_dates .calendar_day.after {
@@ -377,8 +389,8 @@ div.sitenavi > a.sitenavi.active {
 	background: #3C8FD4;
 	border-radius: 3px;
 	color: #fff;
-	font-size: .8em;
-	line-height: 1.2em;
+    font-size: 1em;
+    line-height: 1.2em;
 	box-shadow: inset 0px 0px 3px 0px rgba(0,0,0,.5);
 }
 .calendar .calendar_dates .calendar_day ul.events li.event .event-time {
@@ -403,8 +415,8 @@ div.sitenavi > a.sitenavi.active {
 	font-weight: bold;
 	opacity: 1;
 	padding-left: .2em;
-    font-size: 15px;
-    color: #333;
+	font-size: 15px;
+	color: #333;
 }
 .ui-selectmenu-menu .language-selector-menu.ui-menu .ui-menu-item .ui-icon {
 	height: 24px;
