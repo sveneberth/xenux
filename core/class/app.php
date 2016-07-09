@@ -196,8 +196,6 @@ class app
 		}
 		catch (Exception $e)
 		{
-			var_dump( $e);
-			print $e->getLine();
 			if (defined('DEBUG') && DEBUG == true)
 				log::setPHPError($e);
 			$this->page_name = "Error";
