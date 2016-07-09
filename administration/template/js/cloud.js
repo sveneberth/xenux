@@ -2,6 +2,7 @@
 /* Cloud
 /* ############################################*/
 var ajaxURL = '../modules/cloud/ajax.php';
+var requestType = 'GET';
 var imageURL = baseurl+'/administration/template/images/';
 var defaultDisabled = ['remove', 'move', 'rename'];
 
@@ -167,7 +168,7 @@ $(document).ready(function() {
 		
 		$.ajax({
 			url: ajaxURL,
-			type: 'POST',
+			type: requestType,
 			dataType: 'json',
 			data: {
 				task: 'list_all_dirs',
@@ -213,7 +214,7 @@ $(document).ready(function() {
 		
 		$.ajax({
 			url: ajaxURL,
-			type: 'POST',
+			type: requestType,
 			dataType: 'json',
 			data: {
 				task: 'list_all_dirs',
@@ -272,7 +273,7 @@ $(document).ready(function() {
 		var folder_name = prompt("Ordnername");
 		$.ajax({
 			url: ajaxURL,
-			type: 'POST',
+			type: requestType,
 			dataType: 'json',
 			data: {
 				task: 'create_folder',
@@ -352,7 +353,7 @@ function upload(files) {
 			return xhr;
 		},
 		url: ajaxURL+'?task=upload&parent_folder='+getFolder(),
-		type: 'POST',
+		type: requestType,
 		dataType: 'json',
 		data: FileData,
 		processData: false,
@@ -369,7 +370,7 @@ function upload(files) {
 function remove(rowID) {
 	$.ajax({
 		url: ajaxURL,
-		type: 'POST',
+		type: requestType,
 		dataType: 'json',
 		data: {
 			task: 'remove',
@@ -388,7 +389,7 @@ function remove(rowID) {
 function move(id, to) {
 	$.ajax({
 		url: ajaxURL,
-		type: 'POST',
+		type: requestType,
 		dataType: 'json',
 		data: {
 			task: 'move',
@@ -409,7 +410,7 @@ function move(id, to) {
 function rename(id, newName) {
 	$.ajax({
 		url: ajaxURL,
-		type: 'POST',
+		type: requestType,
 		dataType: 'json',
 		data: {
 			task: 'rename',
@@ -438,7 +439,7 @@ function getFolder() {
 function setbreadcrumb(folder) {
 	$.ajax({
 		url: ajaxURL,
-		type: 'POST',
+		type: requestType,
 		dataType: 'json',
 		data: {
 			task: 'breadcrumb',
@@ -463,7 +464,7 @@ function setbreadcrumb(folder) {
 function fileinfo(id) {
 	$.ajax({
 		url: ajaxURL,
-		type: 'POST',
+		type: requestType,
 		dataType: 'json',
 		data: {
 			task: 'getFileInfo',
@@ -498,7 +499,7 @@ function dir_list(folder) {
 	
 	$.ajax({
 		url: ajaxURL,
-		type: 'POST',
+		type: requestType,
 		dataType: 'json',
 		data: {
 			task: 'dir_list',

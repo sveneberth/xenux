@@ -89,8 +89,9 @@ class template
 	* comments like: "*" this is a comment "*"
 	*/
 	private function replaceComments($content)
-	{			
-		return preg_replace('/\"\*\"(.*?)\"\*\"/s', '', $content);
+	{	
+		$content = preg_replace('/\"\*\"(.*?)\"\*\"/s', '', $content); // old style
+		return preg_replace('/\{\#(.*?)\#\}/s', '', $content);
 	}
 
 	/**

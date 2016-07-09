@@ -1,4 +1,3 @@
-<script src="{{TEMPLATE_PATH}}/js/cloud.js"></script>
 <style>
 	/* must be here, because of the absolute paths */
 	.actions > button.upload {background-image: url('{{TEMPLATE_PATH}}/images/upload_grey.svg');}

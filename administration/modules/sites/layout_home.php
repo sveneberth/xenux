@@ -156,8 +156,7 @@
 		cursor: pointer;
 		display: inline-block;
 		width: 20px;
-		height: 20px;
-		font-size: 1.2em;
+		height: 25px;
 		line-height: 25px;
 	}
 	.menu_order > ul li							> div > .disclose.disable {cursor: inherit;}

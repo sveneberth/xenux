@@ -13,8 +13,7 @@ class pageController extends AbstractController
 	
 	public function run()
 	{
-		$this->pageID = explode('-', @$this->url[1])[0];
-		$this->pageID = preg_replace("/[^0-9]/", '', $this->pageID);
+		$this->pageID = preg_replace("/[^0-9]/", '', @$this->url[1]);
 		
 		if(!empty($this->pageID))
 		{

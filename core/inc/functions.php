@@ -242,7 +242,7 @@ function date2mysql ($date, $isUnixtime=false)
 
 function getPreparedLink($id, $title='')
 {
-	return $id . (!empty($title) ? "-".urlencode($title) : '');
+	return $id . (!empty($title) ? "/".urlencode($title) : '');
 }
 function getPageLink($id, $title='')
 {

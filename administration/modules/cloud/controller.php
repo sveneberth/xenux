@@ -17,7 +17,7 @@ class cloudController extends AbstractController
 		// append translations
 		translator::appendTranslations(PATH_ADMIN . '/modules/'.$this->modulename.'/translation/');
 
-		$app->addCSS(URL_ADMIN . '/modules/'.$this->modulename.'/cloud.css');
+		$app->addJS(URL_ADMIN . '/template/js/cloud.js');
 
 		$template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout.php");
 	

@@ -1,16 +1,21 @@
 $(document).ready(function() {
 	// category accordion
-	$("menu.main-menu-left").accordion({
-		icons: false,
-		active: default_active_menu_left,
-		autoHeight: false,
-		heightStyle: "content" 
+	$("menu.main-menu-left > ul > li > a").click(function(e) {
+	//	e.preventDefault();
+
+		if(false == $(this).next().is(':visible')) {
+			$('menu.main-menu-left > ul ul').slideUp(300);
+
+			$("menu.main-menu-left > ul > li").removeClass('open');
+			$(this).parent().addClass('open');
+		}
+		$(this).next().slideToggle(300);
 	});
-	$("menu.main-menu-left h2").dblclick(function() {
-		$(this).next().find('>li:first-child>a')[0].click();
-	});
+	$('menu.main-menu-left > ul > li.active ul').show();
+
 });
 
+var baseurl = $('[rel=baseurl]').attr('href');
 
 function notifyMe(title, text, click) {
 	if(!Notification) {

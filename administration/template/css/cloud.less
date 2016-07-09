@@ -1,7 +1,7 @@
 .actions {
 	background: #eee;
 	padding: 15px;
-	height: 30px;
+	height: 60px;
 }
 .actions > button[data-title]:not(.disabled) {
 	position: relative;
@@ -47,35 +47,39 @@
 	cursor: no-drop;
 }
 
+@breadcrumbBlue: #2C6DD2;
 
 .breadcrumb {
 	background: #eee;
 	padding: 5px 15px;
 	margin-bottom: 0;
-	border-top: 2px solid #2C6DD2;
-	border-bottom: 2px solid #2C6DD2;
+	border-top: 2px solid @breadcrumbBlue;
+	border-bottom: 2px solid @breadcrumbBlue;
 	line-height: 30px;
-}
-.breadcrumb .treeitem {
-	margin-right: 10px;
-	font-size: 1.2em;
-	color: #333;
-	display: inline-block;
-}
-.breadcrumb .treeitem:hover {
-	color: #777;
-	cursor: pointer;
-}
-.breadcrumb .treeitem:not(:last-child):after {
-	content: '›';
-	display: inline-block;
-	margin-left: 10px;
+
+	.treeitem {
+		margin-right: 10px;
+		font-size: 1.2em;
+		color: #333;
+		display: inline-block;
+	}
+	.treeitem:hover {
+		color: #777;
+		cursor: pointer;
+	}
+	.treeitem:not(:last-child):after {
+		content: '›';
+		display: inline-block;
+		margin-left: 10px;
+	    color: @breadcrumbBlue;
+	}
 }
 
 .explorer {
 	background: #fff;
 	color: #333;
 	overflow-y: auto;
+	cursor: default;
 }
 .explorer > .item {
 	padding: 10px;
@@ -145,10 +149,21 @@
 	background-size: 100%;
 	background-image: url('{{TEMPLATE_PATH}}/images/ajax-loader.gif');
 }
- #feedback { font-size: 1.4em; }
-.explorer .ui-selecting {background: #80BBFF!important;}
-.explorer .ui-selected { background: #4C90DD!important; }
-.ui-selectable-helper {z-index:100;border: 1px dotted #225793;position: absolute;background: rgba(34, 87, 147, 0.2); }
+#feedback {
+	font-size: 1.4em;
+}
+.explorer .ui-selecting {
+	background: #80BBFF !important;
+}
+.explorer .ui-selected {
+	background: #4C90DD !important;
+}
+.ui-selectable-helper {
+	z-index:100;
+	border: 1px dotted #225793;
+	position: absolute;
+	background: rgba(34, 87, 147, 0.2);
+}
 
 .drop-files {
 	background: rgba(255, 255, 255, 0.9);
@@ -267,7 +282,7 @@ div#contextmenu > *:hover {
 	content: '';
 	content: attr(data-label) ":";
 	display: inline-block;
-	width: 100px;
+	width: 130px;
 	font-weight: bold;
 	margin-left: -100px;
 }

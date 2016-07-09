@@ -8,7 +8,8 @@ class app
 	public $page_name;
 	public $user;
 	
-	private $cssfiles = array();
+	private $cssfiles = [];
+	private $jsfiles = [];
 
 	public $canonical_URL = null;
 	public $prev_URL = null;
@@ -76,6 +77,9 @@ class app
 			$template->setVar("SITE_PATH", $this->siteurl);
 			$template->setVar("TEMPLATE_PATH", URL_MAIN.'/templates/'.$this->template);
 
+			$template->setVar("CSS-FILES", $this->getCSS());
+			$template->setVar("JS-FILES", $this->getJS());
+
 			$template->setVar("meta_author", $this->getOption('meta_author'));
 			$template->setVar("meta_desc", $this->getOption('meta_desc'));
 			$template->setVar("meta_keys", $this->getOption('meta_keys'));
@@ -138,10 +142,8 @@ class app
 			$template->setVar("page_title", $this->page_name);
 			$template->setVar("headline", $this->page_name);
 
-			$num_active_module = array_search($this->site, $this->getAdminModule());
-			$template->setVar("num_active_module", $num_active_module !== false ? $num_active_module+1 : 0);
-
 			$template->setVar("CSS-FILES", $this->getCSS());
+			$template->setVar("JS-FILES", $this->getJS());
 			
 			echo $template->render();	
 		}
@@ -194,6 +196,8 @@ class app
 		}
 		catch (Exception $e)
 		{
+			var_dump( $e);
+			print $e->getLine();
 			if (defined('DEBUG') && DEBUG == true)
 				log::setPHPError($e);
 			$this->page_name = "Error";
@@ -211,10 +215,26 @@ class app
 		$css = '';
 		foreach ($this->cssfiles as $file)
 		{
-			$css .= '<link rel="stylesheet" href="' . $file . '" />';
+			$css .= '<link rel="stylesheet" href="' . $file . '" />' . "\n";
 		}
 
 		return $css;
+	}
+
+	public function addJS($file)
+	{
+		$this->jsfiles[] = $file;
+	}
+	
+	public function getJS()
+	{
+		$js = '';
+		foreach ($this->jsfiles as $file)
+		{
+			$js .= '<script src="' . $file . '"></script>' . "\n";
+		}
+
+		return $js;
 	}
 
 

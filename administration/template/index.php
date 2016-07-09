@@ -2,22 +2,21 @@
 <html lang="de">
 <head>
 	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
 	<meta name="robots" content="noindex, nofollow, noarchive" />
 
 	<title>{{page_title}} | Xenux Backend</title>
 	
 	<link rel="baseurl" href="{{URL_MAIN}}" />
-	<script>var baseurl = '{{URL_MAIN}}';</script>
 
 	<!-- http://xenux.bplaced.net -->
 	<meta name="generator" content="Xenux v{{XENUX_VERSION}} - das kostenlose CMS" />
 	
 	<!-- css -->
-	<link rel="stylesheet" type="text/css" href="{{TEMPLATE_PATH}}/css/style.css" media="all"/>
-	<!-- <link rel="stylesheet" type="text/css" href="{{TEMPLATE_PATH}}/css/jquery-ui.css" media="all"/> -->
+	<link rel="stylesheet" type="text/css" href="{{TEMPLATE_PATH}}/css/style.min.css" media="all"/>
+	{# <!-- <link rel="stylesheet" type="text/css" href="{{TEMPLATE_PATH}}/css/jquery-ui.css" media="all"/> --> #}
 	{{CSS-FILES}}
-	
+
 	<!-- jquery + plugins -->
 	<script src="{{TEMPLATE_PATH}}/js/jquery-2.1.1.min.js"></script>
 	<script src="{{TEMPLATE_PATH}}/js/jquery-migrate-1.2.1.min.js"></script>
@@ -28,17 +27,17 @@
 	
 	<!-- scripts -->
 	<script src="{{TEMPLATE_PATH}}/js/functions.js"></script>
-	<script>var default_active_menu_left = {{num_active_module}};</script>
 	<script src="{{TEMPLATE_PATH}}/js/script.js"></script>
-	<script src="http://tablesorter.com/__jquery.tablesorter.min.js"></script><script>$(document).ready(function() 
-    { 
-        $("#data-table").tablesorter(); 
-    } 
-); 
-   </script>
+	<script src="http://tablesorter.com/__jquery.tablesorter.min.js"></script>
+	{{JS-FILES}}
+
+	<script>
+	$(document).ready(function() { 
+		$("#data-table").tablesorter(); 
+	}); 
+	</script>
 </head>
 <body id="top">
-
 	<noscript>
 		<div class="warning-noscript">
 			<div>
@@ -88,53 +87,57 @@
 	</header>
 	
 	<menu class="main-menu-left">
-		<h2><?= __('dashboard') ?></h2>
-		<ul>
-			<li class="<?= $app->url[0]=='dashboard'?'active':'' ?>"><a href="{{URL_MAIN}}/administration/dashboard"><?= __('dashboard') ?></a></li>
-		</ul>
-		<?php
-			$modules = $app->getAdminModule();
-			foreach($modules as $module) // for module in modules
-			{
-				if (is_dir_empty(PATH_ADMIN."/modules/".$module)) // skip an empty folder
-					continue;
-
-				if ($module == 'dashboard') // skip dashboard
-					continue;
-
-				if (file_exists(PATH_ADMIN.'/modules/'.$module.'/menu.json')) // if module-menu-file exist
+		<ul class="menu">
+			<li class="<?= $app->url[0] == 'dashboard' ? 'active open' : '' ?>">
+				<a  class="<?= $app->url[0] == 'dashboard' ? 'active' : '' ?>" href="{{URL_ADMIN}}/dashboard"><?= __('dashboard') ?></a>
+			</li>
+			<?php
+				$modules = $app->getAdminModule();
+				foreach($modules as $module) // for module in modules
 				{
-					// append translations
-					translator::appendTranslations(PATH_ADMIN."/modules/".$module."/translation/");
+					if (is_dir_empty(PATH_ADMIN."/modules/".$module) || $module == 'dashboard') // skip an empty folder adn dashboard
+						continue;
 
-					$filecontent = file_get_contents(PATH_ADMIN.'/modules/'.$module.'/menu.json');
 
-					if ($json = is_json($filecontent, true)) // if file is a valid json-file
+					if (file_exists(PATH_ADMIN.'/modules/'.$module.'/menu.json')) // if module-menu-file exist
 					{
-						$headline = __($json->headline);
+						// append translations
+						translator::appendTranslations(PATH_ADMIN."/modules/".$module."/translation/");
+						$filecontent = file_get_contents(PATH_ADMIN.'/modules/'.$module.'/menu.json');
 
-						echo "<h2>" . __($headline) . "</h2>\n";
-						echo "<ul>\n";
-
-						foreach($json->links as $label => $link)
+						if ($json = is_json($filecontent, true)) // if file is a valid json-file
 						{
-							echo "\t".'<li class="'.($app->url[0] == $module && $app->url[1]==str_replace('/','',$link)?'active':'').'"><a href="'.URL_ADMIN.'/'.$module.$link.'">'.__($label).'</a></li>'."\n";
-						}
+							$headline = __($json->headline);
 
-						echo "</ul>\n";
+							echo '<li class="'.($app->url[0] == $module ? 'active open' : '').'">';
+							echo '<a href="'.(isset($json->links) ? '#' : URL_ADMIN.'/'.$module).'">' . __($headline) . "</a>\n";
+
+							if(isset($json->links))
+							{
+								echo '<ul style="'.($app->url[0] == $module ? '' : 'display:none')."\">\n";
+
+								foreach($json->links as $label => $link)
+								{
+									echo "\t".'<li class="'.($app->url[0] == $module && $app->url[1]==str_replace('/','',$link) ? 'active' : '').'"><a href="'.URL_ADMIN.'/'.$module.$link.'">'.__($label).'</a></li>'."\n";
+								}
+
+								echo "</ul>\n";
+							}
+
+							echo "</li>\n";
+						}
+						else
+						{
+							// invalid json file (print nothing)
+						}
 					}
 					else
 					{
-						// invalid json file (print nothing)
+						echo "menufile doesn't exists";
 					}
 				}
-				else
-				{
-					echo "menufile doesn't exists";
-				}
-			}
-
-		?>
+			?>
+		</ul>
 	</menu>
 	
 	<div class="wrapper">
