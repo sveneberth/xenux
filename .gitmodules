@@ -1,0 +1,3 @@
+[submodule "xenux-templates"]
+	path = xenux-templates
+	url = git@github.com:sveneberth/xenux-templates.git
