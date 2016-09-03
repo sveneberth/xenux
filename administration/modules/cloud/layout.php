@@ -15,23 +15,23 @@
 
 <section class="box-shadow floating one-column-box">
 	<div class="actions">
-		<input type="file" class="file" value="<?= __('file') ?>" multiple style="display:none;" />
-		<button class="upload" data-title="<?= __('upload') ?>" />
-		<button class="create_folder" data-title="<?= __('create folder') ?>" />
-		<button class="remove" data-title="<?= __('remove') ?>" />
-		<button class="move" data-title="<?= __('move') ?>" />
-		<button class="rename" data-title="<?= __('rename') ?>" />
+		<input type="file" class="file" value="<?= __('file') ?>" multiple style="display:none;">
+		<button class="upload" data-title="<?= __('upload') ?>">
+		<button class="create_folder" data-title="<?= __('create folder') ?>">
+		<button class="remove" data-title="<?= __('remove') ?>">
+		<button class="move" data-title="<?= __('move') ?>">
+		<button class="rename" data-title="<?= __('rename') ?>">
 	</div>
 	<div class="upload-progress"></div>
 	<div class="move-target popup-editor">
 		<span><?= __('move to') ?></span>
 		<select size="1"></select>
-		<input type="button" value="<?= __('move') ?>" />
+		<input type="button" value="<?= __('move') ?>">
 	</div>
 	<div class="rename popup-editor">
 		<span><?= __('rename to') ?></span>
 		<input type="text" value=""/>
-		<input type="button" value="<?= __('rename') ?>" />
+		<input type="button" value="<?= __('rename') ?>">
 	</div>
 	<div class="breadcrumb"></div>
 	<div class="explorer"></div>

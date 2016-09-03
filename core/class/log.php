@@ -25,7 +25,7 @@ class log
 		}
 
 		$msg = date("[d-M-Y H:i:s]")." ".$msg."\r\n";
-		
+
 		if(!file_exists(PATH_MAIN."/logs/"))
 			mkdir(PATH_MAIN."/logs/");
 
@@ -34,4 +34,3 @@ class log
 		fclose($handle);
 	}
 }
-?>

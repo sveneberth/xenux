@@ -93,7 +93,7 @@ class mailer
 $mail = '<!DOCTYPE html>
 <html lang="' . $this->lang . '">
 	<head>
-		<meta charset="' . $this->charset . '" />
+		<meta charset="' . $this->charset . '">
 		<title>' . $this->subject . '</title>
 	</head>
 	<body>

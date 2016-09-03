@@ -2,7 +2,7 @@
 class db
 {
 	private static $db = null;
-	
+
 	public static function getConnection()
 	{
 		if(self::$db == null)
@@ -15,7 +15,7 @@ class db
 				}
 
 				self::$db->query("SET NAMES 'utf8';"); // define database as utf-8
-				
+
 				log::writeLog("### conntection to database successful ###");
 			}
 			catch (Exception $e)
@@ -24,8 +24,7 @@ class db
 				die($e->getMessage());
 			}
 		}
-		
+
 		return self::$db;
 	}
 }
-?>

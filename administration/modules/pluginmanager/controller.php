@@ -10,11 +10,11 @@ class pluginmanagerController extends AbstractController
 		if (!isset($this->url[1]) || empty($this->url[1]))
 			header("Location: ".URL_ADMIN.'/'.$this->modulename.'/modules');
 	}
-	
+
 	public function run()
 	{
 		global $XenuxDB, $app;
-		
+
 		// append translations
 		translator::appendTranslations(PATH_ADMIN . '/modules/'.$this->modulename.'/translation/');
 
@@ -46,18 +46,18 @@ class pluginmanagerController extends AbstractController
 			$this->template->setVar("messages", '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>');
 		if (isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == false)
 			$this->template->setVar("messages", '<p class="box-shadow info-message error">'.__('savingFailed').'</p>');
-		
+
 		$this->_checkModuleRemove();
-		
+
 		echo $this->template->render();
 
 		$this->page_name = __('modules');
-	}		
+	}
 
 	private function getModulesUploadForm()
 	{
 		global $app, $XenuxDB;
-		
+
 		$formFields = array
 		(
 			'file' => array
@@ -73,7 +73,7 @@ class pluginmanagerController extends AbstractController
 				'label' => __('upload')
 			)
 		);
-	
+
 		$form = new form($formFields);
 		$form->disableRequiredInfo();
 
@@ -127,13 +127,13 @@ class pluginmanagerController extends AbstractController
 					{
 						$this->template->setVar("messages", '<p class="box-shadow info-message error">'.__('something went wrong :/').'</p>');
 					}
-					
+
 				}
 				else
 				{
 					$this->template->setVar("messages", '<p class="box-shadow info-message error">'.__('upload failed').'</p>');
 				}
-				
+
 				if ($hp_offline == false)
 					$XenuxDB->Update('main', [ // set homepage out of maintenance
 						'value' => false
@@ -191,7 +191,7 @@ class pluginmanagerController extends AbstractController
 			else
 			{
 				// show confirmation
-				$this->template->setVar("messages", '<p class="box-shadow info-message warning">'.__('shure to remove?').'<br /><a class="btn" href="' . URL_ADMIN . '/pluginmanager/modules?removeModule=' . $_GET['removeModule'] . '&confirmed=true">' . __('yes') . '</a></p>');
+				$this->template->setVar("messages", '<p class="box-shadow info-message warning">'.__('shure to remove?').'<br><a class="btn" href="' . URL_ADMIN . '/pluginmanager/modules?removeModule=' . $_GET['removeModule'] . '&confirmed=true">' . __('yes') . '</a></p>');
 			}
 		}
 	}
@@ -209,18 +209,18 @@ class pluginmanagerController extends AbstractController
 			$this->template->setVar("messages", '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>');
 		if (isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == false)
 			$this->template->setVar("messages", '<p class="box-shadow info-message error">'.__('savingFailed').'</p>');
-		
+
 		$this->_checkTemplateRemove();
-		
+
 		echo $this->template->render();
 
 		$this->page_name = __('templates');
-	}		
+	}
 
 	private function getTemplatesUploadForm()
 	{
 		global $app, $XenuxDB;
-		
+
 		$formFields = array
 		(
 			'file' => array
@@ -236,7 +236,7 @@ class pluginmanagerController extends AbstractController
 				'label' => __('upload')
 			)
 		);
-	
+
 		$form = new form($formFields);
 		$form->disableRequiredInfo();
 
@@ -261,7 +261,7 @@ class pluginmanagerController extends AbstractController
 						$zip->extractTo($templatehelper->tmppath);
 						$zip->close();
 
-						
+
 						$templateInfo = $templatehelper->getInfo($templatehelper->tmppath); // get the template info
 						$templatehelper->name($templateInfo->name);
 
@@ -279,7 +279,7 @@ class pluginmanagerController extends AbstractController
 					{
 						$this->template->setVar("messages", '<p class="box-shadow info-message error">'.__('something went wrong :/').'</p>');
 					}
-					
+
 				}
 				else
 				{
@@ -307,7 +307,7 @@ class pluginmanagerController extends AbstractController
 			if (isset($_GET['confirmed']) && @$_GET['confirmed'] == true) // was the remove-process confirmed ??
 			{
 				$templates = json_decode($app->getOption('installed_templates'));
-			
+
 				if (in_array($_GET['removeTemplate'], $templates)) // check if template installed
 				{
 					// uninstall the template
@@ -335,7 +335,7 @@ class pluginmanagerController extends AbstractController
 			else
 			{
 				// show confirmation
-				$this->template->setVar("messages", '<p class="box-shadow info-message warning">'.__('shure to remove?').'<br /><a class="btn" href="' . URL_ADMIN . '/pluginmanager/templates?removeTemplate=' . $_GET['removeTemplate'] . '&confirmed=true">' . __('yes') . '</a></p>');
+				$this->template->setVar("messages", '<p class="box-shadow info-message warning">'.__('shure to remove?').'<br><a class="btn" href="' . URL_ADMIN . '/pluginmanager/templates?removeTemplate=' . $_GET['removeTemplate'] . '&confirmed=true">' . __('yes') . '</a></p>');
 			}
 		}
 	}

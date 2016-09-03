@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="<?= translator::getLanguage() ?>">
 <head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-	<meta name="robots" content="noindex, nofollow, noarchive" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<meta name="robots" content="noindex, nofollow, noarchive">
 
 	<title>{{page_title}} | Xenux Backend</title>
-	
-	<link rel="baseurl" href="{{URL_MAIN}}" />
+
+	<link rel="baseurl" href="{{URL_MAIN}}">
 
 	<!-- http://xenux.bplaced.net -->
-	<meta name="generator" content="Xenux v{{XENUX_VERSION}} - das kostenlose CMS" />
-	
+	<meta name="generator" content="Xenux v{{XENUX_VERSION}} - das kostenlose CMS">
+
 	<!-- css -->
-	<link rel="stylesheet" type="text/css" href="{{TEMPLATE_PATH}}/css/style.min.css" media="all"/>
-	{# <!-- <link rel="stylesheet" type="text/css" href="{{TEMPLATE_PATH}}/css/jquery-ui.css" media="all"/> --> #}
+	<link rel="stylesheet" type="text/css" href="{{TEMPLATE_PATH}}/css/style.min.css" media="all">
+	{# <!-- <link rel="stylesheet" type="text/css" href="{{TEMPLATE_PATH}}/css/jquery-ui.css" media="all"> --> #}
 	{{CSS-FILES}}
 
 	<!-- jquery + plugins -->
@@ -24,7 +24,7 @@
 	<script src="{{TEMPLATE_PATH}}/js/jquery.ui.touch-punch.min.js"></script>
 	<script src="{{TEMPLATE_PATH}}/js/jquery.cookie.js"></script> <!-- need this here ?? -->
 	<script src="{{TEMPLATE_PATH}}/js/jquery.mousewheel.js"></script>
-	
+
 	<!-- scripts -->
 	<script src="{{TEMPLATE_PATH}}/js/functions.js"></script>
 	<script src="{{TEMPLATE_PATH}}/js/script.js"></script>
@@ -32,16 +32,16 @@
 	{{JS-FILES}}
 
 	<script>
-	$(document).ready(function() { 
-		$("#data-table").tablesorter(); 
-	}); 
+	$(document).ready(function() {
+		$("#data-table").tablesorter();
+	});
 	</script>
 </head>
 <body id="top">
 	<noscript>
 		<div class="warning-noscript">
 			<div>
-				<?= __("noscript-message") ?> 
+				<?= __("noscript-message") ?>
 			</div>
 		</div>
 		<style>
@@ -50,20 +50,17 @@
 	</noscript>
 
 	<header>
-
 		<a href="{{URL_MAIN}}" target="_blank" class="header-title"><?= $app->getOption('hp_name') ?></a>
-
 
 		<div class="profile">
 			<?= __('helloUser', $user->userInfo->username) ?>
 			<div class="profile-sub">
-				<img class="profile-image" src="{{TEMPLATE_PATH}}/images/profile.svg" />
-				
+				<img class="profile-image" src="{{TEMPLATE_PATH}}/images/profile.svg">
+
 				<a class="profile-button" href="{{URL_ADMIN}}/users/profile">Profil</a>
 				<a class="logout-button" href="{{URL_ADMIN}}/login?task=logout">Logout</a>
 			</div>
 		</div>
-
 
 		<div class="languageSelector">
 			<p>Change language:</p>
@@ -72,7 +69,7 @@
 				if (count((array)$langs) > 1):
 					?>
 					<select onchange="window.location.href = '{{SITE_PATH}}?lang=' + $(this).val();" class="language-selector">
-						<option disabled="disabled" data-option-class="label" data-style="background-image:none;">Select Language</option>
+						<option disabled data-option-class="label" data-style="background-image:none;">Select Language</option>
 						<?php
 							foreach ($langs as $short => $options)
 							{
@@ -85,7 +82,7 @@
 			?>
 		</div>
 	</header>
-	
+
 	<menu class="main-menu-left">
 		<ul class="menu">
 			<li class="<?= $app->url[0] == 'dashboard' ? 'active open' : '' ?>">
@@ -95,7 +92,7 @@
 				$modules = $app->getAdminModule();
 				foreach($modules as $module) // for module in modules
 				{
-					if (is_dir_empty(PATH_ADMIN."/modules/".$module) || $module == 'dashboard') // skip an empty folder adn dashboard
+					if (is_dir_empty(PATH_ADMIN."/modules/".$module) || $module == 'dashboard') // skip an empty folder and dashboard
 						continue;
 
 
@@ -139,7 +136,7 @@
 			?>
 		</ul>
 	</menu>
-	
+
 	<div class="wrapper">
 		<h1 class="page-headline box-shadow">{{headline}}</h1>
 

@@ -1,26 +1,26 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="<?= translator::getLanguage() ?>">
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="robots" content="index, follow, noarchive" />
+	<meta name="robots" content="index, follow, noarchive">
 
 
 	<title>{{page_title}} | {{homepage_name}}</title>
 
-	<meta name="description" content="{{meta_desc}}" />
-	<meta name="keywords" content="{{meta_keys}}" />
-	<meta name="auhor" content="{{meta_author}}" />
-	<meta name="publisher" content="{{meta_author}}" />
-	<meta name="copyright" content="{{meta_author}}" />
+	<meta name="description" content="{{meta_desc}}">
+	<meta name="keywords" content="{{meta_keys}}">
+	<meta name="auhor" content="{{meta_author}}">
+	<meta name="publisher" content="{{meta_author}}">
+	<meta name="copyright" content="{{meta_author}}">
 
 
 	<!-- http://xenux.bplaced.net -->
-	<meta name="generator" content="Xenux v{{XENUX_VERSION}} - das kostenlose CMS" />
-	
-	<link rel="shortcut icon" href="{{TEMPLATE_PATH}}/img/logo.ico" /> "*" FIXME: use favicon.png (redesign favicon) "*"
-	
+	<meta name="generator" content="Xenux v{{XENUX_VERSION}} - das kostenlose CMS">
+
+	<link rel="shortcut icon" href="{{TEMPLATE_PATH}}/img/logo.ico"> {# FIXME: use favicon.png (redesign favicon) #}
+
 	<!-- Bootstrap core CSS -->
 	<link href="{{TEMPLATE_PATH}}/css/bootstrap.min.css" rel="stylesheet">
 
@@ -29,12 +29,12 @@
 	<link href="{{TEMPLATE_PATH}}/css/custom-style.css" rel="stylesheet">
 
 	<!-- fancybox -->
-	<link rel="stylesheet" type="text/css" href="{{TEMPLATE_PATH}}/fancybox/jquery.fancybox.css?v=2.1.5" media="screen" />
+	<link rel="stylesheet" type="text/css" href="{{TEMPLATE_PATH}}/fancybox/jquery.fancybox.css?v=2.1.5" media="screen">
 
 	<!-- links -->
-	<link rel="canonical" href="{{canonical_URL}}" />
-	#if(prev_URL):<link rel="prev" href="{{prev_URL}}" />#endif
-	#if(next_URL):<link rel="next" href="{{next_URL}}" />#endif
+	<link rel="canonical" href="{{canonical_URL}}">
+	#if(prev_URL):<link rel="prev" href="{{prev_URL}}">#endif
+	#if(next_URL):<link rel="next" href="{{next_URL}}">#endif
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!--[if lt IE 9]>
@@ -93,7 +93,7 @@
 									<li role="separator" class="divider"></li>';
 							foreach ($subsites as $subsite)
 							{
-								
+
 								// get sites level 3 (only public sites)
 								$subsubsites = $XenuxDB->getList('sites', [
 									'order' => 'sortindex ASC',
@@ -126,7 +126,7 @@
 						{
 							echo "<li><a href=\"".getPageLink($site->id, $site->title)."\">".$site->title."</a></li>";
 						}
-						
+
 					}
 				}
 ?>
@@ -160,8 +160,8 @@
 				<aside class="search">
 					<h5><?= __('search') ?></h5>
 					<form action="{{URL_MAIN}}/search/" method="GET">
-						<input type="search" class="search-input" name="q" placeholder="<?= __("search") ?>" value="" />
-						<input type="submit" class="search-submit" value="<?= __("search") ?>" />
+						<input type="search" class="search-input" name="q" placeholder="<?= __("search") ?>" value="">
+						<input type="submit" class="search-submit" value="<?= __("search") ?>">
 					</form>
 				</aside>
 				<?php
@@ -179,12 +179,12 @@
 						echo '<aside class="newest-sites">';
 						echo '<h5>'. __('newestSites') . '</h5>';
 						echo '<ul>';
-						
+
 						foreach ($newestSitesList as $site)
 						{
 							echo '<li><a href="'.getPageLink($site->id, $site->title).'">'.$site->title.'</a></li>';
 						}
-						
+
 						echo '</ul>';
 						echo '</aside>';
 					}
@@ -279,7 +279,7 @@
 				<div class="links">
 					<a href="{{URL_MAIN}}/sitemap"><?= __('sitemap') ?></a>
 					<a href="{{URL_MAIN}}/administration"><?= __('administration') ?></a>
-					
+
 					<a href="{{URL_MAIN}}/contact"><?= __('contact') ?></a>
 					<a href="{{URL_MAIN}}/imprint"><?= __('imprint') ?></a>
 				</div>

@@ -4,26 +4,26 @@ class LoginController extends AbstractController
 	public function __construct($url = null)
 	{
 		if(isset($url))
-			$this->url = $url;		
+			$this->url = $url;
 	}
-	
+
 	public function run()
 	{
 		global $XenuxDB, $app;
 
-		$task = isset($_GET['task']) ? $_GET['task'] : ''; 
-		
-		$action = ($task == 'logout' || $task == 'login' || empty($task) || ($task != 'register' && $task != 'forgotusername' && $task != 'forgotpassword' && $task != 'resetpassword' && $task != 'firstLogin' && $task != 'confirm')) ? 'login' : $task; 
+		$task = isset($_GET['task']) ? $_GET['task'] : '';
+
+		$action = ($task == 'logout' || $task == 'login' || empty($task) || ($task != 'register' && $task != 'forgotusername' && $task != 'forgotpassword' && $task != 'resetpassword' && $task != 'firstLogin' && $task != 'confirm')) ? 'login' : $task;
 
 
 		$template = new template(PATH_ADMIN."/template/login.php", ['action'=>$action]);
-		
+
 		$template->setVar("SITE_PATH",  URL_ADMIN.'/login');
 		$template->setVar("TEMPLATE_PATH", URL_ADMIN.'/template');
 		$template->setVar("homepage_name", $app->getOption('hp_name'));
 		$template->setVar("message", '');
 		$template->setVar("form", '');
-		
+
 		switch ($action) {
 			case 'register':
 				$this->registerAction($template);
@@ -59,12 +59,12 @@ class LoginController extends AbstractController
 
 		echo $template->render();
 		return true;
-	}	
+	}
 
 	private function loginAction(&$template, $task)
 	{
 		global $app, $XenuxDB;
-		
+
 		if($task == 'logout')
 		{
 			$app->user->setLogout();
@@ -248,9 +248,9 @@ class LoginController extends AbstractController
 							$mail->addAdress($data['email'], $data['username']);
 							$mail->subject = 'Registrierung auf "' . $app->getOption('hp_name') . '" bestätigen';
 							$mail->body =
-'Hallo ' . $data['username'] . '<br />
+'Hallo ' . $data['username'] . '<br>
 um deine Registrierung auf ' . $_SERVER['SERVER_NAME'] . ' abzuschließen klicke bitte auf den folgenden Link oder kopiere ihn in die Adressleiste deines Browsers:
-<a href="'.$confirmlink.'">'.$confirmlink.'</a><br />
+<a href="'.$confirmlink.'">'.$confirmlink.'</a><br>
 <p>Solltest Du Dich nicht auf ' . $_SERVER['SERVER_NAME'] . ' registriert haben, ignoriere diese Mail bitte.</p>';
 
 							if(!$mail->send())
@@ -268,7 +268,7 @@ um deine Registrierung auf ' . $_SERVER['SERVER_NAME'] . ' abzuschließen klicke
 						{
 							$template->setVar("message", 'something went wrong -.-');
 						}
-						
+
 					}
 					else
 					{
@@ -331,7 +331,7 @@ um deine Registrierung auf ' . $_SERVER['SERVER_NAME'] . ' abzuschließen klicke
 				$mail->addAdress($userinfo->email, $userinfo->username);
 				$mail->subject = 'Benutzername vergessen';
 				$mail->body =
-'Hallo!<br />
+'Hallo!<br>
 Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: ' . $userinfo->username . '
 <p>Solltest Du die Zusendung des Benuzernamens nicht angefordert haben, ignoriere diese Mail bitte.</p>';
 
@@ -407,9 +407,9 @@ Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: '
 				$mail->addAdress($userinfo->email, $userinfo->username);
 				$mail->subject = 'Passwort vergessen';
 				$mail->body =
-'Hallo ' . $userinfo->username . '!<br />
-<p>Du hast am ' . date("d.m.Y") . ' um ' . date("H:i") . ' von der IP-Adresse ' . $_SERVER['REMOTE_ADDR'] . ' eine Passwortrücksetzung angefordert. Das Passwort kann unter der URL<br />
-<a href="' . $url . '">' . $url . '</a><br />
+'Hallo ' . $userinfo->username . '!<br>
+<p>Du hast am ' . date("d.m.Y") . ' um ' . date("H:i") . ' von der IP-Adresse ' . $_SERVER['REMOTE_ADDR'] . ' eine Passwortrücksetzung angefordert. Das Passwort kann unter der URL<br>
+<a href="' . $url . '">' . $url . '</a><br>
 		zurückgesetzt werden.</p>
 <p>Solltest Du die Zurücksetzung des Passworts nicht angefordert haben, ignoriere diese Mail bitte.</p>';
 

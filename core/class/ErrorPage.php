@@ -45,4 +45,3 @@ class ErrorPage
 		return $template->render();
 	}
 }
-?>

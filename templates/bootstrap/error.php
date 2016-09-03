@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="<?= translator::getLanguage() ?>">
 	<head>
 		<meta charset="UTF-8" />
 		<title>{{errorcode}} {{status}}</title>

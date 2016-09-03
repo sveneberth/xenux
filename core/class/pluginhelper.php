@@ -9,7 +9,7 @@ class pluginhelper
 	private $templatepath = PATH_MAIN . '/templates/';
 	private $hp_offline;
 
-	
+
 	public function __construct($type, $needTMP = true)
 	{
 		global $XenuxDB, $app;
@@ -22,7 +22,7 @@ class pluginhelper
 			$this->create_folder($this->tmppath);
 
 		$this->hp_offline = $app->getOption('homepage_offline');
-		
+
 		if($this->hp_offline == false)
 		{
 			$XenuxDB->Update('main', [ // set homepage in maintenance
@@ -34,11 +34,11 @@ class pluginhelper
 		}
 	}
 
-	
+
 	/**
 	* name:
 	* set the name of the plugin in the pluginhelper-object, to work with this
-	* @param string $name: name of the plugin 
+	* @param string $name: name of the plugin
 	*/
 	public function name($name)
 	{
@@ -48,7 +48,7 @@ class pluginhelper
 
 	/**
 	* install:
-	* @return bool: everthing okay? 
+	* @return bool: everthing okay?
 	*/
 	public function install()
 	{
@@ -60,7 +60,7 @@ class pluginhelper
 			// create module
 			$this->create_folder($this->modulepath . $this->name);
 			$this->create_folder($this->moduleadminpath . $this->name);
-			
+
 			// register module in options
 
 			$installed_modules		= json_decode($this->get_option('installed_modules'));
@@ -73,7 +73,7 @@ class pluginhelper
 
 			// create template
 			$this->create_folder($this->templatepath . $this->name);
-	
+
 			// register template in options
 			$installed_templates	= json_decode($this->get_option('installed_templates'));
 			$installed_templates[]	= $this->name;
@@ -89,13 +89,13 @@ class pluginhelper
 
 	/**
 	* uninstall:
-	* @return bool: everthing okay? 
+	* @return bool: everthing okay?
 	*/
 	public function uninstall()
 	{
 		if (!$this->installed()) // not installed
 			return false;
-		
+
 		if ($this->type == 'module')
 		{
 			$installed_modules = json_decode($this->get_option('installed_modules'));
@@ -122,7 +122,7 @@ class pluginhelper
 
 	/**
 	* remove:
-	* @param array $arr: array of element to be moved 
+	* @param array $arr: array of element to be moved
 	* @return ---
 	*/
 	public function move(array $arr)
@@ -132,11 +132,11 @@ class pluginhelper
 			full_copy($this->tmppath . $old, $this->replace_paths($new));
 		}
 	}
-	
+
 
 	/**
 	* remove:
-	* @param array $arr: array of element to be moved 
+	* @param array $arr: array of element to be moved
 	* @return ---
 	*/
 	public function remove(array $arr)
@@ -162,7 +162,7 @@ class pluginhelper
 		return $app->getOption($name);
 	}
 
-	
+
 	/**
 	* add_option:
 	* @param string $name: name of the option to be added
@@ -203,7 +203,7 @@ class pluginhelper
 		]);
 
 	}
-	
+
 
 	/**
 	* remove_option:
@@ -244,7 +244,7 @@ class pluginhelper
 	{
 		return
 			str_replace([
-				'#MODULEPATH', 
+				'#MODULEPATH',
 				'#MODULEADMINPATH'
 			], [
 				$this->modulepath . $this->name . '/',
@@ -319,4 +319,3 @@ class pluginhelper
 	}
 
 }
-?>

@@ -7,14 +7,14 @@ class XenuxDB
 
 	private $columnQuote = "`";
 	private $stringQuote = "'";
-	
+
 	public function __construct()
 	{
 		$this->db = db::getConnection();
 	}
 
 
-	
+
 	/**
 	* query:
 	* Query successfull:
@@ -33,12 +33,12 @@ class XenuxDB
 				log::writeLog('DB Query: ' . $statement);
 
 			$result = $this->db->query($statement);
-		
+
 			if($result === false)
 			{
 				throw new Exception("MySQL Error: (" . $this->db->errno . ") " . $this->db->error . ' - Failed Statement: "' . $statement . '"');
 			}
-		
+
 			return $result;
 		}
 		catch (Exception $e)
@@ -94,7 +94,7 @@ class XenuxDB
 		return implode($stack, ',');
 	}
 
-	
+
 	private function _inner_conjunct($data, $conjunctor, $outer_conjunctor)
 	{
 		$haystack = array();
@@ -150,7 +150,7 @@ class XenuxDB
 					'(' . $this->_inner_conjunct($value, ' ' . $relation_match[1], $conjunctor) . ')';
 			}
 			else
-			{				
+			{
 				preg_match('/(#{0,2})([\w\.]+)(\(([a-zA-Z0-9_\-]*)\))?(\[(\>|\>\=|\<|\<\=|\!|\<\>|\>\<|\!?~)\])?/i', $key, $match);
 
 				$column = $this->quoteColumn($match[2]);
@@ -288,7 +288,7 @@ class XenuxDB
 		$group_clause = '';
 
 		if(!empty($group))
-		{	
+		{
 			$group_clause .= ' GROUP BY ' . $this->quoteColumn($group);
 
 			if (isset($group['having']))
@@ -307,7 +307,7 @@ class XenuxDB
 		$regexOrder = '/(^[a-zA-Z0-9_\-\.]*)(\s*(DESC|ASC))?/';
 
 		if(!empty($order))
-		{	
+		{
 			if (is_array($order))
 			{
 				if (
@@ -345,7 +345,7 @@ class XenuxDB
 		$limit_clause = '';
 
 		if(!empty($limit))
-		{	
+		{
 			if (is_numeric($limit))
 			{
 				$limit_clause .= ' LIMIT ' . $limit;
@@ -435,9 +435,9 @@ class XenuxDB
 
 		$table .= ' ' . implode($table_join, ' ');
 
-		$column = isset($column_fn) ? $column_fn . '(' . $this->column_push($columns) . ') AS result' : $this->column_push($columns); 
+		$column = isset($column_fn) ? $column_fn . '(' . $this->column_push($columns) . ') AS result' : $this->column_push($columns);
 
-		return 	'SELECT ' . $column . ' FROM ' . $table . 
+		return 	'SELECT ' . $column . ' FROM ' . $table .
 				$this->_where_clause(@$props['where']) .
 				$this->_group_clause(@$props['group']) .
 				$this->_order_clause(@$props['order']) .
@@ -464,7 +464,7 @@ class XenuxDB
 			],
 			--or--
 			'limit' => 5,
-			
+
 			'join' =>
 			[
 				'[>]table2(temptable)' =>
@@ -486,12 +486,12 @@ class XenuxDB
 		]
 	)
 	*/
-	
-	
+
+
 
 	######################################## DATA ACTIONS ########################################
-	
-	
+
+
 	/**
 	* getList:
 	* Query successfull:
@@ -511,12 +511,12 @@ class XenuxDB
 			{
 				$data[] = $row;
 			}
-	
+
 			return /*(object) */$data;
 		}
-		return false;	
+		return false;
 	}
-	
+
 	/**
 	* getEntry:
 	* Query successfull:
@@ -536,7 +536,7 @@ class XenuxDB
 
 		return false;
 	}
-	
+
 	/**
 	* count:
 	* Query successfull:
@@ -568,7 +568,7 @@ class XenuxDB
 	{
 		$table = $this->quoteColumn(MYSQL_PREFIX . $table);
 
-		$statement =	'DELETE FROM ' . $table . 
+		$statement =	'DELETE FROM ' . $table .
 						$this->_where_clause(@$props['where']) .
 						$this->_group_clause(@$props['group']) .
 						$this->_order_clause(@$props['order']) .
@@ -734,7 +734,7 @@ class XenuxDB
 
 		return $this->query($statement);
 	}
-	
+
 
 	######################################## DATABASE ACTIONS ########################################
 
@@ -742,7 +742,7 @@ class XenuxDB
 	public function closeConnection()
 	{
 		$result = $this->db->close();
-		
+
 		return $result;
 	}
 
@@ -784,7 +784,7 @@ class XenuxDB
 
 		return $returnAsArray ? $temp : implode($temp, ',');
 	}
-	
+
 	public function quoteColumn($column, $addPrexif = true, $escapeColumn = true)
 	{
 		$column = str_replace('#', '', $column);
@@ -827,4 +827,3 @@ class XenuxDB
 					$this->quoteString($string));
 	}
 }
-?>

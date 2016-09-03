@@ -1,13 +1,13 @@
 <?php
 class app
-{	
+{
 	public $template;
 	private $site;
 	public $siteurl;
 	public $url;
 	public $page_name;
 	public $user;
-	
+
 	private $cssfiles = [];
 	private $jsfiles = [];
 
@@ -48,7 +48,7 @@ class app
 		{
 			return $result->value;
 		}
-		
+
 		return false;
 	}
 
@@ -56,11 +56,11 @@ class app
 	{
 		$this->template = $template;
 	}
-	
+
 	public function buildPage()
 	{
 		$this->site = empty($this->url[0]) ? 'home' : $this->url[0];
-	
+
 		if ($this->site == 'file')
 		{
 			echo $this->getFile(@$this->url[1]);
@@ -71,7 +71,7 @@ class app
 			translator::appendTranslations(PATH_MAIN."/templates/".$this->template."/translation/");
 
 			$template = new template(PATH_MAIN."/templates/".$this->template."/index.php");
-			
+
 			$template->setVar("page_content", $this->getPageContent());
 
 			$template->setVar("SITE_PATH", $this->siteurl);
@@ -100,7 +100,7 @@ class app
 	public function buildAdminPage()
 	{
 		$this->site = $this->url[0];
-		
+
 		// append translations
 		translator::appendTranslations(PATH_ADMIN . '/translation/');
 
@@ -109,13 +109,13 @@ class app
 			if (inludeExists(PATH_ADMIN."/modules/login/controller.php"))
 			{
 				$controller = new loginController($this->url);
-				
+
 				$controller->run();
 			}
 			else
 			{
 				throw new Exception("404 - controller not found");
-				
+
 				return "404 - controller not found";
 			}
 		}
@@ -128,12 +128,12 @@ class app
 			}
 
 			$template = new template(PATH_ADMIN."/template/index.php");
-			
+
 			$template->setVar("page_content", $this->getPageContent(true));
 
 			$template->setVar("SITE_PATH", URL_ADMIN.'/'.implode('/', $this->url));
 			$template->setVar("TEMPLATE_PATH", URL_MAIN.'/administration/template');
-			
+
 			$template->setVar("meta_author", $this->getOption('meta_author'));
 			$template->setVar("meta_desc", $this->getOption('meta_desc'));
 			$template->setVar("meta_keys", $this->getOption('meta_keys'));
@@ -144,12 +144,12 @@ class app
 
 			$template->setVar("CSS-FILES", $this->getCSS());
 			$template->setVar("JS-FILES", $this->getJS());
-			
-			echo $template->render();	
+
+			echo $template->render();
 		}
 		else
 		{
-			global $_get_params;			
+			global $_get_params;
 			header('Location: '.URL_MAIN.'/administration/login'.(!empty($this->url[0]) ? '?redirectTo='.implode('/', $this->url) : '').'?'.$_get_params);
 		}
 	}
@@ -171,7 +171,7 @@ class app
 
 		return $return;
 	}
-	
+
 	private function getPageContent($administration=false)
 	{
 		try
@@ -180,13 +180,13 @@ class app
 			{
 				$classname = $this->site."Controller";
 				$controller = new $classname($this->url);
-				
+
 				ob_start();
 					$controller->run();
 				$page_content = ob_get_clean();
-				
+
 				$this->page_name = $controller->page_name;
-				
+
 				return $page_content;
 			}
 			else
@@ -207,13 +207,13 @@ class app
 	{
 		$this->cssfiles[] = $file;
 	}
-	
+
 	public function getCSS()
 	{
 		$css = '';
 		foreach ($this->cssfiles as $file)
 		{
-			$css .= '<link rel="stylesheet" href="' . $file . '" />' . "\n";
+			$css .= '<link rel="stylesheet" href="' . $file . '">' . "\n";
 		}
 
 		return $css;
@@ -223,7 +223,7 @@ class app
 	{
 		$this->jsfiles[] = $file;
 	}
-	
+
 	public function getJS()
 	{
 		$js = '';
@@ -249,7 +249,7 @@ class app
 		global $app, $XenuxDB;
 
 		$hashID = $XenuxDB->escapeString(explode('-', $param)[0]);
-		
+
 		preg_match_all('/-([a-z]?)([0-9]*)/', $param, $optionMatches, PREG_SET_ORDER);
 
 		$options = array();
@@ -287,7 +287,7 @@ class app
 
 				if (isset($options['s']))
 					$options['s'] = $options['s'] > $x ? $x : $options['s'];
-				
+
 				if (isset($options['c']))
 				{
 					$desired_height	= $desired_width = isset($options['s']) && is_numeric($options['s']) ? $options['s'] : $y;
@@ -303,7 +303,7 @@ class app
 				imagesavealpha($new, TRUE);
 				imagecopyresampled($new, $image, 0, 0, 0, 0, $desired_width, $desired_height, $x, $y);
 				imagedestroy($image);
-				
+
 				if ($file->mime_type == "image/jpeg")
 				{
 					header("Content-type: image/jpeg");
@@ -334,4 +334,3 @@ class app
 		}
 	}
 }
-?>

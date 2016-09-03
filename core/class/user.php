@@ -4,7 +4,7 @@ class user
 	private $session;
 	public $userInfo;
 	private $userIsLoggedIn;
-	
+
 	public function __construct()
 	{
 		$this->session = @$_SESSION['_LOGIN'];
@@ -13,7 +13,7 @@ class user
 			$this->userInfo	= $this->getUserInfo($this->session['userID']);
 		}
 	}
-	
+
 	public function isLogin()
 	{
 		if(isset($this->session['userID']) && is_numeric($this->session['userID']))
@@ -33,7 +33,7 @@ class user
 		}
 		return false;
 	}
-	
+
 	public function checkPassword($password)
 	{
 		$stored = $this->userInfo->password;
@@ -42,16 +42,16 @@ class user
 	    $string = hash_hmac ( "whirlpool", str_pad ( $password, strlen ( $password ) * 4, sha1 ( $username ), STR_PAD_BOTH ), SALT, true );
 	    return crypt ( $string, substr ( $stored, 0, 30 ) ) == $stored;
 	}
-	
-		
+
+
 	public function createPasswordHash($username, $password, $rounds='10')
 	{
 		$string = hash_hmac ( "whirlpool", str_pad ( $password, strlen ( $password ) * 4, sha1 ( $username ), STR_PAD_BOTH ), SALT, true );
 		$salt = substr ( str_shuffle ( './0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' ) , 0, 22 );
 		return crypt ( $string, '$2a$' . $rounds . '$' . $salt );
 	}
-	
-	
+
+
 	public function getUserInfo($userID)
 	{
 		global $XenuxDB;
@@ -71,7 +71,7 @@ class user
 			return false;
 		}
 	}
-	
+
 	public function getUserByUsername($username)
 	{
 		global $XenuxDB;
@@ -93,7 +93,7 @@ class user
 			return false;
 		}
 	}
-	
+
 	public function getUserByEmail($email)
 	{
 		global $XenuxDB;
@@ -134,7 +134,7 @@ class user
 
 		return false;
 	}
-	
+
 	public function setLogin()
 	{
 		global $XenuxDB;
@@ -150,10 +150,10 @@ class user
 		]);
 
 		$this->setSessionFingerprint($this->userInfo->id);
-	
+
 		return true;
 	}
-	
+
 	public function setLogout()
 	{
 		$_SESSION['_LOGIN'] = '';
@@ -162,7 +162,7 @@ class user
 		$this->clearSessionFingerprint($this->userInfo->id);
 		return true;
 	}
-	
+
 	private function getSessionFingerprint()
 	{
 		return SHA1($_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']);
@@ -171,9 +171,9 @@ class user
 	public function setSessionFingerprint($userID)
 	{
 		global $XenuxDB;
-		
+
 		$fingerprint = $this->getSessionFingerprint();
-		
+
 		$XenuxDB->Update('users', [
 			'session_fingerprint' => $fingerprint,
 		],
@@ -183,11 +183,11 @@ class user
 
 		return true;
 	}
-	
+
 	private function clearSessionFingerprint($userID)
 	{
 		global $XenuxDB;
-		
+
 		$XenuxDB->Update('users', [
 			'session_fingerprint' => NULL,
 		],
@@ -198,4 +198,3 @@ class user
 		return true;
 	}
 }
-?>

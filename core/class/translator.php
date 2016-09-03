@@ -1,6 +1,6 @@
 <?php
 class translator
-{	
+{
 	public static $translations = array();
 	public static $putBasicTranslations = false;
 
@@ -12,17 +12,17 @@ class translator
 			self::$translations = self::getTranslations(self::getLanguage());
 			self::$putBasicTranslations = true;
 		}
-		
-		$translations = self::$translations;	
+
+		$translations = self::$translations;
 
 		if (!isset($translations[$str]))
 			return $str;
 
 		$args = func_get_args(); // get arguments
 		unset($args[0]); // unset varname
-		
+
 		$translationStr = $translations[$str]; // set string
-		
+
 		foreach ($args as $key => $val)
 		{
 			$translationStr = str_replace("%".$key, $val, $translationStr); // replace vars
@@ -35,7 +35,7 @@ class translator
 		global $app;
 		return isset($_SESSION['language']) ? $_SESSION['language'] : $app->getOption('default_language');
 	}
-	
+
 	public function setLanguage($lang)
 	{
 		if (self::translationExists($lang))
@@ -73,15 +73,15 @@ class translator
 
 			return true;
 		}
-		
+
 		return false;
 	}
 
 	private function translationExists($lang, $path=PATH_MAIN.'/translation/')
 	{
 		return
-			file_exists($path . $lang . '.json') && 
-			is_json(file_get_contents($path . $lang . '.json')) && 
+			file_exists($path . $lang . '.json') &&
+			is_json(file_get_contents($path . $lang . '.json')) &&
 			isset(self::getLanguages()[$lang]);
 	}
 
@@ -93,7 +93,7 @@ class translator
 		{
 			while (false !== ($file = readdir($handle)))
 			{
-				if (is_dir($path . $file)) 
+				if (is_dir($path . $file))
 					continue;
 
 				$content = file_get_contents($path . $file);
@@ -116,4 +116,3 @@ function __() // an alias for translator::translate()
 {
 	return forward_static_call_array(array('translator', 'translate'), func_get_args());
 }
-?>

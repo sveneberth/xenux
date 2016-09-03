@@ -9,7 +9,7 @@ class form
 	private $error_msg = array();
 	private $requiredInfo = true;
 
-	public function __construct(array $fields, $class=null, $action=null, $method="post")
+	public function __construct(array $fields, $class=null, $action=null, $method='post')
 	{
 		$this->fields = $fields;
 		$this->class  = $class;
@@ -18,7 +18,7 @@ class form
 
 		$this->data = $this->isSend() ? $this->getInput() : Array();
 	}
-	
+
 	public function isSend()
 	{
 		return $_SERVER['REQUEST_METHOD'] == strtoupper($this->method);
@@ -33,19 +33,19 @@ class form
 	{
 		global $app;
 
-		$formTemplate = new template(PATH_MAIN."/core/template/form/form.php");
-		
-		$formTemplate->setVar("class", $this->class);
-		$formTemplate->setVar("action", $this->action);
-		$formTemplate->setVar("method", $this->method);
-		$formTemplate->setVar("fields", $this->getFormFields($this->fields));
-		$formTemplate->setVar("error_msg", $this->isSend() ? $this->getErrorMsg() : '');
+		$formTemplate = new template($this->getFormTemplateURL('form.php'));
 
-		$formTemplate->setIfCondition("requiredInfo", $this->requiredInfo);
+		$formTemplate->setVar('class', $this->class);
+		$formTemplate->setVar('action', $this->action);
+		$formTemplate->setVar('method', $this->method);
+		$formTemplate->setVar('fields', $this->getFormFields($this->fields));
+		$formTemplate->setVar('error_msg', $this->isSend() ? $this->getErrorMsg() : '');
+
+		$formTemplate->setIfCondition('requiredInfo', $this->requiredInfo);
 
 		return $formTemplate->render();
 	}
-		
+
 	public function isValid()
 	{
 		foreach($this->fields as $name => $props)
@@ -64,22 +64,22 @@ class form
 			}
 
 			$this->fields[$name]['validInput'] = true;
-			
+
 			if(isset($props['required']) && $props['required'] == true && empty($this->data[$name]))
 			{
 				$this->setErrorMsg(__('please fill field', $props['label']));
 				$this->setFieldInvalid($name);
 			}
-			
+
 			if(!empty($this->data[$name]))
 			{
 				switch($props['type'])
 				{
-					case "text":
-					case "textarea":
+					case 'text':
+					case 'textarea':
 						// what can you do wrong here? ;)
 						break;
-					case "password":
+					case 'password':
 						$min_length = isset($props['min_length']) ? $props['min_length'] : 6;
 						if(strlen($this->data[$name]) < $min_length)
 						{
@@ -87,29 +87,29 @@ class form
 							$this->setFieldInvalid($name);
 						}
 						break;
-					case "email":
+					case 'email':
 						if(filter_var($this->data[$name], FILTER_VALIDATE_EMAIL) == false)
 						{
 							$this->setErrorMsg(__('please fill in a valid eMail-adress', $props['label']));
 							$this->setFieldInvalid($name);
 						}
 						break;
-					case "number":
+					case 'number':
 						if(!is_numeric($this->data[$name]))
 						{
 							$this->setErrorMsg(__('only number in field', $props['label']));
 							$this->setFieldInvalid($name);
 						}
 						break;
-					case "date":
-						if(!preg_match("/[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])/", $this->data[$name]))
+					case 'date':
+						if(!preg_match('/[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])/', $this->data[$name]))
 						{
 							$this->setErrorMsg(__('please fill in a valid date', $props['label']));
-							$this->setFieldInvalid($name);							
+							$this->setFieldInvalid($name);
 						}
 						break;
-					case "time":
-						if(!preg_match("/(2[0-3]|[01][0-9]):([0-5][0-9])(:[0-5][0-9])?/", $this->data[$name]))
+					case 'time':
+						if(!preg_match('/(2[0-3]|[01][0-9]):([0-5][0-9])(:[0-5][0-9])?/', $this->data[$name]))
 						{
 							$this->setErrorMsg(__('please fill in a valid time', $props['label']));
 							$this->setFieldInvalid($name);
@@ -124,12 +124,12 @@ class form
 
 		return true;
 	}
-	
+
 	public function disableRequiredInfo()
 	{
 		$this->requiredInfo	= false;
 	}
-	
+
 	public function setErrorMsg($msg)
 	{
 		$this->error_msg[]	= $msg;
@@ -150,20 +150,20 @@ class form
 		$messages = '';
 		foreach($this->error_msg as $message)
 		{
-			$msgTemplate = new template(PATH_MAIN."/core/template/form/_form_error_msg.php");
-			$msgTemplate->setVar("err_message", $message);
+			$msgTemplate = new template($this->getFormTemplateURL('_form_error_msg.php'));
+			$msgTemplate->setVar('err_message', $message);
 			$messages .= $msgTemplate->render();
 		}
 
-		$errTemplate = new template(PATH_MAIN."/core/template/form/_form_error.php");
-		$errTemplate->setVar("error_messages", $messages);
+		$errTemplate = new template($this->getFormTemplateURL('_form_error.php'));
+		$errTemplate->setVar('error_messages', $messages);
 
 		return $errTemplate->render();
 	}
-	
+
 	private function getFormFields()
 	{
-		$form_fields	= "";
+		$form_fields = '';
 
 		foreach($this->fields as $name => $props)
 		{
@@ -174,7 +174,7 @@ class form
 
 		return $form_fields;
 	}
-	
+
 	private function getFormField($fieldname, array $props)
 	{
 		global $app;
@@ -189,47 +189,47 @@ class form
 		$props['wysiwyg']		= isset($props['wysiwyg'])		? $props['wysiwyg']		: false;
 		$props['showLabel']		= isset($props['showLabel'])	? $props['showLabel']	: true;
 		$props['label'] = (isset($props['label:before']) ? $props['label:before'].' ' : '') . $props['label'] . (isset($props['label:after']) ? ''.$props['label:after'] : '');
-		
+
 		$class = $props['class'] . (isset($props['validInput']) && $props['validInput'] == false ? ' wrong' : '');
 		$value = isset($this->data[$fieldname]) ? $this->data[$fieldname] : $props['value'];
 
 		$fieldTemplate = new template();
-		
-		$fieldTemplate->setVar("class",		$class);
-		$fieldTemplate->setVar("style",		$props['style']);
-		$fieldTemplate->setVar("label",		$props['label'] . ($this->isRequired($props['required'] && $this->requiredInfo == true) ? '*' : ''));
-		$fieldTemplate->setVar("name",		$fieldname);
-		if($props['type'] != 'file')
-			$fieldTemplate->setVar("value",		$value);
-		$fieldTemplate->setVar("required",	$this->isRequired($props['required']));
 
-		$fieldTemplate->setIfCondition("showLabel",	$props['showLabel']);
+		$fieldTemplate->setVar('class',		$class);
+		$fieldTemplate->setVar('style',		$props['style']);
+		$fieldTemplate->setVar('label',		$props['label'] . ($this->isRequired($props['required'] && $this->requiredInfo == true) ? '*' : ''));
+		$fieldTemplate->setVar('name',		$fieldname);
+		if($props['type'] != 'file')
+			$fieldTemplate->setVar('value',		$value);
+		$fieldTemplate->setVar('required',	$this->isRequired($props['required']));
+
+		$fieldTemplate->setIfCondition('showLabel',	$props['showLabel']);
 
 		switch(strtolower($props['type']))
 		{
 			case 'text':
-				return $fieldTemplate->render(PATH_MAIN."/core/template/form/_form_text.php");
+				return $fieldTemplate->render($this->getFormTemplateURL('_form_text.php'));
 				break;
 			case 'password':
-				return $fieldTemplate->render(PATH_MAIN."/core/template/form/_form_password.php");
+				return $fieldTemplate->render($this->getFormTemplateURL('_form_password.php'));
 				break;
 			case 'email':
-				return $fieldTemplate->render(PATH_MAIN."/core/template/form/_form_email.php");
+				return $fieldTemplate->render($this->getFormTemplateURL('_form_email.php'));
 				break;
 			case 'textarea':
 				if($props['wysiwyg'])
-					$fieldTemplate->setVar("class", $class.' ckeditor');
-				return $fieldTemplate->render(PATH_MAIN."/core/template/form/_form_textarea.php");
+					$fieldTemplate->setVar('class', $class.' ckeditor');
+				return $fieldTemplate->render($this->getFormTemplateURL('_form_textarea.php'));
 				break;
 			case 'select':
 				$props['options'] = isset($props['options']) ? $props['options'] : '';
-				$fieldTemplate->setVar("options", $this->getSelectOptions($props['options'], $value));
-				return $fieldTemplate->render(PATH_MAIN."/core/template/form/_form_select.php");
+				$fieldTemplate->setVar('options', $this->getSelectOptions($props['options'], $value));
+				return $fieldTemplate->render($this->getFormTemplateURL('_form_select.php'));
 				break;
 			case 'radio':
 				$props['options'] = isset($props['options']) ? $props['options'] : '';
-				$fieldTemplate->setVar("radios", $this->getRadioOptions($props['options'], $fieldname, $value, $class, $props['style']));
-				return $fieldTemplate->render(PATH_MAIN."/core/template/form/_form_radio_fieldset.php");
+				$fieldTemplate->setVar('radios', $this->getRadioOptions($props['options'], $fieldname, $value, $class, $props['style']));
+				return $fieldTemplate->render($this->getFormTemplateURL('_form_radio_fieldset.php'));
 				break;
 			case 'bool_radio':
 				$props['value'] = $value ? 'true' : 'false';
@@ -250,44 +250,44 @@ class form
 				return $this->getFormField($fieldname, $props);
 				break;
 			case 'checkbox':
-				$fieldTemplate->setVar("checked", $this->isChecked($props['checked']));
-				return $fieldTemplate->render(PATH_MAIN."/core/template/form/_form_checkbox.php");
+				$fieldTemplate->setVar('checked', $this->isChecked($props['checked']));
+				return $fieldTemplate->render($this->getFormTemplateURL('_form_checkbox.php'));
 				break;
 			case 'number':
 				$props['min_number'] = isset($props['min_number']) ? $props['min_number'] : '';
 				$props['max_number'] = isset($props['max_number']) ? $props['max_number'] : '';
-				$fieldTemplate->setVar("min_number", $props['min_number']);
-				$fieldTemplate->setVar("max_number", $props['max_number']);		
-				return $fieldTemplate->render(PATH_MAIN."/core/template/form/_form_number.php");
+				$fieldTemplate->setVar('min_number', $props['min_number']);
+				$fieldTemplate->setVar('max_number', $props['max_number']);
+				return $fieldTemplate->render($this->getFormTemplateURL('_form_number.php'));
 				break;
 			case 'date':
-				return $fieldTemplate->render(PATH_MAIN."/core/template/form/_form_date.php");
+				return $fieldTemplate->render($this->getFormTemplateURL('_form_date.php'));
 				break;
 			case 'time':
-				return $fieldTemplate->render(PATH_MAIN."/core/template/form/_form_time.php");
+				return $fieldTemplate->render($this->getFormTemplateURL('_form_time.php'));
 				break;
 			case 'readonly':
-				return $fieldTemplate->render(PATH_MAIN."/core/template/form/_form_text_readonly.php");
+				return $fieldTemplate->render($this->getFormTemplateURL('_form_text_readonly.php'));
 				break;
 			case 'hidden':
-				return $fieldTemplate->render(PATH_MAIN."/core/template/form/_form_hidden.php");
+				return $fieldTemplate->render($this->getFormTemplateURL('_form_hidden.php'));
 				break;
 			case 'html':
 				return $props['value'];
 				break;
 			case 'file':
 				$props['multiple'] = isset($props['multiple']) ? $props['multiple'] : false;
-				$fieldTemplate->setIfCondition("multiple", $props['multiple']);
-				return $fieldTemplate->render(PATH_MAIN."/core/template/form/_form_file_upload.php");
+				$fieldTemplate->setIfCondition('multiple', $props['multiple']);
+				return $fieldTemplate->render($this->getFormTemplateURL('_form_file_upload.php'));
 				break;
 			case 'submit':
-				return $fieldTemplate->render(PATH_MAIN."/core/template/form/_form_submit.php");
+				return $fieldTemplate->render($this->getFormTemplateURL('_form_submit.php'));
 				break;
 		}
 
 		return false;
 	}
-	
+
 	private function getSelectOptions(array $options, $value=null)
 	{
 		global $app;
@@ -298,12 +298,12 @@ class form
 		{
 			$option['disabled'] = isset($props['disabled']) ? $props['disabled'] : '';
 
-			$optionTemplate = new template(PATH_MAIN."/core/template/form/_form_select_option.php");
-		
-			$optionTemplate->setVar("value", $option['value']);
-			$optionTemplate->setVar("label", $option['label']);
-			$optionTemplate->setVar("selected", $this->isSelected($option['value'] == $value));
-			$optionTemplate->setVar("disabled", $this->isDisabled($option['disabled']));
+			$optionTemplate = new template($this->getFormTemplateURL('_form_select_option.php'));
+
+			$optionTemplate->setVar('value', $option['value']);
+			$optionTemplate->setVar('label', $option['label']);
+			$optionTemplate->setVar('selected', $this->isSelected($option['value'] == $value));
+			$optionTemplate->setVar('disabled', $this->isDisabled($option['disabled']));
 
 			$select_options .= $optionTemplate->render() . "\n";
 		}
@@ -321,15 +321,15 @@ class form
 		{
 			$option['disabled'] = isset($props['disabled']) ? $props['disabled'] : '';
 
-			$optionTemplate = new template(PATH_MAIN."/core/template/form/_form_radio.php");
-		
-			$optionTemplate->setVar("value", $option['value']);
-			$optionTemplate->setVar("name", $fieldname);
-			$optionTemplate->setVar("label", $option['label']);
-			$optionTemplate->setVar("class", $class);
-			$optionTemplate->setVar("style", $style);
-			$optionTemplate->setVar("checked", $this->isChecked($option['value'] == $value));
-			$optionTemplate->setVar("disabled", $this->isDisabled($option['disabled']));
+			$optionTemplate = new template($this->getFormTemplateURL('_form_radio.php'));
+
+			$optionTemplate->setVar('value', $option['value']);
+			$optionTemplate->setVar('name', $fieldname);
+			$optionTemplate->setVar('label', $option['label']);
+			$optionTemplate->setVar('class', $class);
+			$optionTemplate->setVar('style', $style);
+			$optionTemplate->setVar('checked', $this->isChecked($option['value'] == $value));
+			$optionTemplate->setVar('disabled', $this->isDisabled($option['disabled']));
 
 			$radio_options .= $optionTemplate->render() . "\n";
 		}
@@ -341,20 +341,29 @@ class form
 	{
 		return $required == true ? 'required' : '';
 	}
-	
+
 	private function isDisabled($disabled)
 	{
 		return $disabled == true ? 'disabled="disabled"' : '';
 	}
-	
+
 	private function isSelected($selected)
 	{
 		return $selected == true ? 'selected="selected"' : '';
 	}
-	
+
 	private function isChecked($checked)
 	{
 		return $checked == true ? 'checked="checked"' : '';
 	}
+
+	private function getFormTemplateURL($formname)
+	{
+		global $app;
+
+		if (file_exists(PATH_MAIN . '/templates/' . $app->getOption('template') . '/form/' . $formname))
+			return PATH_MAIN . '/templates/' . $app->getOption('template') . '/form/' . $formname;
+
+		return PATH_MAIN . '/core/template/form/' . $formname;
+	}
 }
-?>

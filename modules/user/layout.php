@@ -32,7 +32,7 @@
 			foreach (turn_array($matches) as $match)
 			{
 				?>
-				<a href="<?= $match[2] ?>" target="_blank"><?= $match[1] ?></a><br />
+				<a href="<?= $match[2] ?>" target="_blank"><?= $match[1] ?></a><br>
 				<?php
 			}
 			?>

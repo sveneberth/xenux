@@ -1,26 +1,26 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="<?= translator::getLanguage() ?>">
 <head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<meta name="robots" content="index, follow, noarchive" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="robots" content="index, follow, noarchive">
 
 	<title>{{page_title}} | {{homepage_name}}</title>
-	
-	<meta name="description" content="{{meta_desc}}" />
-	<meta name="keywords" content="{{meta_keys}}" />
-	<meta name="auhor" content="{{meta_author}}" />
-	<meta name="publisher" content="{{meta_author}}" />
-	<meta name="copyright" content="{{meta_author}}" />
-	
+
+	<meta name="description" content="{{meta_desc}}">
+	<meta name="keywords" content="{{meta_keys}}">
+	<meta name="auhor" content="{{meta_author}}">
+	<meta name="publisher" content="{{meta_author}}">
+	<meta name="copyright" content="{{meta_author}}">
+
 	<!-- http://xenux.bplaced.net -->
-	<meta name="generator" content="Xenux v{{XENUX_VERSION}} - das kostenlose CMS" />
-	
-	<link rel="shortcut icon" href="{{TEMPLATE_PATH}}/img/logo.ico" /> "*" FIXME: use favicon.png (redesign favicon) "*"
-	
+	<meta name="generator" content="Xenux v{{XENUX_VERSION}} - das kostenlose CMS">
+
+	<link rel="shortcut icon" href="{{TEMPLATE_PATH}}/img/logo.ico"> "*" FIXME: use favicon.png (redesign favicon) "*"
+
 	<!-- css -->
 	<link rel="stylesheet" type="text/css" href="{{TEMPLATE_PATH}}/css/style.css" media="all"/>
-	
+
 	<!-- jquery + plugins -->
 	<script src="{{TEMPLATE_PATH}}/js/jquery-2.1.1.min.js"></script>
 	<script src="{{TEMPLATE_PATH}}/js/jquery-migrate-1.2.1.min.js"></script>
@@ -28,18 +28,18 @@
 	<script src="{{TEMPLATE_PATH}}/js/jquery.ui.touch-punch.min.js"></script>
 	<script src="{{TEMPLATE_PATH}}/js/jquery.cookie.js"></script>
 	<script src="{{TEMPLATE_PATH}}/js/jquery.mousewheel.js"></script>
-	
+
 	<!-- fancybox -->
 	<script src="{{TEMPLATE_PATH}}/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
-	<link rel="stylesheet" type="text/css" href="{{TEMPLATE_PATH}}/fancybox/jquery.fancybox.css?v=2.1.5" media="screen" />
-	
+	<link rel="stylesheet" type="text/css" href="{{TEMPLATE_PATH}}/fancybox/jquery.fancybox.css?v=2.1.5" media="screen">
+
 	<!-- search -->
-	<link rel="search" type="application/opensearchdescription+xml" title="Xenux Suche" href="{{URL_MAIN}}/search.xml.php" />
+	<link rel="search" type="application/opensearchdescription+xml" title="Xenux Suche" href="{{URL_MAIN}}/search.xml.php">
 
 	<!-- links -->
-	<link rel="canonical" href="{{canonical_URL}}" />
-	#if(prev_URL):<link rel="prev" href="{{prev_URL}}" />#endif
-	#if(next_URL):<link rel="next" href="{{next_URL}}" />#endif
+	<link rel="canonical" href="{{canonical_URL}}">
+	#if(prev_URL):<link rel="prev" href="{{prev_URL}}">#endif
+	#if(next_URL):<link rel="next" href="{{next_URL}}">#endif
 
 	<!-- scripts -->
 	<script>
@@ -66,10 +66,10 @@
 <body id="top">
 	<a href="#top" class="toTop"></a>
 	<div class="headWrapper">
-		<header> 
+		<header>
 			<a href="javascript:openmobilemenu();" class="menu-icon"></a>
 			<a class="logo" href="{{URL_MAIN}}">
-				<img src="{{TEMPLATE_PATH}}/img/logo.png" class="nojsload" />
+				<img src="{{TEMPLATE_PATH}}/img/logo.png" class="nojsload">
 			</a>
 			<ul class="topmenu mobilemenu">
 				<li><a href="{{URL_MAIN}}/administration/login"><?= __('login') ?></a></li>
@@ -92,7 +92,7 @@ if ($sites)
 	foreach ($sites as $site)
 	{
 		echo "<li>\n\t<a href=\"".getPageLink($site->id, $site->title)."\">".$site->title."</a>\n";
-		
+
 		// get sites level 2 (only public sites)
 		$subsites = $XenuxDB->getList('sites', [
 			'order' => 'sortindex ASC',
@@ -109,7 +109,7 @@ if ($sites)
 			foreach ($subsites as $subsite)
 			{
 				echo "\t\t<li>\n\t\t\t<a href=\"".getPageLink($subsite->id, $subsite->title)."\">".$subsite->title."</a>\n";
-				
+
 				// get sites level 3 (only public sites)
 				$subsubsites = $XenuxDB->getList('sites', [
 					'order' => 'sortindex ASC',
@@ -133,7 +133,7 @@ if ($sites)
 			}
 			echo "\t</ul>\n";
 		}
-		
+
 		echo "</li>\n";
 	}
 }
@@ -141,8 +141,8 @@ if ($sites)
 					<li class="search">
 						<div id="sb-search" class="sb-search">
 							<form action="{{URL_MAIN}}/search/" method="GET">
-								<input onkeyup="$('.sb-search-submit').css('z-index', ($(this).val() == '' ? 11 : 99));" type="search" class="sb-search-input" name="q" placeholder="<?= __("search") ?>" value="" />
-								<input type="submit" class="sb-search-submit" value="" />
+								<input onkeyup="$('.sb-search-submit').css('z-index', ($(this).val() == '' ? 11 : 99));" type="search" class="sb-search-input" name="q" placeholder="<?= __("search") ?>" value="">
+								<input type="submit" class="sb-search-submit" value="">
 								<span onclick="$('div#sb-search').toggleClass('sb-search-open');$('.sb-search-input').focus();" class="sb-icon-search"></span>
 							</form>
 						</div>
@@ -159,7 +159,7 @@ if ($sites)
 		<noscript>
 			<div class="warning-noscript">
 				<div>
-					<?= __("noscript-message") ?> 
+					<?= __("noscript-message") ?>
 				</div>
 			</div>
 		</noscript>
@@ -188,7 +188,7 @@ if ($sites)
 						echo "	<li>
 									<span class=\"title\">$news->title</span>
 									<span class=\"date\">".pretty_date($news->create_date)."</span>".
-									shortstr(strip_tags($news->text), 50)."<br />
+									shortstr(strip_tags($news->text), 50)."<br>
 									<a href=\"{{URL_MAIN}}/news/view/".getPreparedLink($news->id, $news->title)."\">&raquo;".__("showNews")."</a>
 								</li>";
 					}
@@ -220,7 +220,7 @@ if ($sites)
 						echo "	<li>
 									<span class=\"title\">$event->title</span>
 									<span class=\"date\">".mysql2date("d.m.Y H:i", $event->start_date)."</span>".
-									shortstr(strip_tags($event->text), 50)."<br />
+									shortstr(strip_tags($event->text), 50)."<br>
 									<a href=\"{{URL_MAIN}}/event/view/".getPreparedLink($event->id, $event->title)."\">&raquo;".__("showEvent")."</a>
 								</li>";
 					}
@@ -248,14 +248,14 @@ if ($sites)
 			{
 				echo "<ul class=\"newest-sites\">";
 				echo "<h3>". __('newestSites') . ":</h3>";
-				
+
 				foreach ($newestSitesList as $site)
 				{
 					echo "	<li>
 								<a href=\"".getPageLink($site->id, $site->title)."\">$site->title</a>
 							</li>";
 				}
-				
+
 				echo "</ul>";
 			}
 			?>
@@ -272,8 +272,8 @@ if ($sites)
 					<input type="password" name="password" placeholder="<?= __("password") ?>">
 					<input style="margin: 5px 0;" type="submit" value="<?= __("login") ?>">
 
-					<a href="{{URL_ADMIN}}/login?task=forgotpassword"><?= __("forgotPassword") ?>?</a><br />
-					<a href="{{URL_ADMIN}}/login?task=forgotusername"><?= __("forgotUsername") ?>?</a><br />
+					<a href="{{URL_ADMIN}}/login?task=forgotpassword"><?= __("forgotPassword") ?>?</a><br>
+					<a href="{{URL_ADMIN}}/login?task=forgotusername"><?= __("forgotUsername") ?>?</a><br>
 					<?php if (parse_bool($app->getOption('users_can_register'))): ?>
 						<a href="{{URL_ADMIN}}/login?task=register"><?= __("register") ?></a>
 					<?php endif; ?>
@@ -283,8 +283,8 @@ if ($sites)
 				else
 				{
 ?>
-				<?= __("successLogin", $user->userInfo->firstname) ?>!<br />
-				<a href="{{URL_ADMIN}}">&raquo;<?= __('go to administration') ?></a><br />
+				<?= __("successLogin", $user->userInfo->firstname) ?>!<br>
+				<a href="{{URL_ADMIN}}">&raquo;<?= __('go to administration') ?></a><br>
 				<a href="{{URL_ADMIN}}/login?task=logout"><?= __("logout") ?></a>
 <?php
 				}
@@ -325,7 +325,7 @@ if ($sites)
 			</div>
 
 		</div>
-		
+
 		<main>
 			{{page_content}}
 		</main>
@@ -336,7 +336,7 @@ if ($sites)
 			<div class="links">
 				<a href="{{URL_MAIN}}/sitemap"><?= __('sitemap') ?></a>
 				<a href="{{URL_MAIN}}/administration"><?= __('administration') ?></a>
-				
+
 				<a href="{{URL_MAIN}}/contact"><?= __('contact') ?></a>
 				<a href="{{URL_MAIN}}/imprint"><?= __('imprint') ?></a>
 			</div>

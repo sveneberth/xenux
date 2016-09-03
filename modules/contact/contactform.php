@@ -47,27 +47,27 @@
 		<title>Kontaktaufnahme über das Kontaktformular auf ihrer Homepage</title>
 	</head>
 	<body>
-		Hallo!<br />
-		Es hat ihnen jemand auf der Homepage <a href="'.URL_MAIN.'">'.URL_MAIN.'</a> eine Nachricht geschickt!<br /><br />
+		Hallo!<br>
+		Es hat ihnen jemand auf der Homepage <a href="'.URL_MAIN.'">'.URL_MAIN.'</a> eine Nachricht geschickt!<br><br>
 		<p>
 			<b>Absender</b>
-			<br />
+			<br>
 			Name: $post->name
-			<br />
+			<br>
 			E-Mail: $post->email
 		</p>
 		<p>
-			<b>Nachricht</b><br />
+			<b>Nachricht</b><br>
 			'.nl2br($data['email']).'
 		</p>
-		<br /><br />
+		<br><br>
 		<span style="font-family:Verdana;color:#808080;border-top: 1px #808080 solid;">Diese E-Mail wurde mit Xenux generiert und versendet.</span>
 	</body>
 </html>';
 		mail
 		(
 			$app->getOption('admin_email'),
-			"=?UTF-8?Q?" . quoted_printable_encode("Kontaktaufnahme über das Kontaktformular ihrer Homepage") . "?=", 
+			"=?UTF-8?Q?" . quoted_printable_encode("Kontaktaufnahme über das Kontaktformular ihrer Homepage") . "?=",
 			$mailtext,
 			$header
 		)
