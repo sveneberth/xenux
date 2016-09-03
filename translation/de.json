@@ -8,12 +8,13 @@
 	"translations":
 	{
 		"error":"Fehler",
+		"error404msg":"Das angeforderte Element konnte nicht gefunden werden.",
 		"noscript-message":"In deinem Browser ist JavaScript deaktiviert. Um den vollen Funktionsumfang dieser Webseite zu nutzen, benötigst du JavaScript.",
-		
+
 		"search":"Suche",
 		"searchString":"Suchtext",
 		"noSearchResult":"keine Suchergebnisse zu <i>\"%1\"</i> ...",
-		
+
 		"news_Sg":"Nachricht",
 		"news_Pl":"Nachrichten",
 		"readNews":"Nachricht lesen",
@@ -28,9 +29,9 @@
 		"showEvent":"Termin anzeigen",
 		"noEvents":"keine Termine vorhanden!",
 		"gotoEventList":"Zum Termin Übersicht",
-		"gotoEventCalendar":"Zum Termin-Kalender",
-		"calendar":"Termin-Kalender",
-		
+		"gotoEventCalendar":"Zum Kalender",
+		"calendar":"Kalender",
+
 		"login":"Login",
 		"logout":"Logout",
 		"password":"Passwort",
@@ -50,7 +51,7 @@
 		"bio":"Biografie",
 		"social_media":"Soziale Netzwerke",
 		"amount of postings":"Anzahl von Beiträgen",
-		
+
 		"sitemap":"Sitemap",
 		"contact":"Kontakt",
 		"imprint":"Impressum",
@@ -60,7 +61,7 @@
 		"contactpersons":"Ansprechpartner",
 		"showContactperson":"Ansprechpartner anzeigen",
 		"gotocontactpersonList":"alle Ansprechpartner anzeigen",
-				
+
 		"If you don't want to change the password, leave the fields blank":"Falls du das Passwort nicht ändern möchtest, lass die Felder leer",
 		"usernames cannot be changed":"Benutzernamen können nicht geändert werden",
 
@@ -112,7 +113,7 @@
 		"afternoon": "nachmittags",
 		"evening": "abends",
 		"a year and a half": "eineinhalb Jahren",
-		
+
 		"gotoPage":"gehe zur Seite"
 	}
 }

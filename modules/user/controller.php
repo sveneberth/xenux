@@ -2,15 +2,15 @@
 class userController extends AbstractController
 {
 	protected $pageID;
-	
+
 	public function __construct($url = null)
 	{
 		if(isset($url))
 			$this->url = $url;
-		
+
 		$this->modulename = str_replace('Controller', '', get_class());
 	}
-	
+
 	public function run()
 	{
 		// append translations
@@ -26,11 +26,13 @@ class userController extends AbstractController
 		}
 		else
 		{
-			throw new Exception("404 - $this->modulename template not found");
+			header('HTTP/1.1 404 Not Found');
+			throw new Exception(__('error404msg'));
+			//throw new Exception("404 - $this->modulename template not found");
 		}
 		return true;
 	}
-	
+
 	protected function userView()
 	{
 		global $app, $XenuxDB;
@@ -67,16 +69,15 @@ class userController extends AbstractController
 					'author_id' => $user->id
 				]
 			]));
-			
+
 			echo $template->render();
 
-			$this->page_name = "User:$this->user";
+			$this->page_name = "$this->user";
 		}
 		else
 		{
-			echo "404 - user not found";
-			$this->page_name = "user:404";
+			header('HTTP/1.1 404 Not Found');
+			throw new Exception(__('error404msg'));
 		}
 	}
 }
-?>

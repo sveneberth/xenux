@@ -24,7 +24,7 @@ class ErrorPage
 				break;
 			case 404:
 				$template->setVar('status',	"Not Found");
-				$template->setVar('message', "The requested file doesn't exist on this server.");
+				$template->setVar('message', "The requested resource doesn't exist on this server.");
 				break;
 			case 405:
 				$template->setVar('status',	"Method Not Allowed");

@@ -199,7 +199,7 @@ class app
 			if (defined('DEBUG') && DEBUG == true)
 				log::setPHPError($e);
 			$this->page_name = "Error";
-			return '<p class="box-shadow info-message error">' . $e->getMessage() . '</p>';
+			return '<h1>Error</h1><p class="box-shadow info-message error">' . $e->getMessage() . '</p>';
 		}
 	}
 
@@ -243,6 +243,7 @@ class app
 	* -s(int)	: set the width for an image
 	* -c		: get a square images
 	* -d		: get the file as download
+	* -r		: rotate an image clockwise
 	*/
 	private function getFile($param)
 	{
@@ -280,7 +281,7 @@ class app
 				$image = imagecreatefromstring($file->data);
 
 				if (isset($options['r']) && is_numeric($options['r']))
-					$image = imagerotate($image, $options['r'],  imagecolorallocate($image, 255, 255, 255));
+					$image = imagerotate($image, 360-$options['r'], imagecolorallocate($image, 255, 255, 255));
 
 				$x = imagesx($image);
 				$y = imagesy($image);
@@ -312,7 +313,7 @@ class app
 				elseif ($file->mime_type == "image/gif")
 				{
 					header("Content-type: image/gif");
-					imagegif ($new);
+					imagegif($new);
 				}
 				else
 				{

@@ -7,10 +7,10 @@ class imprintController extends pageController
 	public function __construct($url)
 	{
 		$this->url = $url;
-		
+
 		parent::__construct();
 	}
-	
+
 	public function run()
 	{
 		global $app;
@@ -20,4 +20,3 @@ class imprintController extends pageController
 		return true;
 	}
 }
-?>

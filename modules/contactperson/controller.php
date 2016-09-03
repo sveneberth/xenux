@@ -6,7 +6,7 @@ class contactpersonController extends AbstractController
 		$this->url = $url;
 		$this->modulename = str_replace('Controller', '', get_class());
 	}
-	
+
 	public function run()
 	{
 		if (@$this->url[1] == "list")
@@ -19,17 +19,19 @@ class contactpersonController extends AbstractController
 		}
 		else
 		{
-			throw new Exception("404 - $this->modulename template not found");
+			header('HTTP/1.1 404 Not Found');
+			throw new Exception(__('error404msg'));
+			//throw new Exception("404 - $this->modulename template not found");
 		}
 		return true;
 	}
-	
+
 	private function contactpersonList()
 	{
 		global $XenuxDB;
-		
+
 		echo '<div class="page-header"><h1>' . __('contactpersons') . '</h1></div>';
-		
+
 		$start			= is_numeric(@$_GET['start']) ? floor($_GET['start']) : 0;
 		$amount			= (is_numeric(@$_GET['amount']) && floor(@$_GET['amount']) != 0) ? floor($_GET['amount']) : 20;
 		$absolutenumber	= $XenuxDB->count('contactpersons');
@@ -38,14 +40,14 @@ class contactpersonController extends AbstractController
 			'order' => 'name ASC',
 			'limit' => [$start, $amount]
 		]);
-		
+
 		if ($contactpersonList)
 		{
 			echo "<div>";
 			foreach($contactpersonList as $contactperson)
 			{
 				$template = new template(PATH_MAIN."/modules/".$this->modulename."/layout_list.php");
-		
+
 				$template->setVar("desc", shortstr(strip_tags($contactperson->text)));
 				$template->setVar("position", $contactperson->position);
 				$template->setVar("name", $contactperson->name);
@@ -67,11 +69,11 @@ class contactpersonController extends AbstractController
 
 		$this->page_name = __('contactpersons');
 	}
-	
+
 	private function contactpersonView()
 	{
 		global $XenuxDB;
-	
+
 		$contactpersonID = explode('-', @$this->url[2])[0];
 		$contactpersonID = preg_replace("/[^0-9]/", '', $contactpersonID);
 
@@ -84,21 +86,20 @@ class contactpersonController extends AbstractController
 		if ($contactperson)
 		{
 			$template = new template(PATH_MAIN."/modules/".$this->modulename."/layout_view.php");
-	
+
 			$template->setVar("desc", $contactperson->text);
 			$template->setVar("name", $contactperson->name);
 			$template->setVar("position", $contactperson->position);
 			$template->setVar("email", escapemail($contactperson->email));
-			
+
 			echo $template->render();
 
-			$this->page_name = "contactperson:$contactperson->name";
+			$this->page_name = $contactperson->name;
 		}
 		else
 		{
-			echo "404 - contactperson not found";			
-			$this->page_name = "contactperson:404";
+			header('HTTP/1.1 404 Not Found');
+			throw new Exception(__('error404msg'));
 		}
 	}
 }
-?>

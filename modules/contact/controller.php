@@ -6,10 +6,10 @@ class contactController extends pageController
 	public function __construct($url)
 	{
 		$this->url = $url;
-		
+
 		parent::__construct();
 	}
-	
+
 	public function run()
 	{
 		global $app;
@@ -24,8 +24,7 @@ class contactController extends pageController
 	private function getContactForm()
 	{
 		$template = new template(PATH_MAIN."/modules/contact/contactform.php");
-	
+
 		return $template->render();
 	}
 }
-?>

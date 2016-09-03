@@ -2,30 +2,31 @@
 class pageController extends AbstractController
 {
 	protected $pageID;
-	
+
 	public function __construct($url = null)
 	{
 		if(isset($url))
 			$this->url = $url;
-		
+
 		$this->modulename = "page"; // use static, because works as abstract too
 	}
-	
+
 	public function run()
 	{
 		$this->pageID = preg_replace("/[^0-9]/", '', @$this->url[1]);
-		
+
 		if(!empty($this->pageID))
 		{
 			$this->pageView($this->pageID);
 		}
 		else
 		{
-			throw new Exception("404 - page not found");
+			header('HTTP/1.1 404 Not Found');
+			throw new Exception(__('error404msg'));
 		}
 		return true;
 	}
-	
+
 	protected function pageView($id, $showIsPrivate=false)
 	{
 		global $app, $XenuxDB;
@@ -77,10 +78,10 @@ class pageController extends AbstractController
 				{
 					$app->next_URL = getPageLink($next->id, $next->title);
 				}
-				
+
 				echo $template->render();
 
-				$this->page_name = "Page:$page->title";
+				$this->page_name = $page->title;
 			}
 			else
 			{
@@ -89,16 +90,16 @@ class pageController extends AbstractController
 		}
 		else
 		{
-			echo "404 - page not found";
-			$this->page_name = "Page:404";
+			header('HTTP/1.1 404 Not Found');
+			throw new Exception(__('error404msg'));
 		}
 	}
 
-	
+
 	protected function getContactPersons($id)
 	{
 		global $app, $XenuxDB;
-		
+
 		$return = array();
 
 		$contactpersons = $XenuxDB->getList('site_contactperson', [
@@ -122,7 +123,7 @@ class pageController extends AbstractController
 			foreach($contactpersons as $contactperson)
 			{
 				$template = new template(PATH_MAIN."/templates/".$app->template."/_contactPersons_li.php");
-		
+
 				$template->setVar("name", $contactperson->name);
 				$template->setVar("name_url", urldecode($contactperson->name));
 				$template->setVar("position", $contactperson->position);
@@ -131,13 +132,13 @@ class pageController extends AbstractController
 
 				$list .= $template->render();
 			}
-			
+
 			$template = new template(PATH_MAIN."/templates/".$app->template."/_contactPersons_ul.php");
 			$template->setVar("list", $list);
 			$return[] = $template->render();
 		}
-		
-		
+
+
 		return implode('', $return);
 	}
 
@@ -154,7 +155,7 @@ class pageController extends AbstractController
 		if($prev || $next)
 		{
 			$template = new template(PATH_MAIN."/templates/".$app->template."/_prevNextNavi.php");
-	
+
 			$template->setIfCondition("prev",	$prev);
 			if($prev)
 			{
@@ -168,16 +169,16 @@ class pageController extends AbstractController
 				$template->setVar("next|title",	$next->title);
 				$template->setVar("next|url",	getPageLink($next->id, $next->title));
 			}
-	
+
 			return $template->render();
 		}
-		return false;	
+		return false;
 	}
 
 	protected function _getPrevSite($parent_id, $sortindex)
 	{
 		global $XenuxDB;
-		
+
 		$prev = $XenuxDB->getEntry('sites', [
 			'columns' => [
 				'id',
@@ -192,14 +193,14 @@ class pageController extends AbstractController
 				]
 			]
 		]);
-		
+
 		return $prev;
 	}
 
 	protected function _getNextSite($parent_id, $sortindex)
 	{
 		global $XenuxDB;
-		
+
 		$next = $XenuxDB->getEntry('sites', [
 			'columns' => [
 				'id',
@@ -214,8 +215,7 @@ class pageController extends AbstractController
 				]
 			]
 		]);
-		
+
 		return $next;
 	}
 }
-?>

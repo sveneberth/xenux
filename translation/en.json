@@ -8,8 +8,9 @@
 	"translations":
 	{
 		"error":"Error",
+		"error404msg":"The requested resource doesn't exist on this server.",
 		"noscript-message":"In your browser is JavaScript disabled. please activate JavaScript to use the full range of functions of the website.",
-		
+
 		"search":"Search",
 		"searchString":"Searchtext",
 		"noSearchResult":"no search results for <i>\"%1\"</i> ...",
@@ -27,9 +28,9 @@
 		"showEvent":"show event",
 		"noEvents":"no events available!",
 		"gotoEventList":"go to event Overview",
-		"gotoEventCalendar":"go to event calendar",
-		"calendar":"event calendar",
-		
+		"gotoEventCalendar":"go to calendar",
+		"calendar":"calendar",
+
 		"login":"login",
 		"logout":"logout",
 		"password":"password",
@@ -49,7 +50,7 @@
 		"bio":"Biography",
 		"social_media":"Social Media",
 		"amount of postings": "Amount of postings",
-		
+
 		"sitemap":"Sitemap",
 		"contact":"Contact",
 		"imprint":"Imprint",
@@ -72,7 +73,7 @@
 
 		"yes":"Yes",
 		"no":"No",
-		
+
 		"page":"page",
 		"writtenInfo":"written by <a title=\"go to author-profile\" href=\"{{URL_MAIN}}/user/view/%1\">%1</a> on %2 at %3 o'clock.",
 		"newestSites":"newest sites",

@@ -7,10 +7,10 @@ class homeController extends pageController
 	public function __construct($url)
 	{
 		$this->url = $url;
-		
+
 		parent::__construct();
 	}
-	
+
 	public function run()
 	{
 		global $app;
@@ -20,4 +20,3 @@ class homeController extends pageController
 		return true;
 	}
 }
-?>
