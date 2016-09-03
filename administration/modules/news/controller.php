@@ -11,11 +11,11 @@ class newsController extends AbstractController
 		if(!isset($this->url[1]) || empty($this->url[1]))
 			header("Location: ".URL_ADMIN.'/'.$this->modulename.'/home');
 	}
-	
+
 	public function run()
 	{
 		global $XenuxDB, $app;
-		
+
 		// append translations
 		translator::appendTranslations(PATH_ADMIN . '/modules/'.$this->modulename.'/translation/');
 
@@ -52,7 +52,7 @@ class newsController extends AbstractController
 		global $app, $XenuxDB;
 
 		$template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout_home.php");
-	
+
 		$template->setVar("messages", '');
 
 		if(isset($_GET['remove']) && is_numeric($_GET['remove']) && !empty($_GET['remove']))
@@ -64,14 +64,15 @@ class newsController extends AbstractController
 			]);
 			$template->setVar("messages", '<p class="box-shadow info-message ok">'.__('removedSuccessful').'</p>');
 		}
-		
+
 		$template->setVar("news", $this->getNewsTable());
+		$template->setVar("amount", $XenuxDB->count('news'));
 
 		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == true)
 			$template->setVar("messages", '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>');
 		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == false)
 			$template->setVar("messages", '<p class="box-shadow info-message error">'.__('savingFailed').'</p>');
-		
+
 		echo $template->render();
 
 		$this->page_name = __('home');
@@ -109,7 +110,7 @@ class newsController extends AbstractController
 	private function newsEdit($new=false)
 	{
 		$template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout_edit.php");
-	
+
 		$template->setVar("messages", '');
 		$template->setVar("form", $this->getEditForm($template, $new));
 
@@ -119,7 +120,7 @@ class newsController extends AbstractController
 			$template->setVar("messages", '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>');
 		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == false)
 			$template->setVar("messages", '<p class="box-shadow info-message error">'.__('savingFailed').'</p>');
-		
+
 		echo $template->render();
 
 		$this->page_name = $new ? __('new') : __('edit');
@@ -141,7 +142,7 @@ class newsController extends AbstractController
 
 		if(!@$news && !$new)
 			throw new Exception("error (news 404)");
-			
+
 		$formFields = array
 		(
 			'title' => array
@@ -278,11 +279,10 @@ class newsController extends AbstractController
 					header('Location: '.URL_ADMIN.'/news/home?savingSuccess=false');
 					return false;
 				}
-				
+
 				header('Location: '.URL_ADMIN.'/news/edit/'.$this->editNewsID.'?savingSuccess=false');
-			}			
+			}
 		}
 		return $form->getForm();
 	}
 }
-?>

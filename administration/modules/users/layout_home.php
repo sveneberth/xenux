@@ -57,4 +57,6 @@ ul.data-table > li > .remove-icon {
 			{{users}}
 		</ul>
 	</div>
+
+	{{amount}} <?= __('entries') ?>
 </section>

@@ -12,7 +12,7 @@ class usersController extends AbstractController
 		if(!isset($this->url[1]) || empty($this->url[1]))
 			header("Location: ".URL_ADMIN.'/'.$this->modulename.'/home');
 	}
-	
+
 	public function run()
 	{
 		global $XenuxDB, $app;
@@ -62,8 +62,8 @@ class usersController extends AbstractController
 		global $app, $XenuxDB;
 
 		$template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout_home.php");
-		
-		
+
+
 		if(isset($_GET['remove']) && is_numeric($_GET['remove']) && !empty($_GET['remove']))
 		{
 			$XenuxDB->delete('users', [
@@ -73,15 +73,16 @@ class usersController extends AbstractController
 			]);
 			$this->messages[] = '<p class="box-shadow info-message ok">'.__('removedSuccessful').'</p>';
 		}
-		
+
 		$template->setVar("users", $this->getUserTable());
+		$template->setVar("amount", $XenuxDB->count('users'));
 
 		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == true)
 			$this->messages[] = '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>';
 		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == false)
 			$this->messages[] = '<p class="box-shadow info-message error">'.__('savingFailed').'</p>';
-		
-		
+
+
 		$template->setVar("messages", implode("\n", $this->messages));
 
 		echo $template->render();
@@ -123,7 +124,7 @@ class usersController extends AbstractController
 		$template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout_edit.php", [
 			"profileEdit" => @$this->url[1] == "profile"
 		]);
-	
+
 		$template->setVar("form", $this->getEditForm($template, $new));
 
 		$template->setIfCondition("new", $new);
@@ -133,7 +134,7 @@ class usersController extends AbstractController
 			$this->messages[] = '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>';
 		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == false)
 			$this->messages[] = '<p class="box-shadow info-message error">'.__('savingFailed').'</p>';
-		
+
 		$template->setVar("messages", implode("\n", $this->messages));
 
 		echo $template->render();
@@ -154,7 +155,7 @@ class usersController extends AbstractController
 
 		if(!@$user && !$new)
 			throw new Exception("error (user 404)");
-			
+
 		$formFields = array
 		(
 			'username' => array
@@ -409,11 +410,10 @@ class usersController extends AbstractController
 					header('Location: '.URL_ADMIN.'/users/home?savingSuccess=false');
 					return false;
 				}
-				
+
 				header('Location: '.URL_ADMIN.'/users/edit/'.$this->editUserID.'?savingSuccess=false');
-			}			
+			}
 		}
 		return $form->getForm();
 	}
 }
-?>

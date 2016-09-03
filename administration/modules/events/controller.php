@@ -11,11 +11,11 @@ class eventsController extends AbstractController
 		if(!isset($this->url[1]) || empty($this->url[1]))
 			header("Location: ".URL_ADMIN.'/'.$this->modulename.'/home');
 	}
-	
+
 	public function run()
 	{
 		global $XenuxDB, $app;
-		
+
 		// append translations
 		translator::appendTranslations(PATH_ADMIN . '/modules/'.$this->modulename.'/translation/');
 
@@ -52,7 +52,7 @@ class eventsController extends AbstractController
 		global $app, $XenuxDB;
 
 		$template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout_home.php");
-	
+
 		$template->setVar("messages", '');
 
 		if(isset($_GET['remove']) && is_numeric($_GET['remove']) && !empty($_GET['remove']))
@@ -64,14 +64,15 @@ class eventsController extends AbstractController
 			]);
 			$template->setVar("messages", '<p class="box-shadow info-message ok">'.__('removedSuccessful').'</p>');
 		}
-		
+
 		$template->setVar("events", $this->getEventTable());
+		$template->setVar("amount", $XenuxDB->count('events'));
 
 		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == true)
 			$template->setVar("messages", '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>');
 		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == false)
 			$template->setVar("messages", '<p class="box-shadow info-message error">'.__('savingFailed').'</p>');
-		
+
 		echo $template->render();
 
 		$this->page_name = __('home');
@@ -110,7 +111,7 @@ class eventsController extends AbstractController
 	private function eventEdit($new=false)
 	{
 		$template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout_edit.php");
-	
+
 		$template->setVar("messages", '');
 		$template->setVar("form", $this->getEditForm($template, $new));
 
@@ -120,7 +121,7 @@ class eventsController extends AbstractController
 			$template->setVar("messages", '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>');
 		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == false)
 			$template->setVar("messages", '<p class="box-shadow info-message error">'.__('savingFailed').'</p>');
-		
+
 		echo $template->render();
 
 		$this->page_name = $new ? __('new') : __('edit');
@@ -142,7 +143,7 @@ class eventsController extends AbstractController
 
 		if(!@$event && !$new)
 			throw new Exception("error (evnts 404)");
-			
+
 		$formFields = array
 		(
 			'title' => array
@@ -317,11 +318,10 @@ class eventsController extends AbstractController
 					header('Location: '.URL_ADMIN.'/events/home?savingSuccess=false');
 					return false;
 				}
-				
+
 				header('Location: '.URL_ADMIN.'/events/edit/'.$this->editID.'?savingSuccess=false');
-			}			
+			}
 		}
 		return $form->getForm();
 	}
 }
-?>

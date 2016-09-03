@@ -25,7 +25,7 @@ switch($_REQUEST['task'])
 			$item_id		= $XenuxDB->escapeString($val['item_id']);
 			$parent_id		= $XenuxDB->escapeString($val['parent_id']);
 			$sortindex		= $XenuxDB->escapeString($val['left']);
-		
+
 			$return['success'] = $XenuxDB->Update('sites', [
 				'parent_id' => $parent_id,
 				'sortindex' => $sortindex
@@ -37,7 +37,7 @@ switch($_REQUEST['task'])
 		break;
 	case "site_edit_remove":
 		$item_id	= $XenuxDB->escapeString($_REQUEST['item_id']);
-		
+
 		$return['success'] = $XenuxDB->Update('sites', [
 			'parent_id' => 0
 		],
@@ -53,9 +53,8 @@ switch($_REQUEST['task'])
 }
 
 
-header('Content-type: application/json');  
+header('Content-type: application/json');
 echo json_encode($return);
 
 // close the connection to the database
 $XenuxDB->closeConnection();
-?>

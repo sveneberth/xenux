@@ -62,4 +62,6 @@ ul.data-table > li > .remove-icon {
 			{{events}}
 		</ul>
 	</div>
+
+	{{amount}} <?= __('entries') ?>
 </section>
