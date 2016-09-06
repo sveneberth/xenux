@@ -3,14 +3,19 @@
 /* ############################################*/
 var ajaxURL = '../modules/cloud/ajax.php';
 var requestType = 'GET';
-var imageURL = baseurl+'/administration/template/images/';
+var imageURL = baseurl + '/administration/template/images/';
 var defaultDisabled = ['remove', 'move', 'rename'];
+
+// #FIXME, #TODO:
+// - folder navigation trigger in browser history
+// - add enter event in rename
+// - use $.on() instead of $.live()
 
 $(document).ready(function() {
 	dir_list(0); // load root
 	$('.explorer').height($(window).height() - 254);
 	$('.explorer').selectable({
-		filter: " > div",
+		filter: ' > div',
 		distance: 10, // needed for doublick events
 		start: function() {
 			$('body').css('cursor', 'crosshair');
@@ -47,20 +52,20 @@ $(document).ready(function() {
 		if(!e.ctrlKey) { // if ctrl is pressed don't unselect the other items
 			$('.explorer .item').removeClass('ui-selected');
 		}
-		$(this).addClass('ui-selected');
+		$(this).toggleClass('ui-selected');
 		$('.actions > button').removeClass('disabled');
 	});
 	$('.breadcrumb .treeitem').live('click', function() {
 		var ID = $(this).attr('id');
-		console.info("switched to folder: "+ID);
+		console.info('switched to folder: ' + ID);
 
 		dir_list(ID);
 	});
 	$(document).click(function(e) {
-		var container = $(".popup-editor, #info-popup");
+		var container = $('.popup-editor, #info-popup');
 		if(!$('#contextmenu > *').is(e.target) && !$('.actions > button.rename').is(e.target) && !container.is(e.target) && container.has(e.target).length === 0) {
 			container.fadeOut(50);
-			console.log("popup hide");
+			console.log('popup hide');
 		}
 	});
 
@@ -68,22 +73,22 @@ $(document).ready(function() {
 	// double click events
 	$('.explorer > .item.folder').live('touchstart dblclick', function() {
 		var rowID = $(this).attr('id');
-		console.info("switched to folder: "+rowID);
+		console.info('switched to folder: ' + rowID);
 
 		dir_list(rowID);
 	});
 	$('.explorer > .item.file').live('touchstart dblclick', function() {
 		var rowID = $(this).attr('id');
-		console.info("opened file: "+rowID);
+		console.info('opened file: ' + rowID);
 
-		window.open(baseurl+'/file/'+SHA1(rowID),'File','width=800,height=600,location=0,menubar=0,scrollbars=0,status=0,toolbar=0,resizable=0');
+		window.open(baseurl + '/file/' + SHA1(rowID),'File','width=800,height=600,location=0,menubar=0,scrollbars=0,status=0,toolbar=0,resizable=0');
 	});
 
 
 	// right click
 	var x, y;
-	var contextmenuHeight	= $("#contextmenu").outerHeight();
-	var contextmenuWidth	= $("#contextmenu").outerWidth();
+	var contextmenuHeight	= $('#contextmenu').outerHeight();
+	var contextmenuWidth	= $('#contextmenu').outerWidth();
 	document.oncontextmenu = function(e) {
 		var target = e.target
 
@@ -101,19 +106,19 @@ $(document).ready(function() {
 		var id		= $(target).attr('id');
 		var type	= $(target).hasClass('file') ? 'file' : 'folder';
 
-		$('#contextmenu').data('targetID',		id);
-		$('#contextmenu').data('targetType',	type);
+		$('#contextmenu').data('targetID',   id);
+		$('#contextmenu').data('targetType', type);
 
 
 		x = e.clientX+contextmenuWidth	> $(window).width() 	? e.clientX-contextmenuWidth	: e.clientX;
 		y = e.clientY+contextmenuHeight	> $(window).height()	? e.clientY-contextmenuHeight	: e.clientY;
 
-		$("#contextmenu").css("left", x + "px");
-		$("#contextmenu").css("top", y + "px");
-		$("#contextmenu").show();
+		$('#contextmenu').css('left', x + 'px');
+		$('#contextmenu').css('top' , y + 'px');
+		$('#contextmenu').show();
 	};
 	$(document).mousedown(function(e) {
-		if (!(e.clientX >= x && e.clientX <= (x + $("#contextmenu").width()) && e.clientY >= y && e.clientY <= (y + $("#contextmenu").height()))) {
+		if (!(e.clientX >= x && e.clientX <= (x + $('#contextmenu').width()) && e.clientY >= y && e.clientY <= (y + $('#contextmenu').height()))) {
 			$('#contextmenu').hide();
 		}
 	});
@@ -131,7 +136,7 @@ $(document).ready(function() {
 		var targetType	= $('#contextmenu').data('targetType');
 
 		if(targetType == 'file') {
-			OpenInNewTab(baseurl+'/file/'+SHA1(id));
+			OpenInNewTab(baseurl + '/file/' + SHA1(id));
 		} else {
 			dir_list(id);
 		}
@@ -142,7 +147,7 @@ $(document).ready(function() {
 		var targetType	= $('#contextmenu').data('targetType');
 
 		if(targetType == 'file') {
-			OpenInNewTab(baseurl+'/file/'+SHA1(id)+'-d');
+			OpenInNewTab(baseurl + '/file/' + SHA1(id) + '-d');
 		} else {
 			// #FIXME: download folder as zip
 		}
@@ -176,9 +181,9 @@ $(document).ready(function() {
 			success: function(response) {
 				console.log(response);
 				if(response.success == true) {
-					var options = "";
+					var options = '';
 					for(key in response.data) { // as dataset
-						options += "<option value=\""+key+"\">"+response.data[key]+"</option>";
+						options += '<option value="' + key + '">' + response.data[key] + '</option>';
 					};
 					console.debug(options);
 					$('.move-target > select').html(options);
@@ -222,9 +227,9 @@ $(document).ready(function() {
 			success: function(response) {
 				console.log(response);
 				if(response.success == true) {
-					var options = "";
+					var options = '';
 					for(key in response.data) { // as dataset,
-						options += "<option value=\""+key+"\">"+response.data[key]+"</option>";
+						options += '<option value="' + key + '">' + response.data[key] + '</option>';
 					};
 					console.debug(options);
 					$('.move-target').show();
@@ -270,7 +275,7 @@ $(document).ready(function() {
 		$('.popup-editor.rename').hide();
 	});
 	$('.actions > button.create_folder').click(function() {
-		var folder_name = prompt("Ordnername");
+		var folder_name = prompt('Ordnername');
 		$.ajax({
 			url: ajaxURL,
 			type: requestType,
@@ -320,7 +325,7 @@ function upload(files) {
 	$.ajax({
 		xhr: function() {
 			var xhr = new window.XMLHttpRequest();
-			xhr.upload.addEventListener("progress", function(evt) {
+			xhr.upload.addEventListener('progress', function(evt) {
 				console.log('Number of this Upload: ' + thisUpload);
 				if(evt.lengthComputable) {
 					var percentComplete = evt.loaded / evt.total;
@@ -352,7 +357,7 @@ function upload(files) {
 			}, false);
 			return xhr;
 		},
-		url: ajaxURL+'?task=upload&parent_folder='+getFolder(),
+		url: ajaxURL + '?task=upload&parent_folder=' + getFolder(),
 		type: requestType,
 		dataType: 'json',
 		data: FileData,
@@ -448,9 +453,9 @@ function setbreadcrumb(folder) {
 		success: function(response) {
 			console.log(response);
 			if(response.success == true) {
-				var rows = "<span class=\"treeitem\" id=\"0\">root</span>";
+				var rows = '<span class="treeitem" id="0">root</span>';
 				response.data.forEach(function(entry) { // as dataset
-					rows += "<span class=\"treeitem\" id=\""+entry.id+"\">"+entry.filename+"</span>";
+					rows += '<span class="treeitem" id="' + entry.id + '">' + entry.filename + '</span>';
 				});
 				$('.breadcrumb').html(rows);
 			}
@@ -491,12 +496,12 @@ function fileinfo(id) {
 	});
 }
 function dir_list(folder) {
-	$('.explorer').html("");
-	$('body').css("cursor", "wait").append("<div class='ajax-loader'></div>");
+	$('.explorer').html('');
+	$('body').css('cursor', 'wait').append('<div class='ajax-loader'></div>');
 	$('.explorer').attr('data-folder-id', folder);
 	setbreadcrumb(folder);
 	defaultDisabled.forEach(function(val) {
-		$('.actions > button.'+val).addClass('disabled');
+		$('.actions > button.' + val).addClass('disabled');
 	});
 
 	$.ajax({
@@ -510,26 +515,26 @@ function dir_list(folder) {
 		success: function(response) {
 			console.log(response);
 			if(response.success == true) {
-				var rows = "";
+				var rows = '';
 				$.each(response.data, function(key, entry) { // as dataset
 					var filename = entry.filename.replace(/"/g, '&quot;');
-					rows += "<div class=\"item "+entry.type+"\" id=\""+entry.id+"\" data-filename=\""+filename+"\">";
+					rows += '<div class="item ' + entry.type + '" id="' + entry.id + '" data-filename="' + filename + '">';
 					if(entry.type == 'folder') {
-						rows += "<img src=\""+imageURL+"folder_grey.svg\" class=\"image\" />";
+						rows += '<img src="' + imageURL + 'folder_grey.svg" class="image">';
 					} else {
-						var typeCategory = entry.mime_type.substr(0, entry.mime_type.search("/"));
+						var typeCategory = entry.mime_type.substr(0, entry.mime_type.search('/'));
 						if(typeCategory == 'image') {
-							rows += "<img src=\""+baseurl+'/file/'+SHA1(entry.id)+"-s32-c\" class=\"image\" />";
+							rows += '<img src="' + baseurl + '/file/' + SHA1(entry.id) + '-s32-c" class="image">';
 						} else {
-							rows += "<img src=\""+imageURL+"document_grey.svg\" class=\"image\" />";
+							rows += '<img src="' + imageURL + 'document_grey.svg" class="image">';
 						}
 					}
-					rows += "<span class=\"file filename\">"+filename+"</span>";
-					rows += "</div>";
+					rows += '<span class="file filename">' + filename + '</span>';
+					rows += '</div>';
 				});
 				$('.explorer').html(rows);
 				$('.ajax-loader').remove();
-				$('body').css("cursor", "");
+				$('body').css('cursor', '');
 			}
 		},
 		error: function(xhr, textStatus, errorThrown){
