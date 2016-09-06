@@ -4,19 +4,21 @@ class form
 	private $data;
 	private $fields;
 	private $class;
+	private $id;
 	private $action;
 	private $method;
 	private $error_msg = array();
 	private $requiredInfo = true;
 
-	public function __construct(array $fields, $class=null, $action=null, $method='post')
+	public function __construct(array $fields, $class=null, $id=null, $action=null, $method='post')
 	{
 		$this->fields = $fields;
 		$this->class  = $class;
+		$this->id     = $id;
 		$this->action = $action;
 		$this->method = strtolower($method);
 
-		$this->data = $this->isSend() ? $this->getInput() : Array();
+		$this->data = $this->isSend() ? $this->getInput() : array();
 	}
 
 	public function isSend()
@@ -36,6 +38,7 @@ class form
 		$formTemplate = new template($this->getFormTemplateURL('form.php'));
 
 		$formTemplate->setVar('class', $this->class);
+		$formTemplate->setVar('id', $this->id);
 		$formTemplate->setVar('action', $this->action);
 		$formTemplate->setVar('method', $this->method);
 		$formTemplate->setVar('fields', $this->getFormFields($this->fields));

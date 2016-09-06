@@ -73,7 +73,7 @@
         "please fill in a valid date": "Bitte ein gültiges Datum im Feld \"%1\" angeben!",
         "please fill in a valid time": "Bitte eine gültige Uhrzeit im Feld \"%1\" angeben!",
         "only number in field": "Es dürfen nur Zahlen im Feld \"%1\" verwendet werden!",
-        "with a star marked fields are mandatory fields": "Alle mit einem Stern gekennzeichnete Felder sind Pflichtfelder.",
+        "with a star marked fields are mandatory fields": "Alle mit einem Stern (*) gekennzeichnete Felder sind Pflichtfelder.",
         "you cannot change this value": "Du kannst diesen Wert nicht ändern",
 
         "yes":"Ja",

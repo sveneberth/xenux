@@ -2,16 +2,16 @@
 class searchController extends AbstractController
 {
 	private $searchString;
-	
+
 	public function __construct($url)
 	{
 		global $XenuxDB;
-		
+
 		$this->url = $url;
 		$this->modulename = str_replace('Controller', '', get_class());
 		$this->searchString = $XenuxDB->escapeString(@$_GET['q']);
 	}
-	
+
 	public function run()
 	{
 
@@ -32,7 +32,7 @@ class searchController extends AbstractController
 		width: 15% !important;
 	}
 </style>";
-		
+
 		$formFields = array
 		(
 			'q' => array
@@ -50,9 +50,9 @@ class searchController extends AbstractController
 				'class' => 'float submit'
 			)
 		);
-		$form = new form($formFields, null, null, 'GET');
+		$form = new form($formFields, null, null, null, 'GET');
 		$form->disableRequiredInfo();
-		
+
 		echo $form->getForm();
 		echo '<div class="clear clearfix" style="margin-bottom: 2em;"></div>';
 
@@ -65,12 +65,12 @@ class searchController extends AbstractController
 
 		return true;
 	}
-	
+
 	#FIXME: search in events, news too
 	private function search()
 	{
 		global $XenuxDB;
-	
+
 		$start			= is_numeric(@$_GET['start']) ? floor($_GET['start']) : 0;
 		$amount			= (is_numeric(@$_GET['amount']) && floor(@$_GET['amount']) != 0) ? floor($_GET['amount']) : 10;
 		$absolutenumber = $XenuxDB->count('sites', [
@@ -111,7 +111,7 @@ class searchController extends AbstractController
 									)
 									AND public = true;
 									");
-		var_dump($result);	
+		var_dump($result);
 
 		log::writeLog($XenuxDB->getLastQuery());
 */
@@ -121,7 +121,7 @@ class searchController extends AbstractController
 			foreach($matches as $match)
 			{
 				$template = new template(PATH_MAIN."/modules/".$this->modulename."/layout.php");
-		
+
 				$template->setVar("page_content", shortstr(str_replace("&nbsp;", "", strip_tags($match->text)), 300));
 				$template->setVar("page_title", $match->title);
 				$template->setVar("page_URL", getPageLink($match->id, $match->title));
@@ -135,7 +135,7 @@ class searchController extends AbstractController
 		else
 		{
 			echo "<p>" . __("noSearchResult", $this->searchString) . "</p>";
-		}	
+		}
 	}
 }
 ?>

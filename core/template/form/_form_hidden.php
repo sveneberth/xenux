@@ -1,1 +1,1 @@
-<input type="hidden" name="{{name}}" value="{{value}}" style="{{style}}" />
+<input type="hidden" name="{{name}}" value="{{value}}" style="{{style}}">

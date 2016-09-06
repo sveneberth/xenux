@@ -16,10 +16,10 @@
 	<!-- http://xenux.bplaced.net -->
 	<meta name="generator" content="Xenux v{{XENUX_VERSION}} - das kostenlose CMS">
 
-	<link rel="shortcut icon" href="{{TEMPLATE_PATH}}/img/logo.ico"> "*" FIXME: use favicon.png (redesign favicon) "*"
+	<link rel="shortcut icon" href="{{TEMPLATE_PATH}}/img/logo.ico"> {# FIXME: use favicon.png (redesign favicon) #}
 
 	<!-- css -->
-	<link rel="stylesheet" type="text/css" href="{{TEMPLATE_PATH}}/css/style.css" media="all"/>
+	<link rel="stylesheet" href="{{TEMPLATE_PATH}}/css/style.css" media="all">
 
 	<!-- jquery + plugins -->
 	<script src="{{TEMPLATE_PATH}}/js/jquery-2.1.1.min.js"></script>
@@ -31,7 +31,7 @@
 
 	<!-- fancybox -->
 	<script src="{{TEMPLATE_PATH}}/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
-	<link rel="stylesheet" type="text/css" href="{{TEMPLATE_PATH}}/fancybox/jquery.fancybox.css?v=2.1.5" media="screen">
+	<link rel="stylesheet" href="{{TEMPLATE_PATH}}/fancybox/jquery.fancybox.css?v=2.1.5" media="screen">
 
 	<!-- search -->
 	<link rel="search" type="application/opensearchdescription+xml" title="Xenux Suche" href="{{URL_MAIN}}/search.xml.php">

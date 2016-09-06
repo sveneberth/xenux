@@ -30,7 +30,7 @@
 	</div>
 	<div class="rename popup-editor">
 		<span><?= __('rename to') ?></span>
-		<input type="text" value=""/>
+		<input type="text" value="">
 		<input type="button" value="<?= __('rename') ?>">
 	</div>
 	<div class="breadcrumb"></div>
