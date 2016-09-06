@@ -33,14 +33,14 @@ $(document).ready(function() {
 		console.info('file out window');
 		$('.drop-files').hide();
 		return false;
-	});	
+	});
 	$('.drop-files').bind('drop', function(e) {
 		var files = e.dataTransfer.files;
 		upload(files);
 		$('.drop-files').hide();
 		return false;
 	});
-	
+
 
 	// click events
 	$('.explorer .item').live('click', function(e) {
@@ -53,7 +53,7 @@ $(document).ready(function() {
 	$('.breadcrumb .treeitem').live('click', function() {
 		var ID = $(this).attr('id');
 		console.info("switched to folder: "+ID);
-		
+
 		dir_list(ID);
 	});
 	$(document).click(function(e) {
@@ -63,22 +63,22 @@ $(document).ready(function() {
 			console.log("popup hide");
 		}
 	});
-	
-	
+
+
 	// double click events
 	$('.explorer > .item.folder').live('touchstart dblclick', function() {
 		var rowID = $(this).attr('id');
 		console.info("switched to folder: "+rowID);
-		
+
 		dir_list(rowID);
 	});
 	$('.explorer > .item.file').live('touchstart dblclick', function() {
 		var rowID = $(this).attr('id');
 		console.info("opened file: "+rowID);
-		
+
 		window.open(baseurl+'/file/'+SHA1(rowID),'File','width=800,height=600,location=0,menubar=0,scrollbars=0,status=0,toolbar=0,resizable=0');
 	});
-	
+
 
 	// right click
 	var x, y;
@@ -92,19 +92,19 @@ $(document).ready(function() {
 
 		if (!$(target).is('.item, .item *'))
 			return true; // true show the browser default contextmenu and false show nothing
-		
+
 		e.preventDefault();
 
 		$('.explorer > .item')	.removeClass('ui-selected');
 		$(target)				.addClass('ui-selected');
-		
+
 		var id		= $(target).attr('id');
 		var type	= $(target).hasClass('file') ? 'file' : 'folder';
-		
+
 		$('#contextmenu').data('targetID',		id);
 		$('#contextmenu').data('targetType',	type);
 
-		
+
 		x = e.clientX+contextmenuWidth	> $(window).width() 	? e.clientX-contextmenuWidth	: e.clientX;
 		y = e.clientY+contextmenuHeight	> $(window).height()	? e.clientY-contextmenuHeight	: e.clientY;
 
@@ -157,15 +157,15 @@ $(document).ready(function() {
 	$('#contextmenu > .rename').click(function() {
 		var id = $('#contextmenu').data('targetID');
 		var filename = $('.explorer > .item#' + id).attr('data-filename');
-		
-		$('.rename > input[type="text"]').val(filename);		
+
+		$('.rename > input[type="text"]').val(filename);
 		$('.rename').show();
 
 		$('#contextmenu').hide();
 	});
 	$('#contextmenu > .move').click(function() {
 		var id = $('#contextmenu').data('targetID');
-		
+
 		$.ajax({
 			url: ajaxURL,
 			type: requestType,
@@ -211,7 +211,7 @@ $(document).ready(function() {
 			console.error('no file select');
 			return false;
 		}
-		
+
 		$.ajax({
 			url: ajaxURL,
 			type: requestType,
@@ -242,14 +242,14 @@ $(document).ready(function() {
 			console.error('no file select');
 			return false;
 		}
-		
+
 		var firstSelObj = $('.explorer > .item.ui-selected').eq(0);
 		var filename = firstSelObj.attr('data-filename');
-		
+
 		$('.rename').show();
-		$('.rename > input[type="text"]').val(filename);		
+		$('.rename > input[type="text"]').val(filename);
 	});
-	
+
 	$('.popup-editor.move-target > input[type="button"]').live('click', function() {
 		var to = $('.popup-editor.move-target > select').val();
 		$('.explorer > .item.ui-selected').each(function(i) {
@@ -290,7 +290,7 @@ $(document).ready(function() {
 			}
 		});
 	});
-	
+
 	$('.actions > button.upload').click(function() {
 		$('.actions > input.file').click();
 	});
@@ -307,11 +307,11 @@ function upload(files) {
 	numUpload += 1;
 	var thisUpload = numUpload;
 	console.log('Number of Upload: ' + numUpload);
-	
+
 	$('.upload-progress').append('<progress data-upload-num="' + thisUpload + '" class="upload uploading" value="0" max="100"></progress>');
-	
+
 	console.log('files: %o', files);
-	
+
 	var FileData = new FormData();
 	$.each(files, function(key, value) {
 		FileData.append(key, value);
@@ -337,7 +337,7 @@ function upload(files) {
 								window.focus()
 							}
 						);
-						
+
 						dir_list(getFolder()); // refresh
 						$('.upload-progress > progress.upload[data-upload-num="' + thisUpload + '"]').removeClass('uploading');
 						setTimeout(function() {
@@ -462,6 +462,8 @@ function setbreadcrumb(folder) {
 	});
 }
 function fileinfo(id) {
+	// #FXIME: folder selected -> show amount of containing items
+
 	$.ajax({
 		url: ajaxURL,
 		type: requestType,
@@ -496,7 +498,7 @@ function dir_list(folder) {
 	defaultDisabled.forEach(function(val) {
 		$('.actions > button.'+val).addClass('disabled');
 	});
-	
+
 	$.ajax({
 		url: ajaxURL,
 		type: requestType,
