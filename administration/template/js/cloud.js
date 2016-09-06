@@ -497,7 +497,7 @@ function fileinfo(id) {
 }
 function dir_list(folder) {
 	$('.explorer').html('');
-	$('body').css('cursor', 'wait').append('<div class='ajax-loader'></div>');
+	$('body').css('cursor', 'wait').append('<div class="ajax-loader"></div>');
 	$('.explorer').attr('data-folder-id', folder);
 	setbreadcrumb(folder);
 	defaultDisabled.forEach(function(val) {
