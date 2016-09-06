@@ -26,10 +26,10 @@ switch(@$_REQUEST['task'])
 				$mime_type		= $file['type'];
 				$size			= $file['size'];
 				$lastModified	= filemtime($tmpname);
-					
+
 				$hndFile = fopen($tmpname, "r");
 				$data = addslashes(fread($hndFile, $size));
-				
+
 				$result = $XenuxDB->Insert('files', [
 														'type'				=> 'file',
 														'mime_type'			=> $mime_type,
@@ -196,7 +196,7 @@ switch(@$_REQUEST['task'])
 		if(isset($_REQUEST['id']))
 		{
 			$id = $XenuxDB->escapeString($_REQUEST['id']);
-			
+
 			if($id == 0)
 			{
 				$XenuxDB->clearTable('files');
@@ -214,7 +214,7 @@ switch(@$_REQUEST['task'])
 				$return['success'] = false;
 				break;
 			}
-			
+
 			$row = $XenuxDB->getEntry('files', [
 				'columns' => [
 					'id',
@@ -224,23 +224,23 @@ switch(@$_REQUEST['task'])
 					'id' => $id
 				]
 			]);
-			
+
 			$XenuxDB->Delete('files', [
 				'where' => [
 					'id' => $id
 				]
 			]);
-			
+
 			if($row->type == 'folder')
 			{
 				$arrFolder = array();
 				$arrFolder[] = $id;
-							
+
 				while(!empty($arrFolder))
 				{
 					$arrTemp = $arrFolder;
 					$arrFolder = array();
-					
+
 					foreach ($arrTemp as $val) // for every file/folder
 					{
 						$results = $XenuxDB->getList('files', [
@@ -277,14 +277,14 @@ switch(@$_REQUEST['task'])
 		{
 			$id = $XenuxDB->escapeString($_REQUEST['id']);
 			$to = $XenuxDB->escapeString($_REQUEST['to']);
-		
+
 			if($id == $to)
 			{
 				$return['message'] = "can't move folder in self";
 				$return['success'] = false;
 				break;
 			}
-			
+
 			$XenuxDB->Update('files', [
 				'parent_folder_id' => $to
 			],
@@ -303,9 +303,10 @@ switch(@$_REQUEST['task'])
 		{
 			$id			= $XenuxDB->escapeString($_REQUEST['id']);
 			$newName	= $XenuxDB->escapeString($_REQUEST['newName']);
-		
+
 			$result = $XenuxDB->Update('files', [
-				'filename' => $newName
+				'filename' => $newName,
+				'##lastModified' => 'NOW()'
 			],
 			[
 				'id' => $id
@@ -319,7 +320,7 @@ switch(@$_REQUEST['task'])
 			$return['success'] = false;
 		}
 		break;
-	case "list_all_dirs":
+	case 'list_all_dirs':
 		$return['success'] = true;
 
 		$id				= 0;
@@ -327,12 +328,12 @@ switch(@$_REQUEST['task'])
 		$arrAll[]		= $id;
 		$arrFolder		= array();
 		$arrFolder[]	= $id;
-					
+
 		while(!empty($arrFolder))
 		{
 			$arrTemp = $arrFolder;
 			$arrFolder = array();
-			
+
 			foreach ($arrTemp as $val)
 			{
 				$results = $XenuxDB->getList('files', [
@@ -358,7 +359,7 @@ switch(@$_REQUEST['task'])
 				}
 			}
 		}
-		
+
 		foreach ($arrAll as $val)
 		{
 			$folder = $val;
@@ -382,7 +383,7 @@ switch(@$_REQUEST['task'])
 			$breadcrumb = array_reverse($breadcrumb);
 
 			$return['breadcrumbs'][$val] = $breadcrumb;
-		}	
+		}
 
 		foreach ($return['breadcrumbs'] as $key => $val)
 		{
@@ -398,9 +399,8 @@ switch(@$_REQUEST['task'])
 }
 
 
-header('Content-type: application/json');  
+header('Content-type: application/json');
 echo json_encode($return);
 
 // close the connection to the database
 $XenuxDB->closeConnection();
-?>

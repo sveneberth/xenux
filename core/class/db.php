@@ -10,13 +10,13 @@ class db
 			try {
 				self::$db = new MySQLi(MYSQL_HOST, MYSQL_USER, MYSQL_PW, MYSQL_DB); // connect with database
 
-				if(self::$db->connect_errno) { // if conntection failed
+				if(self::$db->connect_errno) { // if connection failed
 					throw new Exception("Failed to connect to MySQL: (" . self::$db->connect_errno . ") " . self::$db->connect_error);
 				}
 
 				self::$db->query("SET NAMES 'utf8';"); // define database as utf-8
 
-				log::writeLog("### conntection to database successful ###");
+				log::writeLog("### connection to database successful ###");
 			}
 			catch (Exception $e)
 			{

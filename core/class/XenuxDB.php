@@ -652,20 +652,20 @@ class XenuxDB
 			}
 			else
 			{
-				$column = $this->quoteColumn($column);
+				$columnQuoted = $this->quoteColumn($column);
 
 				switch (gettype($value))
 				{
 					case 'NULL':
-						$fields[] = $column . ' = NULL';
+						$fields[] = $columnQuoted . ' = NULL';
 						break;
 					case 'boolean':
-						$fields[] = $column . ' = ' . ($value ? '1' : '0');
+						$fields[] = $columnQuoted . ' = ' . ($value ? '1' : '0');
 						break;
 					case 'integer':
 					case 'double':
 					case 'string':
-						$fields[] = $column . ' = ' . $this->fn_quote($column, $value);
+						$fields[] = $columnQuoted . ' = ' . $this->fn_quote($column, $value);
 						break;
 				}
 			}
