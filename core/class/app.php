@@ -87,10 +87,10 @@ class app
 			$template->setVar("homepage_name", $this->getOption('hp_name'));
 			$template->setVar("page_title", $this->page_name);
 
-			$template->setVar("canonical_URL", is_null($this->canonical_URL) ? $this->siteurl : $this->canonical_URL);
-			$template->setIfCondition("prev_URL", !is_null($this->prev_URL));
+			$template->setVar("canonical_URL", $this->site=='home' ? URL_MAIN : (is_null($this->canonical_URL) ? $this->siteurl : $this->canonical_URL) );
+			$template->setIfCondition("prev_URL", !is_null($this->prev_URL) && $this->site != 'home');
 			$template->setVar("prev_URL", $this->prev_URL);
-			$template->setIfCondition("next_URL", !is_null($this->next_URL));
+			$template->setIfCondition("next_URL", !is_null($this->next_URL) && $this->site != 'home');
 			$template->setVar("next_URL", $this->next_URL);
 
 			echo $template->render();
