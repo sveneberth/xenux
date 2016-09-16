@@ -1,3 +1,4 @@
+<script src="{{TEMPLATE_PATH}}/js/jquery.mjs.nestedSortable.js"></script>
 <script>
 	var url = window.location.href;
 	var title = document.title;
@@ -6,10 +7,8 @@
 	if(window.history.replaceState) {
 		window.history.replaceState(null, null, newUrl);
 	}
-</script>
-<script src="{{TEMPLATE_PATH}}/js/jquery.mjs.nestedSortable.js"></script>
-<script>
-	$(document).ready(function() {
+
+	$(function() {
 		$(".menu_order > ul").nestedSortable({
 			listType: 'ul',
 			forcePlaceholderSize: true,
@@ -27,25 +26,25 @@
 			isTree: true,
 			expandOnHover: 700,
 			startCollapsed: true,
-			
+
 			collapsedClass: 'collapsed',
 			errorClass: 'error',
 			expandedClass: 'expanded',
-			
+
 			stop: function() {
 				console.log("stopped");
 				updateOrder();
 				toggleClasses();
 			}
 		});
-		
-		toggleClasses();		
+
+		toggleClasses();
 
 		$('.disclose:not(.disable)').bind('click', function() {
 			console.log('toggle collapsed/expanded');
 			$(this).closest('li').toggleClass('collapsed').toggleClass('expanded');
 		});
-		
+
 		$('.menu_order .remove').bind('click', function() {
 			if (
 				confirm('Bist du dir sicher diese Seite zu löschen? Das löschen kann nicht rückgängig gemacht werden!')
@@ -73,10 +72,10 @@
 			}
 		});
 	}
-	function updateOrder() {		
+	function updateOrder() {
 		var array = $('.menu_order > ul').nestedSortable('toArray', {startDepthCount: 0});
 		console.log(array);
-		
+
 		$.ajax({
 			url: '{{URL_ADMIN}}/modules/sites/ajax.php',
 			type: 'POST',
@@ -106,7 +105,7 @@
 				console.log(response);
 				if(response.success == true) {
 					$('#list_' + id).fadeOut(300, function() {
-						$(this).remove();	
+						$(this).remove();
 					});
 				}
 			},
@@ -116,6 +115,7 @@
 		});
 	}
 </script>
+
 <style>
 	.menu_order > ul,
 	.menu_order > ul ul {
@@ -137,7 +137,7 @@
 		border: 1px solid #777;
 		cursor: move;
 	}
-	.menu_order   ul > li.non-public {opacity: .7;}		
+	.menu_order   ul > li.non-public {opacity: .7;}
 	.menu_order   ul > li.ignore {cursor: default;}
 	.menu_order   ul > li:nth-child(odd) {background: #fff;}
 	.menu_order   ul > li:nth-child(even) {background: #eee;}
@@ -167,7 +167,7 @@
 	.placeholder {outline: 1px dashed #4183C4;}
 	li.error {background: #fbe3e4!important;border-color: transparent!important;}
 
-	
+
 	.menu_order ul > li a {
 		display: inline-block;
 		line-height: 25px;
@@ -186,27 +186,26 @@
 		background-repeat: no-repeat;
 		background-position: center;
 		display: block;
-		vertical-align: baseline;
 		height: 25px;
 		width: 25px;
-		display: inline-block;
-		vertical-align: top;
-		margin: 0;
-		line-height: 25px;
-		right: 0;
 		position: absolute;
+		right: 0;
+		top: 50%;
+		transform: translateY(-50%);
 	}
 </style>
 
 {{messages}}
 
-<section class="box-shadow floating one-column-box no-margin">
-	<p><?= __('by dragging the pages you can change the menu order') ?></p>
-	<p><?= __('note that in an unpublished site, respective undersites are not listed in the menu') ?></p>
+<div class="grid-row">
+	<section class="box-shadow grid-col">
+		<p><?= __('by dragging the pages you can change the menu order') ?></p>
+		<p><?= __('note that in an unpublished site, respective undersites are not listed in the menu') ?></p>
 
-	<div class="menu_order">
-		<ul>
-			{{menu}}
-		</ul>
-	</div>
-</section>
+		<div class="menu_order">
+			<ul>
+				{{menu}}
+			</ul>
+		</div>
+	</section>
+</div>

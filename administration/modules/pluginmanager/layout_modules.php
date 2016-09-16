@@ -10,22 +10,25 @@
 
 {{messages}}
 
-<section class="box-shadow floating one-column-box">
-	<p><?= __('upload a zip file to install a module') ?></p>
+<div class="grid-row">
+	<section class="box-shadow grid-col">
+		<p><?= __('upload a zip file to install a module') ?></p>
 
-	{{upload_form}}
-</section>
+		{{upload_form}}
+	</section>
+</div>
 
-<section class="box-shadow floating one-column-box">
-	<h3><?= _('all installed modules') ?>:</h3>
+<div class="grid-row">
+	<section class="box-shadow grid-col">
+		<h3><?= _('all installed modules') ?>:</h3>
+		<?php
+			#FIXME: style me
 
-	<?php
-		#FIXME: style me
-
-		$installed_modules = json_decode($app->getOption('installed_modules'));
-		foreach ((array) $installed_modules as $name)
-		{
-			echo $name . '<a style="float: right;" href="' . URL_ADMIN . '/pluginmanager/modules?removeModule=' . $name . '">X</a><br>';
-		}
-	?>
-</section>
+			$installed_modules = json_decode($app->getOption('installed_modules'));
+			foreach ((array) $installed_modules as $name)
+			{
+				echo $name . '<a style="float: right;" href="' . URL_ADMIN . '/pluginmanager/modules?removeModule=' . $name . '">X</a><br>';
+			}
+		?>
+	</section>
+</div>

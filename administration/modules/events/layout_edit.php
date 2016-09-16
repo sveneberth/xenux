@@ -18,7 +18,7 @@ $(document).ready(function() {
 	$(document).on("submit", "form", function(){
 		$(window).off('beforeunload');
 	});
-	
+
 	/**
 	* settings for the wysiwyg-editor, a ckeditor
 	*/
@@ -63,14 +63,16 @@ $(document).ready(function() {
 
 {{messages}}
 
-<section class="box-shadow floating one-column-box no-margin">
-	#if(new):
-		<p><?= __('here can you add a new event') ?></p>
-	#else:
-		<p><?= __('here can you edit the event') ?></p>
-	#endif
+<div class="grid-row">
+	<section class="box-shadow grid-col">
+		#if(new):
+			<p><?= __('here can you add a new event') ?></p>
+		#else:
+			<p><?= __('here can you edit the event') ?></p>
+		#endif
 
-	<div class="form">
-		{{form}}
-	</div>
-</section>
+		<div class="form">
+			{{form}}
+		</div>
+	</section>
+</div>

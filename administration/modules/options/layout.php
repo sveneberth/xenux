@@ -10,6 +10,8 @@
 
 {{messages}}
 
-<section class="box-shadow floating one-column-box">
-	{{form}}
-</section>
+<div class="grid-row">
+	<section class="box-shadow grid-col">
+		{{form}}
+	</section>
+</div>

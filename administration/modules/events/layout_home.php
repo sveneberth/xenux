@@ -34,34 +34,33 @@ ul.data-table > li > .remove-icon {
 	background-repeat: no-repeat;
 	background-position: center;
 	display: block;
-	vertical-align: baseline;
 	height: 25px;
 	width: 25px;
-	display: inline-block;
-	vertical-align: top;
-	margin: 0;
-	line-height: 25px;
-	right: 0;
 	position: absolute;
+	right: 0;
+	top: 50%;
+	transform: translateY(-50%);
 }
 </style>
 
 {{messages}}
 
-<section class="box-shadow floating one-column-box no-margin">
-	<div class="menu_order">
-		<ul class="data-table">
-			<li class="headline">
-				<span class="data-column event-id"><?= __('ID') ?></span>
-				<span class="data-column event-title"><?= __('title') ?></span>
-				<span class="data-column event-create-date"><?= __('createDate') ?></span>
-				<span class="data-column event-start-date"><?= __('startDate') ?></span>
-				<span class="data-column event-end-date"><?= __('endDate') ?></span>
-			</li>
+<div class="grid-row">
+	<section class="box-shadow grid-col">
+		<div class="menu_order">
+			<ul class="data-table">
+				<li class="headline">
+					<span class="data-column event-id"><?= __('ID') ?></span>
+					<span class="data-column event-title"><?= __('title') ?></span>
+					<span class="data-column event-create-date"><?= __('createDate') ?></span>
+					<span class="data-column event-start-date"><?= __('startDate') ?></span>
+					<span class="data-column event-end-date"><?= __('endDate') ?></span>
+				</li>
 
-			{{events}}
-		</ul>
-	</div>
+				{{events}}
+			</ul>
+		</div>
 
-	{{amount}} <?= __('entries') ?>
-</section>
+		{{amount}} <?= __('entries') ?>
+	</section>
+</div>
