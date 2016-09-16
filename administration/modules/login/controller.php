@@ -399,7 +399,7 @@ Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: '
 					return false;
 				}
 
-				$url = URL_ADMIN . '/login?task=resetpassword&id=' . $userinfo->id . '&token=' . $token;
+				$url = URL_ADMIN . '/login?task=resetpassword&amp;id=' . $userinfo->id . '&amp;token=' . $token;
 
 				$mail = new mailer;
 				$mail->setSender(XENUX_MAIL);

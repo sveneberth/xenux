@@ -1,15 +1,16 @@
 <?php
+require_once(PATH_MAIN . '/core/libs/html2text/Html2Text.php');
+require_once(PATH_MAIN . '/core/libs/html2text/Html2TextException.php');
+
 // #FIXME: is_null doesnt work because of the utf8-escaping
 // use an other condition or remove this part
 
 class mailer
 {
 	public $debugPath =  '/mails/';
-	public $contentType = 'text/html';
 	public $charset = 'UTF-8';
 	public $lang = 'de';
 	public $LE = "\n";
-
 
 	private $to = array();
 	private $header = array();
@@ -23,10 +24,13 @@ class mailer
 	public $body = null;
 	private $mail = null;
 
+	private $boundary = null;
+
 	public function __construct()
 	{
 		$this->from = 'xenux@' . $_SERVER['SERVER_NAME'];
 		$this->fromName = 'XENUX';
+		$this->boundary = uniqid('np');
 	}
 
 
@@ -80,17 +84,17 @@ class mailer
 	private function buildHeader()
 	{
 		$this->push_header('MIME-Version: 1.0');
-		$this->push_header('Content-type: ' . $this->contentType . '; charset=' . $this->charset);
+		$this->push_header('Content-type: text/html; charset=' . $this->charset);
 		$this->push_header('From: ' . (!is_null($this->fromName) ? $this->fromName : '') . (!is_null($this->from) ? (is_null($this->fromName) ? $this->from : ' <' . $this->from . '>') : ''));
 		$this->push_header('Reply-To: ' . (!is_null($this->replyToName) ? $this->replyToName : '') . (!is_null($this->replyTo) ? (is_null($this->replyToName) ? $this->replyTo : ' <' . $this->replyTo . '>') : ''));
 		$this->push_header('X-Mailer: XENUX ' . XENUX_VERSION . ' MAILER');
+		$this->push_header('Content-Type: multipart/alternative;boundary=' . $this->boundary);
 	}
 
 	private function buildMail()
 	{
-		if (strpos($this->charset, 'UTF') ===  0 || strpos($this->charset, 'ISO') ===  0 )
-		{
-$mail = '<!DOCTYPE html>
+		$mailPlain = Html2Text\Html2Text::convert($this->body);
+		$mailHTML = '<!DOCTYPE html>
 <html lang="' . $this->lang . '">
 	<head>
 		<meta charset="' . $this->charset . '">
@@ -100,11 +104,14 @@ $mail = '<!DOCTYPE html>
 		' . $this->body . '
 	</body>
 </html>';
-		}
-		else
-		{
-			$mail = $this->body;
-		}
+
+		$mail  = "\n\n--" . $this->boundary . "\n";
+		$mail .= 'Content-type: text/plain;charset=' . $this->charset . "\n\n";
+		$mail .= $mailPlain;
+		$mail .= "\n\n--" . $this->boundary . "\n";
+		$mail .= 'Content-type: text/html;charset=' . $this->charset . "\n\n";
+		$mail .= $mailHTML;
+		$mail .= "\n\n--" . $this->boundary . '--';
 
 		$mail = str_replace(["\r\n", "\r", "\n"], $this->LE, $mail); // Line Endings
 		$mail = wordwrap($mail, 80); // Use lines with 80 characters
