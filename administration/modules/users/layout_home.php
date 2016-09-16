@@ -42,19 +42,17 @@ ul.data-table > li > .remove-icon {
 
 <div class="grid-row">
 	<section class="box-shadow grid-col">
-		<div class="menu_order">
-			<ul class="data-table">
-				<li class="headline">
-					<span class="data-column user-id"><?= __('ID') ?></span>
-					<span class="data-column user-username"><?= __('username') ?></span>
-					<span class="data-column user-firstname"><?= __('firstname') ?></span>
-					<span class="data-column user-lastname"><?= __('lastname') ?></span>
-					<!-- <span class="data-column user-create-date"><?= __('createDate') ?></span> -->
-				</li>
+		<ul class="data-table">
+			<li class="headline">
+				<span class="data-column user-id"><?= __('ID') ?></span>
+				<span class="data-column user-username"><?= __('username') ?></span>
+				<span class="data-column user-firstname"><?= __('firstname') ?></span>
+				<span class="data-column user-lastname"><?= __('lastname') ?></span>
+				<!-- <span class="data-column user-create-date"><?= __('createDate') ?></span> -->
+			</li>
 
-				{{users}}
-			</ul>
-		</div>
+			{{users}}
+		</ul>
 
 		{{amount}} <?= __('entries') ?>
 	</section>

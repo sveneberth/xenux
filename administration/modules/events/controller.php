@@ -92,15 +92,20 @@ class eventsController extends AbstractController
 			foreach($events as $event)
 			{
 				$return .= '
-<li '.($event->public == false ? 'class="non-public"' : '').'>
-	<span class="data-column event-id">'.$event->id.'</span>
-	<a class="data-column event-title edit" href="{{URL_ADMIN}}/events/edit/'.$event->id.'" title="'.__('click to edit event').'">'.$event->title.'</a>
-	<span class="data-column event-create-date">'.$event->create_date.'</span>
-	<span class="data-column event-start-date">'.$event->start_date.'</span>
-	<span class="data-column event-end-date">'.$event->end_date.'</span>
-	<a class="data-column show" target="_blank" href="{{URL_MAIN}}/event/view/'.getPreparedLink($event->id, $event->title).'">'.__('show').'</a>
-	<a href="{{URL_ADMIN}}/events/home/?remove='.$event->id.'" title="'.__('deleteEvent').'" class="remove remove-icon clickable"></a>
-</li>';
+<tr ' . ($event->public == false ? 'class="private"' : '') . '>
+	<td class="column-select"><input type="checkbox" name="item[]" value="' . $event->id . '"></td>
+	<td class="column-id">' . $event->id . '</td>
+	<td class="column-title">
+		<a class="edit" href="{{URL_ADMIN}}/events/edit/' . $event->id . '" title="' . __('click to edit event') . '">' . $event->title . '</a>
+	</td>
+	<td class="column-date">' . $event->create_date . '</td>
+	<td class="column-date">' . $event->start_date . '</td>
+	<td class="column-date">' . $event->end_date . '</td>
+	<td class="column-actions">
+		<a class="view-btn" target="_blank" href="{{URL_MAIN}}/event/view/' . getPreparedLink($event->id, $event->title) . '">' . __('view') . '</a>
+		<a href="{{URL_ADMIN}}/events/home/?remove=' . $event->id . '" title="' . __('deleteEvent') . '" class="remove-btn"></a>
+	</td>
+</tr>';
 			}
 		}
 

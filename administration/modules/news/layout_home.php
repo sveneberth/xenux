@@ -45,18 +45,16 @@ ul.data-table > li > .remove-icon {
 
 <div class="grid-row">
 	<section class="box-shadow grid-col">
-		<div class="menu_order">
-			<ul class="data-table">
-				<li class="headline">
-					<span class="data-column news-id"><?= __('ID') ?></span>
-					<span class="data-column news-title"><?= __('title') ?></span>
-					<span class="data-column news-create-date"><?= __('createDate') ?></span>
-					<span class="data-column news-text"><?= __('newsPreview') ?></span>
-				</li>
+		<ul class="data-table">
+			<li class="headline">
+				<span class="data-column news-id"><?= __('ID') ?></span>
+				<span class="data-column news-title"><?= __('title') ?></span>
+				<span class="data-column news-create-date"><?= __('createDate') ?></span>
+				<span class="data-column news-text"><?= __('newsPreview') ?></span>
+			</li>
 
-				{{news}}
-			</ul>
-		</div>
+			{{news}}
+		</ul>
 
 		{{amount}} <?= __('entries') ?>
 	</section>

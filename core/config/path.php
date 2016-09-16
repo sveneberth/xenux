@@ -13,8 +13,8 @@ $url		= $protocol . '://' .$_SERVER['HTTP_HOST'] . $if_port . $subdir;
 $_get_params = '';
 foreach ($_GET as $key => $value)
 {
-	if($key != 'url')
-		$_get_params .= (!empty($_get_params) ? '&' : '') . $key.'='.$value; 
+	if($key != 'url' && !is_array($value)) #FIXME: the is_array solution is only a hotfix
+		$_get_params .= (!empty($_get_params) ? '&' : '') . $key.'='.$value;
 }
 $_folder_dir = str_replace(array($subdir, @$_GET['url']), '', str_replace('\\', '/', $_SERVER['REQUEST_URI']));
 $_folder_dir = substr($_folder_dir, 0, stripos($_folder_dir, '?'));
@@ -24,4 +24,3 @@ define('PATH_ADMIN',	$dir.'/administration');
 define('URL_MAIN',		$url);
 define('URL_ADMIN',		$url.'/administration');
 define('URL_REQUEST',	$protocol . '://' .$_SERVER['HTTP_HOST'] . $if_port . substr($_SERVER['REQUEST_URI'], 0, stripos($_SERVER['REQUEST_URI'], '?')));
-?>

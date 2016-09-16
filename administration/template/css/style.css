@@ -418,7 +418,9 @@ p {
 input,
 textarea,
 select {
-  font-family: inherit;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
   font-size: 90%;
   border: 1px solid #999;
   color: inherit;
@@ -430,12 +432,15 @@ select {
   max-width: 100%;
   margin: 0 0 15px 0;
   display: block;
-  box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
   transition: ease border .4s, ease background .2s;
 }
 input:focus,
 textarea:focus,
-select:focus {
+select:focus,
+input:hover,
+textarea:hover,
+select:hover {
   border-color: #244394;
 }
 input.wrong,
@@ -478,11 +483,19 @@ input[type="checkbox"]:hover,
 input[type="radio"]:hover,
 input[type="button"]:hover,
 input[type="reset"]:hover {
-  background: #2580a2;
+  /*background: #2580a2;*/
 }
 input[type="radio"],
 input[type="checkbox"] {
-  height: auto;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+}
+input[type="radio"]:checked,
+input[type="checkbox"]:checked {
+  background: #1565c0;
+  outline: 1px solid #999;
+  border-color: #fff;
 }
 input[readonly] {
   cursor: no-drop;
@@ -511,7 +524,7 @@ input[type=radio] + label:before {
   left: 0;
   bottom: 1px;
   background-color: #999;
-  box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, 0.3), 0px 1px 0px 0px rgba(255, 255, 255, 0.8);
+  box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, 0.15), 0px 1px 0px 0px rgba(255, 255, 255, 0.8);
   border-radius: 8px;
 }
 input[type=radio]:checked + label:before {
@@ -520,6 +533,12 @@ input[type=radio]:checked + label:before {
   font-size: 30px;
   text-align: center;
   line-height: 16px;
+}
+select {
+  background-image: url('data:image/svg+xml;utf8, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 137.14286 50" height="50" width="80"><path d="M0 16.429l30-34.286 30 34.286H0zm0 17.142l30 34.286 30-34.286H0z"/></svg>');
+  background-size: 20px;
+  background-repeat: no-repeat;
+  background-position: 100%;
 }
 select + span.info,
 textarea + span.info,
@@ -1250,6 +1269,55 @@ ul.data-table > li.headline {
 ul.data-table > li > .data-column {
   display: inline-block;
   float: left;
+}
+table.data-table tr {
+  padding: 5px 10px;
+}
+table.data-table tr:not(:last-child) {
+  border-bottom: 1px solid #ccc;
+}
+table.data-table th,
+table.data-table td {
+  padding: 5px 10px;
+}
+table.data-table .table-head td,
+table.data-table .table-head th {
+  font-weight: 200;
+  border-bottom: 1px solid #999;
+}
+table.data-table .private {
+  opacity: .7;
+}
+table.data-table .column-id {
+  width: 5%;
+}
+table.data-table .column-date {
+  width: 12%;
+}
+table.data-table .column-actions {
+  width: 10%;
+}
+table.data-table .view-btn {
+  right: 40px;
+  position: absolute;
+}
+table.data-table .remove-btn {
+  background-image: url('../images/remove.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: block;
+  height: 25px;
+  width: 25px;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.amount-entries {
+  float: right;
+  font-size: .9em;
+  color: #444444;
 }
 .never-show {
   display: none !important;

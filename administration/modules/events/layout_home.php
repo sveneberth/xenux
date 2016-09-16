@@ -1,4 +1,5 @@
 <script>
+/* #FIXME: DEBUG
 	var url = window.location.href;
 	var title = document.title;
 	var newUrl = url.substring(0, url.indexOf('?')) + window.location.hash;
@@ -6,61 +7,59 @@
 	if(window.history.replaceState) {
 		window.history.replaceState(null, null, newUrl);
 	}
+	*/
+	$(function() {
+		// #TODO: build table sorting with php, the tablesorter sucks
+		$( '.data-table' ).tablesorter({
+			headers: {
+				0: {
+					sorter: false
+				}
+			}
+		});
+
+		$( '.select-all-items' ).on('click', function() {
+			console.debug('select all');
+			$( '.column-select > input' ).trigger('click');
+		})
+	})
 </script>
-<style>
-ul.data-table > li.non-public {
-	opacity: .7;
-}
-ul.data-table > li > .data-column.event-create-date,
-ul.data-table > li > .data-column.event-start-date,
-ul.data-table > li > .data-column.event-end-date {
-	width: 160px;
-}
-ul.data-table > li > .data-column.event-title {
-	width: 25%;
-	min-width: 250px;
-	max-width: 500px;
-}
-ul.data-table > li > .data-column.event-id {
-	width: 50px;
-}
-ul.data-table > li > .data-column.show {
-	right: 40px;
-	position: absolute;
-}
-ul.data-table > li > .remove-icon {
-	background-image: url('{{TEMPLATE_PATH}}/images/remove.png');
-	background-size: 100%;
-	background-repeat: no-repeat;
-	background-position: center;
-	display: block;
-	height: 25px;
-	width: 25px;
-	position: absolute;
-	right: 0;
-	top: 50%;
-	transform: translateY(-50%);
-}
-</style>
 
 {{messages}}
 
 <div class="grid-row">
 	<section class="box-shadow grid-col">
-		<div class="menu_order">
-			<ul class="data-table">
-				<li class="headline">
-					<span class="data-column event-id"><?= __('ID') ?></span>
-					<span class="data-column event-title"><?= __('title') ?></span>
-					<span class="data-column event-create-date"><?= __('createDate') ?></span>
-					<span class="data-column event-start-date"><?= __('startDate') ?></span>
-					<span class="data-column event-end-date"><?= __('endDate') ?></span>
-				</li>
 
-				{{events}}
-			</ul>
-		</div>
+		<form method="get">
+			{# #TODO: build actions #}
+			<div class="action">
+				<select name="action">
+					<option value="-1">Aktion wählen</option>
+					<option value="private">privat setzen</option>
+					<option value="public">öffentlich zugänglich machen</option>
+					<option value="remove">löschen</option>
+				</select>
+				<input type="submit" class="button action" value="Übernehmen">
+			</div>
 
-		{{amount}} <?= __('entries') ?>
+			<table class="data-table">
+				<thead>
+					<tr class="table-head">
+						<th class="column-select"><input type="checkbox" class="select-all-items"></th>
+						<th class="column-id"><?= __('ID') ?></th>
+						<th class="column-title"><?= __('title') ?></th>
+						<th class="column-create-date"><?= __('createDate') ?></th>
+						<th class="column-start-date"><?= __('startDate') ?></th>
+						<th class="column-end-date"><?= __('endDate') ?></th>
+						<th class="column-actions"></th>
+					</tr>
+				</thead>
+				<tbody>
+					{{events}}
+				</tbody>
+			</table>
+
+			<p class="amount-entries">{{amount}} <?= __('entries') ?></p>
+		</form>
 	</section>
 </div>
