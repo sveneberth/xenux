@@ -3,7 +3,7 @@
 /* ############################################*/
 var ajaxURL = '../modules/cloud/ajax.php';
 var requestType = 'GET';
-var imageURL = baseurl + '/administration/template/images/';
+var imageURL;
 var defaultDisabled = ['remove', 'move', 'rename'];
 
 // #FIXME, #TODO:
@@ -11,7 +11,9 @@ var defaultDisabled = ['remove', 'move', 'rename'];
 // - add enter event in rename
 // - use $.on() instead of $.live()
 
-$(document).ready(function() {
+$(function() {
+	imageURL = baseurl + '/administration/template/images/';
+
 	dir_list(0); // load root
 	$('.explorer').height($(window).height() - 254);
 	$('.explorer').selectable({
