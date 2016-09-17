@@ -200,7 +200,7 @@ class form
 
 		$fieldTemplate->setVar('class',		$class);
 		$fieldTemplate->setVar('style',		$props['style']);
-		$fieldTemplate->setVar('label',		$props['label'] . ($this->isRequired($props['required'] && $this->requiredInfo == true) ? '*' : ''));
+		$fieldTemplate->setVar('label',		$props['label'] . ($this->isRequired($props['required'] && $this->requiredInfo == true) ? ' ('.__('required').')'  : ''));
 		$fieldTemplate->setVar('name',		$fieldname);
 		if($props['type'] != 'file')
 			$fieldTemplate->setVar('value',		$value);

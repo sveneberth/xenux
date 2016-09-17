@@ -1,4 +1,5 @@
 <?php
+#TODO: translation
 class LoginController extends AbstractController
 {
 	public function __construct($url = null)
@@ -13,7 +14,9 @@ class LoginController extends AbstractController
 
 		$task = isset($_GET['task']) ? $_GET['task'] : '';
 
-		$action = ($task == 'logout' || $task == 'login' || empty($task) || ($task != 'register' && $task != 'forgotusername' && $task != 'forgotpassword' && $task != 'resetpassword' && $task != 'firstLogin' && $task != 'confirm')) ? 'login' : $task;
+		$action = ($task == 'logout' || $task == 'login' || empty($task) ||
+			!in_array($task, ['register', 'forgotusername', 'forgotpassword', 'resetpassword', 'setpassword', 'confirm'])
+			) ? 'login' : $task;
 
 
 		$template = new template(PATH_ADMIN."/template/login.php", ['action'=>$action]);
@@ -41,9 +44,9 @@ class LoginController extends AbstractController
 				$this->resetpasswordAction($template);
 				$template->setVar("page_name", __('resetpassword'));
 				break;
-			case 'firstLogin':
-				$this->firstLoginAction($template);
-				$template->setVar("page_name", __('firstLogin'));
+			case 'setpassword':
+				$this->setPasswordAction($template);
+				$template->setVar("page_name", __('setpassword'));
 				break;
 			case 'confirm':
 				$this->confirmAction($template);
@@ -384,7 +387,11 @@ Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: '
 			if($userFoundByUsername) // check if user exists
 			{
 				$userinfo = $app->user->userInfo;
-
+				if (empty($userinfo->password)) // user has not set his password
+				{
+					$template->setVar("message", 'please set your first password');
+					return false;
+				}
 				$token = generateRandomString();
 
 				$result = $XenuxDB->Update("users", [
@@ -523,7 +530,7 @@ Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: '
 		}
 	}
 
-	private function firstLoginAction(&$template)
+	private function setPasswordAction(&$template)
 	{
 		global $app, $XenuxDB;
 
@@ -590,7 +597,16 @@ Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: '
 
 					if($return)
 					{
-						$template->setVar("message", "<p>Das Passwort wurde erfolgreich geändert!</p>");
+						$mail = new mailer;
+						$mail->setSender(XENUX_MAIL);
+						$mail->setReplyTo($app->getOption('admin_email'));
+						$mail->addAdress($userinfo->email, $userinfo->firstname . $userinfo->lastname);
+						$mail->setSubject('Passort gespeichert');
+						$mail->setMessage('Hallo' . $username . '!<br>
+	<p>Dein Passwort für deinen Benutzeraccount auf <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> wurde erogreich gespeichert.</p>');
+						$mail->send()
+
+						$template->setVar("message", "<p>Das Passwort wurde erfolgreich gespeichert!</p>");
 						$app->user->setLogin();
 
 						header('Location: ' . URL_ADMIN . (isset($_GET['redirectTo']) ? $_GET['redirectTo'] : ''));
@@ -660,4 +676,3 @@ Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: '
 		}
 	}
 }
-?>

@@ -83,7 +83,10 @@ CKEDITOR.plugins.add('xenux-cloud', {
 								}
 							}
 
-							rows += '<div onclick="CKEDITOR.tools.xenuxcloud_' + action + '(\'' + entry.id + '\',\'' + filename + '\');" style="background-image:url(\'' + url  + '\');" class="item '+(action!='insertpicture'?'no-image':'')+'"><div class="filename">' + filename + '</div></div>';
+							rows += '<div onclick="CKEDITOR.tools.xenuxcloud_' + action + "('" + entry.id + "','" + filename +
+								'\');" style="background-image:url(\'' + url  + '\');" class="item ' +
+								(action!='insertpicture' ? 'no-image' : '') + '"><div class="filename">' +
+								filename + '</div></div>';
 						});
 						$('#browser').html(empty(rows) ? 'leerer Ordner' : rows);
 					}
@@ -101,7 +104,8 @@ CKEDITOR.plugins.add('xenux-cloud', {
 
 		CKEDITOR.tools.xenuxcloud_insertpicture = function(id, filename) {
 			var dialog = CKEDITOR.dialog.getCurrent();
-			var html = '<img class="cloud-image" src="' + baseurl+'/file/'+SHA1(id) + '-s' + size + '" data-src="' + baseurl+'/file/'+SHA1(id) + '" alt="' + filename + '" />';
+			var html = '<img class="cloud-image" src="' + baseurl+'/file/'+SHA1(id) + '-s' + size +
+				'" data-src="' + baseurl+'/file/'+SHA1(id) + '" alt="' + filename + '">';
 			editor.config.allowedContent = true;
 			editor.insertHtml(html.trim());
 			dialog.hide();
@@ -127,7 +131,8 @@ CKEDITOR.plugins.add('xenux-cloud', {
 					if(response.success == true) {
 						var rows = '<span onclick="CKEDITOR.tools.xenuxcloud_openfolder(0);" class="treeitem" id="0">root</span>';
 						response.data.forEach(function(entry) { // as dataset
-							rows += '<span onclick="CKEDITOR.tools.xenuxcloud_openfolder(' + entry.id + ');"  class="treeitem" id="' + entry.id + '">' + entry.filename + '</span>';
+							rows += '<span onclick="CKEDITOR.tools.xenuxcloud_openfolder(' + entry.id +
+								');"  class="treeitem" id="' + entry.id + '">' + entry.filename + '</span>';
 						});
 						$('#breadcrumb').html(rows);
 					}

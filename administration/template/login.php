@@ -1,3 +1,4 @@
+{# #TODO: translation #}
 <!DOCTYPE html>
 <html lang="<?= translator::getLanguage() ?>">
 <head>
@@ -16,7 +17,6 @@
 	<link rel="stylesheet" type="text/css" href="{{TEMPLATE_PATH}}/css/login.css" media="all">
 </head>
 <body id="top">
-
 	#if(logout):
 		<p class="logout-message box-shadow">Du hast dich erfolgreich ausgeloggt!</p>
 	#endif
@@ -89,11 +89,11 @@
 			<a class="center login" href="{{URL_ADMIN}}/login"><?= __('login') ?></a>
 		<?php endif; ?>
 
-		<?php if($action == 'firstLogin'): ?>
+		<?php if($action == 'setpassword'): ?>
 			<div class="login-box box-shadow">
 				<h2>{{page_name}}</h2>
 
-				<p class="info">Du musst zu erst dein Passwort ändern!</p>
+				<p class="info">Du musst zu erst dein Passwort festlegen!</p>
 
 				{{message}}
 				{{form}}

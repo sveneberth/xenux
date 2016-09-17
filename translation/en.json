@@ -51,6 +51,7 @@
 		"social_media":"Social Media",
 		"amount of postings": "Amount of postings",
 		"entries":"entries",
+		"required":"required",
 
 		"sitemap":"Sitemap",
 		"contact":"Contact",
@@ -61,6 +62,9 @@
 		"contactpersons":"contactpersons",
 		"showContactperson":"show contactperson",
 		"gotocontactpersonList":"go to contactperson list",
+
+		"If you dont want to change the password, leave the fields blank":"If you don't want to change the password, leave the fields blank",
+        "usernames cannot be changed":"usernames cannot be changed",
 
 		"### form ###":"",
 		"please fill field": "Please fill field \"%1\"",

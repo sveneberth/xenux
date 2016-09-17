@@ -1,4 +1,5 @@
 <?php
+#TODO: translation
 class usersController extends AbstractController
 {
 	private $editUserID;
@@ -197,40 +198,37 @@ class usersController extends AbstractController
 			'firstname' => array
 			(
 				'type' => 'text',
-				'required' => true,
-				'editable' => false,
+				'required' => false,
 				'label' => __('firstname'),
 				'value' => @$user->firstname,
 			),
 			'lastname' => array
 			(
 				'type' => 'text',
-				'required' => true,
-				'editable' => false,
+				'required' => false,
 				'label' => __('lastname'),
 				'value' => @$user->lastname,
 			),
 			'realname_show_profile' => array
 			(
-				'type' => 'bool_radio',
-				'required' => true,
+				'type' => 'checkbox',
 				'label' => __('realname_show_profile'),
-				'value' => @$user->realname_show_profile,
+				'value' => 'true',
+				'checked' => @$user->realname_show_profile
 			),
 			'email' => array
 			(
 				'type' => 'email',
 				'required' => true,
-				'editable' => false,
 				'label' => __('email'),
 				'value' => @$user->email,
 			),
 			'email_show_profile' => array
 			(
-				'type' => 'bool_radio',
-				'required' => true,
+				'type' => 'checkbox',
 				'label' => __('email_show_profile'),
-				'value' => @$user->email_show_profile,
+				'value' => 'true',
+				'checked' => @$user->email_show_profile
 			),
 			'homepage' => array
 			(
@@ -250,17 +248,20 @@ class usersController extends AbstractController
 			'password' => array
 			(
 				'type' => 'password',
-				'required' => $new ? true : false,
 				'label' => __('password'),
 				'min_length' => 6,
-				'info' => !$new ? __('If you don\'t want to change the password, leave the fields blank') : '',
+				'info' => !$new ?
+					__('If you dont want to change the password, leave the fields blank') :
+					__('leave the fields blank and the user can set the password himself'),
 			),
 			'passwordAgain' => array
 			(
 				'type' => 'password',
-				'required' => $new ? true : false,
 				'label' => __('passwordAgain'),
-				'min_length' => 6
+				'min_length' => 6,
+				'info' => !$new ?
+					__('If you dont want to change the password, leave the fields blank') :
+					__('leave the fields blank and the user can set the password himself'),
 			),
 			'bio' => array
 			(
@@ -287,11 +288,22 @@ class usersController extends AbstractController
 				'label' => __('cancel'),
 				'style' => 'background-color:red',
 				'class' => 'floating space-left'
+			),
+			'clearfix' => array
+			(
+				'type' => 'html',
+				'value' => '<div class="clear"></div>'
 			)
 		);
 
+		if ($new) {
+			// unset, not needed -> user get email
+			unset($formFields['password']);
+			unset($formFields['passwordAgain']);
+		}
+
 		$form = new form($formFields);
-		$form->disableRequiredInfo();
+	//	$form->disableRequiredInfo();
 
 		if ($form->isSend() && isset($form->getInput()['cancel']))
 		{
@@ -315,7 +327,6 @@ class usersController extends AbstractController
 			{
 				$userFoundByUsername	= $app->user->getUserByUsername($data['username']);
 				$userFoundByEmail		= $app->user->getUserByEmail($data['email']);
-				$passwordsEqual			= $data['password'] == $data['passwordAgain'];
 
 				if ($userFoundByUsername)
 				{
@@ -325,37 +336,60 @@ class usersController extends AbstractController
 				{
 					$this->messages[] = '<p class="box-shadow info-message warning">'.__('an user with this email exist already').'</p>';
 				}
-				if (!$passwordsEqual)
-				{
-					$this->messages[] = '<p class="box-shadow info-message warning">'.__('the passwords are not equal').'</p>';
-				}
 				if (!$social_media_ok)
 				{
 					$this->messages[] = '<p class="box-shadow info-message warning">'.__('the social media links are inacceptable').'</p>';
 				}
 
-				if ($userFoundByEmail || $userFoundByUsername || !$passwordsEqual || !$social_media_ok)
+				if ($userFoundByEmail || $userFoundByUsername || !$social_media_ok)
 				{
 					return $form->getForm();
 				}
+
+				$token = generateRandomString();
 
 				$user = $XenuxDB->Insert('users', [
 					'username'				=> $username,
 					'firstname'				=> $data['firstname'],
 					'lastname'				=> $data['lastname'],
-					'realname_show_profile'	=> parse_bool($data['realname_show_profile']),
+					'realname_show_profile'	=> parse_bool(@$data['realname_show_profile']),
 					'email'					=> $data['email'],
-					'email_show_profile'	=> parse_bool($data['email_show_profile']),
-					'password'				=> $app->user->createPasswordHash($username, $data['password']),
+					'email_show_profile'	=> parse_bool(@$data['email_show_profile']),
+					'password'				=> '',
+					'verifykey'					=> $token,
 					'homepage'				=> $homepage,
 					'bio'					=> $data['bio'],
 					'social_media'			=> $data['social_media'],
 					'confirmed'				=> true
 				]);
 
-				if ($user !== false)
+
+				if (is_numeric($user) && $user != 0)
 				{
-					$this->editUserID = $user;
+					$url = URL_ADMIN . '/login?task=setpassword&amp;id=' . $user . '&amp;token=' . $token;
+
+					$mail = new mailer;
+					$mail->setSender(XENUX_MAIL);
+					$mail->setReplyTo($app->getOption('admin_email'));
+					$mail->addAdress($data['email'], $data['firstname'] . $data['lastname']);
+					$mail->setSubject('Benutzeraccount erstellt');
+					$mail->setMessage('Hallo!<br>
+<p>Es wurde für dich auf <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> ein Benutzeraccount angelegt.</p>
+<p>Benutzername: ' .  $username . '</p>
+<p>Unter der folgenden Adresse kannst du dein Passwort festlegen:<br>
+<a href="' . $url . '">' . $url . '</a></p>');
+
+					if(!$mail->send())
+					{
+						$this->messages[] = '<p class="box-shadow info-message warning">Die Nachricht konnte nicht versendet werden.</p>';
+						$template->setVar("message", '<p>Die Nachricht konnte nicht versendet werden.</p>');
+						$success = false;
+					}
+					else
+					{
+						$this->messages[] = '<p class="box-shadow info-message ok">Mail an den Nutzer erfolgreich versand.</p>';
+						$this->editUserID = $user;
+					}
 				}
 				else
 				{
@@ -433,7 +467,7 @@ class usersController extends AbstractController
 					log::writeLog('user saving failed');
 				$this->messages[] = '<p class="box-shadow info-message error">'.__('savingFailed').'</p>';
 
-				if (isset($data['submit_close']))
+				if (isset($data['submit_close']) || $new) #TODO: use $new exeption for all modules
 				{
 					header('Location: '.URL_ADMIN.'/users/home?savingSuccess=false');
 					return false;

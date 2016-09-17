@@ -64,6 +64,7 @@ class user
 
 		if($user)
 		{
+			$this->userInfo = $user;
 			return $user;
 		}
 		else

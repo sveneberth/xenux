@@ -52,6 +52,7 @@
         "social_media":"Soziale Netzwerke",
         "amount of postings":"Anzahl von Beiträgen",
 		"entries":"Einträge",
+		"required":"erforderlich",
 
         "sitemap":"Sitemap",
         "contact":"Kontakt",
@@ -63,7 +64,7 @@
         "showContactperson":"Ansprechpartner anzeigen",
         "gotocontactpersonList":"alle Ansprechpartner anzeigen",
 
-        "If you don't want to change the password, leave the fields blank":"Falls du das Passwort nicht ändern möchtest, lass die Felder leer",
+        "If you dont want to change the password, leave the fields blank":"Falls du das Passwort nicht ändern möchtest, lass die Felder leer",
         "usernames cannot be changed":"Benutzernamen können nicht geändert werden",
 
         "### form ###":"",
