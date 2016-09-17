@@ -1,7 +1,7 @@
 var baseurl;
 
 $(function() {
-	var baseurl = $( '[rel=baseurl]' ).attr('href');
+	baseurl = $( '[rel=baseurl]' ).attr('href');
 
 	// category accordion
 	$( 'menu.main-menu-left > ul > li > a' ).click(function(e) {

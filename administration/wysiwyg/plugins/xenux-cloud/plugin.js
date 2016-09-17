@@ -37,9 +37,9 @@ CKEDITOR.dialog.add('xenux-cloud-dialog', function(editor) {
 CKEDITOR.plugins.add('xenux-cloud', {
 	init: function(editor) {
 		var pluginDirectory = this.path;
-		
+
 		// add css file
-		$('head').append('<link rel="stylesheet" href="'+pluginDirectory + 'style.css" type="text/css" />');
+		$('head').append('<link rel="stylesheet" href="'+pluginDirectory + 'style.css">');
 
 		// default setting
 		var folder	= 0;
@@ -53,7 +53,7 @@ CKEDITOR.plugins.add('xenux-cloud', {
 		});
 
 		editor.addCommand('xenux-cloud-start', new CKEDITOR.dialogCommand('xenux-cloud-dialog'));
-		
+
 		CKEDITOR.tools.xenuxcloud_loadbrowser = function(folderID) {
 			$.ajax({
 				url: CKEDITOR.config.xenuxCloudAjaxURL,

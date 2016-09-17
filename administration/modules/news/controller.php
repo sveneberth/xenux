@@ -197,10 +197,10 @@ class newsController extends AbstractController
 			),
 			'public' => array
 			(
-				'type' => 'bool_radio',
-				'required' => true,
+				'type' => 'checkbox',
 				'label' => __('newsPublic'),
-				'value' => @$news->public
+				'value' => 'true',
+				'checked' => @$news->public
 			),
 			'author' => array
 			(

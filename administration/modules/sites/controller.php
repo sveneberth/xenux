@@ -11,7 +11,7 @@ class sitesController extends AbstractController
 		if(!isset($this->url[1]) || empty($this->url[1]))
 			header("Location: ".URL_ADMIN.'/'.$this->modulename.'/home');
 	}
-	
+
 	public function run()
 	{
 		global $XenuxDB, $app;
@@ -50,7 +50,7 @@ class sitesController extends AbstractController
 	private function sitesHome()
 	{
 		$template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout_home.php");
-	
+
 		$template->setVar("messages", '');
 		$template->setVar("menu", $this->getMenu());
 
@@ -58,7 +58,7 @@ class sitesController extends AbstractController
 			$template->setVar("messages", '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>');
 		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == false)
 			$template->setVar("messages", '<p class="box-shadow info-message error">'.__('savingFailed').'</p>');
-		
+
 		echo $template->render();
 
 		$this->page_name = __('home');
@@ -144,17 +144,17 @@ class sitesController extends AbstractController
 	private function sitesEdit($new=false)
 	{
 		$template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout_edit.php");
-	
+
 		$template->setVar("messages", '');
 		$template->setVar("form", $this->getEditForm($template, $new));
-		
+
 		$template->setIfCondition("new", $new);
 
 		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == true)
 			$template->setVar("messages", '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>');
 		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == false)
 			$template->setVar("messages", '<p class="box-shadow info-message error">'.__('savingFailed').'</p>');
-		
+
 		echo $template->render();
 
 		$this->page_name = $new ? __('new') : __('edit');
@@ -175,7 +175,7 @@ class sitesController extends AbstractController
 
 		if(!@$site && !$new)
 			throw new Exception("error (site 404)");
-			
+
 		$formFields = array
 		(
 			'title' => array
@@ -197,10 +197,10 @@ class sitesController extends AbstractController
 			),
 			'public' => array
 			(
-				'type' => 'bool_radio',
-				'required' => true,
+				'type' => 'checkbox',
 				'label' => __('sitePublic'),
-				'value' => @$site->public
+				'value' => 'true',
+				'checked' => @$site->public
 			),
 			'html' => array
 			(
@@ -278,7 +278,7 @@ class sitesController extends AbstractController
 			$public = parse_bool($data['public']);
 
 			$author = $app->user->userInfo->id;
-			
+
 			if($new)
 			{
 				$site = $XenuxDB->Insert('sites', [
@@ -312,14 +312,14 @@ class sitesController extends AbstractController
 				[
 					'id' => $this->editSiteID
 				]);
-				
+
 				$return[] = $XenuxDB->Delete('site_contactperson', [
 					'where' => [
 						'site_id' => $this->editSiteID
 					]
 				]);
 			}
-			
+
 			$contactpersons = $XenuxDB->getList('contactpersons', [
 				'order' => 'name ASC'
 			]);
@@ -367,9 +367,9 @@ class sitesController extends AbstractController
 					header('Location: '.URL_ADMIN.'/sites/home?savingSuccess=false');
 					return false;
 				}
-				
+
 				header('Location: '.URL_ADMIN.'/sites/edit/'.$this->editSiteID.'?savingSuccess=false');
-			}			
+			}
 		}
 		return $form->getForm();
 	}

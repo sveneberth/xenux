@@ -487,12 +487,10 @@ input[type="reset"] {
   text-decoration: none;
   display: inline-block;
 }
-.btn:hover,
-a.btn:visited:hover,
-a.btn:link:hover,
+.btn,
+a.btn:hover,
+a.btn:focus,
 input[type="submit"]:hover,
-input[type="checkbox"]:hover,
-input[type="radio"]:hover,
 input[type="button"]:hover,
 input[type="reset"]:hover {
   background: #2580a2;
@@ -1246,6 +1244,7 @@ a.btn-new:link,
   margin-left: 1em;
   padding: 5px 8px;
   text-decoration: none;
+  transition: ease border .4s, ease background .2s;
   position: absolute;
   top: 50%;
   transform: translate(0, -50%);
@@ -1259,6 +1258,7 @@ a.btn-new:visited:hover,
 a.btn-new:link:hover,
 .btn-new:hover {
   background: #2580a2;
+  border-color: #244394;
   color: #e5e5e5;
 }
 .box-shadow {

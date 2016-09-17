@@ -223,7 +223,6 @@ class eventsController extends AbstractController
 			'text' => array
 			(
 				'type' => 'textarea',
-				'required' => true,
 				'label' => __('eventDesc'),
 				'value' => htmlentities(@$event->text),
 				'wysiwyg' => true,
@@ -231,10 +230,11 @@ class eventsController extends AbstractController
 			),
 			'public' => array
 			(
-				'type' => 'bool_radio',
+				'type' => 'checkbox',
 				'required' => true,
 				'label' => __('eventPublic'),
-				'value' => @$event->public
+				'value' => 'true',
+				'checked' => @$event->public
 			),
 			'author' => array
 			(
