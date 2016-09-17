@@ -52,7 +52,6 @@ class newsController extends AbstractController
 		global $app, $XenuxDB;
 
 		$template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout_home.php");
-
 		$template->setVar("messages", '');
 
 		if(isset($_GET['remove']) && is_numeric($_GET['remove']) && !empty($_GET['remove']))
@@ -63,6 +62,34 @@ class newsController extends AbstractController
 				]
 			]);
 			$template->setVar("messages", '<p class="box-shadow info-message ok">'.__('removedSuccessful').'</p>');
+		}
+
+		if (isset($_GET['action']) && in_array($_GET['action'], ['private', 'public', 'remove'])
+			&& isset($_GET['item']) && is_array($_GET['item']))
+		{
+			foreach ($_GET['item'] as $item) {
+				if (is_numeric($item)) {
+					switch ($_GET['action']) {
+						case 'private':
+						case 'public':
+							$XenuxDB->Update('news', [
+								'public' => $_GET['action']=='public' ? true : false
+							], [
+									'id' => $item
+							]);
+							break;
+						case 'remove':
+							$XenuxDB->delete('news', [
+								'where' => [
+									'id' => $item
+								]
+							]);
+							break;
+					}
+					$template->setVar('messages',
+						'<p class="box-shadow info-message ok">' . __('batch processing successful') . '</p>');
+				}
+			}
 		}
 
 		$template->setVar("news", $this->getNewsTable());
@@ -76,6 +103,7 @@ class newsController extends AbstractController
 		echo $template->render();
 
 		$this->page_name = __('home');
+		$this->headlineSuffix = '<a class="btn-new" href="{{URL_ADMIN}}/news/new">' . __('new') . '</a>';
 	}
 
 	private function getNewsTable()
@@ -92,14 +120,19 @@ class newsController extends AbstractController
 			foreach($news as $subnews)
 			{
 				$return .= '
-<li '.($subnews->public == false ? 'class="non-public"' : '').'>
-	<span class="data-column news-id">'.$subnews->id.'</span>
-	<a class="data-column news-title edit" href="{{URL_ADMIN}}/news/edit/'.$subnews->id.'" title="'.__('click to edit news').'">'.$subnews->title.'</a>
-	<span class="data-column news-create-date">'.$subnews->create_date.'</span>
-	<span class="data-column news-text">'.shortstr(strip_tags($subnews->text), 50, 100).'</span>
-	<a class="data-column show" target="_blank" href="{{URL_MAIN}}/news/view/'.getPreparedLink($subnews->id, $subnews->title).'">'.__('show').'</a>
-	<a href="{{URL_ADMIN}}/news/home/?remove='.$subnews->id.'" title="'.__('deleteNews').'" class="remove remove-icon clickable"></a>
-</li>';
+<tr ' . ($subnews->public == false ? 'class="private"' : '') . '>
+	<td class="column-select"><input type="checkbox" name="item[]" value="' . $subnews->id . '"></td>
+	<td class="column-id">' . $subnews->id . '</td>
+	<td class="column-title">
+		<a class="edit" href="{{URL_ADMIN}}/news/edit/' . $subnews->id . '" title="' . __('click to edit news') . '">' . $subnews->title . '</a>
+	</td>
+	<td class="column-date">' . $subnews->create_date . '</td>
+	<td class="column-text">' . shortstr(strip_tags($subnews->text), 50, 100) . '</td>
+	<td class="column-actions">
+		<a class="view-btn" target="_blank" href="{{URL_MAIN}}/news/view/' . getPreparedLink($subnews->id, $subnews->title) . '">' . __('view') . '</a>
+		<a href="{{URL_ADMIN}}/news/home/?remove=' . $subnews->id . '" title="' . __('delete') . '" class="remove-btn"></a>
+	</td>
+</tr>';;
 			}
 		}
 

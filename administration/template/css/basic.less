@@ -17,7 +17,6 @@ body {
   background: #eee;
 }
 
-
 b, strong, th {
   font-weight: bold;
 }
@@ -70,23 +69,24 @@ p {
   margin: 16px 0;
 }
 
-input, textarea, select {
+input, textarea, select, .btn {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  font-size: 90%;
+  background: #fff;
   border: 1px solid #999;
-  color: inherit;
+  box-shadow: inset 0px 1px 2px 0px rgba(0,0,0,0.1);
+  box-sizing: border-box;
+  color: @textColor;
+  display: block;
+  font-size: 90%;
+  line-height: normal;
+  margin: 0 0 15px 0;
+  max-width: 100%;
   padding: 8px 10px;
   resize: none;
-  background: #fff;
-  width: 400px;
-  box-sizing: border-box;
-  max-width: 100%;
-  margin: 0 0 15px 0;
-  display: block;
-  box-shadow: inset 0px 1px 2px 0px rgba(0,0,0,0.1);
   transition: ease border .4s, ease background .2s;
+  width: 400px;
   &:focus, &:hover {border-color: #244394;}
 }
 input.wrong,
@@ -115,6 +115,9 @@ input[type="submit"] {
   margin-top: 2em;
   margin-bottom: 0;
 }
+.btn,
+a.btn:visited,
+a.btn:link,
 input[type="submit"],
 input[type="checkbox"],
 input[type="radio"],
@@ -124,8 +127,10 @@ input[type="reset"] {
   color: #e5e5e5;
   width: auto;
   cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
   &:hover  {
-    /*background: #2580a2;*/
+    background: #2580a2;
   }
 }
 
@@ -216,7 +221,33 @@ form > .cke {
 .clear {
   clear: both;
 }
+.clearfix {
+  *zoom: 1;
+  &:after {
+    content: '';
+    display: block;
+    clear: both;
+    height: 0;
+  }
+}
 
+// center
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.centerX {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+.centerY {
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+}
 
 @-webkit-keyframes popin {
   0% {

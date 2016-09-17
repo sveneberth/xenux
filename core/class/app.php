@@ -7,6 +7,7 @@ class app
 	public $url;
 	public $page_name;
 	public $user;
+	public $headlineSuffix;
 
 	private $cssfiles = [];
 	private $jsfiles = [];
@@ -141,6 +142,7 @@ class app
 			$template->setVar("homepage_name", $this->getOption('hp_name'));
 			$template->setVar("page_title", $this->page_name);
 			$template->setVar("headline", $this->page_name);
+			$template->setVar("headlineSuffix", $this->headlineSuffix);
 
 			$template->setVar("CSS-FILES", $this->getCSS());
 			$template->setVar("JS-FILES", $this->getJS());
@@ -186,6 +188,7 @@ class app
 				$page_content = ob_get_clean();
 
 				$this->page_name = $controller->page_name;
+				$this->headlineSuffix = $controller->headlineSuffix;
 
 				return $page_content;
 			}

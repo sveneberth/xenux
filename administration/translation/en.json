@@ -18,6 +18,7 @@
 		"view":"view",
 		"new":"new",
 		"edit":"edit",
+		"delete":"delete",
 
 		"dashboard":"Dashboard",
 		"cloud":"cloud",

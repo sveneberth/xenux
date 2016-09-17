@@ -8,7 +8,7 @@ class eventsController extends AbstractController
 		$this->url = $url;
 		$this->modulename = str_replace('Controller', '', get_class());
 
-		if(!isset($this->url[1]) || empty($this->url[1]))
+		if (!isset($this->url[1]) || empty($this->url[1]))
 			header("Location: ".URL_ADMIN.'/'.$this->modulename.'/home');
 	}
 
@@ -19,13 +19,13 @@ class eventsController extends AbstractController
 		// append translations
 		translator::appendTranslations(PATH_ADMIN . '/modules/'.$this->modulename.'/translation/');
 
-		if(@$this->url[1] == "home")
+		if (@$this->url[1] == "home")
 		{
 			$this->eventsHome();
 		}
-		elseif(@$this->url[1] == "edit")
+		elseif (@$this->url[1] == "edit")
 		{
-			if(isset($this->url[2]) && is_numeric($this->url[2]) && !empty($this->url[2]))
+			if (isset($this->url[2]) && is_numeric($this->url[2]) && !empty($this->url[2]))
 			{
 				$this->editID = $this->url[2];
 				$this->eventEdit();
@@ -35,7 +35,7 @@ class eventsController extends AbstractController
 				throw new Exception(__('isWrong', 'EVENT ID'));
 			}
 		}
-		elseif(@$this->url[1] == "new")
+		elseif (@$this->url[1] == "new")
 		{
 			$this->eventEdit(true);
 		}
@@ -52,30 +52,59 @@ class eventsController extends AbstractController
 		global $app, $XenuxDB;
 
 		$template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout_home.php");
-
 		$template->setVar("messages", '');
 
-		if(isset($_GET['remove']) && is_numeric($_GET['remove']) && !empty($_GET['remove']))
+		if (isset($_GET['remove']) && is_numeric($_GET['remove']) && !empty($_GET['remove']))
 		{
 			$XenuxDB->delete('events', [
 				'where' => [
 					'id' => $_GET['remove']
 				]
 			]);
-			$template->setVar("messages", '<p class="box-shadow info-message ok">'.__('removedSuccessful').'</p>');
+			$template->setVar('messages', '<p class="box-shadow info-message ok">'.__('removedSuccessful').'</p>');
 		}
+
+		if (isset($_GET['action']) && in_array($_GET['action'], ['private', 'public', 'remove'])
+			&& isset($_GET['item']) && is_array($_GET['item']))
+		{
+			foreach ($_GET['item'] as $item) {
+				if (is_numeric($item)) {
+					switch ($_GET['action']) {
+						case 'private':
+						case 'public':
+							$XenuxDB->Update('events', [
+								'public' => $_GET['action']=='public' ? true : false
+							], [
+									'id' => $item
+							]);
+							break;
+						case 'remove':
+							$XenuxDB->delete('events', [
+								'where' => [
+									'id' => $item
+								]
+							]);
+							break;
+					}
+					$template->setVar('messages',
+						'<p class="box-shadow info-message ok">' . __('batch processing successful') . '</p>');
+				}
+			}
+		}
+
 
 		$template->setVar("events", $this->getEventTable());
 		$template->setVar("amount", $XenuxDB->count('events'));
 
-		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == true)
+		if (isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == true)
 			$template->setVar("messages", '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>');
-		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == false)
+		if (isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == false)
 			$template->setVar("messages", '<p class="box-shadow info-message error">'.__('savingFailed').'</p>');
 
 		echo $template->render();
 
 		$this->page_name = __('home');
+		$this->headlineSuffix = '<a class="btn-new" href="{{URL_ADMIN}}/events/new">' . __('new') . '</a>';
 	}
 
 	private function getEventTable()
@@ -87,7 +116,7 @@ class eventsController extends AbstractController
 		$events = $XenuxDB->getList('events', [
 			'order' => 'start_date DESC'
 		]);
-		if($events)
+		if ($events)
 		{
 			foreach($events as $event)
 			{
@@ -103,7 +132,7 @@ class eventsController extends AbstractController
 	<td class="column-date">' . $event->end_date . '</td>
 	<td class="column-actions">
 		<a class="view-btn" target="_blank" href="{{URL_MAIN}}/event/view/' . getPreparedLink($event->id, $event->title) . '">' . __('view') . '</a>
-		<a href="{{URL_ADMIN}}/events/home/?remove=' . $event->id . '" title="' . __('deleteEvent') . '" class="remove-btn"></a>
+		<a href="{{URL_ADMIN}}/events/home/?remove=' . $event->id . '" title="' . __('delete') . '" class="remove-btn"></a>
 	</td>
 </tr>';
 			}
@@ -122,9 +151,9 @@ class eventsController extends AbstractController
 
 		$template->setIfCondition("new", $new);
 
-		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == true)
+		if (isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == true)
 			$template->setVar("messages", '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>');
-		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == false)
+		if (isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == false)
 			$template->setVar("messages", '<p class="box-shadow info-message error">'.__('savingFailed').'</p>');
 
 		echo $template->render();
@@ -136,7 +165,7 @@ class eventsController extends AbstractController
 	{
 		global $XenuxDB, $app;
 
-		if(!$new)
+		if (!$new)
 			$event = $XenuxDB->getEntry('events', [
 				'join' => [
 					'[>]users' => ['events.author_id' => 'users.id']
@@ -146,7 +175,7 @@ class eventsController extends AbstractController
 				]
 			]);
 
-		if(!@$event && !$new)
+		if (!@$event && !$new)
 			throw new Exception("error (evnts 404)");
 
 		$formFields = array
@@ -239,13 +268,13 @@ class eventsController extends AbstractController
 		$form = new form($formFields);
 		$form->disableRequiredInfo();
 
-		if($form->isSend() && isset($form->getInput()['cancel']))
+		if ($form->isSend() && isset($form->getInput()['cancel']))
 		{
 			header('Location: '.URL_ADMIN.'/evens/home');
 			return false;
 		}
 
-		if($form->isSend() && $form->isValid())
+		if ($form->isSend() && $form->isValid())
 		{
 			$data = $form->getInput();
 
@@ -260,7 +289,7 @@ class eventsController extends AbstractController
 
 			$author = $app->user->userInfo->id;
 
-			if($new)
+			if ($new)
 			{
 				$event = $XenuxDB->Insert('events', [
 					'title'				=> $title,
@@ -272,7 +301,7 @@ class eventsController extends AbstractController
 					'end_date'			=> $end_date
 				]);
 
-				if($event)
+				if ($event)
 				{
 					$return = true;
 					$this->editID = $event;
@@ -297,13 +326,13 @@ class eventsController extends AbstractController
 				]);
 			}
 
-			if($return === true)
+			if ($return === true)
 			{
 				if ((defined('DEBUG') && DEBUG == true))
 					log::writeLog('event saved successful');
 				$template->setVar("messages", '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>');
 
-				if(isset($data['submit_close']))
+				if (isset($data['submit_close']))
 				{
 					header('Location: '.URL_ADMIN.'/events/home?savingSuccess=true');
 					return false;
@@ -318,7 +347,7 @@ class eventsController extends AbstractController
 
 				$template->setVar("messages", '<p class="box-shadow info-message error">'.__('savingFailed').'</p>');
 
-				if(isset($data['submit_close']))
+				if (isset($data['submit_close']))
 				{
 					header('Location: '.URL_ADMIN.'/events/home?savingSuccess=false');
 					return false;

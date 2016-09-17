@@ -138,7 +138,7 @@
 	</menu>
 
 	<div class="wrapper">
-		<h1 class="page-headline box-shadow">{{headline}}</h1>
+		<h1 class="page-headline box-shadow">{{headline}}{{headlineSuffix}}</h1>
 
 		{{page_content}}
 

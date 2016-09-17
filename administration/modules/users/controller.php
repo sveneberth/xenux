@@ -9,7 +9,7 @@ class usersController extends AbstractController
 		$this->url = $url;
 		$this->modulename = str_replace('Controller', '', get_class());
 
-		if(!isset($this->url[1]) || empty($this->url[1]))
+		if (!isset($this->url[1]) || empty($this->url[1]))
 			header("Location: ".URL_ADMIN.'/'.$this->modulename.'/home');
 	}
 
@@ -20,13 +20,13 @@ class usersController extends AbstractController
 		// append translations
 		translator::appendTranslations(PATH_ADMIN . '/modules/'.$this->modulename.'/translation/');
 
-		if(@$this->url[1] == "home")
+		if (@$this->url[1] == "home")
 		{
 			$this->userHome();
 		}
-		elseif(@$this->url[1] == "edit")
+		elseif (@$this->url[1] == "edit")
 		{
-			if(isset($this->url[2]) && is_numeric($this->url[2]) && !empty($this->url[2]))
+			if (isset($this->url[2]) && is_numeric($this->url[2]) && !empty($this->url[2]))
 			{
 				$this->editUserID = $this->url[2];
 				$this->userEdit();
@@ -37,7 +37,7 @@ class usersController extends AbstractController
 				throw new Exception(__('isWrong', 'users ID'));
 			}
 		}
-		elseif(@$this->url[1] == "profile")
+		elseif (@$this->url[1] == "profile")
 		{
 			$this->editUserID = $app->user->userInfo->id;
 			$this->userEdit();
@@ -45,7 +45,7 @@ class usersController extends AbstractController
 
 			$this->page_name = __('profile');
 		}
-		elseif(@$this->url[1] == "new")
+		elseif (@$this->url[1] == "new")
 		{
 			$this->userEdit(true);
 		}
@@ -64,7 +64,7 @@ class usersController extends AbstractController
 		$template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout_home.php");
 
 
-		if(isset($_GET['remove']) && is_numeric($_GET['remove']) && !empty($_GET['remove']))
+		if (isset($_GET['remove']) && is_numeric($_GET['remove']) && !empty($_GET['remove']))
 		{
 			$XenuxDB->delete('users', [
 				'where' => [
@@ -74,12 +74,32 @@ class usersController extends AbstractController
 			$this->messages[] = '<p class="box-shadow info-message ok">'.__('removedSuccessful').'</p>';
 		}
 
+		if (isset($_GET['action']) && in_array($_GET['action'], ['remove'])
+			&& isset($_GET['item']) && is_array($_GET['item']))
+		{
+			foreach ($_GET['item'] as $item) {
+				if (is_numeric($item)) {
+					switch ($_GET['action']) {
+						case 'remove':
+							$XenuxDB->delete('users', [
+								'where' => [
+									'id' => $item
+								]
+							]);
+							break;
+					}
+					$template->setVar('messages',
+						'<p class="box-shadow info-message ok">' . __('batch processing successful') . '</p>');
+				}
+			}
+		}
+
 		$template->setVar("users", $this->getUserTable());
 		$template->setVar("amount", $XenuxDB->count('users'));
 
-		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == true)
+		if (isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == true)
 			$this->messages[] = '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>';
-		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == false)
+		if (isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == false)
 			$this->messages[] = '<p class="box-shadow info-message error">'.__('savingFailed').'</p>';
 
 
@@ -88,6 +108,7 @@ class usersController extends AbstractController
 		echo $template->render();
 
 		$this->page_name = __('home');
+		$this->headlineSuffix = '<a class="btn-new" href="{{URL_ADMIN}}/users/new">' . __('new') . '</a>';
 	}
 
 	private function getUserTable()
@@ -99,19 +120,24 @@ class usersController extends AbstractController
 		$users = $XenuxDB->getList('users', [
 			'order' => 'username ASC'
 		]);
-		if($users)
+		if ($users)
 		{
 			foreach($users as $user)
 			{
 				$return .= '
-<li>
-	<span class="data-column user-id">'.$user->id.'</span>
-	<a class="data-column user-username edit" href="{{URL_ADMIN}}/users/edit/'.$user->id.'" title="'.__('click to edit user').'">'.$user->username.'</a>
-	<span class="data-column user-firstname">'.$user->firstname.'</span>
-	<span class="data-column user-lastname">'.$user->lastname.'</span>
-	<!--<a class="data-column show" target="_blank" href="{{URL_MAIN}}/user/view/'.getPreparedLink($user->id, $user->username).'">'.__('show').'</a>-->
-	<a href="{{URL_ADMIN}}/users/home/?remove='.$user->id.'" title="'.__('deleteusers').'" class="remove remove-icon clickable"></a>
-</li>';
+<tr>
+	<td class="column-select"><input type="checkbox" name="item[]" value="' . $user->id . '"></td>
+	<td class="column-id">' . $user->id . '</td>
+	<td class="column-text">
+		<a class="edit" href="{{URL_ADMIN}}/users/edit/' . $user->id . '" title="' . __('click to edit user') . '">' . $user->username . '</a>
+	</td>
+	<td class="column-text">' . $user->firstname . '</td>
+	<td class="column-text">' . $user->lastname . '</td>
+	<td class="column-actions">
+		<a class="view-btn" target="_blank" href="{{URL_MAIN}}/user/view/' . urlencode($user->username) . '">' . __('view') . '</a>
+		<a href="{{URL_ADMIN}}/users/home/?remove=' . $user->id . '" title="' . __('delete') . '" class="remove-btn"></a>
+	</td>
+</tr>';
 			}
 		}
 
@@ -130,9 +156,9 @@ class usersController extends AbstractController
 		$template->setIfCondition("new", $new);
 		$template->setIfCondition("profileEdit", @$this->url[1] == "profile");
 
-		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == true)
+		if (isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == true)
 			$this->messages[] = '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>';
-		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == false)
+		if (isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == false)
 			$this->messages[] = '<p class="box-shadow info-message error">'.__('savingFailed').'</p>';
 
 		$template->setVar("messages", implode("\n", $this->messages));
@@ -146,14 +172,14 @@ class usersController extends AbstractController
 	{
 		global $XenuxDB, $app;
 
-		if(!$new)
+		if (!$new)
 			$user = $XenuxDB->getEntry('users', [
 				'where' => [
 					'id' => $this->editUserID
 				]
 			]);
 
-		if(!@$user && !$new)
+		if (!@$user && !$new)
 			throw new Exception("error (user 404)");
 
 		$formFields = array
@@ -267,13 +293,13 @@ class usersController extends AbstractController
 		$form = new form($formFields);
 		$form->disableRequiredInfo();
 
-		if($form->isSend() && isset($form->getInput()['cancel']))
+		if ($form->isSend() && isset($form->getInput()['cancel']))
 		{
 			header('Location: '.URL_ADMIN.'/users/home');
 			return false;
 		}
 
-		if($form->isSend() && $form->isValid())
+		if ($form->isSend() && $form->isValid())
 		{
 			$data = $form->getInput();
 
@@ -285,30 +311,30 @@ class usersController extends AbstractController
 
 			$success = true;
 
-			if($new)
+			if ($new)
 			{
 				$userFoundByUsername	= $app->user->getUserByUsername($data['username']);
 				$userFoundByEmail		= $app->user->getUserByEmail($data['email']);
 				$passwordsEqual			= $data['password'] == $data['passwordAgain'];
 
-				if($userFoundByUsername)
+				if ($userFoundByUsername)
 				{
 					$this->messages[] = '<p class="box-shadow info-message warning">'.__('an user with this username exist already').'</p>';
 				}
-				if($userFoundByEmail)
+				if ($userFoundByEmail)
 				{
 					$this->messages[] = '<p class="box-shadow info-message warning">'.__('an user with this email exist already').'</p>';
 				}
-				if(!$passwordsEqual)
+				if (!$passwordsEqual)
 				{
 					$this->messages[] = '<p class="box-shadow info-message warning">'.__('the passwords are not equal').'</p>';
 				}
-				if(!$social_media_ok)
+				if (!$social_media_ok)
 				{
 					$this->messages[] = '<p class="box-shadow info-message warning">'.__('the social media links are inacceptable').'</p>';
 				}
 
-				if($userFoundByEmail || $userFoundByUsername || !$passwordsEqual || !$social_media_ok)
+				if ($userFoundByEmail || $userFoundByUsername || !$passwordsEqual || !$social_media_ok)
 				{
 					return $form->getForm();
 				}
@@ -327,7 +353,7 @@ class usersController extends AbstractController
 					'confirmed'				=> true
 				]);
 
-				if($user !== false)
+				if ($user !== false)
 				{
 					$this->editUserID = $user;
 				}
@@ -338,10 +364,10 @@ class usersController extends AbstractController
 			}
 			else
 			{
-				if((isset($data['password']) && !empty($data['password'])) || (isset($data['passwordAgain']) && !empty($data['passwordAgain'])))
+				if ((isset($data['password']) && !empty($data['password'])) || (isset($data['passwordAgain']) && !empty($data['passwordAgain'])))
 				{
 					// password change
-					if($data['password'] == $data['passwordAgain'])
+					if ($data['password'] == $data['passwordAgain'])
 					{
 						$return = $XenuxDB->Update('users', [
 							'password' => $app->user->createPasswordHash($data['username'], $data['password']),
@@ -350,7 +376,7 @@ class usersController extends AbstractController
 							'id' => $this->editUserID
 						]);
 
-						if($return === false)
+						if ($return === false)
 							$success = false;
 					}
 					else
@@ -361,7 +387,7 @@ class usersController extends AbstractController
 
 				}
 
-				if(!$social_media_ok)
+				if (!$social_media_ok)
 				{
 					$this->messages[] = '<p class="box-shadow info-message warning">'.__('the social media links are inacceptable').'</p>';
 					return $form->getForm();
@@ -383,17 +409,17 @@ class usersController extends AbstractController
 					'id' => $this->editUserID
 				]);
 
-				if($return === false)
+				if ($return === false)
 					$success = false;
 			}
 
-			if($success === true)
+			if ($success === true)
 			{
 				if (defined('DEBUG') && DEBUG == true)
 					log::writeLog('user saved successfull');
 				$this->messages[] = '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>';
 
-				if(isset($data['submit_close']))
+				if (isset($data['submit_close']))
 				{
 					header('Location: '.URL_ADMIN.'/users/home?savingSuccess=true');
 					return false;
@@ -407,7 +433,7 @@ class usersController extends AbstractController
 					log::writeLog('user saving failed');
 				$this->messages[] = '<p class="box-shadow info-message error">'.__('savingFailed').'</p>';
 
-				if(isset($data['submit_close']))
+				if (isset($data['submit_close']))
 				{
 					header('Location: '.URL_ADMIN.'/users/home?savingSuccess=false');
 					return false;

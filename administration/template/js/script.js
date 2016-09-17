@@ -1,21 +1,32 @@
-$(document).ready(function() {
+var baseurl;
+
+$(function() {
+	var baseurl = $( '[rel=baseurl]' ).attr('href');
+
 	// category accordion
-	$("menu.main-menu-left > ul > li > a").click(function(e) {
-	//	e.preventDefault();
+	$( 'menu.main-menu-left > ul > li > a' ).click(function(e) {
+		if(false == $( this ).next().is(':visible')) {
+			$( 'menu.main-menu-left > ul ul' ).slideUp(300);
 
-		if(false == $(this).next().is(':visible')) {
-			$('menu.main-menu-left > ul ul').slideUp(300);
-
-			$("menu.main-menu-left > ul > li").removeClass('open');
-			$(this).parent().addClass('open');
+			$( 'menu.main-menu-left > ul > li' ).removeClass('open');
+			$( this ).parent().addClass('open');
 		}
-		$(this).next().slideToggle(300);
+		$( this ).next().slideToggle(300);
 	});
-	$('menu.main-menu-left > ul > li.active ul').show();
+	$( 'menu.main-menu-left > ul > li.active ul' ).show();
 
+	// data table selector
+	$( '.select-all-items' ).on('click', function() {
+		if ($( this ).attr('checked')) {
+			$( 'td.column-select > input' ).attr('checked', 'checked');
+		} else {
+			$( 'td.column-select > input' ).removeAttr('checked');
+		}
+	})
+	$( 'td.column-select > input' ).on('click', function() {
+		$( '.select-all-items' ).removeAttr('checked')
+	})
 });
-
-var baseurl = $('[rel=baseurl]').attr('href');
 
 function notifyMe(title, text, click) {
 	if(!Notification) {
@@ -27,9 +38,18 @@ function notifyMe(title, text, click) {
 		Notification.requestPermission();
 
 	var notification = new Notification(title, {
-	icon: $('link[rel="shortcut icon"]').attr('href'),
+	icon: $( 'link[rel="shortcut icon"]' ).attr('href'),
 	body: text,
 	});
 
 	notification.onclick = click;
+}
+
+// replace get params in browser's url bar
+var url = window.location.href;
+var title = document.title;
+var newUrl = url.substring(0, url.indexOf('?')) + window.location.hash;
+// replace new url
+if(window.history.replaceState) {
+	window.history.replaceState(null, null, newUrl);
 }

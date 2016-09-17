@@ -417,30 +417,34 @@ p {
 }
 input,
 textarea,
-select {
+select,
+.btn {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  font-size: 90%;
+  background: #fff;
   border: 1px solid #999;
-  color: inherit;
+  box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  color: #111;
+  display: block;
+  font-size: 90%;
+  line-height: normal;
+  margin: 0 0 15px 0;
+  max-width: 100%;
   padding: 8px 10px;
   resize: none;
-  background: #fff;
-  width: 400px;
-  box-sizing: border-box;
-  max-width: 100%;
-  margin: 0 0 15px 0;
-  display: block;
-  box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
   transition: ease border .4s, ease background .2s;
+  width: 400px;
 }
 input:focus,
 textarea:focus,
 select:focus,
+.btn:focus,
 input:hover,
 textarea:hover,
-select:hover {
+select:hover,
+.btn:hover {
   border-color: #244394;
 }
 input.wrong,
@@ -468,6 +472,9 @@ input[type="submit"] {
   margin-top: 2em;
   margin-bottom: 0;
 }
+.btn,
+a.btn:visited,
+a.btn:link,
 input[type="submit"],
 input[type="checkbox"],
 input[type="radio"],
@@ -477,13 +484,18 @@ input[type="reset"] {
   color: #e5e5e5;
   width: auto;
   cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
 }
+.btn:hover,
+a.btn:visited:hover,
+a.btn:link:hover,
 input[type="submit"]:hover,
 input[type="checkbox"]:hover,
 input[type="radio"]:hover,
 input[type="button"]:hover,
 input[type="reset"]:hover {
-  /*background: #2580a2;*/
+  background: #2580a2;
 }
 input[type="radio"],
 input[type="checkbox"] {
@@ -565,6 +577,31 @@ form > .cke {
 }
 .clear {
   clear: both;
+}
+.clearfix {
+  *zoom: 1;
+}
+.clearfix:after {
+  content: '';
+  display: block;
+  clear: both;
+  height: 0;
+}
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.centerX {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+.centerY {
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
 }
 @-webkit-keyframes popin {
   0% {
@@ -1198,6 +1235,32 @@ menu.main-menu-left > ul.menu ul li.active {
   background: #fff;
   padding: 5px 10px;
 }
+a.btn-new,
+a.btn-new:visited,
+a.btn-new:link,
+.btn-new {
+  border: 1px solid #999;
+  box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  font-size: .9rem;
+  margin-left: 1em;
+  padding: 5px 8px;
+  text-decoration: none;
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+a.btn-new:focus,
+a.btn-new:visited:focus,
+a.btn-new:link:focus,
+.btn-new:focus,
+a.btn-new:hover,
+a.btn-new:visited:hover,
+a.btn-new:link:hover,
+.btn-new:hover {
+  background: #2580a2;
+  color: #e5e5e5;
+}
 .box-shadow {
   box-shadow: 0 0 5px 0 #ccc;
 }
@@ -1270,9 +1333,6 @@ ul.data-table > li > .data-column {
   display: inline-block;
   float: left;
 }
-table.data-table tr {
-  padding: 5px 10px;
-}
 table.data-table tr:not(:last-child) {
   border-bottom: 1px solid #ccc;
 }
@@ -1285,8 +1345,25 @@ table.data-table .table-head th {
   font-weight: 200;
   border-bottom: 1px solid #999;
 }
+table.data-table .header {
+  background-repeat: no-repeat;
+  background-position: center right;
+  cursor: pointer;
+}
+table.data-table .header:not(.headerSortDown):not(.headerSortUp):hover {
+  background-image: url(../images/table-bg.gif);
+}
+table.data-table .headerSortUp {
+  background-image: url(../images/table-asc.gif);
+}
+table.data-table .headerSortDown {
+  background-image: url(../images/table-desc.gif);
+}
 table.data-table .private {
   opacity: .7;
+}
+table.data-table .column-select {
+  width: 5%;
 }
 table.data-table .column-id {
   width: 5%;
@@ -1296,6 +1373,9 @@ table.data-table .column-date {
 }
 table.data-table .column-actions {
   width: 10%;
+}
+table.data-table .column-select input {
+  margin: 0;
 }
 table.data-table .view-btn {
   right: 40px;
@@ -1340,4 +1420,15 @@ table.data-table .remove-btn {
   padding: 20px;
   color: #253152;
   text-align: center;
+}
+.actionbar {
+  margin: 0 0 1em;
+}
+.actionbar .action-select,
+.actionbar .action-btn {
+  float: left;
+  margin: 0;
+}
+.actionbar .action-btn {
+  margin-left: 5px;
 }
