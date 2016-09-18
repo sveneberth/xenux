@@ -1308,31 +1308,6 @@ form .error-messages p {
   box-shadow: 0 0 1px 1px #ccc;
   margin: 8px 0;
 }
-ul.data-table {
-  display: block;
-}
-ul.data-table > li {
-  display: block;
-  padding: 5px 10px;
-  position: relative;
-}
-ul.data-table > li:not(:last-child) {
-  border-bottom: 1px solid #ccc;
-}
-ul.data-table > li:after {
-  clear: both;
-  content: '';
-  display: block;
-}
-ul.data-table > li.headline {
-  font-weight: 200;
-  border-bottom: 1px solid #999;
-  padding: 0 10px;
-}
-ul.data-table > li > .data-column {
-  display: inline-block;
-  float: left;
-}
 table.data-table tr:not(:last-child) {
   border-bottom: 1px solid #ccc;
 }

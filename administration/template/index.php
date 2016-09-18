@@ -22,7 +22,6 @@
 	<script src="{{TEMPLATE_PATH}}/js/jquery-migrate-1.2.1.min.js"></script>
 	<script src="{{TEMPLATE_PATH}}/js/jquery-ui.min.js"></script>
 	<script src="{{TEMPLATE_PATH}}/js/jquery.ui.touch-punch.min.js"></script>
-	<script src="{{TEMPLATE_PATH}}/js/jquery.cookie.js"></script> <!-- need this here ?? -->
 	<script src="{{TEMPLATE_PATH}}/js/jquery.mousewheel.js"></script>
 
 	<!-- scripts -->
@@ -30,12 +29,6 @@
 	<script src="{{TEMPLATE_PATH}}/js/script.js"></script>
 	<script src="http://tablesorter.com/__jquery.tablesorter.min.js"></script>
 	{{JS-FILES}}
-
-	<script>
-	$(document).ready(function() {
-		$("#data-table").tablesorter();
-	});
-	</script>
 </head>
 <body id="top">
 	<noscript>
