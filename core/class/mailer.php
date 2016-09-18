@@ -2,9 +2,6 @@
 require_once(PATH_MAIN . '/core/libs/html2text/Html2Text.php');
 require_once(PATH_MAIN . '/core/libs/html2text/Html2TextException.php');
 
-// #FIXME: is_null doesnt work because of the utf8-escaping
-// use an other condition or remove this part
-
 class mailer
 {
 	public $debugPath =  '/mails/';
@@ -72,9 +69,9 @@ class mailer
 
 		foreach ($this->to as $toArr)
 		{
-			$tmp[] = 	(!is_null($toArr[1]) ? $toArr[1] : '') .
-						(!is_null($toArr[0]) ?
-							(is_null($toArr[1]) ? $toArr[0] : ' <' . $toArr[0] . '>') :
+			$tmp[] = 	(!$this->is_null($toArr[1]) ? $toArr[1] : '') . // name if set
+						(!$this->is_null($toArr[0]) ? // email not empty
+							($this->is_null($toArr[1]) ? $toArr[0] : ' <' . $toArr[0] . '>') :
 							'');
 		}
 
@@ -85,8 +82,8 @@ class mailer
 	{
 		$this->push_header('MIME-Version: 1.0');
 		$this->push_header('Content-type: text/html; charset=' . $this->charset);
-		$this->push_header('From: ' . (!is_null($this->fromName) ? $this->fromName : '') . (!is_null($this->from) ? (is_null($this->fromName) ? $this->from : ' <' . $this->from . '>') : ''));
-		$this->push_header('Reply-To: ' . (!is_null($this->replyToName) ? $this->replyToName : '') . (!is_null($this->replyTo) ? (is_null($this->replyToName) ? $this->replyTo : ' <' . $this->replyTo . '>') : ''));
+		$this->push_header('From: ' . (!$this->is_null($this->fromName) ? $this->fromName : '') . (!$this->is_null($this->from) ? ($this->is_null($this->fromName) ? $this->from : ' <' . $this->from . '>') : ''));
+		$this->push_header('Reply-To: ' . (!$this->is_null($this->replyToName) ? $this->replyToName : '') . (!$this->is_null($this->replyTo) ? ($this->is_null($this->replyToName) ? $this->replyTo : ' <' . $this->replyTo . '>') : ''));
 		$this->push_header('X-Mailer: XENUX ' . XENUX_VERSION . ' MAILER');
 		$this->push_header('Content-Type: multipart/alternative;boundary=' . $this->boundary);
 	}
@@ -114,7 +111,7 @@ class mailer
 		$mail .= "\n\n--" . $this->boundary . '--';
 
 		$mail = str_replace(["\r\n", "\r", "\n"], $this->LE, $mail); // Line Endings
-		$mail = wordwrap($mail, 80); // Use lines with 80 characters
+		$mail = wordwrap($mail, 80); // Use 80 characters wide lines
 
 		$this->mail = $mail;
 	}
@@ -158,4 +155,8 @@ class mailer
 		return '=?UTF-8?B?' . base64_encode($str) . '?=';
 	}
 
+	private function is_null($str)
+	{
+		return ($str == $this->escapeUTF8('') || is_null($str));
+	}
 }

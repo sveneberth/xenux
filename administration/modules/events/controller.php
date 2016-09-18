@@ -278,16 +278,12 @@ class eventsController extends AbstractController
 		{
 			$data = $form->getInput();
 
-			$title = preg_replace('/[^a-zA-Z0-9_üÜäÄöÖ$€&#,.()\s]/' , '' , $data['title']);
-
-			$text = strip_tags($data['text'], $_allowedTags);
-
-			$start_date	= $data['startDate']	. ' ' . $data['startTime'];
-			$end_date	= $data['endDate']		. ' ' . $data['endTime'];
-
-			$public = parse_bool($data['public']);
-
-			$author = $app->user->userInfo->id;
+			$title      = preg_replace('/[^a-zA-Z0-9_üÜäÄöÖ$€&#,.()\s]/' , '' , $data['title']);
+			$text       = strip_tags($data['text'], $_allowedTags);
+			$start_date = $data['startDate']	. ' ' . $data['startTime'];
+			$end_date   = $data['endDate']		. ' ' . $data['endTime'];
+			$public     = parse_bool($data['public']);
+			$author     = $app->user->userInfo->id;
 
 			if ($new)
 			{
@@ -328,8 +324,7 @@ class eventsController extends AbstractController
 
 			if ($return === true)
 			{
-				if ((defined('DEBUG') && DEBUG == true))
-					log::writeLog('event saved successful');
+				log::debug('event saved successful');
 				$template->setVar("messages", '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>');
 
 				if (isset($data['submit_close']))
@@ -342,12 +337,10 @@ class eventsController extends AbstractController
 			}
 			else
 			{
-				if ((defined('DEBUG') && DEBUG == true))
-					log::writeLog('event saving failed');
-
+				log::debug('event saving failed');
 				$template->setVar("messages", '<p class="box-shadow info-message error">'.__('savingFailed').'</p>');
 
-				if (isset($data['submit_close']))
+				if (isset($data['submit_close']) || $new)
 				{
 					header('Location: '.URL_ADMIN.'/events/home?savingSuccess=false');
 					return false;

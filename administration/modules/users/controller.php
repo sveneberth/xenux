@@ -447,8 +447,7 @@ class usersController extends AbstractController
 
 			if ($success === true)
 			{
-				if (defined('DEBUG') && DEBUG == true)
-					log::writeLog('user saved successfull');
+				log::debug('user saved successfull');
 				$this->messages[] = '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>';
 
 				if (isset($data['submit_close']))
@@ -461,11 +460,10 @@ class usersController extends AbstractController
 			}
 			else
 			{
-				if (defined('DEBUG') && DEBUG == true)
-					log::writeLog('user saving failed');
+				log::debug('user saving failed');
 				$this->messages[] = '<p class="box-shadow info-message error">'.__('savingFailed').'</p>';
 
-				if (isset($data['submit_close']) || $new) #TODO: use $new exeption for all modules
+				if (isset($data['submit_close']) || $new)
 				{
 					header('Location: '.URL_ADMIN.'/users/home?savingSuccess=false');
 					return false;

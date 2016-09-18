@@ -199,8 +199,7 @@ class app
 		}
 		catch (Exception $e)
 		{
-			if (defined('DEBUG') && DEBUG == true)
-				log::setPHPError($e);
+			log::setPHPError($e);
 			$this->page_name = "Error";
 			return '<h1>Error</h1><p class="box-shadow info-message error">' . $e->getMessage() . '</p>';
 		}

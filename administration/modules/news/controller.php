@@ -244,12 +244,9 @@ class newsController extends AbstractController
 		{
 			$data = $form->getInput();
 
-			$title = preg_replace('/[^a-zA-Z0-9_üÜäÄöÖ$€&#,.()\s]/' , '' , $data['title']);
-
-			$text = strip_tags($data['text'], $_allowedTags);
-
+			$title  = preg_replace('/[^a-zA-Z0-9_üÜäÄöÖ$€&#,.()\s]/' , '' , $data['title']);
+			$text   = strip_tags($data['text'], $_allowedTags);
 			$public = parse_bool($data['public']);
-
 			$author = $app->user->userInfo->id;
 
 			if($new)
@@ -289,8 +286,7 @@ class newsController extends AbstractController
 
 			if($return === true)
 			{
-				if ((defined('DEBUG') && DEBUG == true))
-					log::writeLog('news saved successful');
+				log::debug('news saved successful');
 				$template->setVar("messages", '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>');
 
 				if(isset($data['submit_close']))
@@ -303,11 +299,10 @@ class newsController extends AbstractController
 			}
 			else
 			{
-				if ((defined('DEBUG') && DEBUG == true))
-					log::writeLog('news saving failed');
+				log::debug('news saving failed');
 				$template->setVar("messages", '<p class="box-shadow info-message error">'.__('savingFailed').'</p>');
 
-				if(isset($data['submit_close']))
+				if(isset($data['submit_close']) || $new)
 				{
 					header('Location: '.URL_ADMIN.'/news/home?savingSuccess=false');
 					return false;

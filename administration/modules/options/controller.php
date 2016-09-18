@@ -9,16 +9,16 @@ class optionsController extends AbstractController
 		if(!isset($this->url[1]) || empty($this->url[1]))
 			header("Location: ".URL_ADMIN.'/'.$this->modulename.'/basic');
 	}
-	
+
 	public function run()
 	{
 		global $XenuxDB, $app;
-		
+
 		// append translations
 		translator::appendTranslations(PATH_ADMIN . '/modules/'.$this->modulename.'/translation/');
 
 		$template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout.php");
-	
+
 		$template->setVar("messages", '');
 
 		if ($this->url[1] == 'basic')
@@ -34,8 +34,8 @@ class optionsController extends AbstractController
 			$template->setVar("messages", '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>');
 		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == false)
 			$template->setVar("messages", '<p class="box-shadow info-message error">'.__('savingFailed').'</p>');
-		
-		
+
+
 		echo $template->render();
 
 		$this->page_name = __('options');
@@ -54,7 +54,7 @@ class optionsController extends AbstractController
 			$languagesOption[] = [
 				'value' => $lang,
 				'label' => $meta->label
-			]; 
+			];
 		}
 
 		$templateOption = array();
@@ -63,7 +63,7 @@ class optionsController extends AbstractController
 			$templateOption[] = [
 				'value' => $templateFolder,
 				'label' => $templateFolder
-			]; 
+			];
 		}
 
 		$formFields = array
@@ -169,7 +169,7 @@ class optionsController extends AbstractController
 			{
 				header('Location: '.URL_ADMIN.'/options/basic/?savingSuccess=false');
 			}
-			
+
 		}
 		return $form->getForm();
 	}
@@ -178,7 +178,7 @@ class optionsController extends AbstractController
 	{
 		global $XenuxDB, $app;
 
-		
+
 		$formFields = array
 		(
 			'sites_show_meta_info' => array
@@ -188,7 +188,7 @@ class optionsController extends AbstractController
 				'label' => __('show_meta_info'),
 				'value' => parse_bool($app->getOption('sites_show_meta_info'))
 			),
-			
+
 			'submit' => array
 			(
 				'type' => 'submit',
@@ -205,6 +205,7 @@ class optionsController extends AbstractController
 
 			$success = true;
 			unset($formFields['submit']); // unset, else it will "save" in the options
+
 			foreach ($formFields as $name => $props)
 			{
 				$return = $XenuxDB->Update('main', [
@@ -225,9 +226,8 @@ class optionsController extends AbstractController
 			{
 				header('Location: '.URL_ADMIN.'/options/sites/?savingSuccess=false');
 			}
-			
+
 		}
 		return $form->getForm();
 	}
 }
-?>
