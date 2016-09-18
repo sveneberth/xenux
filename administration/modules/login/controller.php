@@ -604,7 +604,7 @@ Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: '
 						$mail->setSubject('Passort gespeichert');
 						$mail->setMessage('Hallo' . $username . '!<br>
 	<p>Dein Passwort für deinen Benutzeraccount auf <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> wurde erogreich gespeichert.</p>');
-						$mail->send()
+						$mail->send();
 
 						$template->setVar("message", "<p>Das Passwort wurde erfolgreich gespeichert!</p>");
 						$app->user->setLogin();
