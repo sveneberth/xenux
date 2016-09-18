@@ -185,8 +185,6 @@ class usersController extends AbstractController
 
 		$formFields = array
 		(
-			#TODO: make firstname, lastname not required: before check for conflicts
-			#TODO: no password --> send create pw link to user
 			'username' => array
 			(
 				'type' => $new ? 'text' : 'readonly',

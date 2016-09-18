@@ -251,10 +251,10 @@ class LoginController extends AbstractController
 							$mail->addAdress($data['email'], $data['username']);
 							$mail->subject = 'Registrierung auf "' . $app->getOption('hp_name') . '" bestätigen';
 							$mail->body =
-'Hallo ' . $data['username'] . '<br>
-um deine Registrierung auf ' . $_SERVER['SERVER_NAME'] . ' abzuschließen klicke bitte auf den folgenden Link oder kopiere ihn in die Adressleiste deines Browsers:
-<a href="'.$confirmlink.'">'.$confirmlink.'</a><br>
-<p>Solltest Du Dich nicht auf ' . $_SERVER['SERVER_NAME'] . ' registriert haben, ignoriere diese Mail bitte.</p>';
+'<p>Hallo ' . $data['username'] . '!</p>
+<p>Um deine Registrierung auf ' . URL_MAIN . ' abzuschließen klicke bitte auf den folgenden Link oder kopiere ihn in die Adressleiste deines Browsers:<br>
+<a href="'.$confirmlink.'">'.$confirmlink.'</a></p>
+<p>Solltest Du Dich nicht auf ' . URL_MAIN . ' registriert haben, ignoriere diese Mail bitte.</p>';
 
 							if(!$mail->send())
 							{
