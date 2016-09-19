@@ -26,7 +26,6 @@
 	<script src="{{TEMPLATE_PATH}}/js/jquery-migrate-1.2.1.min.js"></script>
 	<script src="{{TEMPLATE_PATH}}/js/jquery-ui.min.js"></script>
 	<script src="{{TEMPLATE_PATH}}/js/jquery.ui.touch-punch.min.js"></script>
-	<script src="{{TEMPLATE_PATH}}/js/jquery.cookie.js"></script>
 	<script src="{{TEMPLATE_PATH}}/js/jquery.mousewheel.js"></script>
 
 	<!-- fancybox -->
@@ -57,7 +56,6 @@
 
 	<noscript>
 		<style>
-			.fontsize {display: none;}
 			.sb-search {width: 100%;}
 			.sb-search .sb-search-submit {z-index: 100;}
 		</style>
@@ -147,7 +145,7 @@ if ($sites)
 							</form>
 						</div>
 					</li>
-					<li class="mobilemenu"><a href="{{URL_MAIN}}/news/list"><?= __('news_Pl') ?></a></li>
+					<li class="mobilemenu"><a href="{{URL_MAIN}}/news/list"><?= __('posts') ?></a></li>
 					<li class="mobilemenu"><a href="{{URL_MAIN}}/event/calendar"><?= __('events') ?></a></li>
 					<li class="mobilemenu"><a href="{{URL_MAIN}}/search"><?= __('search') ?></a></li>
 				</ul>
@@ -163,102 +161,70 @@ if ($sites)
 				</div>
 			</div>
 		</noscript>
-		<div class="fontsize">
-			<a title="<?= __('fontSizeDecrease') ?>" class="decrease"></a>
-			<a title="<?= __('fontSizeReset') ?>" class="reset"></a>
-			<a title="<?= __('fontSizeIncrease') ?>" class="increase"></a>
-		</div>
 		<div class="leftboxes">
 
-			<ul class="news">
-				<h3><?= __('news_Pl') ?>:</h3>
+			<ul class="posts">
+				<h3><?= __('newestPosts') ?>:</h3>
 				<?php
-				// get news (only public news)
-				$newsList = $XenuxDB->getList('news', [
-					'limit' => 3,
-					'order' => 'create_date DESC',
-					'where' => [
-						'public' => true
-					]
-				]);
-				if ($newsList)
-				{
-					foreach ($newsList as $news)
+					// get posts
+					$posts = $XenuxDB->getList('posts', [
+						'limit' => 3,
+						'order' => 'create_date DESC',
+						'where' => [
+							'status' => 'publish'
+						]
+					]);
+					if ($posts)
 					{
-						echo "	<li>
-									<span class=\"title\">$news->title</span>
-									<span class=\"date\">".pretty_date($news->create_date)."</span>".
-									shortstr(strip_tags($news->text), 50)."<br>
-									<a href=\"{{URL_MAIN}}/news/view/".getPreparedLink($news->id, $news->title)."\">&raquo;".__("showNews")."</a>
-								</li>";
+						foreach ($posts as $post)
+						{
+							echo '<li>
+										<span class="title">' . $post->title . '</span>
+										<span class="date">' . pretty_date($post->create_date) . '</span>' .
+										shortstr(strip_tags($post->text), 50) . '<br>
+										<a href="{{URL_MAIN}}/posts/view/' . getPreparedLink($post->id, $post->title) . '">&raquo;' . __('showpost') . '</a>
+									</li>';
+						}
 					}
-				}
-				else
-				{
-					echo "<p style=\"margin:5px 0;\">" . __("noNews") . "</p>";
-				}
+					else
+					{
+						echo '<p style="margin:5px 0;">' . __('noPost') . '</p>';
+					}
 				?>
-				<a href="{{URL_MAIN}}/news/list"><?= __("showAllNews") ?></a>
+				<a href="{{URL_MAIN}}/posts/list"><?= __("showAllPosts") ?></a>
 			</ul>
 
 
 			<ul class="events">
 				<h3><?= __('events') ?>:</h3>
 				<?php
-				// get events
-				$eventList = $XenuxDB->getList('events', [
-					'limit' => 3,
-					'order' => 'start_date DESC',
-					'where' => [
-						'##start_date[>=]' => 'CURDATE()'
-					]
-				]);
-				if ($eventList)
-				{
-					foreach ($eventList as $event)
+					// get events
+					$eventList = $XenuxDB->getList('events', [
+						'limit' => 3,
+						'order' => 'start_date DESC',
+						'where' => [
+							'##start_date[>=]' => 'CURDATE()'
+						]
+					]);
+					if ($eventList)
 					{
-						echo "	<li>
-									<span class=\"title\">$event->title</span>
-									<span class=\"date\">".mysql2date("d.m.Y H:i", $event->start_date)."</span>".
-									shortstr(strip_tags($event->text), 50)."<br>
-									<a href=\"{{URL_MAIN}}/event/view/".getPreparedLink($event->id, $event->title)."\">&raquo;".__("showEvent")."</a>
-								</li>";
+						foreach ($eventList as $event)
+						{
+							echo '<li>
+										<span class="title">' . $event->title . '</span>
+										<span class="date">' . mysql2date('d.m.Y H:i', $event->start_date) . '</span>' .
+										shortstr(strip_tags($event->text), 50) . '<br>
+										<a href="{{URL_MAIN}}/event/view/' . getPreparedLink($event->id, $event->title) . '">&raquo;' . __('showEvent') . '</a>
+									</li>';
+						}
 					}
-				}
-				else
-				{
-					echo "<p style=\"margin:5px 0;\">" . __("noEvents") . "</p>";
-				}
-				?>
-				<a href="{{URL_MAIN}}/event/calendar"><?= __("gotoEventCalendar") ?></a>
+					else
+					{
+						echo '<p style="margin:5px 0;">' . __('noEvents') . '</p>';
+					}
+					?>
+					<a href="{{URL_MAIN}}/event/calendar"><?= __('gotoEventCalendar') ?></a>
 			</ul>
-
-
-			<?php
-			// newest sites (only public sites)
-			$newestSitesList = $XenuxDB->getList('sites', [
-				'limit' => 5,
-				'order' => 'create_date DESC',
-				'where' => [
-					'public' => true
-				]
-			]);
-
-			if ($newestSitesList)
-			{
-				echo "<ul class=\"newest-sites\">";
-				echo "<h3>". __('newestSites') . ":</h3>";
-
-				foreach ($newestSitesList as $site)
-				{
-					echo "	<li>
-								<a href=\"".getPageLink($site->id, $site->title)."\">$site->title</a>
-							</li>";
-				}
-
-				echo "</ul>";
-			}
-			?>
 
 
 			<div>

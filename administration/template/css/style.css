@@ -1399,11 +1399,17 @@ table.data-table .remove-btn {
 .actionbar {
   margin: 0 0 1em;
 }
-.actionbar .action-select,
-.actionbar .action-btn {
+.actionbar .select,
+.actionbar .btn {
   float: left;
   margin: 0;
 }
-.actionbar .action-btn {
+.actionbar .btn {
   margin-left: 5px;
+}
+.actionbar .select {
+  width: 250px;
+}
+.actionbar .select:not(:first-child) {
+  margin-left: 10px;
 }

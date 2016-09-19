@@ -374,6 +374,7 @@ class sitesController extends AbstractController
 
 	private function _getContactpersonForForm()
 	{
+		#TODO: build the contact person module or remove this part
 		global $XenuxDB;
 
 		$return  = '<div class="contact-persons-wrapper">';

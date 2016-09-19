@@ -334,9 +334,11 @@ table.data-table {
 .actionbar {
   margin: 0 0 1em;
 
-  .action-select, .action-btn {
+  .select, .btn {
     float: left;
     margin: 0;
   }
-  .action-btn {margin-left: 5px;}
+  .btn {margin-left: 5px;}
+  .select {width: 250px;}
+  .select:not(:first-child) {margin-left: 10px;}
 }

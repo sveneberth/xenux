@@ -1,20 +1,12 @@
 <script src="{{URL_ADMIN}}/wysiwyg/ckeditor.js"></script>
 <script>
-	var url = window.location.href;
-	var title = document.title;
-	var newUrl = url.substring(0, url.indexOf('?')) + window.location.hash;
-	// replace new url
-	if(window.history.replaceState) {
-		window.history.replaceState(null, null, newUrl);
-	}
-
 	var isModified = false;
 	$(function() {
-		$(window).on('beforeunload', function(){
+		$(window).on('beforeunload', function() {
 			if(isModified)
-				return 'Alle nicht gespeicherte Daten gehen verloren!';
+				return 'Alle nicht gespeicherte Daten gehen verloren!'; //#TODO: translateMe
 		});
-		$(document).on("submit", "form", function(){
+		$(document).on("submit", "form", function() {
 			$(window).off('beforeunload');
 		});
 
@@ -53,7 +45,7 @@
 			});
 		});
 
-		$('input[name="title"], input[name="public"], input[name^="contact_"]').on('change', function(e) {
+		$('input[name="title"], input[name="status"], input[name^="contact_"]').on('change', function(e) {
 			isModified = true;
 		});
 	});
@@ -64,9 +56,9 @@
 <div class="grid-row">
 	<section class="box-shadow grid-col">
 		#if(new):
-			<p><?= __('here can you add a new news') ?></p>
+			<p><?= __('here can you add a new post') ?></p>
 		#else:
-			<p><?= __('here can you edit the news') ?></p>
+			<p><?= __('here can you edit the post') ?></p>
 		#endif
 
 		<div class="form">

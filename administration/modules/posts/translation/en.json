@@ -1,0 +1,18 @@
+{
+	"info":
+	{
+		"author": "Sven Eberth"
+	},
+	"translations":
+	{
+		"post":"Post",
+		"posts":"Posts",
+		"home":"all posts",
+
+		"desc":"description",
+		"click to edit":"click to edit",
+
+		"here can you add a new post":"Here can you add a new post.",
+		"here can you edit the post":"Here can you edit the post."
+	}
+}

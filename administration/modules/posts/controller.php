@@ -1,7 +1,7 @@
 <?php
-class newsController extends AbstractController
+class postsController extends AbstractController
 {
-	private $editNewsID;
+	private $editPostID;
 
 	public function __construct($url)
 	{
@@ -21,23 +21,23 @@ class newsController extends AbstractController
 
 		if(@$this->url[1] == "home")
 		{
-			$this->newsHome();
+			$this->postsHome();
 		}
 		elseif(@$this->url[1] == "edit")
 		{
 			if(isset($this->url[2]) && is_numeric($this->url[2]) && !empty($this->url[2]))
 			{
-				$this->editNewsID = $this->url[2];
-				$this->newsEdit();
+				$this->editPostID = $this->url[2];
+				$this->postEdit();
 			}
 			else
 			{
-				throw new Exception(__('isWrong', 'NEWS ID'));
+				throw new Exception(__('isWrong', 'POST ID'));
 			}
 		}
 		elseif(@$this->url[1] == "new")
 		{
-			$this->newsEdit(true);
+			$this->postEdit(true);
 		}
 		else
 		{
@@ -47,43 +47,46 @@ class newsController extends AbstractController
 		return true;
 	}
 
-	private function newsHome()
+	private function postsHome()
 	{
 		global $app, $XenuxDB;
 
 		$template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout_home.php");
 		$template->setVar("messages", '');
 
-		if(isset($_GET['remove']) && is_numeric($_GET['remove']) && !empty($_GET['remove']))
-		{
-			$XenuxDB->delete('news', [
-				'where' => [
-					'id' => $_GET['remove']
-				]
-			]);
-			$template->setVar("messages", '<p class="box-shadow info-message ok">'.__('removedSuccessful').'</p>');
-		}
 
-		if (isset($_GET['action']) && in_array($_GET['action'], ['private', 'public', 'remove'])
+		// #TODO: merge action and remove in every module/list
+		if (isset($_GET['apply-action']) && isset($_GET['action']) && in_array($_GET['action'], ['publish', 'draft', 'trash'])
 			&& isset($_GET['item']) && is_array($_GET['item']))
 		{
 			foreach ($_GET['item'] as $item) {
 				if (is_numeric($item)) {
 					switch ($_GET['action']) {
-						case 'private':
-						case 'public':
-							$XenuxDB->Update('news', [
-								'public' => $_GET['action']=='public' ? true : false
+						case 'publish':
+						case 'draft':
+							$XenuxDB->Update('posts', [
+								'status' => $_GET['action']
 							], [
 									'id' => $item
 							]);
 							break;
-						case 'remove':
-							$XenuxDB->delete('news', [
-								'where' => [
+						case 'trash':
+							if(@$_GET['filter'] == 'trash')
+							{ // delete in trash
+								$XenuxDB->delete('posts', [
+									'where' => [
+										'id' => $item
+									]
+								]);
+							}
+							else
+							{ // move in trash
+								$XenuxDB->Update('posts', [
+									'status' => 'trash'
+								], [
 									'id' => $item
-								]
-							]);
+								]);
+							}
 							break;
 					}
 					$template->setVar('messages',
@@ -92,8 +95,21 @@ class newsController extends AbstractController
 			}
 		}
 
-		$template->setVar("news", $this->getNewsTable());
-		$template->setVar("amount", $XenuxDB->count('news'));
+		$filter = 'publish'; // default filter
+		if (isset($_GET['apply-filter']) && isset($_GET['filter']) && in_array($_GET['filter'], ['publish', 'draft', 'trash']))
+		{
+			$filter = $_GET['filter'];
+		}
+
+		$amountPublish = $XenuxDB->Count('posts', ['where' => ['status' => 'publish']]);
+		$amountDraft = $XenuxDB->Count('posts', ['where' => ['status' => 'draft']]);
+		$amountTrash = $XenuxDB->Count('posts', ['where' => ['status' => 'trash']]);
+
+		$template->setVar('posts', $this->getPostTable($filter));
+		$template->setVar('amount', $XenuxDB->count('posts'));
+		$template->setVar('amountPublish', $amountPublish);
+		$template->setVar('amountDraft', $amountDraft);
+		$template->setVar('amountTrash', $amountTrash);
 
 		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == true)
 			$template->setVar("messages", '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>');
@@ -103,34 +119,47 @@ class newsController extends AbstractController
 		echo $template->render();
 
 		$this->page_name = __('home');
-		$this->headlineSuffix = '<a class="btn-new" href="{{URL_ADMIN}}/news/new">' . __('new') . '</a>';
+		$this->headlineSuffix = '<a class="btn-new" href="{{URL_ADMIN}}/' . $this->modulename . '/new">' . __('new') . '</a>';
 	}
 
-	private function getNewsTable()
+	private function getPostTable($filter)
 	{
 		global $XenuxDB;
 
 		$return = '';
 
-		$news = $XenuxDB->getList('news', [
-			'order' => 'create_date DESC'
+		$posts = $XenuxDB->getList('posts', [
+			'columns'=> [
+				'posts.id(post_id)',
+				'posts.title',
+				'posts.status',
+				'posts.create_date',
+				'users.username',
+			],
+			'join' => [
+				'[>]users' => ['posts.author_id' => 'users.id']
+			],
+			'order' => 'title DESC',
+			'where' => [
+				'status' => $filter
+			]
 		]);
-		if($news)
+		if($posts)
 		{
-			foreach($news as $subnews)
+			foreach($posts as $post)
 			{
 				$return .= '
-<tr ' . ($subnews->public == false ? 'class="private"' : '') . '>
-	<td class="column-select"><input type="checkbox" name="item[]" value="' . $subnews->id . '"></td>
-	<td class="column-id">' . $subnews->id . '</td>
+<tr>
+	<td class="column-select"><input type="checkbox" name="item[]" value="' . $post->post_id . '"></td>
+	<td class="column-id">' . $post->post_id . '</td>
 	<td class="column-title">
-		<a class="edit" href="{{URL_ADMIN}}/news/edit/' . $subnews->id . '" title="' . __('click to edit news') . '">' . $subnews->title . '</a>
+		<a class="edit" href="{{URL_ADMIN}}/' . $this->modulename . '/edit/' . $post->post_id . '" title="' . __('click to edit') . '">' . $post->title . ($post->status == 'draft' ? ' <span class="draft-hint">(Entwurf)</span>' : '') . '</a>
 	</td>
-	<td class="column-date">' . $subnews->create_date . '</td>
-	<td class="column-text">' . shortstr(strip_tags($subnews->text), 50, 100) . '</td>
+	<td class="column-date">' . $post->create_date . '</td>
+	<td class="column-author">' . $post->username . '</td>
 	<td class="column-actions">
-		<a class="view-btn" target="_blank" href="{{URL_MAIN}}/news/view/' . getPreparedLink($subnews->id, $subnews->title) . '">' . __('view') . '</a>
-		<a href="{{URL_ADMIN}}/news/home/?remove=' . $subnews->id . '" title="' . __('delete') . '" class="remove-btn"></a>
+		<a class="view-btn" target="_blank" href="{{URL_MAIN}}/' . $this->modulename . '/view/' . getPreparedLink($post->post_id, $post->title) . '">' . __('view') . '</a>
+		<a href="{{URL_ADMIN}}/' . $this->modulename . '/home/?apply-filter&filter=' . $filter . '&apply-action&action=trash&item[]=' . $post->post_id . '" title="' . __('delete') . '" class="remove-btn"></a>
 	</td>
 </tr>';;
 			}
@@ -140,7 +169,7 @@ class newsController extends AbstractController
 	}
 
 
-	private function newsEdit($new=false)
+	private function postEdit($new=false)
 	{
 		$template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout_edit.php");
 
@@ -164,17 +193,17 @@ class newsController extends AbstractController
 		global $XenuxDB, $app;
 
 		if(!$new)
-			$news = $XenuxDB->getEntry('news', [
+			$post = $XenuxDB->getEntry('posts', [
 				'join' => [
-					'[>]users' => ['news.author_id' => 'users.id']
+					'[>]users' => ['posts.author_id' => 'users.id']
 				],
 				'where' => [
-					'news.id' => $this->editNewsID
+					'posts.id' => $this->editPostID
 				]
 			]);
 
-		if(!@$news && !$new)
-			throw new Exception("error (news 404)");
+		if(!@$post && !$new)
+			throw new Exception("error (post 404)");
 
 		$formFields = array
 		(
@@ -183,30 +212,40 @@ class newsController extends AbstractController
 				'type' => 'text',
 				'required' => true,
 				'label' => __('title'),
-				'value' => @$news->title,
+				'value' => @$post->title,
 				'class' => 'full_page'
 			),
 			'text' => array
 			(
 				'type' => 'textarea',
 				'required' => true,
-				'label' => __('newsContent'),
-				'value' => htmlentities(@$news->text),
+				'label' => __('desc'),
+				'value' => htmlentities(@$post->text),
 				'wysiwyg' => true,
 				'showLabel' => false
 			),
-			'public' => array
+			'status' => array
 			(
-				'type' => 'checkbox',
-				'label' => __('newsPublic'),
-				'value' => 'true',
-				'checked' => @$news->public
+				'type' => 'select',
+				'required' => true,
+				'label' => __('status'),
+				'value' => @$post->status,
+				'options' => [
+					[
+						'value' => 'publish',
+						'label' => __('publish')
+					],
+					[
+						'value' => 'draft',
+						'label' => __('draft')
+					]
+				]
 			),
 			'author' => array
 			(
 				'type' => 'readonly',
 				'label' => __('author'),
-				'value' => isset($news) ? $news->username : $app->user->userInfo->username
+				'value' => isset($news) ? $post->username : $app->user->userInfo->username
 			),
 			'submit_stay' => array
 			(
@@ -246,24 +285,25 @@ class newsController extends AbstractController
 
 			$title  = preg_replace('/[^a-zA-Z0-9_üÜäÄöÖ$€&#,.()\s]/' , '' , $data['title']);
 			$text   = strip_tags($data['text'], $_allowedTags);
-			$public = parse_bool($data['public']);
+			$status = in_array($data['status'], ['publish', 'draft', 'trash']) ? $data['status'] : 'draft';
 			$author = $app->user->userInfo->id;
 
 			if($new)
 			{
-				$news = $XenuxDB->Insert('news', [
-					'title'				=> $title,
-					'text'				=> $text,
-					'public'			=> $public,
-					'author_id'			=> $author,
-					'create_date'		=> date('Y-m-d H:i:s'),
-					'lastModified_date'	=> date('Y-m-d H:i:s')
+				#TODO: add thumbnail
+				$post = $XenuxDB->Insert('posts', [
+					'title'             => $title,
+					'text'              => $text,
+					'status'            => $status,
+					'author_id'         => $author,
+					'create_date'       => date('Y-m-d H:i:s'),
+					'lastModified_date' => date('Y-m-d H:i:s')
 				]);
 
-				if($news)
+				if($post)
 				{
 					$return = true;
-					$this->editNewsID = $news;
+					$this->editPostID = $post;
 				}
 				else
 				{
@@ -273,42 +313,42 @@ class newsController extends AbstractController
 			else
 			{
 				// update it
-				$return = $XenuxDB->Update('news', [
-					'title'				=> $title,
-					'text'				=> $text,
-					'public'			=> $public,
-					'lastModified_date'	=> date('Y-m-d H:i:s')
+				$return = $XenuxDB->Update('posts', [
+					'title'             => $title,
+					'text'              => $text,
+					'status'            => $status,
+					'lastModified_date' => date('Y-m-d H:i:s')
 				],
 				[
-					'id' => $this->editNewsID
+					'id' => $this->editPostID
 				]);
 			}
 
 			if($return === true)
 			{
-				log::debug('news saved successful');
+				log::debug('post saved successful');
 				$template->setVar("messages", '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>');
 
 				if(isset($data['submit_close']))
 				{
-					header('Location: '.URL_ADMIN.'/news/home?savingSuccess=true');
+					header('Location: '.URL_ADMIN.'/posts/home?savingSuccess=true');
 					return false;
 				}
 
-				header('Location: '.URL_ADMIN.'/news/edit/'.$this->editNewsID.'?savingSuccess=true');
+				header('Location: '.URL_ADMIN.'/posts/edit/'.$this->editPostID.'?savingSuccess=true');
 			}
 			else
 			{
-				log::debug('news saving failed');
+				log::debug('post saving failed');
 				$template->setVar("messages", '<p class="box-shadow info-message error">'.__('savingFailed').'</p>');
 
 				if(isset($data['submit_close']) || $new)
 				{
-					header('Location: '.URL_ADMIN.'/news/home?savingSuccess=false');
+					header('Location: '.URL_ADMIN.'/posts/home?savingSuccess=false');
 					return false;
 				}
 
-				header('Location: '.URL_ADMIN.'/news/edit/'.$this->editNewsID.'?savingSuccess=false');
+				header('Location: '.URL_ADMIN.'/posts/edit/'.$this->editPostID.'?savingSuccess=false');
 			}
 		}
 		return $form->getForm();

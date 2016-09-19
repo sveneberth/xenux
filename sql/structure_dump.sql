@@ -1,11 +1,5 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.11
--- http://www.phpmyadmin.net
---
--- Host: 127.0.0.1
--- Erstellungszeit: 2015-12-19 14:41
--- Server Version: 5.6.21
--- PHP-Version: 5.6.3
+-- Last Modified: 2016-09-19 22:23
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -28,7 +22,7 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `%PREFIX%contactpersons`;
 CREATE TABLE IF NOT EXISTS `%PREFIX%contactpersons` (
-`id` int`id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `name` varchar(150) NOT NULL,
   `position` varchar(150) NOT NULL,
   `email` varchar(150) NOT NULL,
@@ -88,17 +82,18 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%main` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `%PREFIX%news`
+-- Tabellenstruktur für Tabelle `%PREFIX%posts`
 --
 
-DROP TABLE IF EXISTS `%PREFIX%news`;
-CREATE TABLE IF NOT EXISTS `%PREFIX%news` (
+DROP TABLE IF EXISTS `%PREFIX%posts`;
+CREATE TABLE IF NOT EXISTS `%PREFIX%posts` (
 `id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `title` varchar(200) NOT NULL,
   `text` text NOT NULL,
+  `thumbnail_id` int(11) DEFAULT NULL,
   `create_date` timestamp NULL DEFAULT NULL,
   `lastModified_date` timestamp NULL DEFAULT NULL,
-  `public` tinyint(1) DEFAULT '0' COMMENT '1=public;0=private',
+  `status` varchar(50) NOT NULL,
   `author_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
