@@ -5,10 +5,6 @@
 	},
 	"translations":
 	{
-		"go to administration":"go to administration",
-		
-		"fontSizeDecrease":"font smaller",
-		"fontSizeReset":"font normal",
-		"fontSizeIncrease":"font greater"
+		"go to administration":"go to administration"
 	}
 }

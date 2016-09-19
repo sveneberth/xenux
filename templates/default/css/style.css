@@ -29,7 +29,7 @@ html, body {
 	list-style: none;
 }
 
-@-webkit-keyframes popin { 
+@-webkit-keyframes popin {
 	0% {
 		transform: scale(0.1, 0.1);
 		opacity: 0;
@@ -42,7 +42,7 @@ html, body {
 		transform: scale(1, 1);
 	}
 }
-@-moz-keyframes popin { 
+@-moz-keyframes popin {
 	0% {
 		-moz-transform: scale(0.1, 0.1);
 		opacity: 0;
@@ -52,7 +52,7 @@ html, body {
 		opacity: 1;
 	}
 	100% {
-		-moz-transform: scale(1, 1); 
+		-moz-transform: scale(1, 1);
 	}
 }
 
@@ -99,7 +99,7 @@ input[type=file],
 	cursor: pointer;
 }
 
-p { 
+p {
 	-moz-hyphens: auto;
 	-o-hyphens: auto;
 	-webkit-hyphens: auto;
@@ -148,10 +148,10 @@ input[type=radio] + label {
 	margin-right: 15px;
 	font-size: 13px;
 	line-height: inherit;
-}  
+}
 input[type=radio] {
 	display: none;
-}  
+}
 input[type=radio] + label:before {
 	content: "";
 	display: inline-block;
@@ -164,14 +164,14 @@ input[type=radio] + label:before {
 	background-color: #999;
 	box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
 	border-radius: 8px;
-}  
+}
 input[type=radio]:checked + label:before {
 	content: "\2022";
 	color: #f3f3f3;
 	font-size: 30px;
 	text-align: center;
 	line-height: 18px;
-} 
+}
 textarea {
 	height: 150px;
 }
@@ -251,7 +251,7 @@ header .logo  img {
 	max-width: 100px;
 	float: left;
 	margin: 0 10px 0 0;
-} 
+}
 header:after {
 	display: block;
 	content: '';
@@ -575,7 +575,7 @@ footer a:hover {
 
 
 /* ##############################################
-** SITE LAYOUT 
+** SITE LAYOUT
 ** #############################################*/
 /*.calendar */
 .calendar {
@@ -583,7 +583,7 @@ footer a:hover {
 	width: 100%;
 }
 .calendar .calendar_header {
-	line-height: 40px;	
+	line-height: 40px;
 	height: 40px;
 	vertical-align: middle;
 	left: 0;
@@ -775,7 +775,7 @@ div.sitenavi > a.sitenavi.active {
 	border: 1px solid #ccc;
 	padding: 15px;
 	box-shadow: 0 0 5px 0px #aaa;
-	overflow: auto;	
+	overflow: auto;
 	margin: 0 0 1em 0;
 	box-sizing: border-box;
 }
@@ -814,58 +814,9 @@ div.sitenavi > a.sitenavi.active {
 }
 
 
-/* font size */
-.fontsize {
-	float: right;
-	position: relative;
-	height: 0px;
-}
-.fontsize a {
-	border-radius: 2px;
-	height: 1em;
-	width: 1em;
-	line-height: 1em;
-	display: inline-block;
-	text-align: left;
-	text-decoration: none;
-	color: #157EFB;
-	font-size: 1em;
-	padding: 5px;
-	position: relative;
-	margin-left: 5px;
-	float: left;
-}
-.fontsize a:hover {
-	background: #333;
-}
-.fontsize a:before {
-	content: 'A';
-}
-.fontsize a:after {
-	font-size: .8em;
-	line-height: .8em;
-	right: 2px;
-	top: 2px;
-	position: absolute;
-	text-align: right;
-}
-.fontsize a.decrease:after {
-	content: '-';
-}
-.fontsize a.reset:after {
-	font-family: FontAwesome;
-	content: '\f021';
-	font-size: .6em;
-	line-height: 1.5em;
-}
-.fontsize a.increase:after {
-	content: '+';
-}
-
-
 
 /* ##############################################
-** SINGLE ELEMETS 
+** SINGLE ELEMETS
 ** #############################################*/
 .toTop {
 	position: fixed;
@@ -1108,7 +1059,7 @@ div.sitenavi > a.sitenavi.active {
 	.topmenu.mainmenu  li a {
 		display: block;
 		line-height: 40px;
-		margin: 0; 
+		margin: 0;
 		padding: 0 0 0 10px;
 		text-align: left;
 		border-left: none;
@@ -1167,11 +1118,11 @@ div.sitenavi > a.sitenavi.active {
 		display: block;
 		font-size: 16px;
 	}
-	
+
 	.topmenu.mainmenu li.search {
 		display:none;
 	}
-	
+
 	main {
 		float: left;
 		width: 100%;
@@ -1187,16 +1138,16 @@ div.sitenavi > a.sitenavi.active {
 	.fontsize {
 		display: none;
 	}
-	
-	
+
+
 	.contact-persons label {
 		width: 100%;
 	}
-	
+
 	.contactbox {
 		width: 100%;
 	}
-	
+
 	input, textarea {
 		width: 100%;
 	}
