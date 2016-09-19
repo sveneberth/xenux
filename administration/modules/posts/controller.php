@@ -101,12 +101,13 @@ class postsController extends AbstractController
 			$filter = $_GET['filter'];
 		}
 
+		$amount = $XenuxDB->Count('posts', ['where' => ['status' => $filter]]);
 		$amountPublish = $XenuxDB->Count('posts', ['where' => ['status' => 'publish']]);
 		$amountDraft = $XenuxDB->Count('posts', ['where' => ['status' => 'draft']]);
 		$amountTrash = $XenuxDB->Count('posts', ['where' => ['status' => 'trash']]);
 
 		$template->setVar('posts', $this->getPostTable($filter));
-		$template->setVar('amount', $XenuxDB->count('posts'));
+		$template->setVar('amount', $amount);
 		$template->setVar('amountPublish', $amountPublish);
 		$template->setVar('amountDraft', $amountDraft);
 		$template->setVar('amountTrash', $amountTrash);
