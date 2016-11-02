@@ -18,8 +18,8 @@
 	{{CSS-FILES}}
 
 	<!-- jquery + plugins -->
-	<script src="{{TEMPLATE_PATH}}/js/jquery-2.1.1.min.js"></script>
-	<script src="{{TEMPLATE_PATH}}/js/jquery-migrate-1.2.1.min.js"></script>
+	<script src="{{TEMPLATE_PATH}}/js/jquery-3.1.1.min.js"></script>
+	{#<script src="{{TEMPLATE_PATH}}/js/jquery-migrate-1.2.1.min.js"></script>#}
 	<script src="{{TEMPLATE_PATH}}/js/jquery-ui.min.js"></script>
 	<script src="{{TEMPLATE_PATH}}/js/jquery.ui.touch-punch.min.js"></script>
 	<script src="{{TEMPLATE_PATH}}/js/jquery.mousewheel.js"></script>

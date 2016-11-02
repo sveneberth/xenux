@@ -14,10 +14,10 @@
 
 <div class="grid-row">
 	<section class="box-shadow grid-col grid-col-half">
-		<h3><?= __('news statistics') ?></h3>
-		<p><?= __('amount news') ?>: {{count_news}}</p>
-		<p><?= __('amount public') ?>: {{count_public_news}}</p>
-		<p><?= __('amount last week') ?>: {{count_news_lastWeek}}</p>
+		<h3><?= __('post statistics') ?></h3>
+		<p><?= __('amount posts') ?>: {{count_posts}}</p>
+		<p><?= __('amount public') ?>: {{count_public_posts}}</p>
+		<p><?= __('amount last week') ?>: {{count_posts_lastWeek}}</p>
 	</section>
 
 	<section class="box-shadow grid-col grid-col-half">

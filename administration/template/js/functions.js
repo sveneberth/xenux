@@ -1,12 +1,363 @@
-/*!
+/**
  * functions
  * https://github.com/sveneberth/code-snippets-se
  *
- * Copyright 2015 Sven Eberth
+ * Copyright 2016 Sven Eberth
  * Released under the MIT license, see LICENSE.txt
  */
-$(document).ready(function(){$.fn.pressEnter=function(a){return this.each(function(){$(this).bind("enterPress",a);$(this).keypress(function(b){if(b.keyCode==13){$(this).trigger("enterPress")}})})};$.fn.reloadimg=function(a){return this.each(function(b){var c=$(this).attr("src");$(this).attr("src",c);console.log("reload image:\nimg="+b+"\nsrc='"+c+"'")})}});function basename(d){var a=d;var c=a.charAt(a.length-1);if(c==="/"||c==="\\"){a=a.slice(0,-1)}a=a.replace(/^.*[\/\\]/g,"");return a}function empty(a){return(!a||0===a.length)}var emailpattern=new RegExp("^([a-zA-Z0-9\\-\\.\\_]+)(\\@)([a-zA-Z0-9\\-\\.]+)(\\.)([a-zA-Z]{2,4})$");$(document).ready(function(){try{$("a[href^='#']:not(.noscroll)").live("click",function(b){b.preventDefault();var c=$(this).attr("href");scrollto(c);return false})}catch(a){console.log(a);$("a[href^='#']:not(.noscroll)").click(function(b){b.preventDefault();var c=$(this).attr("href");scrollto(c);return false})}});function scrollto(e,b){if(typeof b=="undefined"){var b="object"}if(b=="position"){var a=e}if(b=="object"){if($(e).length>0){var d=$(e).offset().top;var c=$("body").offset().top;var a=d-c}else{console.error("Can not scroll to '"+e+"' - object not found")}}$("html,body").animate({scrollTop:a},1000);return false}$(document).ready(function(){if(typeof a=="undefined"){var a=true}if(a){$("img").each(function(){if(!$(this).hasClass("nojsload")){$(this).hide();$(this).load(function(){$(this).fadeIn(400)})}})}});function isInt(a){return a%1===0}function isJSON(a){return(/^[\],:{}\s]*$/.test(a.replace(/\\["\\\/bfnrtu]/g,"@").replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,"]").replace(/(?:^|:|,)(?:\s*\[)+/g,"")))}function round(c,d){var b=Math.pow(10,d);var a=Math.round(c*b)/b;return a}function FileSizeConvert(b){b=parseFloat(b);if(b==0){return"0 B"}var d=[{unit:"TiB",value:Math.pow(1024,4)},{unit:"GiB",value:Math.pow(1024,3)},{unit:"MiB",value:Math.pow(1024,2)},{unit:"KiB",value:1024},{unit:"B",value:1},];for(var c in d){if(b>=d[c]["value"]){var a=b/d[c]["value"];var e=round(a,2)+" "+d[c]["unit"];a=e.replace(".",",");break}}return a}Math.root=function(a,b){return Math.pow(a,1/b)};function utf8_encode(a){if(a===null||typeof a==="undefined"){return""}var i=(a+"");var j="",b,e,c=0;b=e=0;c=i.length;for(var d=0;d<c;d++){var h=i.charCodeAt(d);var g=null;if(h<128){e++}else{if(h>127&&h<2048){g=String.fromCharCode((h>>6)|192,(h&63)|128)}else{if((h&63488)!=55296){g=String.fromCharCode((h>>12)|224,((h>>6)&63)|128,(h&63)|128)}else{if((h&64512)!=55296){throw new RangeError("Unmatched trail surrogate at "+d)}var f=i.charCodeAt(++d);if((f&64512)!=56320){throw new RangeError("Unmatched lead surrogate at "+(d-1))}h=((h&1023)<<10)+(f&1023)+65536;g=String.fromCharCode((h>>18)|240,((h>>12)&63)|128,((h>>6)&63)|128,(h&63)|128)}}}if(g!==null){if(e>b){j+=i.slice(b,e)}j+=g;b=e=d+1}}if(e>b){j+=i.slice(b,c)}return j}function SHA1(r){var c=function(w,j){var i=(w<<j)|(w>>>(32-j));return i};var s=function(y){var x="";var w;var j;for(w=7;w>=0;w--){j=(y>>>(w*4))&15;x+=j.toString(16)}return x};var f;var u,t;var b=new Array(80);var l=1732584193;var h=4023233417;var g=2562383102;var e=271733878;var d=3285377520;var q,p,o,n,m;var v;r=this.utf8_encode(r);var a=r.length;var k=[];for(u=0;u<a-3;u+=4){t=r.charCodeAt(u)<<24|r.charCodeAt(u+1)<<16|r.charCodeAt(u+2)<<8|r.charCodeAt(u+3);k.push(t)}switch(a%4){case 0:u=2147483648;break;case 1:u=r.charCodeAt(a-1)<<24|8388608;break;case 2:u=r.charCodeAt(a-2)<<24|r.charCodeAt(a-1)<<16|32768;break;case 3:u=r.charCodeAt(a-3)<<24|r.charCodeAt(a-2)<<16|r.charCodeAt(a-1)<<8|128;break}k.push(u);while((k.length%16)!=14){k.push(0)}k.push(a>>>29);k.push((a<<3)&4294967295);for(f=0;f<k.length;f+=16){for(u=0;u<16;u++){b[u]=k[f+u]}for(u=16;u<=79;u++){b[u]=c(b[u-3]^b[u-8]^b[u-14]^b[u-16],1)}q=l;p=h;o=g;n=e;m=d;for(u=0;u<=19;u++){v=(c(q,5)+((p&o)|(~p&n))+m+b[u]+1518500249)&4294967295;m=n;n=o;o=c(p,30);p=q;q=v}for(u=20;u<=39;u++){v=(c(q,5)+(p^o^n)+m+b[u]+1859775393)&4294967295;m=n;n=o;o=c(p,30);p=q;q=v}for(u=40;u<=59;u++){v=(c(q,5)+((p&o)|(p&n)|(o&n))+m+b[u]+2400959708)&4294967295;m=n;n=o;o=c(p,30);p=q;q=v}for(u=60;u<=79;u++){v=(c(q,5)+(p^o^n)+m+b[u]+3395469782)&4294967295;m=n;n=o;o=c(p,30);p=q;q=v}l=(l+q)&4294967295;h=(h+p)&4294967295;g=(g+o)&4294967295;e=(e+n)&4294967295;d=(d+m)&4294967295}v=s(l)+s(h)+s(g)+s(e)+s(d);return v.toLowerCase()};
-function OpenInNewTab(url) {
-	var win = window.open(url, '_blank');
-	win.focus();
+
+ $(function() {
+	//--- check if pressed enter ---
+	$.fn.pressEnter = function(fn) {
+		return this.each(function() {
+			$(this).bind('enterPress', fn);
+			$(this).keypress(function(e) {
+				if(e.keyCode == 13) {
+					$(this).trigger('enterPress');
+				}
+			})
+		});
+	};
+	//---reload a image
+	$.fn.reloadimg = function(fn) {
+		return this.each(function(index) {
+			var src = $(this).prop('src');
+			$(this).prop('src', src);
+			console.log("reload image:\nimg=" + index + "\nsrc='" + src + '"');
+		});
+	};
+});
+
+//--- function basename (like PHP) ---
+function basename (path) {
+	var b = path;
+	var lastChar = b.charAt(b.length - 1);
+	if (lastChar === '/' || lastChar === '\\') {
+		b = b.slice(0, -1);
+	}
+	b = b.replace(/^.*[\/\\]/g, '');
+	return b;
+}
+
+//--- function empty (like PHP) ---
+function empty (str) {
+	return (!str || 0 === str.length);
+}
+
+//--- emailpattern ---
+var emailpattern = new RegExp('^([a-zA-Z0-9\\-\\.\\_]+)(\\@)([a-zA-Z0-9\\-\\.]+)(\\.)([a-zA-Z]{2,4})$');
+
+//--- Scroll to place ---
+$(function() {
+	$('a[href*="#"]:not([href="#"]):not(.noscroll)').on('click', function(event) {
+		event.preventDefault();
+
+		var target = $(this).prop('href');
+		scrollto(target);
+
+		return false;
+	});
+})
+
+function scrollto (target, valuetype) {
+	if(typeof valuetype == 'undefined') {
+		var valuetype = 'object';
+	}
+	if(valuetype == 'position') {
+		var place = target;
+	}
+	if(valuetype == 'object') {
+		if($(target).length > 0) {
+			var targetPos = $(target).offset().top;
+			var bodyTop = $('body').offset().top;
+			var place = targetPos - bodyTop;
+		} else {
+			console.error('Can not scroll to "' + target + '" - object not found' );
+		}
+	}
+
+	$('html,body').animate({
+		scrollTop: place
+	}, 1000);
+
+	return false;
+}
+
+
+//--- images first show after load --------------------------------------------
+$(function() {
+	if(typeof images_show_after_laod == 'undefined') {
+		var images_show_after_laod = true;
+	}
+	if(images_show_after_laod) {
+		$('img').each(function(){
+			if(!$(this).hasClass('nojsload')) {
+				$(this).hide();
+				$(this).on('load', function() {
+					$(this).fadeIn(400);
+				});
+			}
+		})
+	}
+});
+
+
+//--- function to check, if int -----------------------------------------------
+function isInt (n) {
+	return n % 1 === 0;
+}
+
+
+//--- function to check, if JSON ----------------------------------------------
+function isJSON (str) {
+	return (/^[\],:{}\s]*$/.test(str.replace(/\\["\\\/bfnrtu]/g, '@').
+		replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
+		replace(/(?:^|:|,)(?:\s*\[)+/g, '')));
+}
+
+
+//--- function to round on decimalplaces --------------------------------------
+function round (number, decimalplaces) {
+	var factor = Math.pow(10, decimalplaces);
+	var result = Math.round(number * factor) / factor ;
+	return result;
+}
+
+
+//--- function to convert file sizes ------------------------------------------
+function FileSizeConvert (bytes, decimals) {
+	if (bytes == 0) return '0 Byte';
+
+	var k = 1000;
+	var dm = decimals || 3;
+	var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+	var i = Math.floor(Math.log(bytes) / Math.log(k));
+
+	return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+}
+
+
+//--- function to get the nth root --------------------------------------------
+Math['root'] = function(base, n) {
+	return Math.pow(base, 1/n);
+};
+
+
+
+// #######################################
+// the following functions are not my own!
+// #######################################
+
+function utf8_encode (argString) {
+  //  discuss at: http://phpjs.org/functions/utf8_encode/
+  // original by: Webtoolkit.info (http://www.webtoolkit.info/)
+  // improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+  // improved by: sowberry
+  // improved by: Jack
+  // improved by: Yves Sucaet
+  // improved by: kirilloid
+  // bugfixed by: Onno Marsman
+  // bugfixed by: Onno Marsman
+  // bugfixed by: Ulrich
+  // bugfixed by: Rafal Kukawski
+  // bugfixed by: kirilloid
+  //   example 1: utf8_encode('Kevin van Zonneveld');
+  //   returns 1: 'Kevin van Zonneveld'
+
+  if (argString === null || typeof argString === 'undefined') {
+  	return '';
+  }
+
+  var string = (argString + ''); // .replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+  var utftext = '',
+  start, end, stringl = 0;
+
+  start = end = 0;
+  stringl = string.length;
+  for (var n = 0; n < stringl; n++) {
+  	var c1 = string.charCodeAt(n);
+  	var enc = null;
+
+  	if (c1 < 128) {
+  		end++;
+  	} else if (c1 > 127 && c1 < 2048) {
+  		enc = String.fromCharCode(
+  			(c1 >> 6) | 192, (c1 & 63) | 128
+  			);
+  	} else if ((c1 & 0xF800) != 0xD800) {
+  		enc = String.fromCharCode(
+  			(c1 >> 12) | 224, ((c1 >> 6) & 63) | 128, (c1 & 63) | 128
+  			);
+    } else { // surrogate pairs
+    	if ((c1 & 0xFC00) != 0xD800) {
+    		throw new RangeError('Unmatched trail surrogate at ' + n);
+    	}
+    	var c2 = string.charCodeAt(++n);
+    	if ((c2 & 0xFC00) != 0xDC00) {
+    		throw new RangeError('Unmatched lead surrogate at ' + (n - 1));
+    	}
+    	c1 = ((c1 & 0x3FF) << 10) + (c2 & 0x3FF) + 0x10000;
+    	enc = String.fromCharCode(
+    		(c1 >> 18) | 240, ((c1 >> 12) & 63) | 128, ((c1 >> 6) & 63) | 128, (c1 & 63) | 128
+    		);
+    }
+    if (enc !== null) {
+    	if (end > start) {
+    		utftext += string.slice(start, end);
+    	}
+    	utftext += enc;
+    	start = end = n + 1;
+    }
+}
+
+if (end > start) {
+	utftext += string.slice(start, stringl);
+}
+
+return utftext;
+}
+function SHA1 (str) {
+  //  discuss at: http://phpjs.org/functions/sha1/
+  // original by: Webtoolkit.info (http://www.webtoolkit.info/)
+  // improved by: Michael White (http://getsprink.com)
+  // improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+  //    input by: Brett Zamir (http://brett-zamir.me)
+  //  depends on: utf8_encode
+  //   example 1: sha1('Kevin van Zonneveld');
+  //   returns 1: '54916d2e62f65b3afa6e192e6a601cdbe5cb5897'
+
+  var rotate_left = function(n, s) {
+  	var t4 = (n << s) | (n >>> (32 - s));
+  	return t4;
+  };
+
+  /*var lsb_hex = function (val) { // Not in use; needed?
+    var str="";
+    var i;
+    var vh;
+    var vl;
+    for ( i=0; i<=6; i+=2 ) {
+      vh = (val>>>(i*4+4))&0x0f;
+      vl = (val>>>(i*4))&0x0f;
+      str += vh.toString(16) + vl.toString(16);
+    }
+    return str;
+};*/
+
+var cvt_hex = function(val) {
+	var str = '';
+	var i;
+	var v;
+
+	for (i = 7; i >= 0; i--) {
+		v = (val >>> (i * 4)) & 0x0f;
+		str += v.toString(16);
+	}
+	return str;
+};
+
+var blockstart;
+var i, j;
+var W = new Array(80);
+var H0 = 0x67452301;
+var H1 = 0xEFCDAB89;
+var H2 = 0x98BADCFE;
+var H3 = 0x10325476;
+var H4 = 0xC3D2E1F0;
+var A, B, C, D, E;
+var temp;
+
+str = this.utf8_encode(str);
+var str_len = str.length;
+
+var word_array = [];
+for (i = 0; i < str_len - 3; i += 4) {
+	j = str.charCodeAt(i) << 24 | str.charCodeAt(i + 1) << 16 | str.charCodeAt(i + 2) << 8 | str.charCodeAt(i + 3);
+	word_array.push(j);
+}
+
+switch (str_len % 4) {
+	case 0:
+	i = 0x080000000;
+	break;
+	case 1:
+	i = str.charCodeAt(str_len - 1) << 24 | 0x0800000;
+	break;
+	case 2:
+	i = str.charCodeAt(str_len - 2) << 24 | str.charCodeAt(str_len - 1) << 16 | 0x08000;
+	break;
+	case 3:
+	i = str.charCodeAt(str_len - 3) << 24 | str.charCodeAt(str_len - 2) << 16 | str.charCodeAt(str_len - 1) <<
+	8 | 0x80;
+	break;
+}
+
+word_array.push(i);
+
+while ((word_array.length % 16) != 14) {
+	word_array.push(0);
+}
+
+word_array.push(str_len >>> 29);
+word_array.push((str_len << 3) & 0x0ffffffff);
+
+for (blockstart = 0; blockstart < word_array.length; blockstart += 16) {
+	for (i = 0; i < 16; i++) {
+		W[i] = word_array[blockstart + i];
+	}
+	for (i = 16; i <= 79; i++) {
+		W[i] = rotate_left(W[i - 3] ^ W[i - 8] ^ W[i - 14] ^ W[i - 16], 1);
+	}
+
+	A = H0;
+	B = H1;
+	C = H2;
+	D = H3;
+	E = H4;
+
+	for (i = 0; i <= 19; i++) {
+		temp = (rotate_left(A, 5) + ((B & C) | (~B & D)) + E + W[i] + 0x5A827999) & 0x0ffffffff;
+		E = D;
+		D = C;
+		C = rotate_left(B, 30);
+		B = A;
+		A = temp;
+	}
+
+	for (i = 20; i <= 39; i++) {
+		temp = (rotate_left(A, 5) + (B ^ C ^ D) + E + W[i] + 0x6ED9EBA1) & 0x0ffffffff;
+		E = D;
+		D = C;
+		C = rotate_left(B, 30);
+		B = A;
+		A = temp;
+	}
+
+	for (i = 40; i <= 59; i++) {
+		temp = (rotate_left(A, 5) + ((B & C) | (B & D) | (C & D)) + E + W[i] + 0x8F1BBCDC) & 0x0ffffffff;
+		E = D;
+		D = C;
+		C = rotate_left(B, 30);
+		B = A;
+		A = temp;
+	}
+
+	for (i = 60; i <= 79; i++) {
+		temp = (rotate_left(A, 5) + (B ^ C ^ D) + E + W[i] + 0xCA62C1D6) & 0x0ffffffff;
+		E = D;
+		D = C;
+		C = rotate_left(B, 30);
+		B = A;
+		A = temp;
+	}
+
+	H0 = (H0 + A) & 0x0ffffffff;
+	H1 = (H1 + B) & 0x0ffffffff;
+	H2 = (H2 + C) & 0x0ffffffff;
+	H3 = (H3 + D) & 0x0ffffffff;
+	H4 = (H4 + E) & 0x0ffffffff;
+}
+
+temp = cvt_hex(H0) + cvt_hex(H1) + cvt_hex(H2) + cvt_hex(H3) + cvt_hex(H4);
+return temp.toLowerCase();
 }

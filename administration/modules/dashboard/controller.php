@@ -9,7 +9,7 @@ class dashboardController extends AbstractController
 		if(!isset($this->url[1]) || empty($this->url[1]))
 			header("Location: ".URL_ADMIN.'/'.$this->modulename.'/home');
 	}
-	
+
 	public function run()
 	{
 		global $XenuxDB, $app;
@@ -18,22 +18,22 @@ class dashboardController extends AbstractController
 		translator::appendTranslations(PATH_ADMIN . '/modules/'.$this->modulename.'/translation/');
 
 		$template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout.php");
-	
+
 		$template->setVar("count_users", $this->_getCountUsers());
 		$template->setVar("count_active_users", $this->_getCountActiveUsers());
 
 		$template->setVar("count_pages", $this->_getCountPages());
 		$template->setVar("count_public_pages", $this->_getCountPublicPages());
 
-		$template->setVar("count_news", $this->_getCountNews());
-		$template->setVar("count_public_news", $this->_getCountPublicNews());
-		$template->setVar("count_news_lastWeek", $this->_getCountNewsLastWeek());
-		
+		$template->setVar("count_posts", $this->_getCountPosts());
+		$template->setVar("count_public_posts", $this->_getCountPublicPosts());
+		$template->setVar("count_posts_lastWeek", $this->_getCountPostsLastWeek());
+
 		$template->setVar("count_cloud_files", $this->_getCountCloudFiles());
 		$template->setVar("count_cloud_images", $this->_getCountCloudImages());
 		$template->setVar("count_cloud_others", $this->_getCountCloudOthers());
 		$template->setVar("total_size_files", formatBytes($this->_getTotalSizeCloudFiles()));
-		
+
 		echo $template->render();
 
 		$this->page_name = __("dashboard");
@@ -76,35 +76,35 @@ class dashboardController extends AbstractController
 	}
 
 
-	private function _getCountNews()
+	private function _getCountPosts()
 	{
 		global $XenuxDB, $app;
-		return $XenuxDB->Count('news');
+		return $XenuxDB->Count('posts');
 	}
 
-	private function _getCountPublicNews()
+	private function _getCountPublicPosts()
 	{
 		global $XenuxDB, $app;
-		return $XenuxDB->Count('news', [
+		return $XenuxDB->Count('posts', [
 			'where' => [
-				'public' => true
+				'status' => 'publish'
 			]
 		]);
 	}
 
-	private function _getCountNewsLastWeek()
+	private function _getCountPostsLastWeek()
 	{
 		global $XenuxDB, $app;
-		return $XenuxDB->Count('news', [
+		return $XenuxDB->Count('posts', [
 			'where' => [
 				'AND' => [
 					'create_date[>=]' => date2mysql("-1 week +1 day"),
-					'public' => true
+					'status' => 'publish'
 				]
 			]
 		]);
 	}
-	
+
 
 	private function _getCountCloudFiles()
 	{

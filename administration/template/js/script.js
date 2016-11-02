@@ -1,7 +1,7 @@
 var baseurl;
 
 $(function() {
-	baseurl = $( '[rel=baseurl]' ).attr('href');
+	baseurl = $( '[rel="baseurl"]' ).prop('href');
 
 	// category accordion
 	$( 'menu.main-menu-left > ul > li > a' ).click(function(e) {
@@ -17,8 +17,8 @@ $(function() {
 
 	// data table selector
 	$( '.select-all-items' ).on('click', function() {
-		if ($( this ).attr('checked')) {
-			$( 'td.column-select > input' ).attr('checked', 'checked');
+		if ($( this ).prop('checked')) {
+			$( 'td.column-select > input' ).prop('checked', 'checked');
 		} else {
 			$( 'td.column-select > input' ).removeAttr('checked');
 		}
@@ -38,7 +38,7 @@ function notifyMe(title, text, click) {
 		Notification.requestPermission();
 
 	var notification = new Notification(title, {
-	icon: $( 'link[rel="shortcut icon"]' ).attr('href'),
+	icon: $( 'link[rel="shortcut icon"]' ).prop('href'),
 	body: text,
 	});
 

@@ -9,7 +9,7 @@ var defaultDisabled = ['remove', 'move', 'rename'];
 // #FIXME, #TODO:
 // - folder navigation trigger in browser history
 // - add enter event in rename
-// - use $.on() instead of $.live()
+// - use $.on() instead of $.on()
 
 $(function() {
 	imageURL = baseurl + '/administration/template/images/';
@@ -30,7 +30,7 @@ $(function() {
 
 
 	// drag/drop upload
-	$.event.props.push('dataTransfer');
+	//$.event.props.push('dataTransfer');
 	$('.explorer').bind('dragenter', function() {
 		console.info('file in window');
 		$('.drop-files').show();
@@ -50,14 +50,14 @@ $(function() {
 
 
 	// click events
-	$('.explorer .item').live('click', function(e) {
+	$('body').on('click', '.explorer .item', function(e) {
 		if(!e.ctrlKey) { // if ctrl is pressed don't unselect the other items
 			$('.explorer .item').removeClass('ui-selected');
 		}
 		$(this).toggleClass('ui-selected');
 		$('.actions > button').removeClass('disabled');
 	});
-	$('.breadcrumb .treeitem').live('click', function() {
+	$('body').on('click', '.breadcrumb .treeitem', function() {
 		var ID = $(this).attr('id');
 		console.info('switched to folder: ' + ID);
 
@@ -73,13 +73,13 @@ $(function() {
 
 
 	// double click events
-	$('.explorer > .item.folder').live('touchstart dblclick', function() {
+	$('body').on('dblclick', '.explorer > .item.folder', function() {
 		var rowID = $(this).attr('id');
 		console.info('switched to folder: ' + rowID);
 
 		dir_list(rowID);
 	});
-	$('.explorer > .item.file').live('touchstart dblclick', function() {
+	$('body').on('dblclick', '.explorer > .item.file', function() {
 		var rowID = $(this).attr('id');
 		console.info('opened file: ' + rowID);
 
@@ -257,7 +257,7 @@ $(function() {
 		$('.rename > input[type="text"]').val(filename);
 	});
 
-	$('.popup-editor.move-target > input[type="button"]').live('click', function() {
+	$('body').on('click', '.popup-editor.move-target > input[type="button"]', function() {
 		var to = $('.popup-editor.move-target > select').val();
 		$('.explorer > .item.ui-selected').each(function(i) {
 			var rowID = $(this).attr('id');
@@ -265,12 +265,12 @@ $(function() {
 		});
 		$('.popup-editor.move-target').hide();
 	});
-	$('.popup-editor.rename > input[type="text"]').live('keyup', function(event) {
+	$('body').on('keyup', '.popup-editor.rename > input[type="text"]', function(event) {
 		if(event.keyCode == 13) {
 			$('.popup-editor.rename > input[type="button"]').trigger('click');
 		}
 	});
-	$('.popup-editor.rename > input[type="button"]').live('click', function() {
+	$('body').on('click', '.popup-editor.rename > input[type="button"]', function() {
 		var newName = $('.popup-editor.rename > input[type="text"]').val();
 		var firstSelObj = $('.explorer > .item.ui-selected').eq(0);
 		rename(firstSelObj.attr('id'), newName);
@@ -278,24 +278,26 @@ $(function() {
 	});
 	$('.actions > button.create_folder').click(function() {
 		var folder_name = prompt('Ordnername');
-		$.ajax({
-			url: ajaxURL,
-			type: requestType,
-			dataType: 'json',
-			data: {
-				task: 'create_folder',
-				folder_name: folder_name,
-				parent_folder: getFolder(),
-			},
-			success: function(response) {
-				console.log(response);
-				dir_list(getFolder()); // refresh
-			},
-			error: function(xhr, textStatus, errorThrown){
-				console.log('request failed: %s / %o / %s ', textStatus, xhr, errorThrown);
-				alert('something went wrong...please try again');
-			}
-		});
+		if (folder_name) {
+			$.ajax({
+				url: ajaxURL,
+				type: requestType,
+				dataType: 'json',
+				data: {
+					task: 'create_folder',
+					folder_name: folder_name,
+					parent_folder: getFolder(),
+				},
+				success: function(response) {
+					console.log(response);
+					dir_list(getFolder()); // refresh
+				},
+				error: function(xhr, textStatus, errorThrown){
+					console.log('request failed: %s / %o / %s ', textStatus, xhr, errorThrown);
+					alert('something went wrong...please try again');
+				}
+			});
+		}
 	});
 
 	$('.actions > button.upload').click(function() {
