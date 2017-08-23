@@ -1,32 +1,35 @@
 {
-	"info":
-	{
-		"author": "Sven Eberth"
-	},
-	"translations":
-	{
-		"isWrong":"%1 is wrong",
-		"savedSuccessful": "saved successful",
-		"removedSuccessful": "removed successful",
-		"savingFailed": "saving failed",
+  "info":
+  {
+    "author": "Sven Eberth"
+  },
+  "translations":
+  {
+    "isWrong":"%1 is wrong",
+    "savedSuccessful": "saved successful",
+    "removedSuccessful": "removed successful",
+    "savingFailed": "saving failed",
 
-		"save":"save",
-		"save&stay":"save",
-		"save&close":"save and close",
-		"cancel":"cancel",
+    "save":"save",
+    "save&stay":"save",
+    "save&close":"save and close",
+    "cancel":"cancel",
 
-		"view":"view",
-		"new":"new",
-		"edit":"edit",
-		"delete":"delete",
+    "choose action":"choose action",
+    "apply action":"apply",
+    "apply filter":"apply filter",
+    "view":"view",
+    "new":"new",
+    "edit":"edit",
+    "remove":"Löschen",
 
-		"dashboard":"Dashboard",
-		"cloud":"cloud",
+    "dashboard":"Dashboard",
+    "cloud":"cloud",
 
-		"headline":"headline",
-		"title":"title",
-		"createDate":"createdate",
-		"author":"author",
-		"ID":"ID"
-	}
+    "headline":"headline",
+    "title":"title",
+    "createDate":"createdate",
+    "author":"author",
+    "ID":"ID"
+  }
 }

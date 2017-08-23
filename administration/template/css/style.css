@@ -131,7 +131,7 @@ button,
 input,
 select,
 textarea {
-  font-family: Calibri, 'Segoe UI', Verdana, Arial, sans-serif;
+  font-family: Calibri, 'Segoe UI', Arial, sans-serif;
 }
 /**
  * Links
@@ -309,7 +309,6 @@ table {
  */
 * {
   box-sizing: border-box;
-  position: relative;
 }
 /* ##############################################
 ** BASICS
@@ -321,7 +320,7 @@ html {
 body {
   font-size: 100.01%;
   line-height: 1.3;
-  font-family: Calibri, 'Segoe UI', Verdana, Arial, sans-serif;
+  font-family: Calibri, 'Segoe UI', Arial, sans-serif;
   color: #111;
   height: 100%;
   background: #eee;

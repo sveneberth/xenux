@@ -38,8 +38,8 @@ function notifyMe(title, text, click) {
 		Notification.requestPermission();
 
 	var notification = new Notification(title, {
-	icon: $( 'link[rel="shortcut icon"]' ).prop('href'),
-	body: text,
+		icon: $( 'link[rel="shortcut icon"]' ).prop('href'),
+		body: text,
 	});
 
 	notification.onclick = click;

@@ -37,18 +37,16 @@ class user
 	public function checkPassword($password)
 	{
 		$stored = $this->userInfo->password;
-		$username = $this->userInfo->username;
 
-	    $string = hash_hmac ( "whirlpool", str_pad ( $password, strlen ( $password ) * 4, sha1 ( $username ), STR_PAD_BOTH ), SALT, true );
-	    return crypt ( $string, substr ( $stored, 0, 30 ) ) == $stored;
+		return password_verify($password, $stored);
 	}
 
-
-	public function createPasswordHash($username, $password, $rounds='10')
+	public function createPasswordHash($password)
 	{
-		$string = hash_hmac ( "whirlpool", str_pad ( $password, strlen ( $password ) * 4, sha1 ( $username ), STR_PAD_BOTH ), SALT, true );
-		$salt = substr ( str_shuffle ( './0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' ) , 0, 22 );
-		return crypt ( $string, '$2a$' . $rounds . '$' . $salt );
+		return password_hash($password, PASSWORD_DEFAULT, [
+			'cost' => COST,
+			'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM)
+		]);
 	}
 
 
@@ -166,6 +164,7 @@ class user
 
 	private function getSessionFingerprint()
 	{
+		#TODO: use salt
 		return SHA1($_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']);
 	}
 

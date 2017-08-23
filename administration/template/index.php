@@ -79,7 +79,7 @@
 	<menu class="main-menu-left">
 		<ul class="menu">
 			<li class="<?= $app->url[0] == 'dashboard' ? 'active open' : '' ?>">
-				<a  class="<?= $app->url[0] == 'dashboard' ? 'active' : '' ?>" href="{{URL_ADMIN}}/dashboard"><?= __('dashboard') ?></a>
+				<a class="<?= $app->url[0] == 'dashboard' ? 'active' : '' ?>" href="{{URL_ADMIN}}/dashboard"><?= __('dashboard') ?></a>
 			</li>
 			<?php
 				$modules = $app->getAdminModule();

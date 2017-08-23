@@ -154,7 +154,7 @@ class postsController extends AbstractController
 	<td class="column-select"><input type="checkbox" name="item[]" value="' . $post->post_id . '"></td>
 	<td class="column-id">' . $post->post_id . '</td>
 	<td class="column-title">
-		<a class="edit" href="{{URL_ADMIN}}/' . $this->modulename . '/edit/' . $post->post_id . '" title="' . __('click to edit') . '">' . $post->title . ($post->status == 'draft' ? ' <span class="draft-hint">(Entwurf)</span>' : '') . '</a>
+		<a class="edit" href="{{URL_ADMIN}}/' . $this->modulename . '/edit/' . $post->post_id . '" title="' . __('click to edit') . '">' . $post->title . ($post->status == 'draft' ? ' <span class="draft-hint">(' . __('draft') . ')</span>' : '') . '</a>
 	</td>
 	<td class="column-date">' . $post->create_date . '</td>
 	<td class="column-author">' . $post->username . '</td>
@@ -276,7 +276,7 @@ class postsController extends AbstractController
 
 		if($form->isSend() && isset($form->getInput()['cancel']))
 		{
-			header('Location: '.URL_ADMIN.'/news/home');
+			header('Location: '.URL_ADMIN.'/posts/home');
 			return false;
 		}
 

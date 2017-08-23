@@ -32,7 +32,6 @@ include_once(PATH_MAIN.'/core/config/vars.php');
 include_once(PATH_MAIN.'/xenux-conf.php');
 
 // include stuff
-include_once(PATH_MAIN.'/core/inc/arrays.php'); // include arrays
 include_once(PATH_MAIN.'/core/inc/functions.php'); // include functions
 
 // include classes
@@ -56,4 +55,3 @@ include_once(PATH_MAIN.'/core/class/pluginhelper.php');
 /** Build a Database and App Handler */
 $XenuxDB	= new XenuxDB;
 $app		= new app(isset($_GET['url']) ? $_GET['url'] : '');
-?>

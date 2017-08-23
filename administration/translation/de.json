@@ -1,32 +1,35 @@
 {
-	"info":
-	{
-		"author": "Sven Eberth"
-	},
-	"translations":
-	{
-		"isWrong":"%1 ist falsch",
-		"savedSuccessful": "erfolgreich gespeichert",
-		"removedSuccessful": "erfolgreich gelöscht",
-		"savingFailed": "speichern Fehlgeschlagen",
+  "info":
+  {
+    "author": "Sven Eberth"
+  },
+  "translations":
+  {
+    "isWrong":"%1 ist falsch",
+    "savedSuccessful": "Erfolgreich gespeichert",
+    "removedSuccessful": "Erfolgreich gelöscht",
+    "savingFailed": "Speichern Fehlgeschlagen",
 
-		"save":"speichern",
-		"save&stay":"speichern",
-		"save&close":"speichern und schließen",
-		"cancel":"abbrechen",
+    "save":"Speichern",
+    "save&stay":"Speichern",
+    "save&close":"Speichern und schließen",
+    "cancel":"Abbrechen",
 
-		"view":"Anzeigen",
-		"new":"Neu",
-		"edit":"Bearbeiten",
-		"delete":"Löschen",
+    "choose action":"Aktion wählen",
+    "apply action":"Übernehmen",
+    "apply filter":"Filter anwenden",
+    "view":"Anzeigen",
+    "new":"Neu",
+    "edit":"Bearbeiten",
+    "remove":"Löschen",
 
-		"dashboard":"Dashboard",
-		"cloud":"Cloud",
+    "dashboard":"Dashboard",
+    "cloud":"Cloud",
 
-		"headline":"Überschrift",
-		"title":"Titel",
-		"createDate":"Erstelldatum",
-		"author":"Autor",
-		"ID":"ID"
-	}
+    "headline":"Überschrift",
+    "title":"Titel",
+    "createDate":"Erstelldatum",
+    "author":"Autor",
+    "ID":"ID"
+  }
 }

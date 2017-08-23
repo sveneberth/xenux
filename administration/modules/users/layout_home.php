@@ -15,11 +15,11 @@
 	<section class="box-shadow grid-col">
 		<form method="get">
 			<div class="actionbar clearfix">
-				<select name="action" class="action-select">
-					<option value="-1">Aktion wählen</option>
-					<option value="remove">löschen</option>
+				<select name="action" class="select action-select">
+					<option value="-1"><?= __('choose action') ?></option>
+					<option value="remove"><?= __('remove') ?></option>
 				</select>
-				<input type="submit" class="action-btn" value="Übernehmen">
+				<input type="submit" class="btn action-btn" value="<?= __('apply action') ?>">
 			</div>
 
 			<table class="data-table">

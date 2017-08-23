@@ -1,3 +1,4 @@
+{# #TODO: translation #}
 <script>
 	$(function() {
 		$( '.data-table' ).tablesorter({
@@ -17,19 +18,19 @@
 		<form method="get">
 			<div class="actionbar clearfix">
 				<select name="action" class="select action-select">
-					<option value="-1">Aktion wählen</option>
-					<option value="draft">als Entwurf speichern</option>
-					<option value="publish">veröffentlichen</option>
-					<option value="trash">löschen</option>
+					<option value="-1"><?= __('choose action') ?></option>
+					<option value="draft"><?= __('safe as draft') ?></option>
+					<option value="publish"><?= __('publish') ?></option>
+					<option value="remove"><?= __('remove') ?></option>
 				</select>
-				<input name="apply-action" type="submit" class="btn action-btn" value="Übernehmen">
+				<input type="submit" class="btn action-btn" value="<?= __('apply action') ?>">
 
 				<select name="filter" class="select filter-select">
-					<option value="publish" <?php if(@$_GET['filter'] == 'publish') echo 'selected'; ?>>Öffentliche Beiträge ({{amountPublish}})</option>
-					<option value="draft" <?php if(@$_GET['filter'] == 'draft') echo 'selected'; ?>>Entwürfe ({{amountDraft}})</option>
-					<option value="trash" <?php if(@$_GET['filter'] == 'trash') echo 'selected'; ?>>Papierkorb ({{amountTrash}})</option>
+					<option value="publish" <?php if(@$_GET['filter'] == 'publish') echo 'selected'; ?>><?= __('public posts') ?> ({{amountPublish}})</option>
+					<option value="draft" <?php if(@$_GET['filter'] == 'draft') echo 'selected'; ?>><?= __('drafts') ?> ({{amountDraft}})</option>
+					<option value="trash" <?php if(@$_GET['filter'] == 'trash') echo 'selected'; ?>><?= __('trash') ?> ({{amountTrash}})</option>
 				</select>
-				<input name="apply-filter" type="submit" class="btn filter-btn" value="Filter anwenden">
+				<input name="apply-filter" type="submit" class="btn filter-btn" value="<?= __('apply filter') ?>">
 			</div>
 
 			<table class="data-table">

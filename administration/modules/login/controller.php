@@ -237,7 +237,7 @@ class LoginController extends AbstractController
 							'lastname' => $data['lastname'],
 							'username' => $data['username'],
 							'email' => $data['email'],
-							'password' => $app->user->createPasswordHash($data['username'], $data['password']),
+							'password' => $app->user->createPasswordHash($data['password']),
 							'verifykey' => $token
 						]);
 						if($return !== false)
@@ -499,7 +499,7 @@ Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: '
 				{
 					$return = $XenuxDB->Update('users', [
 						'verifykey' => NULL,
-						'password' => $app->user->createPasswordHash($userinfo->username, $data['password'])
+						'password' => $app->user->createPasswordHash($data['password'])
 					],
 					[
 						'id' => $userinfo->id
@@ -589,7 +589,7 @@ Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: '
 				{
 					$return = $XenuxDB->Update('users', [
 						'verifykey' => NULL,
-						'password' => $app->user->createPasswordHash($userinfo->username, $data['password'])
+						'password' => $app->user->createPasswordHash($data['password'])
 					],
 					[
 						'id' => $userinfo->id

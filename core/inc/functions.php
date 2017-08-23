@@ -13,16 +13,16 @@ function escapemail ($email, $props = array())
 	else
 	{
 		$link = "<a" . (isset($props['class']) ? ' class="' . $props['class'] . '"' : '') . (isset($props['id']) ? ' id="' . $props['id'] . '"' : '') . " href=\"mailto:$email\">" . (isset($props['text']) ? $props['text'] : $email) . "</a>";
-		
+
 		$emailprops	= str_split($link, 1);
-		
+
 		$JS = "";
-		
+
 		foreach ($emailprops as $val)
 		{
 			$JS .= ((strlen($JS)==0) ? '' : ' + ') . "'$val'";
 		}
-		
+
 		return
 			"<script>document.write($JS);</script>".
 			"<noscript>" . (isset($props['text']) ? "\"" . $props['text'] . "\" &lt;" . str_replace(array('@', '.'), array(' [at] ', ' [dot] '), $email) . "&gt;" : str_replace(array('@', '.'), array(' [at] ', ' [dot] '), $email)) . "</noscript>";
@@ -39,7 +39,7 @@ function whitespace2nbsp ($str)
 {
 	if (empty($str) || !isset($str))
 		return false;
-		
+
 	return str_replace(" ", "&nbsp;", $str);
 }
 
@@ -99,7 +99,7 @@ function pretty_date ($datestr = '')
 			$r = __('yesterday');
 		else
 			$r = __('two days ago');
-		
+
 		$hour_date = intval(date('G',$date)) + (intval(date('i',$date))/60);
 		$hour_now = intval(date('G',$now)) + (intval(date('i',$now))/60);
 		if($hour_date>=22.5 || $hour_date<$day_start)
@@ -142,10 +142,10 @@ function pretty_date ($datestr = '')
 
 	if ($d<18)
 		return __('ago', __('one year'));
-	
+
 	if ($d<21)
 		return __('ago', __('a year and a half'));
-	
+
 	$d = round($d / 12);
 	return __('ago', $d.' '.__('years'));
 }
@@ -178,7 +178,7 @@ function shortstr ($str, $size=100, $max=200)
 * formatBytes
 * @param int $size: size in bytes
 * @param int $precision: amount of decimal places
-* @return string: converted value + unit 
+* @return string: converted value + unit
 * @source: http://stackoverflow.com/a/2510540/3749896
 */
 function formatBytes ($size, $precision = 2)
@@ -194,7 +194,7 @@ function formatBytes ($size, $precision = 2)
 * generateRandomString
 * @param int $length: lenght of the random string
 * @param string $characters: the allowed characters
-* @return string: random string 
+* @return string: random string
 * @source: http://stackoverflow.com/a/2510540/3749896
 */
 function generateRandomString ($length = 10,  $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
@@ -212,7 +212,7 @@ function generateRandomString ($length = 10,  $characters = '0123456789abcdefghi
 * mysql2date
 * @param string $format: the request format
 * @param string $date: the date
-* @return string: formatted date 
+* @return string: formatted date
 */
 function mysql2date ($format, $date)
 {
@@ -230,7 +230,7 @@ function mysql2date ($format, $date)
 * @param string $date: date or unixtime
 * @param $isUnixtime: is @param $date unixtime (optional)
 * @return string: formatted date
-*/ 
+*/
 function date2mysql ($date, $isUnixtime=false)
 {
 	if(!$isUnixtime)
@@ -253,7 +253,7 @@ function getPageLink($id, $title='')
 /**
 * inludeExists
 * @param string $file: path of file
-* @return bool: file included ? 
+* @return bool: file included ?
 */
 function inludeExists ($file)
 {
@@ -271,7 +271,7 @@ function inludeExists ($file)
 * is_json
 * @param string $string: the to be checed (json-)string
 * @param string $return_data: if json, return the checked json string ?
-* @return bool: file included ? 
+* @return bool: file included ?
 */
 function is_json ($string, $return_data = false)
 {
@@ -286,7 +286,7 @@ function is_json ($string, $return_data = false)
 * @param int $absolutenumber: the amount of entrys
 * @param int $start: the number of the entry of the actually site
 * @param int $amount: the amount of entries per site
-* @return string: the navigationbar as html 
+* @return string: the navigationbar as html
 */
 function getMenuBarMultiSites ($absolutenumber, $start, $amount)
 {
@@ -306,7 +306,7 @@ function getMenuBarMultiSites ($absolutenumber, $start, $amount)
 			$return .= "\" title=\"".__('page')." $thissite\" href=\"{{SITE_PATH}}?";
 			foreach ($_GET as $key => $value)
 			{
-				if($key != 'url' && $key != 'start' && $key != 'amount')					
+				if($key != 'url' && $key != 'start' && $key != 'amount')
 					$return .= $key . '=' . $value . '&';
 			}
 			$return .= "start=$limit&amount=$amount\">$thissite</a>\n";
@@ -365,7 +365,7 @@ function full_copy ($source, $target)
 			if ($entry == '.' || $entry == '..')
 				continue;
 
-			$Entry = $source . '/' . $entry;          
+			$Entry = $source . '/' . $entry;
 			if (is_dir($Entry))
 			{
 				full_copy ($Entry, $target . '/' . $entry);
@@ -385,27 +385,27 @@ function full_copy ($source, $target)
 
 /**
 * turn_array
-* @param array $m: result of preg_match_all 
+* @param array $m: result of preg_match_all
 * @return array: the turned array
 * @source: http://php.net/manual/de/function.preg-match-all.php#102520
 */
-function turn_array ($m) 
-{ 
-    for ($z = 0;$z < count($m);$z++) 
-    { 
-        for ($x = 0;$x < count($m[$z]);$x++) 
-        { 
-            $rt[$x][$z] = $m[$z][$x]; 
-        } 
-    }    
-    
-    return $rt; 
+function turn_array ($m)
+{
+    for ($z = 0;$z < count($m);$z++)
+    {
+        for ($x = 0;$x < count($m[$z]);$x++)
+        {
+            $rt[$x][$z] = $m[$z][$x];
+        }
+    }
+
+    return $rt;
 }
 
 
 /**
 * rrmmdir
-* this fuction delete recursive a dir 
+* this fuction delete recursive a dir
 * @param string $dir: path of the to be deleted dir
 * @return bool: successful ?
 */
@@ -452,13 +452,12 @@ function remove_array_value(array &$array, &$value)
 * is_dir_empty
 * check if a folder is empty
 * @param string $dir: path of the folder
-* @return bool: is empty ? 
+* @return bool: is empty ?
 */
 function is_dir_empty($dir)
 {
 	if (!is_readable($dir))
-		return NULL; 
+		return NULL;
 
 	return (count(scandir($dir)) == 2);
 }
-?>

@@ -1,17 +1,22 @@
 {
-	"info":
-	{
-		"author": "Sven Eberth"
-	},
-	"translations":
-	{
-		"post":"Beitrag",
-		"posts":"Beiträge",
-		"home":"alle Beiträge",
-
-		"desc":"Beschreibung",
-		"click to edit":"Klicken, um zu bearbeiten",
-		"here can you add a new post":"Hier kannst du einen neuen Beitrag anlegen.",
-		"here can you edit the post":"Hier kannst du den Beitrag bearbeiten."
-	}
+  "info":
+  {
+    "author": "Sven Eberth"
+  },
+  "translations":
+  {
+    "post":"Beitrag",
+    "posts":"Beiträge",
+    "home":"Alle Beiträge",
+    "safe as draft":"Als Entwurf speichern",
+    "publish":"Veröffentlichen",
+    "public posts":"Öffentliche Beiträge",
+    "draft":"Entwurf",
+    "drafts":"Entwürfe",
+    "trash":"Papierkorb",
+    "desc":"Beschreibung",
+    "click to edit":"Klicken, um zu bearbeiten",
+    "here can you add a new post":"Hier kannst du einen neuen Beitrag anlegen.",
+    "here can you edit the post":"Hier kannst du den Beitrag bearbeiten."
+  }
 }

@@ -187,11 +187,10 @@ class usersController extends AbstractController
 		(
 			'username' => array
 			(
-				'type' => $new ? 'text' : 'readonly',
+				'type' => 'text',
 				'required' => true,
 				'label' => __('username'),
 				'value' =>  !$new ? $user->username : '',
-				'info' => !$new ? __('usernames cannot be changed') : '',
 			),
 			'firstname' => array
 			(
@@ -402,7 +401,7 @@ class usersController extends AbstractController
 					if ($data['password'] == $data['passwordAgain'])
 					{
 						$return = $XenuxDB->Update('users', [
-							'password' => $app->user->createPasswordHash($data['username'], $data['password']),
+							'password' => $app->user->createPasswordHash($data['password']),
 						],
 						[
 							'id' => $this->editUserID

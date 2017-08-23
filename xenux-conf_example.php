@@ -7,25 +7,24 @@
 
 /** ### MySQL Settings ### */
 /** MySQL Hostname */
-define('MYSQL_HOST',    'localhost');
+define('MYSQL_HOST', 'localhost');
 
 /** MySQL Database Username */
-define('MYSQL_USER',	'root');
+define('MYSQL_USER', 'root');
 
 /** MySQL Database Password  */
-define('MYSQL_PW',		'');
+define('MYSQL_PW', '');
 
 /** MySQL Databasename  */
-define('MYSQL_DB',		'xenux');
+define('MYSQL_DB', 'xenux');
 
 /** MySQL Prefix for Database-Tables  */
-define('MYSQL_PREFIX',	'XENUX_');
+define('MYSQL_PREFIX', 'XENUX_');
 
 
-/** Salt for User-Login  */
-define('SALT', 'aRan0mStrIng');
+/** Cost for User-Login  */
+define('COST', 11);
 
 
 /** enable (true) or disable (false) debugging mode  */
-define('DEBUG', false);
-?>
+define('DEBUG', true);

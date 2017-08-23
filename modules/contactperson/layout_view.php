@@ -6,6 +6,6 @@
 
 {{email}}
 
-<br/>
-<br/>
+<br>
+<br>
 <a href="{{URL_MAIN}}/contactperson/list">&raquo;<?= __('gotocontactpersonList') ?></a>
