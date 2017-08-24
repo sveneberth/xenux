@@ -3,9 +3,7 @@ class pluginmanagerController extends AbstractController
 {
 	public function __construct($url)
 	{
-		$this->url = $url;
-		$this->template;
-		$this->modulename = str_replace('Controller', '', get_class());
+		parent::__construct($url);
 
 		if (!isset($this->url[1]) || empty($this->url[1]))
 			header("Location: ".URL_ADMIN.'/'.$this->modulename.'/modules');
@@ -340,4 +338,3 @@ class pluginmanagerController extends AbstractController
 		}
 	}
 }
-?>

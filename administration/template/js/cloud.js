@@ -524,13 +524,13 @@ function dir_list(folder) {
 					var filename = entry.filename.replace(/"/g, '&quot;');
 					rows += '<div class="item ' + entry.type + '" id="' + entry.id + '" data-filename="' + filename + '">';
 					if(entry.type == 'folder') {
-						rows += '<img src="' + imageURL + 'folder_grey.svg" class="image">';
+						rows += '<img src="' + imageURL + 'folder.svg" class="image">';
 					} else {
 						var typeCategory = entry.mime_type.substr(0, entry.mime_type.search('/'));
 						if(typeCategory == 'image') {
 							rows += '<img src="' + baseurl + '/file/' + SHA1(entry.id) + '-s32-c" class="image">';
 						} else {
-							rows += '<img src="' + imageURL + 'document_grey.svg" class="image">';
+							rows += '<img src="' + imageURL + 'document.svg" class="image">';
 						}
 					}
 					rows += '<span class="file filename">' + filename + '</span>';

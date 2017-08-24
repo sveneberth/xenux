@@ -6,4 +6,4 @@ xenux-conf.php
 /mails/
 
 # ignore temp folder
-/tmp/ 
+/tmp/

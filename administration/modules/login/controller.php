@@ -2,10 +2,9 @@
 #TODO: translation
 class LoginController extends AbstractController
 {
-	public function __construct($url = null)
+	public function __construct($url)
 	{
-		if(isset($url))
-			$this->url = $url;
+		parent::__construct($url);
 	}
 
 	public function run()

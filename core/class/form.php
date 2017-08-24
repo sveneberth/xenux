@@ -83,7 +83,7 @@ class form
 						// what can you do wrong here? ;)
 						break;
 					case 'password':
-						$min_length = isset($props['min_length']) ? $props['min_length'] : 6;
+						$min_length = isset($props['min_length']) ? $props['min_length'] : 8;
 						if(strlen($this->data[$name]) < $min_length)
 						{
 							$this->setErrorMsg(__('password to short. minlength', $props['label'], $min_length));

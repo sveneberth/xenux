@@ -7,8 +7,7 @@ class usersController extends AbstractController
 
 	public function __construct($url)
 	{
-		$this->url = $url;
-		$this->modulename = str_replace('Controller', '', get_class());
+		parent::__construct($url);
 
 		if (!isset($this->url[1]) || empty($this->url[1]))
 			header("Location: ".URL_ADMIN.'/'.$this->modulename.'/home');
@@ -136,7 +135,11 @@ class usersController extends AbstractController
 	<td class="column-text">' . $user->lastname . '</td>
 	<td class="column-actions">
 		<a class="view-btn" target="_blank" href="{{URL_MAIN}}/user/view/' . urlencode($user->username) . '">' . __('view') . '</a>
-		<a href="{{URL_ADMIN}}/users/home/?remove=' . $user->id . '" title="' . __('delete') . '" class="remove-btn"></a>
+		<a href="{{URL_ADMIN}}/users/home/?remove=' . $user->id . '" title="' . __('delete') . '" class="remove-btn">
+			<svg xmlns="http://www.w3.org/2000/svg" height="32px" version="1.1" viewBox="0 0 32 32" width="32px">
+				 <path fill-rule="evenodd" d="M21.333 3.556h4.741V4.74H5.926V3.556h4.74V2.37c0-1.318 1.06-2.37 2.368-2.37h5.932a2.37 2.37 0 0 1 2.367 2.37v1.186zM5.926 5.926v22.517A3.55 3.55 0 0 0 9.482 32h13.036a3.556 3.556 0 0 0 3.556-3.557V5.926H5.926zm4.74 3.555v18.963h1.186V9.481h-1.185zm4.741 0v18.963h1.186V9.481h-1.186zm4.741 0v18.963h1.185V9.481h-1.185zm-7.107-8.296c-.657 0-1.19.526-1.19 1.185v1.186h8.297V2.37c0-.654-.519-1.185-1.189-1.185h-5.918z"/>
+			</svg>
+		</a>
 	</td>
 </tr>';
 			}
@@ -246,7 +249,6 @@ class usersController extends AbstractController
 			(
 				'type' => 'password',
 				'label' => __('password'),
-				'min_length' => 6,
 				'info' => !$new ?
 					__('If you dont want to change the password, leave the fields blank') :
 					__('leave the fields blank and the user can set the password himself'),
@@ -255,7 +257,6 @@ class usersController extends AbstractController
 			(
 				'type' => 'password',
 				'label' => __('passwordAgain'),
-				'min_length' => 6,
 				'info' => !$new ?
 					__('If you dont want to change the password, leave the fields blank') :
 					__('leave the fields blank and the user can set the password himself'),
@@ -314,35 +315,36 @@ class usersController extends AbstractController
 
 			$username		= preg_replace('/[^a-zA-Z0-9_\-\.]/' , '' , $data['username']);
 			$homepage		= full($data['homepage']) ? (preg_match('/^([a-zA-Z]*)\:\/\//', $data['homepage']) ? $data['homepage'] : 'http://'.$data['homepage']) : '';
+			$social_media =  trim(preg_replace('/(.*?)\:\s?(\w*?):(.*?)$/m', '', $data['social_media']));
 
-			$result =  trim(preg_replace('/(.*?)\:\s?(\w*?):(.*?)$/m', '', $data['social_media']));
-			$social_media_ok = ($result == '');
+			$social_media_ok		= ($social_media == '');
+			$userFoundByUsername	= $app->user->getUserByUsername($username) && $username != @$user->username;
+			$userFoundByEmail		= $app->user->getUserByEmail($data['email']) && $data['email'] != @$user->email;
+
+			if (!$social_media_ok)
+			{
+				$this->messages[] = '<p class="box-shadow info-message warning">'.__('the social media links are inacceptable').'</p>';
+			}
+
+			if ($userFoundByUsername)
+			{
+				$this->messages[] = '<p class="box-shadow info-message warning">'.__('an user with this username exist already').'</p>';
+			}
+
+			if ($userFoundByEmail)
+			{
+				$this->messages[] = '<p class="box-shadow info-message warning">'.__('an user with this email exist already').'</p>';
+			}
+
+			if ($userFoundByEmail || $userFoundByUsername || !$social_media_ok)
+			{
+				return $form->getForm();
+			}
 
 			$success = true;
 
 			if ($new)
 			{
-				$userFoundByUsername	= $app->user->getUserByUsername($data['username']);
-				$userFoundByEmail		= $app->user->getUserByEmail($data['email']);
-
-				if ($userFoundByUsername)
-				{
-					$this->messages[] = '<p class="box-shadow info-message warning">'.__('an user with this username exist already').'</p>';
-				}
-				if ($userFoundByEmail)
-				{
-					$this->messages[] = '<p class="box-shadow info-message warning">'.__('an user with this email exist already').'</p>';
-				}
-				if (!$social_media_ok)
-				{
-					$this->messages[] = '<p class="box-shadow info-message warning">'.__('the social media links are inacceptable').'</p>';
-				}
-
-				if ($userFoundByEmail || $userFoundByUsername || !$social_media_ok)
-				{
-					return $form->getForm();
-				}
-
 				$token = generateRandomString();
 
 				$user = $XenuxDB->Insert('users', [
@@ -415,18 +417,11 @@ class usersController extends AbstractController
 						$this->messages[] = '<p class="box-shadow info-message warning">'.__('the passwords are not equal').'</p>';
 						return $form->getForm();
 					}
-
 				}
-
-				if (!$social_media_ok)
-				{
-					$this->messages[] = '<p class="box-shadow info-message warning">'.__('the social media links are inacceptable').'</p>';
-					return $form->getForm();
-				}
-
 
 				// update it
 				$return = $XenuxDB->Update('users', [
+					'username'				=> $data['username'],
 					'firstname'				=> $data['firstname'],
 					'lastname'				=> $data['lastname'],
 					'realname_show_profile'	=> parse_bool($data['realname_show_profile']),

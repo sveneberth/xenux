@@ -3,12 +3,9 @@ class userController extends AbstractController
 {
 	protected $pageID;
 
-	public function __construct($url = null)
+	public function __construct($url)
 	{
-		if(isset($url))
-			$this->url = $url;
-
-		$this->modulename = str_replace('Controller', '', get_class());
+		parent::__construct($url);
 	}
 
 	public function run()
@@ -26,6 +23,7 @@ class userController extends AbstractController
 		}
 		else
 		{
+			#FIXME: improve error handling
 			header('HTTP/1.1 404 Not Found');
 			throw new Exception(__('error404msg'));
 			//throw new Exception("404 - $this->modulename template not found");
@@ -64,7 +62,7 @@ class userController extends AbstractController
 				'where' => [
 					'author_id' => $user->id
 				]
-			]) + $XenuxDB->count('news', [
+			]) + $XenuxDB->count('posts', [
 				'where' => [
 					'author_id' => $user->id
 				]

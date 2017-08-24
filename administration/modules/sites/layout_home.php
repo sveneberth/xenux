@@ -117,6 +117,7 @@
 </script>
 
 <style>
+	{# #FIXME: move me and script above #}
 	.menu_order > ul,
 	.menu_order > ul ul {
 		margin: 0 0 0 25px;
@@ -181,17 +182,14 @@
 		position: absolute;
 	}
 	.menu_order ul > li .remove-icon {
-		background-image: url('{{TEMPLATE_PATH}}/images/remove.png');
-		background-size: 100%;
-		background-repeat: no-repeat;
-		background-position: center;
 		display: block;
-		height: 25px;
-		width: 25px;
+		height: 20px;
+		width: 20px;
 		position: absolute;
 		right: 0;
 		top: 50%;
 		transform: translateY(-50%);
+		fill: #777;
 	}
 </style>
 

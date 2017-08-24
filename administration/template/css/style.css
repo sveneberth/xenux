@@ -799,10 +799,31 @@ form > .cke {
   padding: 15px;
   height: 60px;
 }
-.actions > button[data-title]:not(.disabled) {
-  position: relative;
+.actions .action-button {
+  width: auto;
+  display: inline-block;
+  margin: 0 5px 0 0;
+  width: 30px;
+  height: 30px;
+  padding: 3px;
+  background: #fff;
+  border: 1px solid #929292;
 }
-.actions > button[data-title]:not(.disabled):after {
+.actions .action-button svg {
+  width: 100%;
+  height: 100%;
+  fill: #929292;
+}
+.actions .action-button.disabled {
+  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.4);
+  background-color: #DBDBDB;
+  cursor: no-drop;
+}
+.actions .action-button:not(.disabled) {
+  position: relative;
+  /* tooltip*/
+}
+.actions .action-button:not(.disabled):after {
   display: block;
   position: absolute;
   left: -999em;
@@ -819,30 +840,15 @@ form > .cke {
   opacity: 0;
   transition: opacity .4s .3s ease;
 }
-.actions > button[data-title]:not(.disabled):hover:after {
+.actions .action-button:not(.disabled):hover {
+  border: 1px solid #157EFB;
+}
+.actions .action-button:not(.disabled):hover svg {
+  fill: #157EFB;
+}
+.actions .action-button:not(.disabled):hover:after {
   left: -61px;
   opacity: 1;
-}
-.actions > button:not(.disabled):hover {
-  border: 1px solid #157efb;
-}
-.actions > button {
-  width: auto;
-  display: inline-block;
-  margin: 0 5px 0 0;
-  width: 30px;
-  height: 30px;
-  padding: 10px;
-  background-color: #fff;
-  background-position: center;
-  background-size: 90%;
-  background-repeat: no-repeat;
-  border: 1px solid #929292;
-}
-.actions > button.disabled {
-  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.4);
-  background-color: #DBDBDB;
-  cursor: no-drop;
 }
 .breadcrumb {
   background: #eee;
@@ -1231,6 +1237,7 @@ menu.main-menu-left > ul.menu ul li.active {
 .page-headline {
   background: #fff;
   padding: 5px 10px;
+  position: relative;
 }
 a.btn-new,
 a.btn-new:visited,
@@ -1347,26 +1354,34 @@ table.data-table .column-date {
 }
 table.data-table .column-actions {
   width: 10%;
+  position: relative;
 }
 table.data-table .column-select input {
   margin: 0;
 }
 table.data-table .view-btn {
-  right: 40px;
+  display: block;
   position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 table.data-table .remove-btn {
-  background-image: url('../images/remove.png');
-  background-size: 100%;
-  background-repeat: no-repeat;
-  background-position: center;
   display: block;
-  height: 25px;
-  width: 25px;
+  height: 20px;
+  width: 20px;
   position: absolute;
   right: 0;
   top: 50%;
   transform: translateY(-50%);
+}
+table.data-table .remove-btn svg {
+  width: 100%;
+  height: 100%;
+  fill: #929292;
+}
+table.data-table .remove-btn:hover svg {
+  fill: #157EFB;
 }
 .amount-entries {
   float: right;
@@ -1411,4 +1426,7 @@ table.data-table .remove-btn {
 }
 .actionbar .select:not(:first-child) {
   margin-left: 10px;
+}
+.hide {
+  display: none;
 }

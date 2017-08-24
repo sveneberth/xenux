@@ -15,4 +15,3 @@ $XenuxDB->addTable('test1', [
 	'column2' => 'text NOT NULL',
 	'column3' => 'timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP'
 ]);
-?>

@@ -7,15 +7,9 @@ abstract class AbstractController {
 	public $page_name;
 	public $headlineSuffix;
 
-	public function __construct()
+	public function __construct($url)
 	{
-		$this->db = db::getConnection();
-
-		/*
-			FIXME:
-			create modulename in abstract-class
-
-			$this->modulename = str_replace('Controller', '', get_class());
-		*/
+		$this->modulename = str_replace('Controller', '', get_called_class());
+		$this->url = $url;
 	}
 }

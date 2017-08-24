@@ -3,12 +3,10 @@ class pageController extends AbstractController
 {
 	protected $pageID;
 
-	public function __construct($url = null)
+	public function __construct($url)
 	{
-		if(isset($url))
-			$this->url = $url;
-
-		$this->modulename = "page"; // use static, because works as abstract too
+		parent::__construct($url);
+		$this->modulename = "page"; // use static, because children should use this layout as well
 	}
 
 	public function run()

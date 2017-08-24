@@ -6,9 +6,7 @@ class imprintController extends pageController
 {
 	public function __construct($url)
 	{
-		$this->url = $url;
-
-		parent::__construct();
+		parent::__construct($url);
 	}
 
 	public function run()

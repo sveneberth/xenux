@@ -5,10 +5,9 @@ class searchController extends AbstractController
 
 	public function __construct($url)
 	{
-		global $XenuxDB;
+		parent::__construct($url);
 
-		$this->url = $url;
-		$this->modulename = str_replace('Controller', '', get_class());
+		global $XenuxDB;
 		$this->searchString = $XenuxDB->escapeString(@$_GET['q']);
 	}
 
@@ -138,4 +137,3 @@ class searchController extends AbstractController
 		}
 	}
 }
-?>

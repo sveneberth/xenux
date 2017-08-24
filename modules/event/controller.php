@@ -3,8 +3,7 @@ class eventController extends AbstractController
 {
 	public function __construct($url)
 	{
-		$this->url = $url;
-		$this->modulename = str_replace('Controller', '', get_class());
+		parent::__construct($url);
 	}
 
 	public function run()

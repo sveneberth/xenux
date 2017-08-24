@@ -8,4 +8,3 @@ $modulehelper->remove
 $modulehelper->remove_option('module_test_installed');
 
 $XenuxDB->removeTable('test1');
-?>

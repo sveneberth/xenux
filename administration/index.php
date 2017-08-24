@@ -5,7 +5,7 @@
  * @link       http://www.xenux.bplaced.net
  * @version    2.0
  * @author     Sven Eberth <mail@sven-eberth.de.hm>
- * @copyright  Copyright (c) 2013 - 2015, Sven Eberth.
+ * @copyright  Copyright (c) 2013 - 2017, Sven Eberth.
  * @license    GNU General Public License version 3, see LICENSE.txt
  */
 
@@ -16,4 +16,3 @@ $app->buildAdminPage();
 
 // close the connection to the database
 $XenuxDB->closeConnection();
-?>

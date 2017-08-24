@@ -2,31 +2,28 @@
 class sitemapController extends AbstractController
 {
 	private $searchString;
-	
+
 	public function __construct($url)
 	{
-		global $XenuxDB;
-		
-		$this->url = $url;
-		$this->modulename = str_replace('Controller', '', get_class());
+		parent::__construct($url);
 	}
-	
+
 	public function run()
 	{
 		$this->loadSitemap();
 		// $this->buildXMLSitemap();
 
-		$this->page_name = __("sitemap");		
+		$this->page_name = __("sitemap");
 
 		return true;
 	}
-	
+
 	private function loadSitemap()
 	{
 		global $XenuxDB;
-	
+
 		echo "<h1 class=\"page-headline\">" . __("sitemap") . "</h1>";
-		
+
 		echo "<ul class=\"sitemap\">";
 
 		$sites = $XenuxDB->getList('sites', [
@@ -43,7 +40,7 @@ class sitemapController extends AbstractController
 			foreach($sites as $site)
 			{
 				echo "<li>\n\t<a href=\"".getPageLink($site->id, $site->title)."\">".$site->title."</a>\n";
-				
+
 				$subsites = $XenuxDB->getList('sites', [
 					'order' => 'sortindex ASC',
 					'where' => [
@@ -84,22 +81,22 @@ class sitemapController extends AbstractController
 				echo "</li>\n";
 			}
 		}
-		
-		// news
-		echo '<li><a href="{{URL_MAIN}}/news/list">' . __("news_Pl") . '</a>';
-		$newsList = $XenuxDB->getList('news', [
+
+		// posts
+		echo '<li><a href="{{URL_MAIN}}/posts/list">' . __("posts") . '</a>';
+		$posts = $XenuxDB->getList('posts', [
 			'columns' => [
 				'id',
 				'title'
 			],
 			'order' => 'create_date DESC'
 		]);
-		if ($newsList)
+		if ($posts)
 		{
 			echo "<ul>";
-			foreach ($newsList as $news)
+			foreach ($posts as $post)
 			{
-				echo '<li><a href="{{URL_MAIN}}/news/view/' . getPreparedLink($news->id, $news->title) . '">' . $news->title .'</a></li>';
+				echo '<li><a href="{{URL_MAIN}}/posts/view/' . getPreparedLink($post->id, $post->title) . '">' . $post->title .'</a></li>';
 			}
 			echo "</ul>";
 		}
@@ -107,19 +104,19 @@ class sitemapController extends AbstractController
 
 		// events
 		echo '<li><a href="{{URL_MAIN}}/event/calendar">' . __("events") . '</a>';
-		$eventsList = $XenuxDB->getList('events', [
+		$events = $XenuxDB->getList('events', [
 			'columns' => [
 				'id',
 				'title'
 			],
 			'order' => 'create_date DESC'
 		]);
-		if ($eventsList)
+		if ($events)
 		{
 			echo "<ul>";
-			foreach ($eventsList as $events)
+			foreach ($events as $event)
 			{
-				echo '<li><a href="{{URL_MAIN}}/event/view/' . getPreparedLink($events->id, $events->title) . '">' . $events->title .'</a></li>';
+				echo '<li><a href="{{URL_MAIN}}/event/view/' . getPreparedLink($event->id, $event->title) . '">' . $event->title .'</a></li>';
 			}
 			echo "</ul>";
 		}
@@ -133,19 +130,19 @@ class sitemapController extends AbstractController
 
 		echo "</ul>";
 	}
-	
+
 	private function buildXMLSitemap($overwrite = false)
 	{
 		global $XenuxDB;
-	
+
 		ob_start();
 
-			echo 
+			echo
 '<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" 
-  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" 
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
   xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">';
-		
+
 			$sites = $XenuxDB->getList('sites', ['orderBy' => 'sortindex', 'orderDir' => 'ASC', 'where' => "public = true"]);
 			if ($sites)
 			{
@@ -159,7 +156,7 @@ class sitemapController extends AbstractController
 				}
 			}
 
-			echo "\n</urlset>";	
+			echo "\n</urlset>";
 
 		$buffer = ob_get_clean();
 
@@ -191,4 +188,3 @@ class sitemapController extends AbstractController
 		return true;
 	}
 }
-?>
