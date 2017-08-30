@@ -62,13 +62,9 @@ $(function() {
 	$('.drop-files').bind('drop', function(e) {
 		e.preventDefault();
 		e.stopPropagation();
-//		alert( e.originalEvent.dataTransfer );
-		upload(e.originalEvent.dataTransfer.files);
+		var files = e.originalEvent.dataTransfer.files;
+		upload(files);
 		$('.drop-files').hide();
-	//	var files = e.dataTransfer.files;
-	//	upload(files);
-
-
 		return false;
 	});
 
