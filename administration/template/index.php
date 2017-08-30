@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 	<meta name="robots" content="noindex, nofollow, noarchive">
 
-	<title>{{page_title}} | Xenux Backend</title>
+	<title>{{page_title}} &ndash; Xenux Backend</title>
 
 	<link rel="baseurl" href="{{URL_MAIN}}">
 
@@ -13,7 +13,7 @@
 	<meta name="generator" content="Xenux v{{XENUX_VERSION}} - das kostenlose CMS">
 
 	<!-- css -->
-	<link rel="stylesheet" type="text/css" href="{{TEMPLATE_PATH}}/css/style.min.css" media="all">
+	<link rel="stylesheet" href="{{TEMPLATE_PATH}}/css/style.min.css" media="all">
 	{# <!-- <link rel="stylesheet" type="text/css" href="{{TEMPLATE_PATH}}/css/jquery-ui.css" media="all"> --> #}
 	{{CSS-FILES}}
 
@@ -131,7 +131,7 @@
 	</menu>
 
 	<div class="wrapper">
-		<h1 class="page-headline box-shadow">{{headline}}{{headlineSuffix}}</h1>
+		<h1 class="page-headline box-shadow">{{headlinePrefix}}{{headline}}{{headlineSuffix}}</h1>
 
 		{{page_content}}
 

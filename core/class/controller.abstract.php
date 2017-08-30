@@ -1,10 +1,10 @@
 <?php
 abstract class AbstractController {
-	protected $db;
 	protected $url;
 	protected $modulename;
 	protected $template;
 	public $page_name;
+	public $headlinePrefix;
 	public $headlineSuffix;
 
 	public function __construct($url)

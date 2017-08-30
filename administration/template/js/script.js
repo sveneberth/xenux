@@ -47,7 +47,6 @@ function notifyMe(title, text, click) {
 
 // replace get params in browser's url bar
 var url = window.location.href;
-var title = document.title;
 var newUrl = url.substring(0, url.indexOf('?')) + window.location.hash;
 // replace new url
 if(window.history.replaceState) {

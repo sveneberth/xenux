@@ -1,20 +1,27 @@
 /* ##############################################
 /* Cloud
 /* ############################################*/
-var ajaxURL = '../modules/cloud/ajax.php';
+var ajaxURL;
 var requestType = 'GET';
 var imageURL;
 var defaultDisabled = ['remove', 'move', 'rename'];
 
 // #FIXME, #TODO:
-// - folder navigation trigger in browser history
 // - add enter event in rename
-// - use $.on() instead of $.on()
 
 $(function() {
-	imageURL = baseurl + '/administration/template/images/';
+	ajaxURL = baseurl + '/administration/modules/cloud/ajax.php';
+	imageURL = baseurl + '/administration/modules/cloud/';
 
-	dir_list(0); // load root
+
+	var url = window.location.href;
+	var folderID = url.substr(url.indexOf("/cloud/") + 7);
+	if(isInt(folderID)) {
+		dir_list(folderID); // load folder
+	} else {
+		dir_list(0); // load root
+	}
+
 	$('.explorer').height($(window).height() - 254);
 	$('.explorer').selectable({
 		filter: ' > div',
@@ -27,6 +34,19 @@ $(function() {
 			$('body').css('cursor', '');
 		},
 	});
+
+
+	window.addEventListener('popstate', function(e) {
+		var state = e.state;
+		console.log("my state: %s", state);
+		if (state == null) {
+			dir_list(0);
+			document.title = 'root \u2013 Xenux Cloud';
+		} else {
+			dir_list(state.id);
+			document.title = state.title + ' \u2013 Xenux Cloud';
+		}
+	})
 
 
 	// drag/drop upload
@@ -59,7 +79,12 @@ $(function() {
 	});
 	$('body').on('click', '.breadcrumb .treeitem', function() {
 		var ID = $(this).attr('id');
-		console.info('switched to folder: ' + ID);
+		var filename = $(this).html();
+
+		console.info('switched to folder: %s:%s', ID, filename);
+
+		history.pushState({id: ID, title: filename}, null, baseurl + '/administration/cloud/' + ID);
+		document.title = filename + ' \u2013 Xenux Cloud';
 
 		dir_list(ID);
 	});
@@ -74,16 +99,21 @@ $(function() {
 
 	// double click events
 	$('body').on('dblclick', '.explorer > .item.folder', function() {
-		var rowID = $(this).attr('id');
-		console.info('switched to folder: ' + rowID);
+		var ID = $(this).attr('id');
+		var filename = $(this).data('filename');
 
-		dir_list(rowID);
+		console.info('switched to folder: %s:%s', ID, filename);
+
+		history.pushState({id: ID, title: filename}, null, baseurl + '/administration/cloud/' + ID);
+		document.title = filename + ' \u2013 Xenux Cloud';
+
+		dir_list(ID);
 	});
 	$('body').on('dblclick', '.explorer > .item.file', function() {
-		var rowID = $(this).attr('id');
-		console.info('opened file: ' + rowID);
+		var ID = $(this).attr('id');
+		console.info('opened file: ' + ID);
 
-		window.open(baseurl + '/file/' + SHA1(rowID),'File','width=800,height=600,location=0,menubar=0,scrollbars=0,status=0,toolbar=0,resizable=0');
+		window.open(baseurl + '/file/' + SHA1(ID),'File','width=800,height=600,location=0,menubar=0,scrollbars=0,status=0,toolbar=0,resizable=0');
 	});
 
 
@@ -209,8 +239,8 @@ $(function() {
 			return false;
 		}
 		$('.explorer > .item.ui-selected').each(function(i) {
-			var rowID = $(this).attr('id');
-			remove(rowID);
+			var ID = $(this).attr('id');
+			remove(ID);
 		});
 	});
 	$('.actions > button.move').click(function() {
@@ -260,8 +290,8 @@ $(function() {
 	$('body').on('click', '.popup-editor.move-target > input[type="button"]', function() {
 		var to = $('.popup-editor.move-target > select').val();
 		$('.explorer > .item.ui-selected').each(function(i) {
-			var rowID = $(this).attr('id');
-			move(rowID, to);
+			var ID = $(this).attr('id');
+			move(ID, to);
 		});
 		$('.popup-editor.move-target').hide();
 	});
@@ -376,14 +406,14 @@ function upload(files) {
 		}
 	});
 };
-function remove(rowID) {
+function remove(ID) {
 	$.ajax({
 		url: ajaxURL,
 		type: requestType,
 		dataType: 'json',
 		data: {
 			task: 'remove',
-			id: rowID
+			id: ID
 		},
 		success: function(response) {
 			console.log(response);

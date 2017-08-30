@@ -1,96 +1,84 @@
+@charset "UTF-8";
 .actions {
   background: #eee;
   padding: 15px;
   height: 60px;
-
-  .action-button {
-    width: auto;
-    display: inline-block;
-    margin: 0 5px 0 0;
-    width: 30px;
-    height: 30px;
-    padding: 3px;
-    background: #fff;
-    border: 1px solid @svgColor;
-
-    svg {
-      width: 100%;
-      height: 100%;
-      fill: @svgColor;
-    }
-
-    &.disabled {
-      box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.4);
-      background-color: #DBDBDB;
-      cursor: no-drop;
-    }
-
-    &:not(.disabled) {
-      position: relative;
-
-      /* tooltip*/
-      &:after {
-        display: block;
-        position: absolute;
-        left: -999em;
-        top: 35px;
-        padding: .3em;
-        border: 1px solid #2a2a2a;
-        color: #fff;
-        background: #333;
-        text-decoration: none;
-        content: attr(data-title);
-        font-size: 14px;
-        width: 150px;
-        z-index: 9999;
-        opacity: 0;
-        transition: opacity .4s .3s ease;
-      }
-
-      &:hover {
-        border: 1px solid @svgHoverColor;
-
-        svg {
-          fill: @svgHoverColor;
-        }
-
-        &:after {
-          left: -61px;
-          opacity: 1;
-        }
-      }
-    }
-  }
 }
-
-@breadcrumbBlue: #2C6DD2;
-
+.actions .action-button {
+  width: auto;
+  display: inline-block;
+  margin: 0 5px 0 0;
+  width: 30px;
+  height: 30px;
+  padding: 3px;
+  background: #fff;
+  border: 1px solid #929292;
+}
+.actions .action-button svg {
+  width: 100%;
+  height: 100%;
+  fill: #929292;
+}
+.actions .action-button.disabled {
+  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.4);
+  background-color: #DBDBDB;
+  cursor: no-drop;
+}
+.actions .action-button:not(.disabled) {
+  position: relative;
+  /* tooltip*/
+}
+.actions .action-button:not(.disabled):after {
+  display: block;
+  position: absolute;
+  left: -999em;
+  top: 35px;
+  padding: .3em;
+  border: 1px solid #2a2a2a;
+  color: #fff;
+  background: #333;
+  text-decoration: none;
+  content: attr(data-title);
+  font-size: 14px;
+  width: 150px;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity .4s .3s ease;
+}
+.actions .action-button:not(.disabled):hover {
+  border: 1px solid #157EFB;
+}
+.actions .action-button:not(.disabled):hover svg {
+  fill: #157EFB;
+}
+.actions .action-button:not(.disabled):hover:after {
+  left: -61px;
+  opacity: 1;
+}
 .breadcrumb {
   background: #eee;
   padding: 5px 15px;
   margin-bottom: 0;
-  border-top: 2px solid @breadcrumbBlue;
-  border-bottom: 2px solid @breadcrumbBlue;
+  border-top: 2px solid #2C6DD2;
+  border-bottom: 2px solid #2C6DD2;
   line-height: 30px;
-
-  .treeitem {
-    margin-right: 10px;
-    font-size: 1.2em;
-    color: #333;
-    display: inline-block;
-  }
-  .treeitem:hover {
-    color: #777;
-    cursor: pointer;
-  }
-  .treeitem:not(:last-child):after {
-    content: '›';
-    display: inline-block;
-    margin-left: 10px;
-    color: @breadcrumbBlue;
-  }
 }
-
+.breadcrumb .treeitem {
+  margin-right: 10px;
+  font-size: 1.2em;
+  color: #333;
+  display: inline-block;
+}
+.breadcrumb .treeitem:hover {
+  color: #777;
+  cursor: pointer;
+}
+.breadcrumb .treeitem:not(:last-child):after {
+  content: '›';
+  display: inline-block;
+  margin-left: 10px;
+  color: #2C6DD2;
+}
 .explorer {
   background: #fff;
   color: #333;
@@ -175,12 +163,11 @@
   background: #4C90DD !important;
 }
 .ui-selectable-helper {
-  z-index:100;
+  z-index: 100;
   border: 1px dotted #225793;
   position: absolute;
   background: rgba(34, 87, 147, 0.2);
 }
-
 .drop-files {
   background: rgba(255, 255, 255, 0.9);
   width: 90%;
@@ -221,7 +208,7 @@
   left: 30%;
   box-sizing: border-box;
   z-index: 9999;
-  background: rgba(255, 255, 255, .95);
+  background: rgba(255, 255, 255, 0.95);
   color: #333;
   padding: 20px;
   border: 2px solid #333;
@@ -245,7 +232,6 @@
   margin-top: 10px;
   width: 100%;
 }
-
 div#contextmenu {
   position: fixed;
   display: none;
@@ -261,12 +247,11 @@ div#contextmenu > * {
   padding: 5px 15px;
   color: #222;
   text-decoration: none;
-  cursor: pointer;;
+  cursor: pointer;
 }
 div#contextmenu > *:hover {
   background: #ddd;
 }
-
 #info-popup {
   position: fixed;
   top: 30%;
@@ -274,7 +259,7 @@ div#contextmenu > *:hover {
   left: 35%;
   box-sizing: border-box;
   z-index: 9999;
-  background: rgba(255, 255, 255, .95);
+  background: rgba(255, 255, 255, 0.95);
   color: #333;
   padding: 20px;
   border: 2px solid #333;

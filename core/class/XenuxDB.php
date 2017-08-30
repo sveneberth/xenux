@@ -254,11 +254,15 @@ class XenuxDB
 				explode(' ', 'AND OR GROUP ORDER HAVING LIMIT LIKE MATCH')
 			));
 
+			log::writeLog($single_condition); #DEBUG
+
 			if ($single_condition != array())
 			{
+				log::writeLog("HEYHOHEYHO"); #DEBUG
 				$where_clause = ' WHERE ' . $this->_data_implode($single_condition, '');
 			}
 
+			#FIXME: use AND as default
 			if (!empty($where_AND))
 			{
 				$value = array_values($where_AND);

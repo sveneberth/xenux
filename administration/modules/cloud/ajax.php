@@ -95,7 +95,12 @@ switch(@$_REQUEST['task'])
 				'order' => 'filename ASC'
 			]);
 
-			if($result !== false)
+			if($result === null || empty($result))
+			{
+				$return['message'] = 'folder not found';
+				$return['success'] = false;
+			}
+			elseif($result !== false)
 			{
 				$return['data'] = $result;
 				$return['success'] = true;
@@ -133,8 +138,12 @@ switch(@$_REQUEST['task'])
 					'order' => 'filename ASC'
 				]);
 
-				if($row === false)
+
+				if($row === false || $row === null)
 				{
+					if($row === null)
+						$return['message'] = 'folder not found';
+
 					$return['success'] = false;
 					break;
 				}

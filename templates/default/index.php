@@ -79,10 +79,10 @@
 $sites = $XenuxDB->getList('sites', [
 			'order' => 'sortindex ASC',
 			'where' => [
-				'AND' => [
+				#DEBUG 'AND' => [
 					'parent_id' => 0,
 					'public' => true
-				]
+				#DEBUG],
 			],
 		]);
 if ($sites)
