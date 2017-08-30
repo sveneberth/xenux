@@ -10,6 +10,7 @@ if(!$app->user->isLogin())
 
 $return = array();
 $return['success'] = false;
+$return['status'] = 0;
 
 switch(@$_REQUEST['task'])
 {
@@ -82,44 +83,54 @@ switch(@$_REQUEST['task'])
 		{
 			$folder = $_REQUEST['folder'];
 
-			$result = $XenuxDB->getList('files', [
-				'columns' => [
-					'id',
-					'type',
-					'filename',
-					'mime_type'
-				],
+			// check if folder exists or is root
+			if ($XenuxDB->count('files', [
 				'where' => [
-					'parent_folder_id' => $folder
-				],
-				'order' => 'filename ASC'
-			]);
+					'id' => $folder
+			]]) > 0 || $folder == 0) {
+				$result = $XenuxDB->getList('files', [
+					'columns' => [
+						'id',
+						'type',
+						'filename',
+						'mime_type'
+					],
+					'where' => [
+						'parent_folder_id' => $folder
+					],
+					'order' => 'filename ASC'
+				]);
 
-			if($result === null || empty($result))
-			{
-				$return['message'] = 'folder not found';
-				$return['success'] = false;
-			}
-			elseif($result !== false)
-			{
-				$return['data'] = $result;
-				$return['success'] = true;
+				if($result !== false)
+				{
+					$return['data'] = $result;
+					$return['success'] = true;
+					$return['status'] = 200;
+				}
+				else
+				{
+					$return['success'] = false;
+				}
 			}
 			else
 			{
+				$return['message'] = "folder not found";
 				$return['success'] = false;
+				$return['status'] = 404;
 			}
 		}
 		else
 		{
-			$return['message'] = 'invalid request';
+			$return['message'] = 'parameter `folder` is missing';
 			$return['success'] = false;
+			$return['status'] = 405;
 		}
 		break;
 	case 'breadcrumb':
 		if(isset($_REQUEST['folder']))
 		{
 			$return['success'] = true;
+			$return['status'] = 200;
 
 			$folder = $_REQUEST['folder'];
 
@@ -141,8 +152,10 @@ switch(@$_REQUEST['task'])
 
 				if($row === false || $row === null)
 				{
-					if($row === null)
+					if($row === null) {
 						$return['message'] = 'folder not found';
+						$return['status'] = 404;
+					}
 
 					$return['success'] = false;
 					break;
@@ -157,8 +170,9 @@ switch(@$_REQUEST['task'])
 		}
 		else
 		{
-			$return['message'] = 'invalid request';
+			$return['message'] = 'parameter `folder` is missing';
 			$return['success'] = false;
+			$return['status'] = 405;
 		}
 		break;
 	case 'getFileInfo':

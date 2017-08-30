@@ -6,9 +6,6 @@ var requestType = 'GET';
 var imageURL;
 var defaultDisabled = ['remove', 'move', 'rename'];
 
-// #FIXME, #TODO:
-// - add enter event in rename
-
 $(function() {
 	ajaxURL = baseurl + '/administration/modules/cloud/ajax.php';
 	imageURL = baseurl + '/administration/modules/cloud/';
@@ -36,6 +33,7 @@ $(function() {
 	});
 
 
+	// history event
 	window.addEventListener('popstate', function(e) {
 		var state = e.state;
 		console.log("my state: %s", state);
@@ -62,9 +60,15 @@ $(function() {
 		return false;
 	});
 	$('.drop-files').bind('drop', function(e) {
-		var files = e.dataTransfer.files;
-		upload(files);
+		e.preventDefault();
+		e.stopPropagation();
+//		alert( e.originalEvent.dataTransfer );
+		upload(e.originalEvent.dataTransfer.files);
 		$('.drop-files').hide();
+	//	var files = e.dataTransfer.files;
+	//	upload(files);
+
+
 		return false;
 	});
 
@@ -90,9 +94,13 @@ $(function() {
 	});
 	$(document).click(function(e) {
 		var container = $('.popup-editor, #info-popup');
-		if(!$('#contextmenu > *').is(e.target) && !$('.actions > button.rename').is(e.target) && !container.is(e.target) && container.has(e.target).length === 0) {
+		if(
+			!$('#contextmenu > *').is(e.target) &&
+			!$('.actions > button.rename, .actions > button.rename *').is(e.target) &&
+			!container.is(e.target) && container.has(e.target).length === 0
+		) {
 			container.fadeOut(50);
-			console.log('popup hide');
+			console.info('popup hide');
 		}
 	});
 
@@ -235,7 +243,7 @@ $(function() {
 	// action events
 	$('.actions > button.remove').click(function() {
 		if($('.explorer > .item.ui-selected').length == 0) {
-			console.error('no file select');
+			console.error('no item selected');
 			return false;
 		}
 		$('.explorer > .item.ui-selected').each(function(i) {
@@ -245,7 +253,7 @@ $(function() {
 	});
 	$('.actions > button.move').click(function() {
 		if($('.explorer > .item.ui-selected').length == 0) {
-			console.error('no file select');
+			console.error('no item selected');
 			return false;
 		}
 
@@ -276,7 +284,7 @@ $(function() {
 	});
 	$('.actions > button.rename').click(function() {
 		if($('.explorer > .item.ui-selected').length == 0) {
-			console.error('no file select');
+			console.error('no item selected');
 			return false;
 		}
 
@@ -392,7 +400,7 @@ function upload(files) {
 			return xhr;
 		},
 		url: ajaxURL + '?task=upload&parent_folder=' + getFolder(),
-		type: requestType,
+		type: "POST",
 		dataType: 'json',
 		data: FileData,
 		processData: false,
@@ -486,13 +494,15 @@ function setbreadcrumb(folder) {
 		},
 		success: function(response) {
 			console.log(response);
+			var rows = '<span class="treeitem" id="0">root</span>';
 			if(response.success == true) {
-				var rows = '<span class="treeitem" id="0">root</span>';
 				response.data.forEach(function(entry) { // as dataset
 					rows += '<span class="treeitem" id="' + entry.id + '">' + entry.filename + '</span>';
 				});
-				$('.breadcrumb').html(rows);
+			} else if(response.status == 404) {
+				$('.explorer').html("Error 404 - Item Not Found");
 			}
+			$('.breadcrumb').html(rows);
 		},
 		error: function(xhr, textStatus, errorThrown){
 			console.log('request failed: %s / %o / %s ', textStatus, xhr, errorThrown);
@@ -501,7 +511,7 @@ function setbreadcrumb(folder) {
 	});
 }
 function fileinfo(id) {
-	// #FXIME: folder selected -> show amount of containing items
+	// #FIXME: folder selected -> show amount of containing items
 
 	$.ajax({
 		url: ajaxURL,
