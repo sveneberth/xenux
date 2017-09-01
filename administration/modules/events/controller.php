@@ -225,10 +225,9 @@ class eventsController extends AbstractController
 			),
 			'text' => array
 			(
-				'type' => 'textarea',
+				'type' => 'wysiwyg',
 				'label' => __('eventDesc'),
-				'value' => htmlentities(@$event->text),
-				'wysiwyg' => true,
+				'value' => @$event->text,
 				'showLabel' => false
 			),
 			'public' => array
@@ -266,8 +265,6 @@ class eventsController extends AbstractController
 			)
 		);
 
-		$_allowedTags = "<font><b><strong><a><i><em><u><span><div><p><img><ol><ul><li><h1><h2><h3><h4><h5><h6><table><tr><td><th><br><hr><code><pre><del><ins><blockquote><sub><sup><address><q><cite><var><samp><kbd><tt><small><big><s><caption><tbody><thead><tfoot><param>";
-
 		$form = new form($formFields);
 		$form->disableRequiredInfo();
 
@@ -281,8 +278,8 @@ class eventsController extends AbstractController
 		{
 			$data = $form->getInput();
 
-			$title      = preg_replace('/[^a-zA-Z0-9_üÜäÄöÖ$€&#,.()\s]/' , '' , $data['title']);
-			$text       = strip_tags($data['text'], $_allowedTags);
+			$title      = $data['title'];
+			$text       = $data['text'];
 			$start_date = $data['startDate']	. ' ' . $data['startTime'];
 			$end_date   = $data['endDate']		. ' ' . $data['endTime'];
 			$public     = parse_bool($data['public']);

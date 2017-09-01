@@ -1,5 +1,5 @@
 -- phpMyAdmin SQL Dump
--- Last Modified: 2016-09-19 22:23
+-- Last Modified: 2017-09-01 23:07
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,28 +17,13 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `%PREFIX%contactpersons`
---
-
-DROP TABLE IF EXISTS `%PREFIX%contactpersons`;
-CREATE TABLE IF NOT EXISTS `%PREFIX%contactpersons` (
-`id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `name` varchar(150) NOT NULL,
-  `position` varchar(150) NOT NULL,
-  `email` varchar(150) NOT NULL,
-  `text` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Tabellenstruktur für Tabelle `%PREFIX%events`
 --
 
 DROP TABLE IF EXISTS `%PREFIX%events`;
 CREATE TABLE IF NOT EXISTS `%PREFIX%events` (
 `id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `title` varchar(200) NOT NULL,
+  `title` text NOT NULL,
   `text` text NOT NULL,
   `start_date` timestamp NULL DEFAULT NULL,
   `end_date` timestamp NULL DEFAULT NULL,
@@ -88,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%main` (
 DROP TABLE IF EXISTS `%PREFIX%posts`;
 CREATE TABLE IF NOT EXISTS `%PREFIX%posts` (
 `id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `title` varchar(200) NOT NULL,
+  `title` text NOT NULL,
   `text` text NOT NULL,
   `thumbnail_id` int(11) DEFAULT NULL,
   `create_date` timestamp NULL DEFAULT NULL,
@@ -106,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%posts` (
 DROP TABLE IF EXISTS `%PREFIX%sites`;
 CREATE TABLE IF NOT EXISTS `%PREFIX%sites` (
 `id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `title` varchar(300) NOT NULL,
+  `title` text NOT NULL,
   `text` text NOT NULL,
   `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `lastModified_date` timestamp NULL DEFAULT NULL,
@@ -114,19 +99,6 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%sites` (
   `sortindex` int(10) NOT NULL,
   `public` tinyint(1) DEFAULT '0' COMMENT '1=public;0=private',
   `author_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `%PREFIX%site_contactperson`
---
-
-DROP TABLE IF EXISTS `%PREFIX%site_contactperson`;
-CREATE TABLE IF NOT EXISTS `%PREFIX%site_contactperson` (
-`id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `site_id` int(11) NOT NULL,
-  `contactperson_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------

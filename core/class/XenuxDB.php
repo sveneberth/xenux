@@ -254,11 +254,11 @@ class XenuxDB
 				explode(' ', 'AND OR GROUP ORDER HAVING LIMIT LIKE MATCH')
 			));
 
-			log::writeLog($single_condition); #DEBUG
+			#log::writeLog($single_condition); #DEBUG
 
 			if ($single_condition != array())
 			{
-				log::writeLog("HEYHOHEYHO"); #DEBUG
+				#log::writeLog("HEYHOHEYHO"); #DEBUG
 				$where_clause = ' WHERE ' . $this->_data_implode($single_condition, '');
 			}
 

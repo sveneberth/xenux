@@ -19,6 +19,7 @@ class pageController extends AbstractController
 		}
 		else
 		{
+			#TODO: enhance handling with http code with ErrorPage::statuscode(), or something like that
 			header('HTTP/1.1 404 Not Found');
 			throw new Exception(__('error404msg'));
 		}
@@ -64,7 +65,6 @@ class pageController extends AbstractController
 				$template->setIfCondition("show_meta_info", parse_bool($app->getOption('sites_show_meta_info')));
 
 				$template->setVar("_PREV_NEXT", $this->getPrevNext($page));
-				$template->setVar("_contactPersons", $this->getContactPersons($id));
 
 				/* next and prev url */
 				$app->canonical_URL = getPageLink($page->site_id, $page->title);
@@ -91,53 +91,6 @@ class pageController extends AbstractController
 			header('HTTP/1.1 404 Not Found');
 			throw new Exception(__('error404msg'));
 		}
-	}
-
-
-	protected function getContactPersons($id)
-	{
-		global $app, $XenuxDB;
-
-		$return = array();
-
-		$contactpersons = $XenuxDB->getList('site_contactperson', [
-			'columns' => [
-				'contactpersons.id',
-				'name',
-				'position',
-				'email'
-			],
-			'where' => [
-				'site_id' => $id
-			],
-			'join' => [
-				'[>]sites' => ['site_contactperson.site_id' => 'sites.id'],
-				'[>]contactpersons' => ['site_contactperson.contactperson_id' => 'contactpersons.id']
-			]
-		]);
-		if($contactpersons)
-		{
-			$list = null;
-			foreach($contactpersons as $contactperson)
-			{
-				$template = new template(PATH_MAIN."/templates/".$app->template."/_contactPersons_li.php");
-
-				$template->setVar("name", $contactperson->name);
-				$template->setVar("name_url", urldecode($contactperson->name));
-				$template->setVar("position", $contactperson->position);
-				$template->setVar("email", escapemail($contactperson->email));
-				$template->setVar("ID", $contactperson->id);
-
-				$list .= $template->render();
-			}
-
-			$template = new template(PATH_MAIN."/templates/".$app->template."/_contactPersons_ul.php");
-			$template->setVar("list", $list);
-			$return[] = $template->render();
-		}
-
-
-		return implode('', $return);
 	}
 
 	protected function getPrevNext($page)

@@ -428,34 +428,6 @@ main .prevnextnavi:after {
 	content: '';
 }
 
-main > .contactpersons {
-	margin-top: 25px;
-}
-main > .contactpersons > h3 {
-	margin: 0 0 5px 0;
-}
-main > .contactpersons > ul > li {
-	border: 2px solid #555;
-	display: inline-block;
-	padding: 5px 10px;
-	margin-right: 10px;
-	margin-bottom: 10px;
-}
-main > .contactpersons > ul > li span {
-	display: block;
-}
-main > .contactpersons > ul > li .title {
-	font-size: 1.05em;
-	font-weight: bold;
-}
-main > .contactpersons > ul > li .email > a {
-	color: inherit;
-}
-main > .contactpersons > ul > li:hover .email > a {
-	color: #0d5fa3;
-}
-
-
 
 .meta-info {
 	color: #666;

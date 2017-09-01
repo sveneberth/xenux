@@ -52,3 +52,18 @@ var newUrl = url.substring(0, url.indexOf('?')) + window.location.hash;
 if(window.history.replaceState) {
 	window.history.replaceState(null, null, newUrl);
 }
+
+var isModified = false;
+$(function() {
+	$(window).on('beforeunload', function() {
+		if(isModified)
+			return 'Alle nicht gespeicherte Daten gehen verloren!';
+	});
+	$(document).on("submit", "form", function(){
+		$(window).off('beforeunload');
+	});
+
+	$('form input').on('change', function(e) {
+		isModified = true;
+	});
+});

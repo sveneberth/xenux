@@ -9,6 +9,7 @@ class form
 	private $method;
 	private $error_msg = array();
 	private $requiredInfo = true;
+	private $useWYSIWYG = false;
 
 	public function __construct(array $fields, $class=null, $id=null, $action=null, $method='post')
 	{
@@ -28,7 +29,37 @@ class form
 
 	public function getInput()
 	{
-		return $this->method == 'post' ? $_POST : ($this->method == 'get' ? $_GET : false);
+		if (full($this->data))
+			return $this->data;
+
+		$data = $this->method == 'post' ? $_POST : ($this->method == 'get' ? $_GET : false);
+		$return = [];
+
+		foreach($this->fields as $name => $props)
+		{
+			if (in_array(['html', 'file'], $props['type'])) // those types has no value
+				continue;
+
+			$value = isset($data[$name]) ? $data[$name] : null;
+
+			switch($props['type']) // custom handling
+				{
+					case 'text':
+					case 'textarea':
+						$value = htmlentities($value, ENT_SUBSTITUTE, "UTF-8");
+						break;
+					case 'wysiwyg':
+						$allowedTags =	'<b><strong><a><i><em><u><span><div><p><img><ol><ul><li>' .
+										'<h1><h2><h3><h4><h5><h6><br><hr><code><pre><blockquote><sub><sup>';
+
+						$value = strip_tags($value, $allowedTags);
+						break;
+				}
+
+			$return[$name] = $value;
+		}
+
+		return $return;
 	}
 
 	public function getForm()
@@ -45,6 +76,9 @@ class form
 		$formTemplate->setVar('error_msg', $this->isSend() ? $this->getErrorMsg() : '');
 
 		$formTemplate->setIfCondition('requiredInfo', $this->requiredInfo);
+
+		if ($this->useWYSIWYG)
+			$app->addJS(URL_ADMIN . "/wysiwyg/ckeditor.js");
 
 		return $formTemplate->render();
 	}
@@ -80,6 +114,7 @@ class form
 				{
 					case 'text':
 					case 'textarea':
+					case 'wysiwyg':
 						// what can you do wrong here? ;)
 						break;
 					case 'password':
@@ -189,7 +224,6 @@ class form
 		$props['label']			= isset($props['label'])		? $props['label']		: '';
 		$props['checked']		= isset($props['checked'])		? $props['checked']		: false;
 		$props['required']		= isset($props['required'])		? $props['required']	: false;
-		$props['wysiwyg']		= isset($props['wysiwyg'])		? $props['wysiwyg']		: false;
 		$props['showLabel']		= isset($props['showLabel'])	? $props['showLabel']	: true;
 		$props['label'] = (isset($props['label:before']) ? $props['label:before'].' ' : '') . $props['label'] . (isset($props['label:after']) ? ''.$props['label:after'] : '');
 
@@ -220,8 +254,12 @@ class form
 				return $fieldTemplate->render($this->getFormTemplateURL('_form_email.php'));
 				break;
 			case 'textarea':
-				if($props['wysiwyg'])
-					$fieldTemplate->setVar('class', $class.' ckeditor');
+				return $fieldTemplate->render($this->getFormTemplateURL('_form_textarea.php'));
+				break;
+			case 'wysiwyg':
+				$fieldTemplate->setVar('class', $class . ' ckeditor');
+				$fieldTemplate->setVar('value', htmlentities($value, ENT_SUBSTITUTE, "UTF-8"));
+				$this->useWYSIWYG = true;
 				return $fieldTemplate->render($this->getFormTemplateURL('_form_textarea.php'));
 				break;
 			case 'select':

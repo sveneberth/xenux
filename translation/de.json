@@ -60,10 +60,6 @@
         "administration":"Administration",
         "homepage":"Homepage",
 
-        "contactpersons":"Ansprechpartner",
-        "showContactperson":"Ansprechpartner anzeigen",
-        "gotocontactpersonList":"alle Ansprechpartner anzeigen",
-
         "If you dont want to change the password, leave the fields blank":"Falls du das Passwort nicht ändern möchtest, lass die Felder leer",
         "usernames cannot be changed":"Benutzernamen können nicht geändert werden",
 

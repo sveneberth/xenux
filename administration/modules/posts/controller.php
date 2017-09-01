@@ -221,11 +221,10 @@ class postsController extends AbstractController
 			),
 			'text' => array
 			(
-				'type' => 'textarea',
+				'type' => 'wysiwyg',
 				'required' => true,
 				'label' => __('desc'),
-				'value' => htmlentities(@$post->text),
-				'wysiwyg' => true,
+				'value' => @$post->text,
 				'showLabel' => false
 			),
 			'status' => array
@@ -272,7 +271,6 @@ class postsController extends AbstractController
 			)
 		);
 
-		$_allowedTags = "<font><b><strong><a><i><em><u><span><div><p><img><ol><ul><li><h1><h2><h3><h4><h5><h6><table><tr><td><th><br><hr><code><pre><del><ins><blockquote><sub><sup><address><q><cite><var><samp><kbd><tt><small><big><s><caption><tbody><thead><tfoot><param>";
 
 		$form = new form($formFields);
 		$form->disableRequiredInfo();
@@ -287,8 +285,8 @@ class postsController extends AbstractController
 		{
 			$data = $form->getInput();
 
-			$title  = preg_replace('/[^a-zA-Z0-9_üÜäÄöÖ$€&#,.()\s]/' , '' , $data['title']);
-			$text   = strip_tags($data['text'], $_allowedTags);
+			$title  = $data['title'];
+			$text   = $data['text'];
 			$status = in_array($data['status'], ['publish', 'draft', 'trash']) ? $data['status'] : 'draft';
 			$author = $app->user->userInfo->id;
 

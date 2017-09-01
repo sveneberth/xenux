@@ -8,5 +8,3 @@
 #endif
 
 {{_PREV_NEXT}}
-
-{{_contactPersons}}

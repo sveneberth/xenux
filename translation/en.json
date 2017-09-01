@@ -59,10 +59,6 @@
 		"administration":"administration",
 		"homepage":"Homepage",
 
-		"contactpersons":"contactpersons",
-		"showContactperson":"show contactperson",
-		"gotocontactpersonList":"go to contactperson list",
-
 		"If you dont want to change the password, leave the fields blank":"If you don't want to change the password, leave the fields blank",
         "usernames cannot be changed":"usernames cannot be changed",
 

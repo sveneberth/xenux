@@ -193,11 +193,10 @@ class sitesController extends AbstractController
 			),
 			'text' => array
 			(
-				'type' => 'textarea',
+				'type' => 'wysiwyg',
 				'required' => true,
 				'label' => __('pageContent'),
-				'value' => htmlentities(@$site->text),
-				'wysiwyg' => true,
+				'value' => @$site->text,
 				'showLabel' => false
 			),
 			'public' => array
@@ -206,11 +205,6 @@ class sitesController extends AbstractController
 				'label' => __('sitePublic'),
 				'value' => 'true',
 				'checked' => @$site->public
-			),
-			'html' => array
-			(
-				'type' => 'html',
-				'value' => $this->_getContactpersonForForm(),
 			),
 			'selectAsHomePage' => array
 			(
@@ -260,8 +254,6 @@ class sitesController extends AbstractController
 			)
 		);
 
-		$_allowedTitleChars	= '/[^a-zA-Z0-9_üÜäÄöÖ$€&#,.()\s"\']/';
-		$_allowedTags		= '<font><b><strong><a><i><em><u><span><div><p><img><ol><ul><li><h1><h2><h3><h4><h5><h6><table><tr><td><th><br><hr><code><pre><del><ins><blockquote><sub><sup><address><q><cite><var><samp><kbd><tt><small><big><s><iframe><caption><tbody><thead><tfoot><embed><object><param>';
 
 		$form = new form($formFields);
 		$form->disableRequiredInfo();
@@ -275,22 +267,13 @@ class sitesController extends AbstractController
 		{
 			$data = $form->getInput();
 
-			$title = preg_replace($_allowedTitleChars, '' , $data['title']);
-			$title = htmlentities($title);
-
-			$text = strip_tags($data['text'], $_allowedTags);
-
-			$public = parse_bool($data['public']);
-
-			$author = $app->user->userInfo->id;
-
 			if($new)
 			{
 				$site = $XenuxDB->Insert('sites', [
-					'title'				=> $title,
-					'text'				=> $text,
-					'public'			=> $public,
-					'author_id'			=> $author,
+					'title'				=> $data['title'],
+					'text'				=> $data['text'],
+					'public'			=> parse_bool($data['public']),
+					'author_id'			=> $app->user->userInfo->id,
 					'create_date'		=> date('Y-m-d H:i:s'),
 					'lastModified_date'	=> date('Y-m-d H:i:s')
 				]);
@@ -309,36 +292,16 @@ class sitesController extends AbstractController
 			{
 				// update it
 				$return[] = $XenuxDB->Update('sites', [
-					'title'				=> $title,
-					'text'				=> $text,
-					'public'			=> $public,
+					'title'				=> $data['title'],
+					'text'				=> $data['text'],
+					'public'			=> parse_bool($data['public']),
 					'lastModified_date'	=> date('Y-m-d H:i:s')
 				],
 				[
 					'id' => $this->editSiteID
 				]);
-
-				$return[] = $XenuxDB->Delete('site_contactperson', [
-					'where' => [
-						'site_id' => $this->editSiteID
-					]
-				]);
 			}
 
-			$contactpersons = $XenuxDB->getList('contactpersons', [
-				'order' => 'name ASC'
-			]);
-			if($contactpersons)
-			{
-				foreach($contactpersons as $contactperson)
-				{
-					if(isset($_POST['contact_'.$contactperson->id]))
-						$return[] = $XenuxDB->Insert('site_contactperson', [
-							'site_id'			=> $this->editSiteID,
-							'contactperson_id'	=> $contactperson->id
-						]) !== false;
-				}
-			}
 
 			if(isset($data['selectAsHomePage']) && parse_bool($data['selectAsHomePage']))
 				$return[] = $XenuxDB->Update('main', ['value' => $this->editSiteID], ['name' => 'HomePage_ID']) !== false;
@@ -375,42 +338,5 @@ class sitesController extends AbstractController
 			}
 		}
 		return $form->getForm();
-	}
-
-	private function _getContactpersonForForm()
-	{
-		#TODO: build the contact person module or remove this part
-		global $XenuxDB;
-
-		$return  = '<div class="contact-persons-wrapper">';
-		$return .= '<h3>' . __('contactpersons') . '</h3>';
-
-		$contactpersons = $XenuxDB->getList('contactpersons', [
-			'order' => 'name ASC'
-		]);
-		if($contactpersons)
-		{
-			foreach($contactpersons as $contactperson)
-			{
-				$return .= "<input ";
-				$num = $XenuxDB->Count('site_contactperson', [
-					'where' => [
-						'AND' => [
-							'site_id' => $this->editSiteID,
-							'contactperson_id' => $contactperson->id
-							]
-						]
-				]);
-
-				if((empty($_POST) && $num >= 1) || isset($_POST['contact_'.$contactperson->id]))
-					$return .= 'checked';
-
-				$return .= " type=\"checkbox\" id=\"contact_{$contactperson->id}\" name=\"contact_{$contactperson->id}\" value=\"true\"><label for=\"contact_{$contactperson->id}\">{$contactperson->name}</label>";
-				}
-		}
-
-		$return .= '</div>';
-
-		return $return;
 	}
 }

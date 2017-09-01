@@ -19,13 +19,13 @@ CKEDITOR.dialog.add('xenux-cloud-dialog', function(editor) {
 						type: 'html',
 						align: 'left',
 						style: '',
-						html: '<div id="breadcrumb"></div>'
+						html: '<div class="breadcrumb"></div>'
 					},
 					{
 						type: 'html',
 						align: 'left',
 						style: '',
-						html: '<div id="browser"></div>'
+						html: '<div class="browser"></div>'
 					}
 				]
 			}
@@ -39,7 +39,7 @@ CKEDITOR.plugins.add('xenux-cloud', {
 		var pluginDirectory = this.path;
 
 		// add css file
-		$('head').append('<link rel="stylesheet" href="'+pluginDirectory + 'style.css">');
+		$('head').append('<link rel="stylesheet" href="' + pluginDirectory + 'style.css">');
 
 		// default setting
 		var folder	= 0;
@@ -70,7 +70,7 @@ CKEDITOR.plugins.add('xenux-cloud', {
 						$.each(response.data, function(key, entry) {
 							var filename = entry.filename.replace(/"/g, '&quot;');
 							if(entry.type == 'folder') {
-								url		= baseurl + '/administration/template/images/folder_grey.svg';
+								url		= baseurl + '/administration/modules/cloud/folder.svg';
 								action	= 'openfolder';
 							} else {
 								var typeCategory = entry.mime_type.substr(0, entry.mime_type.search("/"));
@@ -78,7 +78,7 @@ CKEDITOR.plugins.add('xenux-cloud', {
 									url		= baseurl + '/file/' + SHA1(entry.id) + '-s100-c';
 									action	= 'insertpicture';
 								} else {
-									url		= baseurl + '/administration/template/images/document_grey.svg';
+									url		= baseurl + '/administration/modules/cloud/document.svg';
 									action	= 'insertlinktofile';
 								}
 							}
@@ -88,7 +88,7 @@ CKEDITOR.plugins.add('xenux-cloud', {
 								(action!='insertpicture' ? 'no-image' : '') + '"><div class="filename">' +
 								filename + '</div></div>';
 						});
-						$('#browser').html(empty(rows) ? 'leerer Ordner' : rows);
+						$(CKEDITOR.dialog.getCurrent().parts.dialog.$).find('.browser').html(empty(rows) ? 'leerer Ordner' : rows);
 					}
 				}
 			});
@@ -97,8 +97,8 @@ CKEDITOR.plugins.add('xenux-cloud', {
 		CKEDITOR.tools.xenuxcloud_insertlinktofile = function(id, filename) {
 			var dialog = CKEDITOR.dialog.getCurrent();
 			var html = '<a class="cloud-url" target="_blank" href="' + baseurl+'/file/'+SHA1(id) + '">' + filename + '</a>';
-			editor.config.allowedContent = true;
-			editor.insertHtml(html.trim());
+			CKEDITOR.currentInstance.config.allowedContent = true;
+			CKEDITOR.currentInstance.insertHtml(html.trim());
 			dialog.hide();
 		};
 
@@ -106,13 +106,12 @@ CKEDITOR.plugins.add('xenux-cloud', {
 			var dialog = CKEDITOR.dialog.getCurrent();
 			var html = '<img class="cloud-image" src="' + baseurl+'/file/'+SHA1(id) + '-s' + size +
 				'" data-src="' + baseurl+'/file/'+SHA1(id) + '" alt="' + filename + '">';
-			editor.config.allowedContent = true;
-			editor.insertHtml(html.trim());
+			CKEDITOR.currentInstance.config.allowedContent = true;
+			CKEDITOR.currentInstance.insertHtml(html.trim());
 			dialog.hide();
 		};
 
 		CKEDITOR.tools.xenuxcloud_openfolder = function(id) {
-			folder = id;
 			CKEDITOR.tools.xenuxcloud_loadbrowser(id);
 			CKEDITOR.tools.xenuxcloud_setbreadcrumb(id);
 		};
@@ -134,7 +133,7 @@ CKEDITOR.plugins.add('xenux-cloud', {
 							rows += '<span onclick="CKEDITOR.tools.xenuxcloud_openfolder(' + entry.id +
 								');"  class="treeitem" id="' + entry.id + '">' + entry.filename + '</span>';
 						});
-						$('#breadcrumb').html(rows);
+						$(CKEDITOR.dialog.getCurrent().parts.dialog.$).find('.breadcrumb').html(rows);
 					}
 				}
 			});
