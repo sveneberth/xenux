@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%events` (
   `start_date` timestamp NULL DEFAULT NULL,
   `end_date` timestamp NULL DEFAULT NULL,
   `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `public` tinyint(1) DEFAULT '0' COMMENT '1=public;0=private',
+  `status` varchar(50) NOT NULL,
   `author_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -44,12 +44,13 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%events` (
 
 DROP TABLE IF EXISTS `%PREFIX%files`;
 CREATE TABLE IF NOT EXISTS `%PREFIX%files` (
-`id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `type` varchar(50) NOT NULL,
   `mime_type` varchar(200) DEFAULT NULL,
+  `file_extension` varchar(300) DEFAULT NULL,
   `data` longblob,
   `filename` varchar(200) DEFAULT NULL,
-  `size` int(20) NOT NULL COMMENT 'size in byte',
+  `size` bigint(20) NOT NULL COMMENT 'size in byte',
   `lastModified` timestamp NULL DEFAULT NULL,
   `parent_folder_id` int(10) NOT NULL,
   `author_id` int(11) NOT NULL

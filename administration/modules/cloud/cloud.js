@@ -1,15 +1,13 @@
 /* ##############################################
 /* Cloud
 /* ############################################*/
-var ajaxURL;
+var ajaxURL, imageURL;
 var requestType = 'GET';
-var imageURL;
 var defaultDisabled = ['remove', 'move', 'rename'];
 
 $(function() {
 	ajaxURL = baseurl + '/administration/modules/cloud/ajax.php';
 	imageURL = baseurl + '/administration/modules/cloud/';
-
 
 	var url = window.location.href;
 	var folderID = url.substr(url.indexOf("/cloud/") + 7);
@@ -22,7 +20,7 @@ $(function() {
 	$('.explorer').height($(window).height() - 254);
 	$('.explorer').selectable({
 		filter: ' > div',
-		distance: 10, // needed for doublick events
+		distance: 10, // needed for doubleick events
 		start: function() {
 			$('body').css('cursor', 'crosshair');
 		},
@@ -47,7 +45,7 @@ $(function() {
 	})
 
 
-	// drag/drop upload
+	// drag&drop upload
 	//$.event.props.push('dataTransfer');
 	$('.explorer').bind('dragenter', function() {
 		console.info('file in window');
@@ -76,6 +74,19 @@ $(function() {
 		}
 		$(this).toggleClass('ui-selected');
 		$('.actions > button').removeClass('disabled');
+	});
+	$('body').on('click', '.explorer .item.ui-selected .filename:not(:has(input))', function(e) {
+		var ID = $(this).parent().attr('id');
+		var filename = $(this).parent().data('filename');
+		console.log(ID, filename);
+
+		// remove other inputs, has no effect on new input - its only tidier
+		$('.explorer .item .filename:has(input)').each(function(entry) {
+			var filename = $(this).parent().data('filename');
+			$(this).text(filename);
+		});
+
+		$(this).html('<input class="rename-input" type="text" value="' + escapeHtml(filename) + '">');
 	});
 	$('body').on('click', '.breadcrumb .treeitem', function() {
 		var ID = $(this).attr('id');
@@ -115,16 +126,17 @@ $(function() {
 	});
 	$('body').on('dblclick', '.explorer > .item.file', function() {
 		var ID = $(this).attr('id');
+		var filename = $(this).data('filename');
 		console.info('opened file: ' + ID);
 
-		window.open(baseurl + '/file/' + SHA1(ID),'File','width=800,height=600,location=0,menubar=0,scrollbars=0,status=0,toolbar=0,resizable=0');
+		window.open(baseurl + '/file/' + ID + '-' + encodeURI(filename),'File','width=800,height=600,location=0,menubar=0,scrollbars=0,status=0,toolbar=0,resizable=0');
 	});
 
 
 	// right click
 	var x, y;
-	var contextmenuHeight	= $('#contextmenu').outerHeight();
-	var contextmenuWidth	= $('#contextmenu').outerWidth();
+	var contextmenuHeight = $('#contextmenu').outerHeight();
+	var contextmenuWidth  = $('#contextmenu').outerWidth();
 	document.oncontextmenu = function(e) {
 		var target = e.target
 
@@ -139,8 +151,8 @@ $(function() {
 		$('.explorer > .item')	.removeClass('ui-selected');
 		$(target)				.addClass('ui-selected');
 
-		var id		= $(target).attr('id');
-		var type	= $(target).hasClass('file') ? 'file' : 'folder';
+		var id   = $(target).attr('id');
+		var type = $(target).hasClass('file') ? 'file' : 'folder';
 
 		$('#contextmenu').data('targetID',   id);
 		$('#contextmenu').data('targetType', type);
@@ -172,18 +184,18 @@ $(function() {
 		var targetType	= $('#contextmenu').data('targetType');
 
 		if(targetType == 'file') {
-			OpenInNewTab(baseurl + '/file/' + SHA1(id));
+			OpenInNewTab(baseurl + '/file/' + id);
 		} else {
 			dir_list(id);
 		}
 		$('#contextmenu').hide();
 	});
 	$('#contextmenu > .download').click(function() {
-		var id			= $('#contextmenu').data('targetID');
-		var targetType	= $('#contextmenu').data('targetType');
+		var id         = $('#contextmenu').data('targetID');
+		var targetType = $('#contextmenu').data('targetType');
 
 		if(targetType == 'file') {
-			OpenInNewTab(baseurl + '/file/' + SHA1(id) + '-d');
+			OpenInNewTab(baseurl + '/file/' + id + '-d');
 		} else {
 			// #FIXME: download folder as zip
 		}
@@ -304,6 +316,14 @@ $(function() {
 			$('.popup-editor.rename > input[type="button"]').trigger('click');
 		}
 	});
+	$('body').on('keyup', '.explorer .item.ui-selected .filename .rename-input', function(event) {
+		if(event.keyCode == 13) {
+			var ID = $(this).parent().parent().attr('id');
+			var filename = $(this).val();
+			console.log(ID, filename);
+			rename(ID, filename);
+		}
+	});
 	$('body').on('click', '.popup-editor.rename > input[type="button"]', function() {
 		var newName = $('.popup-editor.rename > input[type="text"]').val();
 		var firstSelObj = $('.explorer > .item.ui-selected').eq(0);
@@ -374,7 +394,7 @@ function upload(files) {
 					if(percentComplete === 100) {
 						notifyMe(
 							'Upload abgeschlossen',
-							'Der Upload in der Xenux-Cloud wurde erfolgreich abgeschlossen',
+							'Der Upload in die Xenux-Cloud wurde erfolgreich abgeschlossen',
 							function() {
 								window.open().close()
 								window.focus()
@@ -507,7 +527,7 @@ function setbreadcrumb(folder) {
 	});
 }
 function fileinfo(id) {
-	// #FIXME: folder selected -> show amount of containing items
+	// #TODO: folder selected -> show amount of containing items
 
 	$.ajax({
 		url: ajaxURL,
@@ -557,14 +577,14 @@ function dir_list(folder) {
 			if(response.success == true) {
 				var rows = '';
 				$.each(response.data, function(key, entry) { // as dataset
-					var filename = entry.filename.replace(/"/g, '&quot;');
+					var filename = escapeHtml(entry.filename);
 					rows += '<div class="item ' + entry.type + '" id="' + entry.id + '" data-filename="' + filename + '">';
 					if(entry.type == 'folder') {
 						rows += '<img src="' + imageURL + 'folder.svg" class="image">';
 					} else {
 						var typeCategory = entry.mime_type.substr(0, entry.mime_type.search('/'));
 						if(typeCategory == 'image') {
-							rows += '<img src="' + baseurl + '/file/' + SHA1(entry.id) + '-s32-c" class="image">';
+							rows += '<img src="' + baseurl + '/file/' + entry.id + '-' + encodeURI(entry.filename) + '-s32-c" class="image">';
 						} else {
 							rows += '<img src="' + imageURL + 'document.svg" class="image">';
 						}

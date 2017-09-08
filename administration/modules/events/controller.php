@@ -53,36 +53,38 @@ class eventsController extends AbstractController
 		$template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout_home.php");
 		$template->setVar("messages", '');
 
-		if (isset($_GET['remove']) && is_numeric($_GET['remove']) && !empty($_GET['remove']))
-		{
-			$XenuxDB->delete('events', [
-				'where' => [
-					'id' => $_GET['remove']
-				]
-			]);
-			$template->setVar('messages', '<p class="box-shadow info-message ok">'.__('removedSuccessful').'</p>');
-		}
-
-		if (isset($_GET['action']) && in_array($_GET['action'], ['private', 'public', 'remove'])
+		// #TODO: merge action and remove in every module/list
+		if (isset($_GET['apply-action']) && isset($_GET['action']) && in_array($_GET['action'], ['publish', 'draft', 'trash'])
 			&& isset($_GET['item']) && is_array($_GET['item']))
 		{
 			foreach ($_GET['item'] as $item) {
 				if (is_numeric($item)) {
 					switch ($_GET['action']) {
-						case 'private':
-						case 'public':
+						case 'publish':
+						case 'draft':
 							$XenuxDB->Update('events', [
-								'public' => $_GET['action']=='public' ? true : false
+								'status' => $_GET['action']
 							], [
 									'id' => $item
 							]);
 							break;
-						case 'remove':
-							$XenuxDB->delete('events', [
-								'where' => [
+						case 'trash':
+							if (@$_GET['filter'] == 'trash')
+							{ // delete in trash
+								$XenuxDB->delete('events', [
+									'where' => [
+										'id' => $item
+									]
+								]);
+							}
+							else
+							{ // move in trash
+								$XenuxDB->Update('events', [
+									'status' => 'trash'
+								], [
 									'id' => $item
-								]
-							]);
+								]);
+							}
 							break;
 					}
 					$template->setVar('messages',
@@ -91,9 +93,22 @@ class eventsController extends AbstractController
 			}
 		}
 
+		$filter = 'publish'; // default filter
+		if (isset($_GET['apply-filter']) && isset($_GET['filter']) && in_array($_GET['filter'], ['publish', 'draft', 'trash']))
+		{
+			$filter = $_GET['filter'];
+		}
 
-		$template->setVar("events", $this->getEventTable());
-		$template->setVar("amount", $XenuxDB->count('events'));
+		$amount        = $XenuxDB->Count('events', ['where' => ['status' => $filter]]);
+		$amountPublish = $XenuxDB->Count('events', ['where' => ['status' => 'publish']]);
+		$amountDraft   = $XenuxDB->Count('events', ['where' => ['status' => 'draft']]);
+		$amountTrash   = $XenuxDB->Count('events', ['where' => ['status' => 'trash']]);
+
+		$template->setVar('events', $this->getEventTable($filter));
+		$template->setVar('amount', $amount);
+		$template->setVar('amountPublish', $amountPublish);
+		$template->setVar('amountDraft', $amountDraft);
+		$template->setVar('amountTrash', $amountTrash);
 
 		if (isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == true)
 			$template->setVar("messages", '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>');
@@ -106,21 +121,24 @@ class eventsController extends AbstractController
 		$this->headlineSuffix = '<a class="btn-new" href="{{URL_ADMIN}}/events/new">' . __('new') . '</a>';
 	}
 
-	private function getEventTable()
+	private function getEventTable($filter)
 	{
 		global $XenuxDB;
 
 		$return = '';
 
 		$events = $XenuxDB->getList('events', [
-			'order' => 'start_date DESC'
+			'order' => 'start_date DESC',
+			'where' => [
+				'status' => $filter
+			]
 		]);
 		if ($events)
 		{
 			foreach($events as $event)
 			{
 				$return .= '
-<tr ' . ($event->public == false ? 'class="private"' : '') . '>
+<tr class="is-' . $event->status . '">
 	<td class="column-select"><input type="checkbox" name="item[]" value="' . $event->id . '"></td>
 	<td class="column-id">' . $event->id . '</td>
 	<td class="column-title">
@@ -132,9 +150,7 @@ class eventsController extends AbstractController
 	<td class="column-actions">
 		<a class="view-btn" target="_blank" href="{{URL_MAIN}}/event/view/' . getPreparedLink($event->id, $event->title) . '">' . __('view') . '</a>
 		<a href="{{URL_ADMIN}}/events/home/?remove=' . $event->id . '" title="' . __('delete') . '" class="remove-btn">
-			<svg xmlns="http://www.w3.org/2000/svg" height="32px" version="1.1" viewBox="0 0 32 32" width="32px">
-				 <path fill-rule="evenodd" d="M21.333 3.556h4.741V4.74H5.926V3.556h4.74V2.37c0-1.318 1.06-2.37 2.368-2.37h5.932a2.37 2.37 0 0 1 2.367 2.37v1.186zM5.926 5.926v22.517A3.55 3.55 0 0 0 9.482 32h13.036a3.556 3.556 0 0 0 3.556-3.557V5.926H5.926zm4.74 3.555v18.963h1.186V9.481h-1.185zm4.741 0v18.963h1.186V9.481h-1.186zm4.741 0v18.963h1.185V9.481h-1.185zm-7.107-8.296c-.657 0-1.19.526-1.19 1.185v1.186h8.297V2.37c0-.654-.519-1.185-1.189-1.185h-5.918z"/>
-			</svg>
+			' . embedSVG(PATH_ADMIN . '/template/images/trash.svg') . '
 		</a>
 	</td>
 </tr>';
@@ -185,80 +201,89 @@ class eventsController extends AbstractController
 		(
 			'title' => array
 			(
-				'type' => 'text',
+				'type'     => 'text',
 				'required' => true,
-				'label' => __('title'),
-				'value' => @$event->title,
-				'class' => 'full_page'
+				'label'    => __('title'),
+				'value'    => @$event->title,
+				'class'    => 'full_page'
 			),
 			'startDate' => array
-			(
-				'type' => 'date',
+				(
+				'type'     => 'date',
 				'required' => true,
-				'label' => __('startDate'),
-				'value' => mysql2date('Y-m-d', @$event->start_date),
-				'class' => ''
+				'label'    => __('startDate'),
+				'value'    => mysql2date('Y-m-d', @$event->start_date),
+				'class'    => ''
 			),
 			'startTime' => array
 			(
-				'type' => 'time',
+				'type'     => 'time',
 				'required' => true,
-				'label' => __('startTime'),
-				'value' => mysql2date('H:i:s', @$event->start_date),
-				'class' => ''
+				'label'    => __('startTime'),
+				'value'    => mysql2date('H:i:s', @$event->start_date),
+				'class'    => ''
 			),
 			'endDate' => array
 			(
-				'type' => 'date',
+				'type'     => 'date',
 				'required' => true,
-				'label' => __('endDate'),
-				'value' => mysql2date('Y-m-d', @$event->end_date),
-				'class' => ''
+				'label'    => __('endDate'),
+				'value'    => mysql2date('Y-m-d', @$event->end_date),
+				'class'    => ''
 			),
 			'endTime' => array
 			(
-				'type' => 'time',
+				'type'     => 'time',
 				'required' => true,
-				'label' => __('endTime'),
-				'value' => mysql2date('H:i:s', @$event->end_date),
-				'class' => ''
+				'label'    => __('endTime'),
+				'value'    => mysql2date('H:i:s', @$event->end_date),
+				'class'    => ''
 			),
 			'text' => array
 			(
-				'type' => 'wysiwyg',
-				'label' => __('eventDesc'),
-				'value' => @$event->text,
+				'type'      => 'wysiwyg',
+				'label'     => __('eventDesc'),
+				'value'     => @$event->text,
 				'showLabel' => false
 			),
-			'public' => array
+			'status' => array
 			(
-				'type' => 'checkbox',
+				'type'     => 'select',
 				'required' => true,
-				'label' => __('eventPublic'),
-				'value' => 'true',
-				'checked' => @$event->public
+				'label'    => __('status'),
+				'value'    => @$events->status,
+				'options'  => [
+					[
+						'value' => 'publish',
+						'label' => __('publish')
+					],
+					[
+						'value' => 'draft',
+						'label' => __('draft')
+					]
+				]
 			),
 			'author' => array
 			(
-				'type' => 'readonly',
+				'type'  => 'readonly',
 				'label' => __('author'),
 				'value' => isset($event) ? $event->username : $app->user->userInfo->username
 			),
 			'submit_stay' => array
 			(
-				'type' => 'submit',
+				'type'  => 'submit',
 				'label' => __('save&stay'),
 				'class' => 'floating'
 			),
 			'submit_close' => array
 			(
-				'type' => 'submit',
+				'type'  => 'submit',
 				'label' => __('save&close'),
 				'class' => 'floating space-left'
 			),
 			'cancel' => array
 			(
-				'type' => 'submit',
+				'type'  => 'submit',
 				'label' => __('cancel'),
 				'style' => 'background-color:red',
 				'class' => 'floating space-left'
@@ -280,21 +305,21 @@ class eventsController extends AbstractController
 
 			$title      = $data['title'];
 			$text       = $data['text'];
-			$start_date = $data['startDate']	. ' ' . $data['startTime'];
-			$end_date   = $data['endDate']		. ' ' . $data['endTime'];
-			$public     = parse_bool($data['public']);
+			$start_date = $data['startDate'] . ' ' . $data['startTime'];
+			$end_date   = $data['endDate']   . ' ' . $data['endTime'];
+			$status     = in_array($data['status'], ['publish', 'draft', 'trash']) ? $data['status'] : 'draft';
 			$author     = $app->user->userInfo->id;
 
 			if ($new)
 			{
 				$event = $XenuxDB->Insert('events', [
-					'title'				=> $title,
-					'text'				=> $text,
-					'public'			=> $public,
-					'author_id'			=> $author,
-					'create_date'		=> date('Y-m-d H:i:s'),
-					'start_date'		=> $start_date,
-					'end_date'			=> $end_date
+					'title'       => $title,
+					'text'        => $text,
+					'status'      => $status,
+					'author_id'   => $author,
+					'create_date' => date('Y-m-d H:i:s'),
+					'start_date'  => $start_date,
+					'end_date'    => $end_date
 				]);
 
 				if ($event)
@@ -311,11 +336,11 @@ class eventsController extends AbstractController
 			{
 				// update it
 				$return = $XenuxDB->Update('events', [
-					'title'				=> $title,
-					'text'				=> $text,
-					'public'			=> $public,
-					'start_date'		=> $start_date,
-					'end_date'			=> $end_date
+					'title'      => $title,
+					'text'       => $text,
+					'status'     => $status,
+					'start_date' => $start_date,
+					'end_date'   => $end_date
 				],
 				[
 					'id' => $this->editID
@@ -333,7 +358,7 @@ class eventsController extends AbstractController
 					return false;
 				}
 
-				header('Location: '.URL_ADMIN.'/events/edit/'.$this->editID.'?savingSuccess=true');
+				header('Location: '.URL_ADMIN.'/events/edit/' . $this->editID . '?savingSuccess=true');
 			}
 			else
 			{
@@ -346,7 +371,7 @@ class eventsController extends AbstractController
 					return false;
 				}
 
-				header('Location: '.URL_ADMIN.'/events/edit/'.$this->editID.'?savingSuccess=false');
+				header('Location: '.URL_ADMIN.'/events/edit/' . $this->editID . '?savingSuccess=false');
 			}
 		}
 		return $form->getForm();

@@ -106,23 +106,33 @@
   padding: 10px;
   line-height: 2em;
   display: block;
+
+ &:nth-child(odd) {
+    background: #fff;
+  }
+ &:nth-child(even) {
+    background: #eee;
+  }
+
+ .image {
+    height: 2em;
+    width: 2em;
+    margin-right: 10px;
+    display: inline-block;
+  }
+  .rename-input {
+    margin: 0;
+    display: inline-block;
+  }
+
+  &.ui-selecting {
+    background: #80BBFF !important;
+  }
+  &.ui-selected {
+    background: #4C90DD !important;
+  }
 }
-.explorer > .item:nth-child(odd) {
-  background: #fff;
-}
-.explorer > .item:nth-child(even) {
-  background: #eee;
-}
-.explorer > .item.select {
-  padding: 20px 10px;
-  background: #4C90DD;
-}
-.explorer > .item .image {
-  height: 2em;
-  width: 2em;
-  margin-right: 10px;
-  display: inline-block;
-}
+
 .upload-progress {
   position: fixed;
   bottom: 0px;
@@ -173,12 +183,7 @@
 #feedback {
   font-size: 1.4em;
 }
-.explorer .ui-selecting {
-  background: #80BBFF !important;
-}
-.explorer .ui-selected {
-  background: #4C90DD !important;
-}
+
 .ui-selectable-helper {
   z-index:100;
   border: 1px dotted #225793;

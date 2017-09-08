@@ -14,6 +14,7 @@
     "save&stay":"Speichern",
     "save&close":"Speichern und schließen",
     "cancel":"Abbrechen",
+    "click to edit":"Klicken, um zu bearbeiten",
 
     "choose action":"Aktion wählen",
     "apply action":"Übernehmen",
@@ -22,6 +23,13 @@
     "new":"Neu",
     "edit":"Bearbeiten",
     "remove":"Löschen",
+    "status":"Status",
+    "draft":"Entwurf",
+    "drafts":"Entwürfe",
+    "trash":"Papierkorb",
+    "desc":"Beschreibung",
+    "safe as draft":"Als Entwurf speichern",
+    "publish":"Veröffentlichen",
 
     "dashboard":"Dashboard",
     "cloud":"Cloud",

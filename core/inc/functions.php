@@ -461,3 +461,18 @@ function is_dir_empty($dir)
 
 	return (count(scandir($dir)) == 2);
 }
+
+
+/**
+* embedSVG
+* embed a SVG for inline useage
+* @param string $file: path to svg file
+* @return string: the svg
+*/
+function embedSVG($file)
+{
+	if (!is_readable($file))
+		return NULL;
+
+	return file_get_contents($file);
+}

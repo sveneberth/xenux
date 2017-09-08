@@ -100,7 +100,7 @@ class template
 	* <p>than</p>
 	* #endif
 	*/
-	#FIXME: allow nested ifs
+	#TODO: allow nested ifs
 	private function replaceIfs($content)
 	{
 	#	var_dump($this->ifVars);

@@ -75,7 +75,7 @@ CKEDITOR.plugins.add('xenux-cloud', {
 							} else {
 								var typeCategory = entry.mime_type.substr(0, entry.mime_type.search("/"));
 								if(typeCategory == 'image') {
-									url		= baseurl + '/file/' + SHA1(entry.id) + '-s100-c';
+									url		= baseurl + '/file/' + entry.id + '-' + encodeURI(filename) + '-s100-c';
 									action	= 'insertpicture';
 								} else {
 									url		= baseurl + '/administration/modules/cloud/document.svg';
@@ -96,7 +96,7 @@ CKEDITOR.plugins.add('xenux-cloud', {
 
 		CKEDITOR.tools.xenuxcloud_insertlinktofile = function(id, filename) {
 			var dialog = CKEDITOR.dialog.getCurrent();
-			var html = '<a class="cloud-url" target="_blank" href="' + baseurl+'/file/'+SHA1(id) + '">' + filename + '</a>';
+			var html = '<a class="cloud-url" target="_blank" href="' + baseurl+'/file/'+id+'-'+encodeURI(filename) + '">' + filename + '</a>';
 			CKEDITOR.currentInstance.config.allowedContent = true;
 			CKEDITOR.currentInstance.insertHtml(html.trim());
 			dialog.hide();
@@ -104,8 +104,8 @@ CKEDITOR.plugins.add('xenux-cloud', {
 
 		CKEDITOR.tools.xenuxcloud_insertpicture = function(id, filename) {
 			var dialog = CKEDITOR.dialog.getCurrent();
-			var html = '<img class="cloud-image" src="' + baseurl+'/file/'+SHA1(id) + '-s' + size +
-				'" data-src="' + baseurl+'/file/'+SHA1(id) + '" alt="' + filename + '">';
+			var html = '<img class="cloud-image" src="' + baseurl+'/file/'+id+'-'+encodeURI(filename)+'-s' + size +
+				'" data-src="' + baseurl+'/file/'+id+'-'+encodeURI(filename) + '" alt="' + filename + '">';
 			CKEDITOR.currentInstance.config.allowedContent = true;
 			CKEDITOR.currentInstance.insertHtml(html.trim());
 			dialog.hide();

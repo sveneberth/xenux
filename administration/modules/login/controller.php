@@ -170,45 +170,43 @@ class LoginController extends AbstractController
 		(
 			'firstname' => array
 			(
-				'type' => 'text',
+				'type'     => 'text',
 				'required' => false,
-				'label' => __('firstname')
+				'label'    => __('firstname')
 			),
 			'lastname' => array
 			(
-				'type' => 'text',
+				'type'     => 'text',
 				'required' => false,
-				'label' => __('lastname')
+				'label'    => __('lastname')
 			),
 			'email' => array
 			(
-				'type' => 'email',
+				'type'     => 'email',
 				'required' => true,
-				'label' => __('email')
+				'label'    => __('email')
 			),
 			'username' => array
 			(
-				'type' => 'text',
+				'type'     => 'text',
 				'required' => true,
-				'label' => __('username')
+				'label'    => __('username')
 			),
 			'password' => array
 			(
-				'type' => 'password',
+				'type'     => 'password',
 				'required' => true,
-				'label' => __('password'),
-				'min_length' => 6
+				'label'    => __('password')
 			),
 			'passwordAgain' => array
 			(
-				'type' => 'password',
+				'type'     => 'password',
 				'required' => true,
-				'label' => __('passwordAgain'),
-				'min_length' => 6
+				'label'    => __('passwordAgain')
 			),
 			'submit' => array
 			(
-				'type' => 'submit',
+				'type'  => 'submit',
 				'label' => __('register')
 			)
 		);
@@ -233,10 +231,10 @@ class LoginController extends AbstractController
 
 						$return = $XenuxDB->Insert('users', [
 							'firstname' => $data['firstname'],
-							'lastname' => $data['lastname'],
-							'username' => $data['username'],
-							'email' => $data['email'],
-							'password' => $app->user->createPasswordHash($data['password']),
+							'lastname'  => $data['lastname'],
+							'username'  => $data['username'],
+							'email'     => $data['email'],
+							'password'  => $app->user->createPasswordHash($data['password']),
 							'verifykey' => $token
 						]);
 						if($return !== false)
@@ -303,13 +301,13 @@ class LoginController extends AbstractController
 		(
 			'email' => array
 			(
-				'type' => 'email',
+				'type'     => 'email',
 				'required' => true,
-				'label' => __('email')
+				'label'    => __('email')
 			),
 			'submit' => array
 			(
-				'type' => 'submit',
+				'type'  => 'submit',
 				'label' => __('sendUsername')
 			)
 		);
@@ -363,13 +361,13 @@ Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: '
 		(
 			'username' => array
 			(
-				'type' => 'text',
+				'type'     => 'text',
 				'required' => true,
-				'label' => __('username')
+				'label'    => __('username')
 			),
 			'submit' => array
 			(
-				'type' => 'submit',
+				'type'  => 'submit',
 				'label' => __('resetPassword')
 			)
 		);
@@ -468,21 +466,19 @@ Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: '
 			(
 				'password' => array
 				(
-					'type' => 'password',
-					'required' => true,
-					'label' => __('password'),
-					'min_length' => 6
+					'type'       => 'password',
+					'required'   => true,
+					'label'      => __('password')
 				),
 				'passwordAgain' => array
 				(
-					'type' => 'password',
-					'required' => true,
-					'label' => __('passwordAgain'),
-					'min_length' => 6
+					'type'       => 'password',
+					'required'   => true,
+					'label'      => __('passwordAgain')
 				),
 				'submit' => array
 				(
-					'type' => 'submit',
+					'type'  => 'submit',
 					'label' => __('resetPassword')
 				)
 			);
@@ -558,21 +554,19 @@ Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: '
 			(
 				'password' => array
 				(
-					'type' => 'password',
+					'type'     => 'password',
 					'required' => true,
-					'label' => __('password'),
-					'min_length' => 6
+					'label'    => __('password'),
 				),
 				'passwordAgain' => array
 				(
-					'type' => 'password',
+					'type'     => 'password',
 					'required' => true,
-					'label' => __('passwordAgain'),
-					'min_length' => 6
+					'label'    => __('passwordAgain'),
 				),
 				'submit' => array
 				(
-					'type' => 'submit',
+					'type'  => 'submit',
 					'label' => __('resetPassword')
 				)
 			);

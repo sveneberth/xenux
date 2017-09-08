@@ -19,28 +19,41 @@ switch(@$_REQUEST['task'])
 		{
 			$return['success'] = true;
 
-			$parent_folder = $XenuxDB->escapeString($_REQUEST['parent_folder']);
+			$parent_folder = $_REQUEST['parent_folder'];
 			foreach ($_FILES as $key => $file)
 			{
-				$name			= $file['name'];
-				$tmpname		= $file['tmp_name'];
-				$mime_type		= $file['type'];
-				$size			= $file['size'];
-				$lastModified	= filemtime($tmpname);
+				$name         = $file['name'];
+				$tmpname      = $file['tmp_name'];
+				$mime_type    = $file['type'];
+				$size         = $file['size'];
+				$lastModified = filemtime($tmpname);
+
+				if (substr($name, -7) == '.tar.gz')
+				{
+					$ext = 'tar.gz';
+					$filename = substr(pathinfo($name, PATHINFO_FILENAME), 0, -4);
+				}
+				else
+				{
+					$ext = pathinfo($name, PATHINFO_EXTENSION);
+					$filename = pathinfo($name, PATHINFO_FILENAME);
+				}
+
 
 				$hndFile = fopen($tmpname, "r");
 				$data = addslashes(fread($hndFile, $size));
 
 				$result = $XenuxDB->Insert('files', [
-														'type'				=> 'file',
-														'mime_type'			=> $mime_type,
-														'#data'				=> $data,
-														'filename'			=> $name,
-														'size'				=> $size,
-														'lastModified'		=> date("Y-m-d H:i:s", $lastModified),
-														'parent_folder_id'	=> $parent_folder,
-														'author_id'			=> $app->user->userInfo->id
-													]);
+					'type'             => 'file',
+					'mime_type'        => $mime_type,
+					'file_extension'   => $ext,
+					'#data'            => $data,
+					'filename'         => $filename,
+					'size'             => $size,
+					'lastModified'     => date("Y-m-d H:i:s", $lastModified),
+					'parent_folder_id' => $parent_folder,
+					'author_id'        => $app->user->userInfo->id
+				]);
 				if($result === false)
 				{
 					$return['success'] = false;
@@ -63,11 +76,11 @@ switch(@$_REQUEST['task'])
 			$parent_folder	= $_REQUEST['parent_folder'];
 
 			$result = $XenuxDB->Insert('files', [
-													'type'				=> 'folder',
-													'filename'			=> $folder_name,
-													'lastModified'		=> date("Y-m-d H:i:s"),
-													'parent_folder_id'	=> $parent_folder,
-												]);
+				'type'             => 'folder',
+				'filename'         => $folder_name,
+				'lastModified'     => date("Y-m-d H:i:s"),
+				'parent_folder_id' => $parent_folder,
+			]);
 
 			if($result === false)
 				$return['success'] = false;
@@ -103,9 +116,9 @@ switch(@$_REQUEST['task'])
 
 				if($result !== false)
 				{
-					$return['data'] = $result;
+					$return['data']    = $result;
 					$return['success'] = true;
-					$return['status'] = 200;
+					$return['status']  = 200;
 				}
 				else
 				{
@@ -116,14 +129,14 @@ switch(@$_REQUEST['task'])
 			{
 				$return['message'] = "folder not found";
 				$return['success'] = false;
-				$return['status'] = 404;
+				$return['status']  = 404;
 			}
 		}
 		else
 		{
 			$return['message'] = 'parameter `folder` is missing';
 			$return['success'] = false;
-			$return['status'] = 405;
+			$return['status']  = 405;
 		}
 		break;
 	case 'breadcrumb':
@@ -154,7 +167,7 @@ switch(@$_REQUEST['task'])
 				{
 					if($row === null) {
 						$return['message'] = 'folder not found';
-						$return['status'] = 404;
+						$return['status']  = 404;
 					}
 
 					$return['success'] = false;
@@ -172,7 +185,7 @@ switch(@$_REQUEST['task'])
 		{
 			$return['message'] = 'parameter `folder` is missing';
 			$return['success'] = false;
-			$return['status'] = 405;
+			$return['status']  = 405;
 		}
 		break;
 	case 'getFileInfo':
@@ -218,7 +231,7 @@ switch(@$_REQUEST['task'])
 	case 'remove':
 		if(isset($_REQUEST['id']))
 		{
-			$id = $XenuxDB->escapeString($_REQUEST['id']);
+			$id = $_REQUEST['id'];
 
 			if($id == 0)
 			{
@@ -233,7 +246,7 @@ switch(@$_REQUEST['task'])
 			]);
 			if($num == 0)
 			{
-				$return['errmsg'] = "to remove file doesn't exist";
+				$return['errmsg']  = "to remove file doesn't exist";
 				$return['success'] = false;
 				break;
 			}
@@ -298,8 +311,8 @@ switch(@$_REQUEST['task'])
 	case 'move':
 		if(isset($_REQUEST['id']) && isset($_REQUEST['to']))
 		{
-			$id = $XenuxDB->escapeString($_REQUEST['id']);
-			$to = $XenuxDB->escapeString($_REQUEST['to']);
+			$id = $_REQUEST['id'];
+			$to = $_REQUEST['to'];
 
 			if($id == $to)
 			{
@@ -324,8 +337,8 @@ switch(@$_REQUEST['task'])
 	case 'rename':
 		if(isset($_REQUEST['id']) && isset($_REQUEST['newName']))
 		{
-			$id			= $XenuxDB->escapeString($_REQUEST['id']);
-			$newName	= $XenuxDB->escapeString($_REQUEST['newName']);
+			$id      = $_REQUEST['id'];
+			$newName = $_REQUEST['newName'];
 
 			$result = $XenuxDB->Update('files', [
 				'filename' => $newName,
@@ -346,11 +359,11 @@ switch(@$_REQUEST['task'])
 	case 'list_all_dirs':
 		$return['success'] = true;
 
-		$id				= 0;
-		$arrAll			= array();
-		$arrAll[]		= $id;
-		$arrFolder		= array();
-		$arrFolder[]	= $id;
+		$id          = 0;
+		$arrAll      = array();
+		$arrAll[]    = $id;
+		$arrFolder   = array();
+		$arrFolder[] = $id;
 
 		while(!empty($arrFolder))
 		{

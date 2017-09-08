@@ -69,73 +69,73 @@ class optionsController extends AbstractController
 		(
 			'meta_author' => array
 			(
-				'type' => 'text',
+				'type'     => 'text',
 				'required' => true,
-				'label' => __('meta_author'),
-				'value' => $app->getOption('meta_author')
+				'label'    => __('meta_author'),
+				'value'    => $app->getOption('meta_author')
 			),
 			'hp_name' => array
 			(
-				'type' => 'text',
+				'type'     => 'text',
 				'required' => true,
-				'label' => __('hp_name'),
-				'value' => $app->getOption('hp_name')
+				'label'    => __('hp_name'),
+				'value'    => $app->getOption('hp_name')
 			),
 			'meta_desc' => array
 			(
-				'type' => 'textarea',
+				'type'  => 'textarea',
 				'label' => __('meta_desc'),
 				'value' => $app->getOption('meta_desc'),
-				'info' => __('description of the homepage for meta tags')
+				'info'  => __('description of the homepage for meta tags')
 			),
 			'meta_keys' => array
 			(
-				'type' => 'textarea',
+				'type'     => 'textarea',
 				'required' => true,
-				'label' => __('meta_keys'),
-				'value' => $app->getOption('meta_keys'),
-				'info' => __('keywords of the homepage for meta tags')
+				'label'    => __('meta_keys'),
+				'value'    => $app->getOption('meta_keys'),
+				'info'     => __('keywords of the homepage for meta tags')
 			),
 			'admin_email' => array
 			(
-				'type' => 'email',
+				'type'     => 'email',
 				'required' => true,
-				'label' => __('admin_email'),
-				'value' => $app->getOption('admin_email')
+				'label'    => __('admin_email'),
+				'value'    => $app->getOption('admin_email')
 			),
 			'users_can_register' => array
 			(
-				'type' => 'bool_radio',
+				'type'     => 'bool_radio',
 				'required' => true,
-				'label' => __('users_can_register'),
-				'value' => parse_bool($app->getOption('users_can_register')),
+				'label'    => __('users_can_register'),
+				'value'    => parse_bool($app->getOption('users_can_register')),
 			),
 			'homepage_offline' => array
 			(
-				'type' => 'bool_radio',
+				'type'     => 'bool_radio',
 				'required' => true,
-				'label' => __('homepage_offline'),
-				'value' => parse_bool($app->getOption('homepage_offline')),
+				'label'    => __('homepage_offline'),
+				'value'    => parse_bool($app->getOption('homepage_offline')),
 			),
 			'template' => array
 			(
-				'type' => 'select',
+				'type'     => 'select',
 				'required' => true,
-				'label' => __('template'),
-				'value' => $app->getOption('template'),
-				'options' => $templateOption
+				'label'    => __('template'),
+				'value'    => $app->getOption('template'),
+				'options'  => $templateOption
 			),
 			'default_language' => array
 			(
-				'type' => 'select',
+				'type'     => 'select',
 				'required' => true,
-				'label' => __('default_language'),
-				'value' => $app->getOption('default_language'),
-				'options' => $languagesOption
+				'label'    => __('default_language'),
+				'value'    => $app->getOption('default_language'),
+				'options'  => $languagesOption
 			),
 			'submit' => array
 			(
-				'type' => 'submit',
+				'type'  => 'submit',
 				'label' => __('save')
 			)
 		);
@@ -182,10 +182,10 @@ class optionsController extends AbstractController
 		(
 			'sites_show_meta_info' => array
 			(
-				'type' => 'bool_radio',
+				'type'     => 'bool_radio',
 				'required' => true,
-				'label' => __('show_meta_info'),
-				'value' => parse_bool($app->getOption('sites_show_meta_info'))
+				'label'    => __('show_meta_info'),
+				'value'    => parse_bool($app->getOption('sites_show_meta_info'))
 			),
 
 			'submit' => array

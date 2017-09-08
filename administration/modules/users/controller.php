@@ -190,106 +190,106 @@ class usersController extends AbstractController
 		(
 			'username' => array
 			(
-				'type' => 'text',
+				'type'     => 'text',
 				'required' => true,
-				'label' => __('username'),
-				'value' =>  !$new ? $user->username : '',
+				'label'    => __('username'),
+				'value'    =>  !$new ? $user->username : '',
 			),
 			'firstname' => array
 			(
-				'type' => 'text',
+				'type'     => 'text',
 				'required' => false,
-				'label' => __('firstname'),
-				'value' => @$user->firstname,
+				'label'    => __('firstname'),
+				'value'    => @$user->firstname,
 			),
 			'lastname' => array
 			(
-				'type' => 'text',
+				'type'     => 'text',
 				'required' => false,
-				'label' => __('lastname'),
-				'value' => @$user->lastname,
+				'label'    => __('lastname'),
+				'value'    => @$user->lastname,
 			),
 			'realname_show_profile' => array
 			(
-				'type' => 'checkbox',
-				'label' => __('realname_show_profile'),
-				'value' => 'true',
+				'type'    => 'checkbox',
+				'label'   => __('realname_show_profile'),
+				'value'   => 'true',
 				'checked' => @$user->realname_show_profile
 			),
 			'email' => array
 			(
-				'type' => 'email',
+				'type'     => 'email',
 				'required' => true,
-				'label' => __('email'),
-				'value' => @$user->email,
+				'label'    => __('email'),
+				'value'    => @$user->email,
 			),
 			'email_show_profile' => array
 			(
-				'type' => 'checkbox',
-				'label' => __('email_show_profile'),
-				'value' => 'true',
+				'type'    => 'checkbox',
+				'label'   => __('email_show_profile'),
+				'value'   => 'true',
 				'checked' => @$user->email_show_profile
 			),
 			'homepage' => array
 			(
-				'type' => 'text',
+				'type'     => 'text',
 				'required' => false,
-				'label' => __('homepage'),
-				'value' => @$user->homepage,
+				'label'    => __('homepage'),
+				'value'    => @$user->homepage,
 			),
 			'social_media' => array
 			(
-				'type' => 'textarea',
+				'type'     => 'textarea',
 				'required' => false,
-				'label' => __('social_media'),
-				'value' => @$user->social_media,
-				'info' => __('social media introduction'),
+				'label'    => __('social_media'),
+				'value'    => @$user->social_media,
+				'info'     => __('social media introduction'),
 			),
 			'password' => array
 			(
-				'type' => 'password',
+				'type'  => 'password',
 				'label' => __('password'),
-				'info' => !$new ?
+				'info'  => !$new ?
 					__('If you dont want to change the password, leave the fields blank') :
 					__('leave the fields blank and the user can set the password himself'),
 			),
 			'passwordAgain' => array
 			(
-				'type' => 'password',
+				'type'  => 'password',
 				'label' => __('passwordAgain'),
-				'info' => !$new ?
+				'info'  => !$new ?
 					__('If you dont want to change the password, leave the fields blank') :
 					__('leave the fields blank and the user can set the password himself'),
 			),
 			'bio' => array
 			(
-				'type' => 'textarea',
+				'type'     => 'textarea',
 				'required' => false,
-				'label' => __('bio'),
-				'value' => @$user->bio,
+				'label'    => __('bio'),
+				'value'    => @$user->bio,
 			),
 			'submit_stay' => array
 			(
-				'type' => 'submit',
+				'type'  => 'submit',
 				'label' => __('save&stay'),
 				'class' => 'floating'
 			),
 			'submit_close' => array
 			(
-				'type' => 'submit',
+				'type'  => 'submit',
 				'label' => __('save&close'),
 				'class' => 'floating space-left'
 			),
 			'cancel' => array
 			(
-				'type' => 'submit',
+				'type'  => 'submit',
 				'label' => __('cancel'),
 				'style' => 'background-color:red',
 				'class' => 'floating space-left'
 			),
 			'clearfix' => array
 			(
-				'type' => 'html',
+				'type'  => 'html',
 				'value' => '<div class="clear"></div>'
 			)
 		);
@@ -317,9 +317,9 @@ class usersController extends AbstractController
 			$homepage		= full($data['homepage']) ? (preg_match('/^([a-zA-Z]*)\:\/\//', $data['homepage']) ? $data['homepage'] : 'http://'.$data['homepage']) : '';
 			$social_media =  trim(preg_replace('/(.*?)\:\s?(\w*?):(.*?)$/m', '', $data['social_media']));
 
-			$social_media_ok		= ($social_media == '');
-			$userFoundByUsername	= $app->user->getUserByUsername($username) && $username != @$user->username;
-			$userFoundByEmail		= $app->user->getUserByEmail($data['email']) && $data['email'] != @$user->email;
+			$social_media_ok     = ($social_media == '');
+			$userFoundByUsername = $app->user->getUserByUsername($username) && $username != @$user->username;
+			$userFoundByEmail    = $app->user->getUserByEmail($data['email']) && $data['email'] != @$user->email;
 
 			if (!$social_media_ok)
 			{
@@ -348,18 +348,18 @@ class usersController extends AbstractController
 				$token = generateRandomString();
 
 				$user = $XenuxDB->Insert('users', [
-					'username'				=> $username,
-					'firstname'				=> $data['firstname'],
-					'lastname'				=> $data['lastname'],
-					'realname_show_profile'	=> parse_bool(@$data['realname_show_profile']),
-					'email'					=> $data['email'],
-					'email_show_profile'	=> parse_bool(@$data['email_show_profile']),
-					'password'				=> '',
-					'verifykey'					=> $token,
-					'homepage'				=> $homepage,
-					'bio'					=> $data['bio'],
-					'social_media'			=> $data['social_media'],
-					'confirmed'				=> true
+					'username'              => $username,
+					'firstname'             => $data['firstname'],
+					'lastname'              => $data['lastname'],
+					'realname_show_profile' => parse_bool(@$data['realname_show_profile']),
+					'email'                 => $data['email'],
+					'email_show_profile'    => parse_bool(@$data['email_show_profile']),
+					'password'              => '',
+					'verifykey'             => $token,
+					'homepage'              => $homepage,
+					'bio'                   => $data['bio'],
+					'social_media'          => $data['social_media'],
+					'confirmed'             => true
 				]);
 
 
@@ -421,15 +421,15 @@ class usersController extends AbstractController
 
 				// update it
 				$return = $XenuxDB->Update('users', [
-					'username'				=> $data['username'],
-					'firstname'				=> $data['firstname'],
-					'lastname'				=> $data['lastname'],
-					'realname_show_profile'	=> parse_bool($data['realname_show_profile']),
-					'email'					=> $data['email'],
-					'email_show_profile'	=> parse_bool($data['email_show_profile']),
-					'homepage'				=> $homepage,
-					'bio'					=> $data['bio'],
-					'social_media'			=> $data['social_media']
+					'username'              => $data['username'],
+					'firstname'             => $data['firstname'],
+					'lastname'              => $data['lastname'],
+					'realname_show_profile' => parse_bool($data['realname_show_profile']),
+					'email'                 => $data['email'],
+					'email_show_profile'    => parse_bool($data['email_show_profile']),
+					'homepage'              => $homepage,
+					'bio'                   => $data['bio'],
+					'social_media'          => $data['social_media']
 				],
 				[
 					'id' => $this->editUserID

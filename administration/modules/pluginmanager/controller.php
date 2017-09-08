@@ -60,14 +60,14 @@ class pluginmanagerController extends AbstractController
 		(
 			'file' => array
 			(
-				'type' => 'file',
+				'type'     => 'file',
 				'required' => true,
 				'multiple' => false,
-				'label' => __('upload file')
+				'label'    => __('upload file')
 			),
 			'submit' => array
 			(
-				'type' => 'submit',
+				'type'  => 'submit',
 				'label' => __('upload')
 			)
 		);
@@ -223,14 +223,14 @@ class pluginmanagerController extends AbstractController
 		(
 			'file' => array
 			(
-				'type' => 'file',
+				'type'     => 'file',
 				'required' => true,
 				'multiple' => false,
-				'label' => __('upload file')
+				'label'    => __('upload file')
 			),
 			'submit' => array
 			(
-				'type' => 'submit',
+				'type'  => 'submit',
 				'label' => __('upload')
 			)
 		);

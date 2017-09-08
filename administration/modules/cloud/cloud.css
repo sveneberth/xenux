@@ -96,15 +96,21 @@
 .explorer > .item:nth-child(even) {
   background: #eee;
 }
-.explorer > .item.select {
-  padding: 20px 10px;
-  background: #4C90DD;
-}
 .explorer > .item .image {
   height: 2em;
   width: 2em;
   margin-right: 10px;
   display: inline-block;
+}
+.explorer > .item .rename-input {
+  margin: 0;
+  display: inline-block;
+}
+.explorer > .item.ui-selecting {
+  background: #80BBFF !important;
+}
+.explorer > .item.ui-selected {
+  background: #4C90DD !important;
 }
 .upload-progress {
   position: fixed;
@@ -155,12 +161,6 @@
 }
 #feedback {
   font-size: 1.4em;
-}
-.explorer .ui-selecting {
-  background: #80BBFF !important;
-}
-.explorer .ui-selected {
-  background: #4C90DD !important;
 }
 .ui-selectable-helper {
   z-index: 100;

@@ -1,4 +1,3 @@
-{# #TODO: translation #}
 <script>
 	$(function() {
 		$( '.data-table' ).tablesorter({
@@ -21,9 +20,9 @@
 					<option value="-1"><?= __('choose action') ?></option>
 					<option value="draft"><?= __('safe as draft') ?></option>
 					<option value="publish"><?= __('publish') ?></option>
-					<option value="remove"><?= __('remove') ?></option>
+					<option value="trash"><?= __('remove') ?></option>
 				</select>
-				<input type="submit" class="btn action-btn" value="<?= __('apply action') ?>">
+				<input name="apply-action" type="submit" class="btn action-btn" value="<?= __('apply action') ?>">
 
 				<select name="filter" class="select filter-select">
 					<option value="publish" <?php if(@$_GET['filter'] == 'publish') echo 'selected'; ?>><?= __('public posts') ?> ({{amountPublish}})</option>

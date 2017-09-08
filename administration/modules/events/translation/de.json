@@ -7,7 +7,6 @@
 	{
 		"events":"Termine",
 		"home":"alle Termine",
-
 		"eventPreview":"Termin Vorschau",
 		"startDate":"Startdatum",
 		"startTime":"Startzeit",
@@ -16,8 +15,7 @@
 		"eventDesc":"Termin Beschreibung",
 		"eventPublic":"Termin veröffentlicht",
 		"deleteEvent":"Termin löschen",
-
-		"click to edit event":"Klicken, um den Termin zu bearbeiten",
+    "public events":"Öffentliche Termine",
 		"here can you add a new event":"Hier kannst du eine neuen Termin anlegen.",
 		"here can you edit the event":"Hier kannst du den Termin bearbeiten."
 	}

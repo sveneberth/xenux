@@ -83,7 +83,7 @@ class sitesController extends AbstractController
 								<div>
 									<span class=\"disclose\"></span>
 									<a class=\"edit\" href=\"{{URL_ADMIN}}/sites/edit/".$site->id."\" title=\"".__('click to edit site')."\">".$site->title."</a>
-									<a class=\"show\" target=\"_blank\" href=\"".getPageLink($site->id, $site->title)."\">".__('show')."</a>
+									<a class=\"show\" target=\"_blank\" href=\"".getPageLink($site->id, $site->title)."\">".__('view')."</a>
 									<svg title=\"".__('deleteSite')."\" class=\"remove remove-icon clickable\" xmlns=\"http://www.w3.org/2000/svg\" height=\"32px\" version=\"1.1\" viewBox=\"0 0 32 32\" width=\"32px\">
 										 <path fill-rule=\"evenodd\" d=\"M21.333 3.556h4.741V4.74H5.926V3.556h4.74V2.37c0-1.318 1.06-2.37 2.368-2.37h5.932a2.37 2.37 0 0 1 2.367 2.37v1.186zM5.926 5.926v22.517A3.55 3.55 0 0 0 9.482 32h13.036a3.556 3.556 0 0 0 3.556-3.557V5.926H5.926zm4.74 3.555v18.963h1.186V9.481h-1.185zm4.741 0v18.963h1.186V9.481h-1.186zm4.741 0v18.963h1.185V9.481h-1.185zm-7.107-8.296c-.657 0-1.19.526-1.19 1.185v1.186h8.297V2.37c0-.654-.519-1.185-1.189-1.185h-5.918z\"/>
 									</svg>
@@ -104,7 +104,7 @@ class sitesController extends AbstractController
 										<div>
 											<span class=\"disclose\"></span>
 											<a class=\"edit\" href=\"{{URL_ADMIN}}/sites/edit/".$subsite->id."\" title=\"".__('click to edit site')."\">".$subsite->title."</a>
-											<a class=\"show\" href=\"".getPageLink($subsite->id, $subsite->title)."\">".__('show')."</a>
+											<a class=\"show\" href=\"".getPageLink($subsite->id, $subsite->title)."\">".__('view')."</a>
 											<svg title=\"".__('deleteSite')."\" class=\"remove remove-icon clickable\" xmlns=\"http://www.w3.org/2000/svg\" height=\"32px\" version=\"1.1\" viewBox=\"0 0 32 32\" width=\"32px\">
 												 <path fill-rule=\"evenodd\" d=\"M21.333 3.556h4.741V4.74H5.926V3.556h4.74V2.37c0-1.318 1.06-2.37 2.368-2.37h5.932a2.37 2.37 0 0 1 2.367 2.37v1.186zM5.926 5.926v22.517A3.55 3.55 0 0 0 9.482 32h13.036a3.556 3.556 0 0 0 3.556-3.557V5.926H5.926zm4.74 3.555v18.963h1.186V9.481h-1.185zm4.741 0v18.963h1.186V9.481h-1.186zm4.741 0v18.963h1.185V9.481h-1.185zm-7.107-8.296c-.657 0-1.19.526-1.19 1.185v1.186h8.297V2.37c0-.654-.519-1.185-1.189-1.185h-5.918z\"/>
 											</svg>
@@ -125,7 +125,7 @@ class sitesController extends AbstractController
 												<div>
 													<span class=\"disclose\"></span>
 													<a class=\"edit\" href=\"{{URL_ADMIN}}/sites/edit/".$subsubsite->id."\" title=\"".__('click to edit site')."\">".$subsubsite->title."</a>
-													<a class=\"show\" target=\"_blank\" href=\"".getPageLink($subsubsite->id, $subsubsite->title)."\">".__('show')."</a>
+													<a class=\"show\" target=\"_blank\" href=\"".getPageLink($subsubsite->id, $subsubsite->title)."\">".__('view')."</a>
 													<svg title=\"".__('deleteSite')."\" class=\"remove remove-icon clickable\" xmlns=\"http://www.w3.org/2000/svg\" height=\"32px\" version=\"1.1\" viewBox=\"0 0 32 32\" width=\"32px\">
 														 <path fill-rule=\"evenodd\" d=\"M21.333 3.556h4.741V4.74H5.926V3.556h4.74V2.37c0-1.318 1.06-2.37 2.368-2.37h5.932a2.37 2.37 0 0 1 2.367 2.37v1.186zM5.926 5.926v22.517A3.55 3.55 0 0 0 9.482 32h13.036a3.556 3.556 0 0 0 3.556-3.557V5.926H5.926zm4.74 3.555v18.963h1.186V9.481h-1.185zm4.741 0v18.963h1.186V9.481h-1.186zm4.741 0v18.963h1.185V9.481h-1.185zm-7.107-8.296c-.657 0-1.19.526-1.19 1.185v1.186h8.297V2.37c0-.654-.519-1.185-1.189-1.185h-5.918z\"/>
 													</svg>
@@ -185,69 +185,69 @@ class sitesController extends AbstractController
 		(
 			'title' => array
 			(
-				'type' => 'text',
+				'type'     => 'text',
 				'required' => true,
-				'label' => __('headline'),
-				'value' => @$site->title,
-				'class' => 'full_page'
+				'label'    => __('headline'),
+				'value'    => @$site->title,
+				'class'    => 'full_page'
 			),
 			'text' => array
 			(
-				'type' => 'wysiwyg',
-				'required' => true,
-				'label' => __('pageContent'),
-				'value' => @$site->text,
+				'type'      => 'wysiwyg',
+				'required'  => true,
+				'label'     => __('pageContent'),
+				'value'     => @$site->text,
 				'showLabel' => false
 			),
 			'public' => array
 			(
-				'type' => 'checkbox',
-				'label' => __('sitePublic'),
-				'value' => 'true',
+				'type'    => 'checkbox',
+				'label'   => __('sitePublic'),
+				'value'   => 'true',
 				'checked' => @$site->public
 			),
 			'selectAsHomePage' => array
 			(
-				'type' => 'checkbox',
-				'label' => __('selectAsHomePage'),
-				'value' => 'true',
+				'type'    => 'checkbox',
+				'label'   => __('selectAsHomePage'),
+				'value'   => 'true',
 				'checked' => $app->getOption('HomePage_ID') == @$site->id,
 			),
 			'selectAsContactPage' => array
 			(
-				'type' => 'checkbox',
-				'label' => __('selectAsContactPage'),
-				'value' => 'true',
+				'type'    => 'checkbox',
+				'label'   => __('selectAsContactPage'),
+				'value'   => 'true',
 				'checked' => $app->getOption('ContactPage_ID') == @$site->id,
 			),
 			'selectAsImprintPage' => array
 			(
-				'type' => 'checkbox',
-				'label' => __('selectAsImprintPage'),
-				'value' => 'true',
+				'type'    => 'checkbox',
+				'label'   => __('selectAsImprintPage'),
+				'value'   => 'true',
 				'checked' => $app->getOption('ImprintPage_ID') == @$site->id,
 			),
 			'author' => array
 			(
-				'type' => 'readonly',
+				'type'  => 'readonly',
 				'label' => __('author'),
 				'value' => isset($news) ? $news->username : $app->user->userInfo->username
 			),
 			'submit_stay' => array
 			(
-				'type' => 'submit',
+				'type'  => 'submit',
 				'label' => __('save&stay'),
 				'class' => 'floating'
 			),
 			'submit_close' => array
 			(
-				'type' => 'submit',
+				'type'  => 'submit',
 				'label' => __('save&close'),
 				'class' => 'floating space-left'
 			),
 			'cancel' => array
 			(
-				'type' => 'submit',
+				'type'  => 'submit',
 				'label' => __('cancel'),
 				'style' => 'background-color:red',
 				'class' => 'floating space-left'
@@ -270,12 +270,12 @@ class sitesController extends AbstractController
 			if($new)
 			{
 				$site = $XenuxDB->Insert('sites', [
-					'title'				=> $data['title'],
-					'text'				=> $data['text'],
-					'public'			=> parse_bool($data['public']),
-					'author_id'			=> $app->user->userInfo->id,
-					'create_date'		=> date('Y-m-d H:i:s'),
-					'lastModified_date'	=> date('Y-m-d H:i:s')
+					'title'             => $data['title'],
+					'text'              => $data['text'],
+					'public'            => parse_bool($data['public']),
+					'author_id'         => $app->user->userInfo->id,
+					'create_date'       => date('Y-m-d H:i:s'),
+					'lastModified_date' => date('Y-m-d H:i:s')
 				]);
 
 				if($site !== false)
@@ -292,10 +292,10 @@ class sitesController extends AbstractController
 			{
 				// update it
 				$return[] = $XenuxDB->Update('sites', [
-					'title'				=> $data['title'],
-					'text'				=> $data['text'],
-					'public'			=> parse_bool($data['public']),
-					'lastModified_date'	=> date('Y-m-d H:i:s')
+					'title'             => $data['title'],
+					'text'              => $data['text'],
+					'public'            => parse_bool($data['public']),
+					'lastModified_date' => date('Y-m-d H:i:s')
 				],
 				[
 					'id' => $this->editSiteID

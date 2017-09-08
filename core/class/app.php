@@ -243,7 +243,7 @@ class app
 
 	/**
 	* function getFile (a part of the Xenux-Cloud)
-	* request: PROJECT-PATH/file/{SHA1-HASH-OF-THE-FILE-ID}{flags}
+	* request: PROJECT-PATH/file/FILE-ID{flags}
 	* flags:
 	* -s(int)	: set the width for an image
 	* -c		: get a square images
@@ -254,7 +254,7 @@ class app
 	{
 		global $app, $XenuxDB;
 
-		$hashID = $XenuxDB->escapeString(explode('-', $param)[0]);
+		$ID = $XenuxDB->escapeString(explode('-', $param)[0]);
 
 		preg_match_all('/-([a-z]?)([0-9]*)/', $param, $optionMatches, PREG_SET_ORDER);
 
@@ -268,7 +268,7 @@ class app
 					'where' => [
 						'AND' => [
 							'type' => 'file',
-							'SHA1(id)' => $hashID
+							'id' => $ID
 						]
 					]
 				]);
@@ -277,7 +277,7 @@ class app
 			$lastModified = mysql2date('D, d M Y H:i:s', $file->lastModified);
 			$typeCategory = substr($file->mime_type, 0, strpos($file->mime_type, "/"));
 
-			header("Content-Disposition: ".(isset($options['d']) ? 'attachment' : 'inline')."; filename=\"{$file->filename}\"");
+			header("Content-Disposition: ".(isset($options['d']) ? 'attachment' : 'inline')."; filename=\"{$file->filename}.{$file->file_extension}\"");
 			header("Cache-Control: public, max-age=3600");
 			header("Last-Modified: {$lastModified} GMT");
 
@@ -286,7 +286,7 @@ class app
 				$image = imagecreatefromstring($file->data);
 
 				if (isset($options['r']) && is_numeric($options['r']))
-					$image = imagerotate($image, 360-$options['r'], imagecolorallocate($image, 255, 255, 255));
+					$image = imagerotate($image, 360-$options['r'], imageColorAllocateAlpha($image, 0, 0, 0, 127));
 
 				$x = imagesx($image);
 				$y = imagesy($image);

@@ -15,14 +15,22 @@
 	<section class="box-shadow grid-col">
 		<form method="get">
 			<div class="actionbar clearfix">
-				<select name="action" class="action-select">
-					<option value="-1">Aktion wählen</option>
-					<option value="private">privat setzen</option>
-					<option value="public">öffentlich zugänglich machen</option>
-					<option value="remove">löschen</option>
+				<select name="action" class="select action-select">
+					<option value="-1"><?= __('choose action') ?></option>
+					<option value="draft"><?= __('safe as draft') ?></option>
+					<option value="publish"><?= __('publish') ?></option>
+					<option value="trash"><?= __('remove') ?></option>
 				</select>
-				<input type="submit" class="action-btn" value="Übernehmen">
+				<input name="apply-action" type="submit" class="btn action-btn" value="<?= __('apply action') ?>">
+
+				<select name="filter" class="select filter-select">
+					<option value="publish" <?php if(@$_GET['filter'] == 'publish') echo 'selected'; ?>><?= __('public events') ?> ({{amountPublish}})</option>
+					<option value="draft" <?php if(@$_GET['filter'] == 'draft') echo 'selected'; ?>><?= __('drafts') ?> ({{amountDraft}})</option>
+					<option value="trash" <?php if(@$_GET['filter'] == 'trash') echo 'selected'; ?>><?= __('trash') ?> ({{amountTrash}})</option>
+				</select>
+				<input name="apply-filter" type="submit" class="btn filter-btn" value="<?= __('apply filter') ?>">
 			</div>
+
 
 			<table class="data-table">
 				<thead>

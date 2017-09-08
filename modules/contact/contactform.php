@@ -1,34 +1,34 @@
 <h3>Kontaktformular</h3>
 
 <?php
-#FIXME: translation
+#TODO: translation
 
 $formFields = Array
 (
 	'name' => Array
 	(
-		'type' => 'text',
-		'value' => null,
+		'type'     => 'text',
+		'value'    => null,
 		'required' => false,
-		'label' => 'Name'
+		'label'    => 'Name'
 	),
 	'email' => Array
 	(
-		'type' => 'email',
-		'value' => null,
+		'type'     => 'email',
+		'value'    => null,
 		'required' => true,
-		'label' => 'E-Mail'
+		'label'    => 'E-Mail'
 	),
 	'message' => Array
 	(
-		'type' => 'textarea',
-		'value' => null,
+		'type'     => 'textarea',
+		'value'    => null,
 		'required' => true,
-		'label' => 'Nachricht'
+		'label'    => 'Nachricht'
 	),
 	'submit' => Array
 	(
-		'type' => 'submit',
+		'type'  => 'submit',
 		'label' => 'Senden',
 		'style' => 'margin-top:1em;display:block;'
 	)

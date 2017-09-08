@@ -1,13 +1,13 @@
 <?php
 class postsController extends AbstractController
 {
-	private $editPostID;
+	private $editID;
 
 	public function __construct($url)
 	{
 		parent::__construct($url);
 
-		if(!isset($this->url[1]) || empty($this->url[1]))
+		if (!isset($this->url[1]) || empty($this->url[1]))
 			header("Location: ".URL_ADMIN.'/'.$this->modulename.'/home');
 	}
 
@@ -18,15 +18,15 @@ class postsController extends AbstractController
 		// append translations
 		translator::appendTranslations(PATH_ADMIN . '/modules/'.$this->modulename.'/translation/');
 
-		if(@$this->url[1] == "home")
+		if (@$this->url[1] == "home")
 		{
 			$this->postsHome();
 		}
-		elseif(@$this->url[1] == "edit")
+		elseif (@$this->url[1] == "edit")
 		{
-			if(isset($this->url[2]) && is_numeric($this->url[2]) && !empty($this->url[2]))
+			if (isset($this->url[2]) && is_numeric($this->url[2]) && !empty($this->url[2]))
 			{
-				$this->editPostID = $this->url[2];
+				$this->editID = $this->url[2];
 				$this->postEdit();
 			}
 			else
@@ -34,7 +34,7 @@ class postsController extends AbstractController
 				throw new Exception(__('isWrong', 'POST ID'));
 			}
 		}
-		elseif(@$this->url[1] == "new")
+		elseif (@$this->url[1] == "new")
 		{
 			$this->postEdit(true);
 		}
@@ -53,7 +53,6 @@ class postsController extends AbstractController
 		$template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout_home.php");
 		$template->setVar("messages", '');
 
-
 		// #TODO: merge action and remove in every module/list
 		if (isset($_GET['apply-action']) && isset($_GET['action']) && in_array($_GET['action'], ['publish', 'draft', 'trash'])
 			&& isset($_GET['item']) && is_array($_GET['item']))
@@ -70,7 +69,7 @@ class postsController extends AbstractController
 							]);
 							break;
 						case 'trash':
-							if(@$_GET['filter'] == 'trash')
+							if (@$_GET['filter'] == 'trash')
 							{ // delete in trash
 								$XenuxDB->delete('posts', [
 									'where' => [
@@ -100,10 +99,10 @@ class postsController extends AbstractController
 			$filter = $_GET['filter'];
 		}
 
-		$amount = $XenuxDB->Count('posts', ['where' => ['status' => $filter]]);
+		$amount        = $XenuxDB->Count('posts', ['where' => ['status' => $filter]]);
 		$amountPublish = $XenuxDB->Count('posts', ['where' => ['status' => 'publish']]);
-		$amountDraft = $XenuxDB->Count('posts', ['where' => ['status' => 'draft']]);
-		$amountTrash = $XenuxDB->Count('posts', ['where' => ['status' => 'trash']]);
+		$amountDraft   = $XenuxDB->Count('posts', ['where' => ['status' => 'draft']]);
+		$amountTrash   = $XenuxDB->Count('posts', ['where' => ['status' => 'trash']]);
 
 		$template->setVar('posts', $this->getPostTable($filter));
 		$template->setVar('amount', $amount);
@@ -111,9 +110,9 @@ class postsController extends AbstractController
 		$template->setVar('amountDraft', $amountDraft);
 		$template->setVar('amountTrash', $amountTrash);
 
-		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == true)
+		if (isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == true)
 			$template->setVar("messages", '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>');
-		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == false)
+		if (isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == false)
 			$template->setVar("messages", '<p class="box-shadow info-message error">'.__('savingFailed').'</p>');
 
 		echo $template->render();
@@ -144,12 +143,12 @@ class postsController extends AbstractController
 				'status' => $filter
 			]
 		]);
-		if($posts)
+		if ($posts)
 		{
 			foreach($posts as $post)
 			{
 				$return .= '
-<tr>
+<tr class="is-' . $post->status . '">
 	<td class="column-select"><input type="checkbox" name="item[]" value="' . $post->post_id . '"></td>
 	<td class="column-id">' . $post->post_id . '</td>
 	<td class="column-title">
@@ -160,9 +159,7 @@ class postsController extends AbstractController
 	<td class="column-actions">
 		<a class="view-btn" target="_blank" href="{{URL_MAIN}}/' . $this->modulename . '/view/' . getPreparedLink($post->post_id, $post->title) . '">' . __('view') . '</a>
 		<a href="{{URL_ADMIN}}/' . $this->modulename . '/home/?apply-filter&filter=' . $filter . '&apply-action&action=trash&item[]=' . $post->post_id . '" title="' . __('delete') . '" class="remove-btn">
-			<svg xmlns="http://www.w3.org/2000/svg" height="32px" version="1.1" viewBox="0 0 32 32" width="32px">
-				 <path fill-rule="evenodd" d="M21.333 3.556h4.741V4.74H5.926V3.556h4.74V2.37c0-1.318 1.06-2.37 2.368-2.37h5.932a2.37 2.37 0 0 1 2.367 2.37v1.186zM5.926 5.926v22.517A3.55 3.55 0 0 0 9.482 32h13.036a3.556 3.556 0 0 0 3.556-3.557V5.926H5.926zm4.74 3.555v18.963h1.186V9.481h-1.185zm4.741 0v18.963h1.186V9.481h-1.186zm4.741 0v18.963h1.185V9.481h-1.185zm-7.107-8.296c-.657 0-1.19.526-1.19 1.185v1.186h8.297V2.37c0-.654-.519-1.185-1.189-1.185h-5.918z"/>
-			</svg>
+			' . embedSVG(PATH_ADMIN . '/template/images/trash.svg') . '
 		</a>
 	</td>
 </tr>';;
@@ -182,9 +179,9 @@ class postsController extends AbstractController
 
 		$template->setIfCondition("new", $new);
 
-		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == true)
+		if (isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == true)
 			$template->setVar("messages", '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>');
-		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == false)
+		if (isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == false)
 			$template->setVar("messages", '<p class="box-shadow info-message error">'.__('savingFailed').'</p>');
 
 		echo $template->render();
@@ -196,44 +193,44 @@ class postsController extends AbstractController
 	{
 		global $XenuxDB, $app;
 
-		if(!$new)
+		if (!$new)
 			$post = $XenuxDB->getEntry('posts', [
 				'join' => [
 					'[>]users' => ['posts.author_id' => 'users.id']
 				],
 				'where' => [
-					'posts.id' => $this->editPostID
+					'posts.id' => $this->editID
 				]
 			]);
 
-		if(!@$post && !$new)
+		if (!@$post && !$new)
 			throw new Exception("error (post 404)");
 
 		$formFields = array
 		(
 			'title' => array
 			(
-				'type' => 'text',
+				'type'     => 'text',
 				'required' => true,
-				'label' => __('title'),
-				'value' => @$post->title,
-				'class' => 'full_page'
+				'label'    => __('title'),
+				'value'    => @$post->title,
+				'class'    => 'full_page'
 			),
 			'text' => array
 			(
-				'type' => 'wysiwyg',
-				'required' => true,
-				'label' => __('desc'),
-				'value' => @$post->text,
+				'type'      => 'wysiwyg',
+				'required'  => true,
+				'label'     => __('desc'),
+				'value'     => @$post->text,
 				'showLabel' => false
 			),
 			'status' => array
 			(
-				'type' => 'select',
+				'type'     => 'select',
 				'required' => true,
-				'label' => __('status'),
-				'value' => @$post->status,
-				'options' => [
+				'label'    => __('status'),
+				'value'    => @$post->status,
+				'options'  => [
 					[
 						'value' => 'publish',
 						'label' => __('publish')
@@ -246,25 +243,25 @@ class postsController extends AbstractController
 			),
 			'author' => array
 			(
-				'type' => 'readonly',
+				'type'  => 'readonly',
 				'label' => __('author'),
 				'value' => isset($news) ? $post->username : $app->user->userInfo->username
 			),
 			'submit_stay' => array
 			(
-				'type' => 'submit',
+				'type'  => 'submit',
 				'label' => __('save&stay'),
 				'class' => 'floating'
 			),
 			'submit_close' => array
 			(
-				'type' => 'submit',
+				'type'  => 'submit',
 				'label' => __('save&close'),
 				'class' => 'floating space-left'
 			),
 			'cancel' => array
 			(
-				'type' => 'submit',
+				'type'  => 'submit',
 				'label' => __('cancel'),
 				'style' => 'background-color:red',
 				'class' => 'floating space-left'
@@ -275,13 +272,13 @@ class postsController extends AbstractController
 		$form = new form($formFields);
 		$form->disableRequiredInfo();
 
-		if($form->isSend() && isset($form->getInput()['cancel']))
+		if ($form->isSend() && isset($form->getInput()['cancel']))
 		{
 			header('Location: '.URL_ADMIN.'/posts/home');
 			return false;
 		}
 
-		if($form->isSend() && $form->isValid())
+		if ($form->isSend() && $form->isValid())
 		{
 			$data = $form->getInput();
 
@@ -290,7 +287,7 @@ class postsController extends AbstractController
 			$status = in_array($data['status'], ['publish', 'draft', 'trash']) ? $data['status'] : 'draft';
 			$author = $app->user->userInfo->id;
 
-			if($new)
+			if ($new)
 			{
 				#TODO: add thumbnail
 				$post = $XenuxDB->Insert('posts', [
@@ -302,10 +299,10 @@ class postsController extends AbstractController
 					'lastModified_date' => date('Y-m-d H:i:s')
 				]);
 
-				if($post)
+				if ($post)
 				{
 					$return = true;
-					$this->editPostID = $post;
+					$this->editID = $post;
 				}
 				else
 				{
@@ -322,35 +319,35 @@ class postsController extends AbstractController
 					'lastModified_date' => date('Y-m-d H:i:s')
 				],
 				[
-					'id' => $this->editPostID
+					'id' => $this->editID
 				]);
 			}
 
-			if($return === true)
+			if ($return === true)
 			{
 				log::debug('post saved successful');
 				$template->setVar("messages", '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>');
 
-				if(isset($data['submit_close']))
+				if (isset($data['submit_close']))
 				{
 					header('Location: '.URL_ADMIN.'/posts/home?savingSuccess=true');
 					return false;
 				}
 
-				header('Location: '.URL_ADMIN.'/posts/edit/'.$this->editPostID.'?savingSuccess=true');
+				header('Location: '.URL_ADMIN.'/posts/edit/' . $this->editID . '?savingSuccess=true');
 			}
 			else
 			{
 				log::debug('post saving failed');
 				$template->setVar("messages", '<p class="box-shadow info-message error">'.__('savingFailed').'</p>');
 
-				if(isset($data['submit_close']) || $new)
+				if (isset($data['submit_close']) || $new)
 				{
 					header('Location: '.URL_ADMIN.'/posts/home?savingSuccess=false');
 					return false;
 				}
 
-				header('Location: '.URL_ADMIN.'/posts/edit/'.$this->editPostID.'?savingSuccess=false');
+				header('Location: '.URL_ADMIN.'/posts/edit/' . $this->editID . '?savingSuccess=false');
 			}
 		}
 		return $form->getForm();

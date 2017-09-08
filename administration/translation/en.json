@@ -14,6 +14,7 @@
     "save&stay":"save",
     "save&close":"save and close",
     "cancel":"cancel",
+    "click to edit":"click to edit",
 
     "choose action":"choose action",
     "apply action":"apply",
@@ -21,7 +22,14 @@
     "view":"view",
     "new":"new",
     "edit":"edit",
-    "remove":"Löschen",
+    "remove":"remove",
+    "status":"status",
+    "draft":"draft",
+    "drafts":"drafts",
+    "trash":"trashbin",
+    "desc":"description",
+    "safe as draft":"safe as draft",
+    "publish":"publish",
 
     "dashboard":"Dashboard",
     "cloud":"cloud",
