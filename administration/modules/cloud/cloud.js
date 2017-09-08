@@ -20,7 +20,7 @@ $(function() {
 	$('.explorer').height($(window).height() - 254);
 	$('.explorer').selectable({
 		filter: ' > div',
-		distance: 10, // needed for doubleick events
+		distance: 10, // needed for doubleclick events
 		start: function() {
 			$('body').css('cursor', 'crosshair');
 		},
