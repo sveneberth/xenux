@@ -18,7 +18,7 @@
 	<!-- http://xenux.bplaced.net -->
 	<meta name="generator" content="Xenux v{{XENUX_VERSION}} - das kostenlose CMS">
 
-	<link rel="shortcut icon" href="{{TEMPLATE_PATH}}/img/logo.ico"> {# FIXME: use favicon.png (redesign favicon) #}
+	<link rel="shortcut icon" href="{{TEMPLATE_PATH}}/img/logo.ico"> {# #FIXME: use favicon.png (redesign favicon) #}
 
 	<!-- Bootstrap core CSS -->
 	<link href="{{TEMPLATE_PATH}}/css/bootstrap.min.css" rel="stylesheet">

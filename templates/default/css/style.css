@@ -1008,7 +1008,7 @@ div.sitenavi > a.sitenavi.active {
 		line-height: 50px;
 		background: #333;
 	}
-	/* FIXME: if menu heigher than site */
+	/* #FIXME: if menu heigher than site */
 	.topmenu.mainmenu  {
 		height: auto;
 		position: absolute;
