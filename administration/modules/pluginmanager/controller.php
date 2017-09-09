@@ -244,7 +244,6 @@ class pluginmanagerController extends AbstractController
 			$templatehelper = new pluginhelper('template');
 
 			$uploadfile = $templatehelper->tmppath . basename($_FILES['file']['name']); // uploadfile
-			#$ext       = end((explode(".",  $_FILES["file"]["name"]))); // extension
 			$ext        = pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION);
 
 			if ($ext == 'zip')
