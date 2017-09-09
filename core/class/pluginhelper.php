@@ -16,14 +16,14 @@ class pluginhelper
 
 		$this->type = $type;
 
-		$this->tmppath	= PATH_MAIN . '/tmp/' . generateRandomString(6) . '/';
+		$this->tmppath = PATH_MAIN . '/tmp/' . generateRandomString(6) . '/';
 
-		if($needTMP)
-			$this->create_folder($this->tmppath);
+		if ($needTMP)
+			create_folder($this->tmppath);
 
 		$this->hp_offline = $app->getOption('homepage_offline');
 
-		if($this->hp_offline == false)
+		if ($this->hp_offline == false)
 		{
 			$XenuxDB->Update('main', [ // set homepage in maintenance
 				'value' => true
@@ -58,13 +58,13 @@ class pluginhelper
 		if ($this->type == 'module')
 		{
 			// create module
-			$this->create_folder($this->modulepath . $this->name);
-			$this->create_folder($this->moduleadminpath . $this->name);
+			create_folder($this->modulepath . $this->name);
+			create_folder($this->moduleadminpath . $this->name);
 
 			// register module in options
 
-			$installed_modules		= json_decode($this->get_option('installed_modules'));
-			$installed_modules[]	= $this->name;
+			$installed_modules   = json_decode($this->get_option('installed_modules'));
+			$installed_modules[] = $this->name;
 			$this->update_option('installed_modules', json_encode($installed_modules));
 		}
 		elseif ($this->type == 'template')
@@ -72,11 +72,11 @@ class pluginhelper
 			full_copy($this->tmppath, $this->templatepath . $this->name);
 
 			// create template
-			$this->create_folder($this->templatepath . $this->name);
+			create_folder($this->templatepath . $this->name);
 
 			// register template in options
-			$installed_templates	= json_decode($this->get_option('installed_templates'));
-			$installed_templates[]	= $this->name;
+			$installed_templates   = json_decode($this->get_option('installed_templates'));
+			$installed_templates[] = $this->name;
 			$this->update_option('installed_templates', json_encode($installed_templates));
 		}
 		else
@@ -224,18 +224,6 @@ class pluginhelper
 
 
 	/**
-	* create_folder
-	* @param string $path: path of the new folder
-	* @return string: path with replaced constants
-	*/
-	private function create_folder($path)
-	{
-		if (!file_exists($path)) // create folder, if doesn't exists
-			return mkdir($path, null, true);
-	}
-
-
-	/**
 	* replace_paths
 	* @param string $string: path of a file
 	* @return string: path with replaced constants
@@ -304,10 +292,10 @@ class pluginhelper
 
 		rrmdir($this->tmppath);
 
-		if(is_dir_empty(dirname($this->tmppath)))
+		if (is_dir_empty(dirname($this->tmppath)))
 			rrmdir(dirname($this->tmppath));
 
-		if($this->hp_offline == false)
+		if ($this->hp_offline == false)
 		{
 			$XenuxDB->Update('main', [ // set homepage out of maintenance
 				'value' => false

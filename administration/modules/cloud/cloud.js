@@ -195,11 +195,8 @@ $(function() {
 		var id         = $('#contextmenu').data('targetID');
 		var targetType = $('#contextmenu').data('targetType');
 
-		if(targetType == 'file') {
-			OpenInNewTab(baseurl + '/file/' + id + '-d');
-		} else {
-			// #FIXME: download folder as zip
-		}
+		OpenInNewTab(baseurl + '/file/' + id + '-d');
+
 		$('#contextmenu').hide();
 	});
 	$('#contextmenu > .fileinfo').click(function() {

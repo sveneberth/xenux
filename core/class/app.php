@@ -243,13 +243,16 @@ class app
 
 	/**
 	* function getFile (a part of the Xenux-Cloud)
-	* request: PROJECT-PATH/file/FILE-ID{flags}
+	* request: {{URL_MAIN}}/file/FILE-ID{flags}
 	* flags:
 	* -s(int)	: set the width for an image
 	* -c		: get a square images
 	* -d		: get the file as download
 	* -r		: rotate an image clockwise
 	*/
+	#TODO: save in an external file (class)
+	#FIXME: <{{URL_MAIN}}/file/> download root - but should throw an error
+	#FIXME: folder download only allowed as admin (user is login)
 	private function getFile($param)
 	{
 		global $app, $XenuxDB;
@@ -265,72 +268,174 @@ class app
 				$options[$match[1]] = $match[2];
 			}
 
-			$file = $XenuxDB->getEntry('files', [
-						'where' => [
-							'AND' => [
-								'type' => 'file',
-								'id' => $ID
-							]
-						]
-					]);
+			if ($ID == 0)
+			{ // simulate a folder if root selected
+				$file           = new stdClass();
+				$file->id       = 0;
+				$file->type     = 'folder';
+				$file->filename = 'root';
+			}
+			else
+			{
+				$file = $XenuxDB->getEntry('files', [
+					'where' => [
+						'id' => $ID
+					]
+				]);
+			}
 			if ($file)
 			{
-				$lastModified = mysql2date('D, d M Y H:i:s', $file->lastModified);
-				$typeCategory = substr($file->mime_type, 0, strpos($file->mime_type, "/"));
+				if ($file->type == 'file')
+					{
+					$lastModified = mysql2date('D, d M Y H:i:s', $file->lastModified);
+					$typeCategory = substr($file->mime_type, 0, strpos($file->mime_type, "/"));
 
-				header("Content-Disposition: ".(isset($options['d']) ? 'attachment' : 'inline')."; filename=\"{$file->filename}.{$file->file_extension}\"");
-				header("Cache-Control: public, max-age=3600");
-				header("Last-Modified: {$lastModified} GMT");
+					header("Content-Disposition: ".(isset($options['d']) ? 'attachment' : 'inline')."; filename=\"{$file->filename}.{$file->file_extension}\"");
+					header("Cache-Control: public, max-age=3600");
+					header("Last-Modified: {$lastModified} GMT");
+					header("Content-Length: " . $file->size);
 
-				if ($typeCategory == 'image' && $file->mime_type != "image/svg+xml" && (isset($options['c']) || isset($options['r']) || isset($options['s'])))
+					if ($typeCategory == 'image' && $file->mime_type != "image/svg+xml" && (isset($options['c']) || isset($options['r']) || isset($options['s'])))
+					{
+						$image = imagecreatefromstring($file->data);
+
+						if (isset($options['r']) && is_numeric($options['r']))
+							$image = imagerotate($image, 360-$options['r'], imageColorAllocateAlpha($image, 0, 0, 0, 127));
+
+						$x = imagesx($image);
+						$y = imagesy($image);
+
+						if (isset($options['s']))
+							$options['s'] = $options['s'] > $x ? $x : $options['s'];
+
+						if (isset($options['c']))
+						{
+							$desired_height	= $desired_width = isset($options['s']) && is_numeric($options['s']) ? $options['s'] : $y;
+						}
+						else
+						{
+							$desired_width = (isset($options['s']) && is_numeric($options['s'])) ? $options['s'] : $x;
+							$desired_height = $y / $x * $desired_width;
+						}
+
+						$new = imagecreatetruecolor($desired_width, $desired_height);
+						imagealphablending($new, FALSE);
+						imagesavealpha($new, TRUE);
+						imagecopyresampled($new, $image, 0, 0, 0, 0, $desired_width, $desired_height, $x, $y);
+						imagedestroy($image);
+
+						if ($file->mime_type == "image/jpeg")
+						{
+							header("Content-type: image/jpeg");
+							imagejpeg($new);
+						}
+						elseif ($file->mime_type == "image/gif")
+						{
+							header("Content-type: image/gif");
+							imagegif($new);
+						}
+						else
+						{
+							header("Content-type: image/png");
+							imagepng($new);
+						}
+					}
+					else
+					{
+						header("Content-type: {$file->mime_type}");
+						echo $file->data;
+					}
+				}
+				elseif($file->type == 'folder')
 				{
-					$image = imagecreatefromstring($file->data);
+					$tmppath = PATH_MAIN . '/tmp/' . generateRandomString(10) . '/';
+					create_folder($tmppath);
 
-					if (isset($options['r']) && is_numeric($options['r']))
-						$image = imagerotate($image, 360-$options['r'], imageColorAllocateAlpha($image, 0, 0, 0, 127));
+					$zip = new ZipArchive();
+					$filename = $tmppath . 'archive.zip';
 
-					$x = imagesx($image);
-					$y = imagesy($image);
-
-					if (isset($options['s']))
-						$options['s'] = $options['s'] > $x ? $x : $options['s'];
-
-					if (isset($options['c']))
+					if ($zip->open($filename, ZIPARCHIVE::CREATE) === true)
 					{
-						$desired_height	= $desired_width = isset($options['s']) && is_numeric($options['s']) ? $options['s'] : $y;
+						$id          = $file->id;
+						$arrFolder   = array();
+						$arrAll      = array();
+						$arrFolder[] = $id;
+						$arrAll[]    = $id;
+
+						while (!empty($arrFolder))
+						{
+							$arrTemp = $arrFolder;
+							$arrFolder = array();
+
+							foreach ($arrTemp as $val)
+							{
+								$results = $XenuxDB->getList('files', [
+									'where' => [
+										'parent_folder_id' => $val
+									],
+									'order' => 'filename ASC'
+								]);
+
+								foreach ($results as $result)
+								{
+									if ($result->type == 'file')
+									{
+
+										$folder = $result->parent_folder_id;
+										$breadcrumb = array();
+										while ($folder != $file->id)
+										{
+											$row = $XenuxDB->getEntry('files', [
+												'columns' => [
+													'id',
+													'filename',
+													'parent_folder_id'
+												],
+												'where' => [
+													'id' => $folder
+												]
+											]);
+
+											$folder = $row->parent_folder_id;
+											$breadcrumb[] = $row->filename;
+										}
+										$breadcrumb = array_reverse($breadcrumb);
+										$path = implode('/', $breadcrumb) . '/';
+
+										$zip->addFromString($path . $result->filename . '.' . $result->file_extension, $result->data);
+									}
+									elseif ($result->type == 'folder')
+									{
+										$arrFolder[] = $result->id;
+									}
+									$arrAll[] = $result->id;
+								}
+							}
+						}
+
+						$zip->close();
+
+						header("Content-type: application/octet-stream");
+						header("Content-Length: ".filesize($tmppath . 'archive.zip'));
+						header("Content-Disposition: attachment; filename=\"{$file->filename}.zip\"");
+						header("Content-Transfer-Encoding: binary");
+						clearstatcache(); // make sure the file size isn't cached
+
+						readfile($tmppath . 'archive.zip');
+
+						rrmdir($tmppath); // remove tmp folder
 					}
 					else
 					{
-						$desired_width = (isset($options['s']) && is_numeric($options['s'])) ? $options['s'] : $x;
-						$desired_height = $y / $x * $desired_width;
+						ErrorPage::view(500);
+						log::setPHPError("cannot open <$filename>");
 					}
 
-					$new = imagecreatetruecolor($desired_width, $desired_height);
-					imagealphablending($new, FALSE);
-					imagesavealpha($new, TRUE);
-					imagecopyresampled($new, $image, 0, 0, 0, 0, $desired_width, $desired_height, $x, $y);
-					imagedestroy($image);
-
-					if ($file->mime_type == "image/jpeg")
-					{
-			#			header("Content-type: image/jpeg");
-						imagejpeg($new);
-					}
-					elseif ($file->mime_type == "image/gif")
-					{
-						header("Content-type: image/gif");
-						imagegif($new);
-					}
-					else
-					{
-						header("Content-type: image/png");
-						imagepng($new);
-					}
 				}
 				else
 				{
-					header("Content-type: {$file->mime_type}");
-					echo $file->data;
+					// no folder and no file ...
+					ErrorPage::view(500);
 				}
 			}
 			else

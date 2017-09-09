@@ -27,7 +27,7 @@ class log
 	public static function writeLog($msg)
 	{
 		// if message an array, convert them into a JSON-String
-		if (is_array($msg))
+		if (is_array($msg) || is_object($msg))
 		{
 			$msg = json_encode($msg);
 		}
