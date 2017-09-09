@@ -40,7 +40,7 @@ class userController extends AbstractController
 				'username' => $this->user
 			]
 		]);
-		if($user)
+		if ($user)
 		{
 			$template = new template(PATH_MAIN."/modules/".$this->modulename."/layout.php",
 			[

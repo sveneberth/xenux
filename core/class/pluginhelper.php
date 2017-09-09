@@ -127,7 +127,7 @@ class pluginhelper
 	*/
 	public function move(array $arr)
 	{
-		foreach($arr as $old => $new)
+		foreach ($arr as $old => $new)
 		{
 			full_copy($this->tmppath . $old, $this->replace_paths($new));
 		}
@@ -141,7 +141,7 @@ class pluginhelper
 	*/
 	public function remove(array $arr)
 	{
-		foreach($arr as $object)
+		foreach ($arr as $object)
 		{
 			$object = $this->replace_paths($object); // replace the constants
 

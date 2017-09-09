@@ -22,7 +22,7 @@ class app
 		$this->user		= new User;
 
 		$this->setTemplate($this->getOption('template'));
-		if(isset($_GET['useTemplate']) && full($_GET['useTemplate']) && defined('DEBUG') && DEBUG == true)
+		if (isset($_GET['useTemplate']) && full($_GET['useTemplate']) && defined('DEBUG') && DEBUG == true)
 			$this->setTemplate($_GET['useTemplate']);
 
 		$url			= strtolower($url);
@@ -346,7 +346,7 @@ class app
 						echo $file->data;
 					}
 				}
-				elseif($file->type == 'folder')
+				elseif ($file->type == 'folder')
 				{
 					$tmppath = PATH_MAIN . '/tmp/' . generateRandomString(10) . '/';
 					create_folder($tmppath);

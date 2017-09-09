@@ -55,7 +55,7 @@ class searchController extends AbstractController
 		echo $form->getForm();
 		echo '<div class="clear clearfix" style="margin-bottom: 2em;"></div>';
 
-		if($form->isSend() && $form->isValid() && !empty($this->searchString))
+		if ($form->isSend() && $form->isValid() && !empty($this->searchString))
 		{
 			$this->search();
 		}
@@ -115,9 +115,9 @@ class searchController extends AbstractController
 		log::writeLog($XenuxDB->getLastQuery());
 */
 
-		if($matches)
+		if ($matches)
 		{
-			foreach($matches as $match)
+			foreach ($matches as $match)
 			{
 				$template = new template(PATH_MAIN."/modules/".$this->modulename."/layout.php");
 

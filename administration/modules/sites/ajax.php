@@ -2,10 +2,10 @@
 // include Xenux-Loader
 include_once(dirname(dirname(dirname(__DIR__))) . "/core/xenux-load.php");
 
-if(!(defined('DEBUG') && DEBUG == true))
+if (!(defined('DEBUG') && DEBUG == true))
 	error_reporting(0);
 
-if(!$app->user->isLogin())
+if (!$app->user->isLogin())
 	ErrorPage::view(404);
 
 $return = array();
@@ -18,8 +18,8 @@ if (!isset($_REQUEST['task']) || empty(@$_REQUEST['task']))
 switch($_REQUEST['task'])
 {
 	case 'site_edit_update_order':
-		foreach($_REQUEST['items'] as $key => $val) {
-			if($key == 0)
+		foreach ($_REQUEST['items'] as $key => $val) {
+			if ($key == 0)
 				continue;
 
 			$item_id		= $XenuxDB->escapeString($val['item_id']);

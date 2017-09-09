@@ -7,7 +7,7 @@ class sitesController extends AbstractController
 	{
 		parent::__construct($url);
 
-		if(!isset($this->url[1]) || empty($this->url[1]))
+		if (!isset($this->url[1]) || empty($this->url[1]))
 			header("Location: ".URL_ADMIN.'/'.$this->modulename.'/home');
 	}
 
@@ -17,14 +17,15 @@ class sitesController extends AbstractController
 
 		// append translations
 		translator::appendTranslations(PATH_ADMIN . '/modules/'.$this->modulename.'/translation/');
+		$app->addJS(URL_ADMIN . '/modules/' . $this->modulename . '/jquery.mjs.nestedSortable.js');
 
-		if(@$this->url[1] == "home")
+		if (@$this->url[1] == "home")
 		{
 			$this->sitesHome();
 		}
-		elseif(@$this->url[1] == "edit")
+		elseif (@$this->url[1] == "edit")
 		{
-			if(isset($this->url[2]) && is_numeric($this->url[2]) && !empty($this->url[2]))
+			if (isset($this->url[2]) && is_numeric($this->url[2]) && !empty($this->url[2]))
 			{
 				$this->editSiteID = $this->url[2];
 				$this->sitesEdit();
@@ -34,7 +35,7 @@ class sitesController extends AbstractController
 				throw new Exception(__('isWrong', 'SITE ID'));
 			}
 		}
-		elseif(@$this->url[1] == "new")
+		elseif (@$this->url[1] == "new")
 		{
 			$this->sitesEdit(true);
 		}
@@ -53,9 +54,9 @@ class sitesController extends AbstractController
 		$template->setVar("messages", '');
 		$template->setVar("menu", $this->getMenu());
 
-		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == true)
+		if (isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == true)
 			$template->setVar("messages", '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>');
-		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == false)
+		if (isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == false)
 			$template->setVar("messages", '<p class="box-shadow info-message error">'.__('savingFailed').'</p>');
 
 		echo $template->render();
@@ -75,9 +76,9 @@ class sitesController extends AbstractController
 				'parent_id' => 0
 			]
 		]);
-		if($sites)
+		if ($sites)
 		{
-			foreach($sites as $site)
+			foreach ($sites as $site)
 			{
 				$return .= "	<li id=\"list_".$site->id."\" ".($site->public == false ? 'class="non-public"' : '').">
 								<div>
@@ -95,10 +96,10 @@ class sitesController extends AbstractController
 						'parent_id' => $site->id
 					]
 				]);
-				if($subsites)
+				if ($subsites)
 				{
 				$return .= "\t<ul>\n";
-					foreach($subsites as $subsite)
+					foreach ($subsites as $subsite)
 					{
 						$return .= "	<li id=\"list_".$subsite->id."\" ".($subsite->public == false ? 'class="non-public"' : '').">
 										<div>
@@ -116,10 +117,10 @@ class sitesController extends AbstractController
 								'parent_id' => $subsite->id
 							]
 						]);
-						if($subsubsites)
+						if ($subsubsites)
 						{
 						$return .= "\t\t\t<ul>\n";
-							foreach($subsubsites as $subsubsite)
+							foreach ($subsubsites as $subsubsite)
 							{
 								$return .= "	<li id=\"list_".$subsubsite->id."\" ".($subsubsite->public == false ? 'class="non-public"' : '').">
 												<div>
@@ -155,9 +156,9 @@ class sitesController extends AbstractController
 
 		$template->setIfCondition("new", $new);
 
-		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == true)
+		if (isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == true)
 			$template->setVar("messages", '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>');
-		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == false)
+		if (isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == false)
 			$template->setVar("messages", '<p class="box-shadow info-message error">'.__('savingFailed').'</p>');
 
 		echo $template->render();
@@ -169,7 +170,7 @@ class sitesController extends AbstractController
 	{
 		global $XenuxDB, $app;
 
-		if(!$new)
+		if (!$new)
 		{
 			$site = $XenuxDB->getEntry('sites', [
 				'where' => [
@@ -178,7 +179,7 @@ class sitesController extends AbstractController
 			]);
 		}
 
-		if(!@$site && !$new)
+		if (!@$site && !$new)
 			throw new Exception("error (site 404)");
 
 		$formFields = array
@@ -258,16 +259,16 @@ class sitesController extends AbstractController
 		$form = new form($formFields);
 		$form->disableRequiredInfo();
 
-		if($form->isSend() && isset($form->getInput()['cancel']))
+		if ($form->isSend() && isset($form->getInput()['cancel']))
 		{
 			header('Location: '.URL_ADMIN.'/sites/home');
 			return false;
 		}
-		if($form->isSend() && $form->isValid())
+		if ($form->isSend() && $form->isValid())
 		{
 			$data = $form->getInput();
 
-			if($new)
+			if ($new)
 			{
 				$site = $XenuxDB->Insert('sites', [
 					'title'             => $data['title'],
@@ -278,7 +279,7 @@ class sitesController extends AbstractController
 					'lastModified_date' => date('Y-m-d H:i:s')
 				]);
 
-				if($site !== false)
+				if ($site !== false)
 				{
 					$return[] = true;
 					$this->editSiteID = $site;
@@ -303,20 +304,20 @@ class sitesController extends AbstractController
 			}
 
 
-			if(isset($data['selectAsHomePage']) && parse_bool($data['selectAsHomePage']))
+			if (isset($data['selectAsHomePage']) && parse_bool($data['selectAsHomePage']))
 				$return[] = $XenuxDB->Update('main', ['value' => $this->editSiteID], ['name' => 'HomePage_ID']) !== false;
 
-			if(isset($data['selectAsContactPage']) && parse_bool($data['selectAsContactPage']))
+			if (isset($data['selectAsContactPage']) && parse_bool($data['selectAsContactPage']))
 				$return[] = $XenuxDB->Update('main', ['value' => $this->editSiteID], ['name' => 'ContactPage_ID']) !== false;
 
-			if(isset($data['selectAsImprintPage']) && parse_bool($data['selectAsImprintPage']))
+			if (isset($data['selectAsImprintPage']) && parse_bool($data['selectAsImprintPage']))
 				$return[] = $XenuxDB->Update('main', ['value' => $this->editSiteID], ['name' => 'ImprintPage_ID']) !== false;
 
-			if(count(array_unique($return)) === 1)
+			if (count(array_unique($return)) === 1)
 			{
 				log::debug('site saved successful');
 
-				if(isset($data['submit_close']))
+				if (isset($data['submit_close']))
 				{
 					header('Location: '.URL_ADMIN.'/sites/home?savingSuccess=true');
 					return false;
@@ -328,7 +329,7 @@ class sitesController extends AbstractController
 			{
 				log::debug('site saving failed');
 
-				if(isset($data['submit_close']) || $new)
+				if (isset($data['submit_close']) || $new)
 				{
 					header('Location: '.URL_ADMIN.'/sites/home?savingSuccess=false');
 					return false;

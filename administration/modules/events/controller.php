@@ -135,7 +135,7 @@ class eventsController extends AbstractController
 		]);
 		if ($events)
 		{
-			foreach($events as $event)
+			foreach ($events as $event)
 			{
 				$return .= '
 <tr class="is-' . $event->status . '">

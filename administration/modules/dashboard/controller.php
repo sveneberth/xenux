@@ -5,7 +5,7 @@ class dashboardController extends AbstractController
 	{
 		parent::__construct($url);
 
-		if(!isset($this->url[1]) || empty($this->url[1]))
+		if (!isset($this->url[1]) || empty($this->url[1]))
 			header("Location: ".URL_ADMIN.'/'.$this->modulename.'/home');
 	}
 

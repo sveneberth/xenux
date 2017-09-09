@@ -83,7 +83,7 @@
 			</li>
 			<?php
 				$modules = $app->getAdminModule();
-				foreach($modules as $module) // for module in modules
+				foreach ($modules as $module) // for module in modules
 				{
 					if (is_dir_empty(PATH_ADMIN."/modules/".$module) || $module == 'dashboard') // skip an empty folder and dashboard
 						continue;
@@ -102,11 +102,11 @@
 							echo '<li class="'.($app->url[0] == $module ? 'active open' : '').'">';
 							echo '<a href="'.(isset($json->links) ? '#' : URL_ADMIN.'/'.$module).'">' . __($headline) . "</a>\n";
 
-							if(isset($json->links))
+							if (isset($json->links))
 							{
 								echo '<ul style="'.($app->url[0] == $module ? '' : 'display:none')."\">\n";
 
-								foreach($json->links as $label => $link)
+								foreach ($json->links as $label => $link)
 								{
 									echo "\t".'<li class="'.($app->url[0] == $module && $app->url[1]==str_replace('/','',$link) ? 'active' : '').'"><a href="'.URL_ADMIN.'/'.$module.$link.'">'.__($label).'</a></li>'."\n";
 								}

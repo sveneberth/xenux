@@ -9,17 +9,17 @@ class user
 	{
 		$this->session = @$_SESSION['_LOGIN'];
 
-		if($this->isLogin()) {
+		if ($this->isLogin()) {
 			$this->userInfo	= $this->getUserInfo($this->session['userID']);
 		}
 	}
 
 	public function isLogin()
 	{
-		if(isset($this->session['userID']) && is_numeric($this->session['userID']))
+		if (isset($this->session['userID']) && is_numeric($this->session['userID']))
 		{
 			$userID	= $this->session['userID'];
-			if($this->getSessionFingerprint() == $this->getUserSessionFingerprint($userID))
+			if ($this->getSessionFingerprint() == $this->getUserSessionFingerprint($userID))
 			{
 				return true;
 			}
@@ -60,7 +60,7 @@ class user
 			]
 		]);
 
-		if($user)
+		if ($user)
 		{
 			$this->userInfo = $user;
 			return $user;
@@ -82,7 +82,7 @@ class user
 			]
 		]);
 
-		if($user)
+		if ($user)
 		{
 			$this->userInfo = $this->getUserInfo($user->id);
 			return $user->id;
@@ -104,7 +104,7 @@ class user
 			]
 		]);
 
-		if($user)
+		if ($user)
 		{
 			$this->userInfo = $this->getUserInfo($user->id);
 			return $user->id;
@@ -126,7 +126,7 @@ class user
 			]
 		]);
 
-		if($user)
+		if ($user)
 		{
 			return $user->session_fingerprint;
 		}

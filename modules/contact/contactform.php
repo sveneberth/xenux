@@ -36,7 +36,7 @@ $formFields = Array
 
 $contactform = new form($formFields);
 
-if($contactform->isSend() && $contactform->isValid())
+if ($contactform->isSend() && $contactform->isValid())
 {
 	$data = $contactform->getInput();
 

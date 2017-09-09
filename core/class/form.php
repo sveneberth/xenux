@@ -35,7 +35,7 @@ class form
 		$data = $this->method == 'post' ? $_POST : ($this->method == 'get' ? $_GET : false);
 		$return = [];
 
-		foreach($this->fields as $name => $props)
+		foreach ($this->fields as $name => $props)
 		{
 			if (in_array($props['type'], ['html', 'file'])) // those types has no value
 				continue;
@@ -85,14 +85,14 @@ class form
 
 	public function isValid()
 	{
-		foreach($this->fields as $name => $props)
+		foreach ($this->fields as $name => $props)
 		{
-			if($props['type'] == 'html')
+			if ($props['type'] == 'html')
 				continue;
 
-			if($props['type'] == 'file')
+			if ($props['type'] == 'file')
 			{
-				if(!isset($_FILES[$name]) || ($props['multiple'] ? $_FILES[$name]['error'][0] : $_FILES[$name]['error']) == 4)
+				if (!isset($_FILES[$name]) || ($props['multiple'] ? $_FILES[$name]['error'][0] : $_FILES[$name]['error']) == 4)
 				{
 					$this->setErrorMsg(__('please select a file in field', $props['label']));
 					$this->setFieldInvalid($name);
@@ -102,13 +102,13 @@ class form
 
 			$this->fields[$name]['validInput'] = true;
 
-			if(isset($props['required']) && $props['required'] == true && empty($this->data[$name]))
+			if (isset($props['required']) && $props['required'] == true && empty($this->data[$name]))
 			{
 				$this->setErrorMsg(__('please fill field', $props['label']));
 				$this->setFieldInvalid($name);
 			}
 
-			if(!empty($this->data[$name]))
+			if (!empty($this->data[$name]))
 			{
 				switch($props['type'])
 				{
@@ -119,35 +119,35 @@ class form
 						break;
 					case 'password':
 						$min_length = isset($props['min_length']) ? $props['min_length'] : 8;
-						if(strlen($this->data[$name]) < $min_length)
+						if (strlen($this->data[$name]) < $min_length)
 						{
 							$this->setErrorMsg(__('password to short. minlength', $props['label'], $min_length));
 							$this->setFieldInvalid($name);
 						}
 						break;
 					case 'email':
-						if(filter_var($this->data[$name], FILTER_VALIDATE_EMAIL) == false)
+						if (filter_var($this->data[$name], FILTER_VALIDATE_EMAIL) == false)
 						{
 							$this->setErrorMsg(__('please fill in a valid eMail-adress', $props['label']));
 							$this->setFieldInvalid($name);
 						}
 						break;
 					case 'number':
-						if(!is_numeric($this->data[$name]))
+						if (!is_numeric($this->data[$name]))
 						{
 							$this->setErrorMsg(__('only number in field', $props['label']));
 							$this->setFieldInvalid($name);
 						}
 						break;
 					case 'date':
-						if(!preg_match('/[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])/', $this->data[$name]))
+						if (!preg_match('/[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])/', $this->data[$name]))
 						{
 							$this->setErrorMsg(__('please fill in a valid date', $props['label']));
 							$this->setFieldInvalid($name);
 						}
 						break;
 					case 'time':
-						if(!preg_match('/(2[0-3]|[01][0-9]):([0-5][0-9])(:[0-5][0-9])?/', $this->data[$name]))
+						if (!preg_match('/(2[0-3]|[01][0-9]):([0-5][0-9])(:[0-5][0-9])?/', $this->data[$name]))
 						{
 							$this->setErrorMsg(__('please fill in a valid time', $props['label']));
 							$this->setFieldInvalid($name);
@@ -157,7 +157,7 @@ class form
 			}
 		}
 
-		if(!empty($this->error_msg))
+		if (!empty($this->error_msg))
 			return false;
 
 		return true;
@@ -186,7 +186,7 @@ class form
 		$this->isValid(); // needed to get the error messages
 
 		$messages = '';
-		foreach($this->error_msg as $message)
+		foreach ($this->error_msg as $message)
 		{
 			$msgTemplate = new template($this->getFormTemplateURL('_form_error_msg.php'));
 			$msgTemplate->setVar('err_message', $message);
@@ -203,10 +203,10 @@ class form
 	{
 		$form_fields = '';
 
-		foreach($this->fields as $name => $props)
+		foreach ($this->fields as $name => $props)
 		{
 			$form_fields .= $this->getFormField($name, $props) . "\n";
-			if(isset($props['info']) && !empty($props['info']))
+			if (isset($props['info']) && !empty($props['info']))
 				$form_fields .= '<span class="info">' . $props['info'] . '</span>' . "\n";
 		}
 
@@ -236,7 +236,7 @@ class form
 		$fieldTemplate->setVar('style',		$props['style']);
 		$fieldTemplate->setVar('label',		$props['label'] . ($this->isRequired($props['required'] && $this->requiredInfo == true) ? ' ('.__('required').')'  : ''));
 		$fieldTemplate->setVar('name',		$fieldname);
-		if($props['type'] != 'file')
+		if ($props['type'] != 'file')
 			$fieldTemplate->setVar('value',		$value);
 		$fieldTemplate->setVar('required',	$this->isRequired($props['required']));
 

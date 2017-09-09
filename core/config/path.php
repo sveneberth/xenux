@@ -13,7 +13,7 @@ $url		= $protocol . '://' .$_SERVER['HTTP_HOST'] . $if_port . $subdir;
 $_get_params = '';
 foreach ($_GET as $key => $value)
 {
-	if($key != 'url' && !is_array($value)) #FIXME: the is_array solution is only a hotfix
+	if ($key != 'url' && !is_array($value)) #FIXME: the is_array solution is only a hotfix
 		$_get_params .= (!empty($_get_params) ? '&' : '') . $key.'='.$value;
 }
 $_folder_dir = str_replace(array($subdir, @$_GET['url']), '', str_replace('\\', '/', $_SERVER['REQUEST_URI']));

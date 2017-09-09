@@ -5,7 +5,7 @@ class optionsController extends AbstractController
 	{
 		parent::__construct($url);
 
-		if(!isset($this->url[1]) || empty($this->url[1]))
+		if (!isset($this->url[1]) || empty($this->url[1]))
 			header("Location: ".URL_ADMIN.'/'.$this->modulename.'/basic');
 	}
 
@@ -29,9 +29,9 @@ class optionsController extends AbstractController
 			$template->setVar("form", $this->getSitesForm($template));
 		}
 
-		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == true)
+		if (isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == true)
 			$template->setVar("messages", '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>');
-		if(isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == false)
+		if (isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == false)
 			$template->setVar("messages", '<p class="box-shadow info-message error">'.__('savingFailed').'</p>');
 
 
@@ -143,7 +143,7 @@ class optionsController extends AbstractController
 		$form = new form($formFields);
 		$form->disableRequiredInfo();
 
-		if($form->isSend() && $form->isValid())
+		if ($form->isSend() && $form->isValid())
 		{
 			$data = $form->getInput();
 
@@ -156,11 +156,11 @@ class optionsController extends AbstractController
 				[
 					'name' => $name
 				]);
-				if($return === false)
+				if ($return === false)
 					$success = false;
 			}
 
-			if($success)
+			if ($success)
 			{
 				header('Location: '.URL_ADMIN.'/options/basic/?savingSuccess=true');
 			}
@@ -198,7 +198,7 @@ class optionsController extends AbstractController
 		$form = new form($formFields);
 		$form->disableRequiredInfo();
 
-		if($form->isSend() && $form->isValid())
+		if ($form->isSend() && $form->isValid())
 		{
 			$data = $form->getInput();
 
@@ -213,11 +213,11 @@ class optionsController extends AbstractController
 				[
 					'name' => $name
 				]);
-				if($return === false)
+				if ($return === false)
 					$success = false;
 			}
 
-			if($success)
+			if ($success)
 			{
 				header('Location: '.URL_ADMIN.'/options/sites/?savingSuccess=true');
 			}

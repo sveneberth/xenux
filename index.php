@@ -13,7 +13,7 @@
 include_once(__DIR__ . '/core/xenux-load.php');
 
 
-if(parse_bool($app->getOption('homepage_offline')) === true && substr(@$_GET['url'], 0, 5) !== 'file/')
+if (parse_bool($app->getOption('homepage_offline')) === true && substr(@$_GET['url'], 0, 5) !== 'file/')
 {
 	ErrorPage::view(503, 'Homepage is in maintenance. Please visit later again.');
 }

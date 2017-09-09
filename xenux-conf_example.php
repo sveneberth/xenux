@@ -1,8 +1,8 @@
 <?php
 /**
-* The Basic Settings of Xenux
-* Pay Attention before you change anything!
-*/
+ * The Basic Settings of Xenux
+ * Pay Attention before you change anything!
+ */
 
 
 /** ### MySQL Settings ### */

@@ -122,7 +122,7 @@ class usersController extends AbstractController
 		]);
 		if ($users)
 		{
-			foreach($users as $user)
+			foreach ($users as $user)
 			{
 				$return .= '
 <tr>
@@ -378,7 +378,7 @@ class usersController extends AbstractController
 <p>Unter der folgenden Adresse kannst du dein Passwort festlegen:<br>
 <a href="' . $url . '">' . $url . '</a></p>');
 
-					if(!$mail->send())
+					if (!$mail->send())
 					{
 						$this->messages[] = '<p class="box-shadow info-message warning">Die Nachricht konnte nicht versendet werden.</p>';
 						$template->setVar("message", '<p>Die Nachricht konnte nicht versendet werden.</p>');

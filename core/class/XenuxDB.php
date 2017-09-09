@@ -33,7 +33,7 @@ class XenuxDB
 
 			$result = $this->db->query($statement);
 
-			if($result === false)
+			if ($result === false)
 			{
 				throw new Exception("MySQL Error: (" . $this->db->errno . ") " . $this->db->error . ' - Failed Statement: "' . $statement . '"');
 			}
@@ -68,11 +68,11 @@ class XenuxDB
 			preg_match('/([a-zA-Z0-9_\-\.]*)\s*\(([a-zA-Z0-9_\-]*)\)/i', $value, $match);
 			# column(as-column)
 
-			if(strpos($value, '#') === 0)
+			if (strpos($value, '#') === 0)
 			{
 				preg_match('/(#?)([a-zA-Z0-9_\-]*)\(([a-zA-Z0-9_\-\.]*)(?:\,\s\'([a-zA-Z0-9_\-\.\,\:\% ]*)\')?\)(?:\(([a-zA-Z0-9_\-\.]*)\))?/i', $value, $fn_match);
 
-				if(isset($fn_match[2], $fn_match[3]) && !empty($fn_match[2]) && !empty($fn_match[3]))
+				if (isset($fn_match[2], $fn_match[3]) && !empty($fn_match[2]) && !empty($fn_match[3]))
 				{
 					array_push($stack, $fn_match[2] . '(' . $this->quoteColumn($fn_match[3]) . (isset($fn_match[4]) && !empty($fn_match[4]) ? ", '{$fn_match[4]}'" : '') . ')' . (isset($fn_match[5]) ? ' AS '.$this->quoteColumn($fn_match[5]) : ''));
 					continue;
@@ -290,7 +290,7 @@ class XenuxDB
 	{
 		$group_clause = '';
 
-		if(!empty($group))
+		if (!empty($group))
 		{
 			$group_clause .= ' GROUP BY ' . $this->quoteColumn($group);
 
@@ -309,7 +309,7 @@ class XenuxDB
 
 		$regexOrder = '/(^[a-zA-Z0-9_\-\.]*)(\s*(DESC|ASC))?/';
 
-		if(!empty($order))
+		if (!empty($order))
 		{
 			if (is_array($order))
 			{
@@ -347,7 +347,7 @@ class XenuxDB
 	{
 		$limit_clause = '';
 
-		if(!empty($limit))
+		if (!empty($limit))
 		{
 			if (is_numeric($limit))
 			{
@@ -383,7 +383,7 @@ class XenuxDB
 			'><' => 'INNER'
 		);
 
-		foreach($join as $sub_table => $relation)
+		foreach ($join as $sub_table => $relation)
 		{
 			preg_match('/(\[(\<|\>|\>\<|\<\>)\])?([a-zA-Z0-9_\-]*)\s?(\(([a-zA-Z0-9_\-]*)\))?/', $sub_table, $match);
 			# [join-method]table(as-table)
@@ -507,7 +507,7 @@ class XenuxDB
 	{
 		$result = $this->query($this->select_context($table, $props));
 
-		if($result !== false)
+		if ($result !== false)
 		{
 			$data = array();
 			while ($row = $result->fetch_object())
@@ -532,7 +532,7 @@ class XenuxDB
 	{
 		$result = $this->query($this->select_context($table, $props));
 
-		if($result !== false)
+		if ($result !== false)
 		{
 			return $result->fetch_object();
 		}
@@ -552,7 +552,7 @@ class XenuxDB
 	{
 		$result = $this->query($this->select_context($table, $props, 'COUNT'));
 
-		if($result !== false)
+		if ($result !== false)
 		{
 			return $result->fetch_object()->result;
 		}

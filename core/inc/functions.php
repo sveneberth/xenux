@@ -1,9 +1,9 @@
 <?php
 /**
-* escapemail
-* @param string $email: the to be escaped email
-* @return string: the escaped email
-*/
+ * escapemail
+ * @param string $email: the to be escaped email
+ * @return string: the escaped email
+ */
 function escapemail ($email, $props = array())
 {
 	if (empty($email))
@@ -31,10 +31,10 @@ function escapemail ($email, $props = array())
 
 
 /**
-* whitespace2nbsp
-* @param string $str: the haystack
-* @return string: the replaced value
-*/
+ * whitespace2nbsp
+ * @param string $str: the haystack
+ * @return string: the replaced value
+ */
 function whitespace2nbsp ($str)
 {
 	if (empty($str) || !isset($str))
@@ -45,12 +45,12 @@ function whitespace2nbsp ($str)
 
 
 /**
-* pretty_date
-* conver a date like 1.1.1970 => x year ago
-* @param string $datestr: a date or time
-* @return string: the pretty date
-* @source: http://simbo.de/blog/2009/12/pretty-date-relative-zeitangaben-in-worten (adapted)
-*/
+ * pretty_date
+ * conver a date like 1.1.1970 => x year ago
+ * @param string $datestr: a date or time
+ * @return string: the pretty date
+ * @source: http://simbo.de/blog/2009/12/pretty-date-relative-zeitangaben-in-worten (adapted)
+ */
 function pretty_date ($datestr = '')
 {
 	$now = time();
@@ -95,26 +95,26 @@ function pretty_date ($datestr = '')
 
 		if (date('j',($now-$day_start*3600)) == date('j',($date-$day_start*3600)))
 			$r = __('today');
-		elseif(date('j',($now-($day_start+24)*3600)) == date('j',($date-$day_start*3600)))
+		elseif (date('j',($now-($day_start+24)*3600)) == date('j',($date-$day_start*3600)))
 			$r = __('yesterday');
 		else
 			$r = __('two days ago');
 
 		$hour_date = intval(date('G',$date)) + (intval(date('i',$date))/60);
 		$hour_now = intval(date('G',$now)) + (intval(date('i',$now))/60);
-		if($hour_date>=22.5 || $hour_date<$day_start)
+		if ($hour_date>=22.5 || $hour_date<$day_start)
 		{
 			$r = $r==__('yesterday') ? __('last night') : $r.' '.__('night');
 		}
-		elseif($hour_date>=$day_start && $hour_date<9)
+		elseif ($hour_date>=$day_start && $hour_date<9)
 			$r .= ' '.__('morning');
-		elseif($hour_date>=9 && $hour_date<11.5)
+		elseif ($hour_date>=9 && $hour_date<11.5)
 			$r .= ' '.__('before noon');
-		elseif($hour_date>=11.5 && $hour_date<13.5)
+		elseif ($hour_date>=11.5 && $hour_date<13.5)
 			$r .= ' '.__('noon');
-		elseif($hour_date>=13.5 && $hour_date<18)
+		elseif ($hour_date>=13.5 && $hour_date<18)
 			$r .= ' '.__('afternoon');
-		elseif($hour_date>=18 && $hour_date<22.5)
+		elseif ($hour_date>=18 && $hour_date<22.5)
 			$r .= ' '.__('evening');
 		return $r;
 	}
@@ -152,12 +152,12 @@ function pretty_date ($datestr = '')
 
 
 /**
-* shortstr
-* @param string $str: the string to be shortened
-* @param string $size: the position on which the function starts with the search of the next whitespace
-* @param string $max: max length of the new string
-* @return string: the shortened string
-*/
+ * shortstr
+ * @param string $str: the string to be shortened
+ * @param string $size: the position on which the function starts with the search of the next whitespace
+ * @param string $max: max length of the new string
+ * @return string: the shortened string
+ */
 function shortstr ($str, $size=100, $max=200)
 {
 	if (strlen($str) > $size)
@@ -175,12 +175,12 @@ function shortstr ($str, $size=100, $max=200)
 
 
 /**
-* formatBytes
-* @param int $size: size in bytes
-* @param int $precision: amount of decimal places
-* @return string: converted value + unit
-* @source: http://stackoverflow.com/a/2510540/3749896
-*/
+ * formatBytes
+ * @param int $size: size in bytes
+ * @param int $precision: amount of decimal places
+ * @return string: converted value + unit
+ * @source: http://stackoverflow.com/a/2510540/3749896
+ */
 function formatBytes ($size, $precision = 2)
 {
 	$base = log($size, 1024);
@@ -191,17 +191,17 @@ function formatBytes ($size, $precision = 2)
 
 
 /**
-* generateRandomString
-* @param int $length: lenght of the random string
-* @param string $characters: the allowed characters
-* @return string: random string
-* @source: http://stackoverflow.com/a/2510540/3749896
-*/
+ * generateRandomString
+ * @param int $length: lenght of the random string
+ * @param string $characters: the allowed characters
+ * @return string: random string
+ * @source: http://stackoverflow.com/a/2510540/3749896
+ */
 function generateRandomString ($length = 10,  $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
 {
     $charactersLength = strlen($characters);
     $randomString = '';
-    for($i = 0; $i < $length; $i++) {
+    for ($i = 0; $i < $length; $i++) {
         $randomString .= $characters[rand(0, $charactersLength - 1)];
     }
     return $randomString;
@@ -209,14 +209,14 @@ function generateRandomString ($length = 10,  $characters = '0123456789abcdefghi
 
 
 /**
-* mysql2date
-* @param string $format: the request format
-* @param string $date: the date
-* @return string: formatted date
-*/
+ * mysql2date
+ * @param string $format: the request format
+ * @param string $date: the date
+ * @return string: formatted date
+ */
 function mysql2date ($format, $date)
 {
-	if(empty($format) || empty($date))
+	if (empty($format) || empty($date))
 		return false;
 
 	$unixtime = strtotime($date);
@@ -226,14 +226,14 @@ function mysql2date ($format, $date)
 
 
 /**
-* date2mysql
-* @param string $date: date or unixtime
-* @param $isUnixtime: is @param $date unixtime (optional)
-* @return string: formatted date
-*/
+ * date2mysql
+ * @param string $date: date or unixtime
+ * @param $isUnixtime: is @param $date unixtime (optional)
+ * @return string: formatted date
+ */
 function date2mysql ($date, $isUnixtime=false)
 {
-	if(!$isUnixtime)
+	if (!$isUnixtime)
 		$date = strtotime($date);
 
 	return date('Y-m-d H:i:s', $date);
@@ -251,13 +251,13 @@ function getPageLink($id, $title='')
 
 
 /**
-* inludeExists
-* @param string $file: path of file
-* @return bool: file included ?
-*/
+ * inludeExists
+ * @param string $file: path of file
+ * @return bool: file included ?
+ */
 function inludeExists ($file)
 {
-	if(file_exists($file))
+	if (file_exists($file))
 	{
 		include_once($file);
 		return true;
@@ -268,11 +268,11 @@ function inludeExists ($file)
 
 
 /**
-* is_json
-* @param string $string: the to be checed (json-)string
-* @param string $return_data: if json, return the checked json string ?
-* @return bool: file included ?
-*/
+ * is_json
+ * @param string $string: the to be checed (json-)string
+ * @param string $return_data: if json, return the checked json string ?
+ * @return bool: file included ?
+ */
 function is_json ($string, $return_data = false)
 {
 	$data = json_decode($string);
@@ -281,32 +281,32 @@ function is_json ($string, $return_data = false)
 
 
 /**
-* getMenuBarMultiSites
-* this function build the Navigation for eg. search result which are dividet in several sites.
-* @param int $absolutenumber: the amount of entrys
-* @param int $start: the number of the entry of the actually site
-* @param int $amount: the amount of entries per site
-* @return string: the navigationbar as html
-*/
+ * getMenuBarMultiSites
+ * this function build the Navigation for eg. search result which are dividet in several sites.
+ * @param int $absolutenumber: the amount of entrys
+ * @param int $start: the number of the entry of the actually site
+ * @param int $amount: the amount of entries per site
+ * @return string: the navigationbar as html
+ */
 function getMenuBarMultiSites ($absolutenumber, $start, $amount)
 {
 	$return = '';
 
-	if($absolutenumber > $amount)
+	if ($absolutenumber > $amount)
 	{
 		$return .= "<div class=\"sitenavi\">\n";
 		$b = ceil($absolutenumber/$amount);
-		for($a = ceil($absolutenumber/$amount); $a > 0; $a--)
+		for ($a = ceil($absolutenumber/$amount); $a > 0; $a--)
 		{
 			$thissite = $b - $a + 1;
 			$limit = $amount * ($b - $a);
 			$return .= "\t<a class=\"sitenavi";
-			if($limit == $start)
+			if ($limit == $start)
 				$return .= " active";
 			$return .= "\" title=\"".__('page')." $thissite\" href=\"{{SITE_PATH}}?";
 			foreach ($_GET as $key => $value)
 			{
-				if($key != 'url' && $key != 'start' && $key != 'amount')
+				if ($key != 'url' && $key != 'start' && $key != 'amount')
 					$return .= $key . '=' . $value . '&';
 			}
 			$return .= "start=$limit&amount=$amount\">$thissite</a>\n";
@@ -319,10 +319,10 @@ function getMenuBarMultiSites ($absolutenumber, $start, $amount)
 
 
 /**
-* parse_bool
-* @param string $value: the to be parsed string
-* @return bool: true ("1", "true", "on" and "yes") or false ("0", "false", "off" and "no") else null
-*/
+ * parse_bool
+ * @param string $value: the to be parsed string
+ * @return bool: true ("1", "true", "on" and "yes") or false ("0", "false", "off" and "no") else null
+ */
 function parse_bool ($value)
 {
 	return filter_var($value, FILTER_VALIDATE_BOOLEAN);
@@ -330,15 +330,15 @@ function parse_bool ($value)
 
 
 /**
-* function full
-* opposite of PHP's default function `empty`
-* but better support for objects
-* @param mixed $str: value to check
-* @return bool: is not empty ?
-*/
+ * function full
+ * opposite of PHP's default function `empty`
+ * but better support for objects
+ * @param mixed $str: value to check
+ * @return bool: is not empty ?
+ */
 function full($str)
 {
-	if(is_object($str))
+	if (is_object($str))
 		$str = (array) $str;
 
 	return !empty($str);
@@ -346,12 +346,12 @@ function full($str)
 
 
 /**
-* function full_copy
-* copy a folder and subfolders
-* @param string $source: path of the source
-* @param string $target: path of the target
-* @return --
-*/
+ * function full_copy
+ * copy a folder and subfolders
+ * @param string $source: path of the source
+ * @param string $target: path of the target
+ * @return --
+ */
 function full_copy ($source, $target)
 {
 	if (is_dir($source))
@@ -384,11 +384,11 @@ function full_copy ($source, $target)
 
 
 /**
-* turn_array
-* @param array $m: result of preg_match_all
-* @return array: the turned array
-* @source: http://php.net/manual/de/function.preg-match-all.php#102520
-*/
+ * turn_array
+ * @param array $m: result of preg_match_all
+ * @return array: the turned array
+ * @source: http://php.net/manual/de/function.preg-match-all.php#102520
+ */
 function turn_array ($m)
 {
     for ($z = 0;$z < count($m);$z++)
@@ -404,11 +404,11 @@ function turn_array ($m)
 
 
 /**
-* rrmmdir
-* this fuction delete recursive a dir
-* @param string $dir: path of the to be deleted dir
-* @return bool: successful ?
-*/
+ * rrmmdir
+ * this fuction delete recursive a dir
+ * @param string $dir: path of the to be deleted dir
+ * @return bool: successful ?
+ */
 function rrmdir ($dir)
 {
 	if (!file_exists($dir))
@@ -431,11 +431,11 @@ function rrmdir ($dir)
 
 
 /**
-* remove_array_value
-* remove an key by the value
-* @param array $array: the array
-* @param mixed $value: the to be removed value
-*/
+ * remove_array_value
+ * remove an key by the value
+ * @param array $array: the array
+ * @param mixed $value: the to be removed value
+ */
 function remove_array_value(array &$array, &$value)
 {
 	if (($key = array_search($value, $array)) !== false)
@@ -449,11 +449,11 @@ function remove_array_value(array &$array, &$value)
 
 
 /**
-* is_dir_empty
-* check if a folder is empty
-* @param string $dir: path of the folder
-* @return bool: is empty ?
-*/
+ * is_dir_empty
+ * check if a folder is empty
+ * @param string $dir: path of the folder
+ * @return bool: is empty ?
+ */
 function is_dir_empty($dir)
 {
 	if (!is_readable($dir))
@@ -464,11 +464,11 @@ function is_dir_empty($dir)
 
 
 /**
-* embedSVG
-* embed a SVG for inline useage
-* @param string $file: path to svg file
-* @return string: the svg
-*/
+ * embedSVG
+ * embed a SVG for inline useage
+ * @param string $file: path to svg file
+ * @return string: the svg
+ */
 function embedSVG($file)
 {
 	if (!is_readable($file))

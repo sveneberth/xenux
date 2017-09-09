@@ -37,7 +37,7 @@ class sitemapController extends AbstractController
 		]);
 		if ($sites)
 		{
-			foreach($sites as $site)
+			foreach ($sites as $site)
 			{
 				echo "<li>\n\t<a href=\"".getPageLink($site->id, $site->title)."\">".$site->title."</a>\n";
 
@@ -53,7 +53,7 @@ class sitemapController extends AbstractController
 				if ($subsites)
 				{
 					echo "\t<ul>\n";
-					foreach($subsites as $subsite)
+					foreach ($subsites as $subsite)
 					{
 						echo "\t\t<li>\n\t\t\t<a href=\"".getPageLink($subsite->id, $subsite->title)."\">".$subsite->title."</a>\n";
 						$subsubsites = $XenuxDB->getList('sites', [
@@ -68,7 +68,7 @@ class sitemapController extends AbstractController
 						if ($subsubsites)
 						{
 							echo "\t\t\t<ul>\n";
-							foreach($subsubsites as $subsubsite)
+							foreach ($subsubsites as $subsubsite)
 							{
 								echo "\t\t\t\t<li>\n\t\t\t\t\t<a href=\"".getPageLink($subsubsite->id, $subsubsite->title)."\">".$subsubsite->title."</a>\n\t\t\t\t</li>\n";
 							}
@@ -146,7 +146,7 @@ class sitemapController extends AbstractController
 			$sites = $XenuxDB->getList('sites', ['orderBy' => 'sortindex', 'orderDir' => 'ASC', 'where' => "public = true"]);
 			if ($sites)
 			{
-				foreach($sites as $site)
+				foreach ($sites as $site)
 				{
 					echo '
 	<url>

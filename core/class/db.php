@@ -5,12 +5,12 @@ class db
 
 	public static function getConnection()
 	{
-		if(self::$db == null)
+		if (self::$db == null)
 		{
 			try {
 				self::$db = new MySQLi(MYSQL_HOST, MYSQL_USER, MYSQL_PW, MYSQL_DB); // connect with database
 
-				if(self::$db->connect_errno) { // if connection failed
+				if (self::$db->connect_errno) { // if connection failed
 					throw new Exception("Failed to connect to MySQL: (" . self::$db->connect_errno . ") " . self::$db->connect_error);
 				}
 

@@ -16,7 +16,7 @@ class template
 	{
 		global $app, $XenuxDB;
 
-		if(isset($templatePath))
+		if (isset($templatePath))
 			$this->templatePath	= $templatePath;
 
 		foreach ($this->phpvars as $key => $value) {
@@ -26,7 +26,7 @@ class template
 		$user = $app->user;
 
 		ob_start();
-			if(file_exists($this->templatePath))
+			if (file_exists($this->templatePath))
 			{
 				include($this->templatePath);
 			}
@@ -78,7 +78,7 @@ class template
 	{
 		$this->setDefaultVars();
 
-		foreach($this->vars as $var_name => $var_value) {
+		foreach ($this->vars as $var_name => $var_value) {
 			$content = str_replace("{{".$var_name."}}", $var_value, $content);
 		}
 
@@ -112,7 +112,7 @@ class template
 
 		#	var_dump($match);
 
-			if(isset($this->ifVars[$conditionName]) && $this->ifVars[$conditionName] == true)
+			if (isset($this->ifVars[$conditionName]) && $this->ifVars[$conditionName] == true)
 			{
 				return $than;
 			}

@@ -145,7 +145,7 @@ class postsController extends AbstractController
 		]);
 		if ($posts)
 		{
-			foreach($posts as $post)
+			foreach ($posts as $post)
 			{
 				$return .= '
 <tr class="is-' . $post->status . '">

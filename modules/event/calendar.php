@@ -91,24 +91,24 @@ class Calendar {
 		// first day of this month in this week (1-7)
 		$firstDayOfTheWeek = date('N', strtotime($this->currentYear . '-' . $this->currentMonth . '-01'));
 
-		if($this->currentDay == 0 && $cellNumber == $firstDayOfTheWeek)
+		if ($this->currentDay == 0 && $cellNumber == $firstDayOfTheWeek)
 		{
 			$this->currentDay = 1;
 		}
 
-		if($this->currentDay != 0 && $this->currentDay <= $this->daysInMonth)
+		if ($this->currentDay != 0 && $this->currentDay <= $this->daysInMonth)
 		{	// cellNumber in month
 			$cellContent = $this->currentDay;
 			$this->currentDay++;
 
-			if($cellContent == $today_day && $this->currentMonth == $today_mon && $this->currentYear == $today_year)
+			if ($cellContent == $today_day && $this->currentMonth == $today_mon && $this->currentYear == $today_year)
 				$additionalClass = "today";
 
 			$month = $this->currentMonth;
 		}
 		else
 		{	// cellNumber before or after month
-			if($this->currentDay == 0)
+			if ($this->currentDay == 0)
 			{	// before
 				$cellContent = sprintf("%02d", $this->daysInPreMonth + $dayInWeek + 1 - $firstDayOfTheWeek);
 				$additionalClass = "before";
@@ -135,25 +135,25 @@ class Calendar {
 			],
 			'order' => 'start_date ASC'
 		]);
-		if($events)
+		if ($events)
 		{
 			foreach ($events as $event)
 			{
 				$template = new template(PATH_MAIN."/templates/".$app->template."/_calendar_day_dates.php");
 
-				if(mysql2date("Y-m-d", $event->start_date) == mysql2date("Y-m-d", $event->end_date)) // event only one day long
+				if (mysql2date("Y-m-d", $event->start_date) == mysql2date("Y-m-d", $event->end_date)) // event only one day long
 				{
 					$template->setVar("time", mysql2date("H:i", $event->start_date));
 				}
-				elseif(mysql2date("Y-m-d", $event->start_date) == mysql2date("Y-m-d", "{$this->currentYear}-{$month}-{$cellContent}")) // start day
+				elseif (mysql2date("Y-m-d", $event->start_date) == mysql2date("Y-m-d", "{$this->currentYear}-{$month}-{$cellContent}")) // start day
 				{
 					$template->setVar("time", "&larr;<span style=\"width:5px;display: inline-block;\"></span>" . mysql2date("H:i", $event->start_date));
 				}
-				elseif(mysql2date("Y-m-d", $event->start_date) < mysql2date("Y-m-d", "{$this->currentYear}-{$month}-{$cellContent}") && mysql2date("Y-m-d", $event->end_date) > mysql2date("Y-m-d", "{$this->currentYear}-{$month}-{$cellContent}")) // middle day
+				elseif (mysql2date("Y-m-d", $event->start_date) < mysql2date("Y-m-d", "{$this->currentYear}-{$month}-{$cellContent}") && mysql2date("Y-m-d", $event->end_date) > mysql2date("Y-m-d", "{$this->currentYear}-{$month}-{$cellContent}")) // middle day
 				{
 					$template->setVar("time", "&harr;");
 				}
-				elseif(mysql2date("Y-m-d", $event->end_date) == mysql2date("Y-m-d", "{$this->currentYear}-{$month}-{$cellContent}")) // end day
+				elseif (mysql2date("Y-m-d", $event->end_date) == mysql2date("Y-m-d", "{$this->currentYear}-{$month}-{$cellContent}")) // end day
 				{
 					$template->setVar("time", "&rarr;<span style=\"width:5px;display: inline-block;\"></span>" . mysql2date("H:i", $event->end_date));
 				}
@@ -181,7 +181,7 @@ class Calendar {
 
 		$labels = null;
 
-		foreach($this->dayLabels as $index => $label)
+		foreach ($this->dayLabels as $index => $label)
 		{
 			$template = new template(PATH_MAIN."/templates/".$app->template."/_calendar_label.php");
 			$template->setVar("label", __($label));
@@ -193,10 +193,10 @@ class Calendar {
 
 	private function _weeksInMonth($month=null, $year=null)
 	{
-		if($year == null)
+		if ($year == null)
 			$year = $this->currentYear;
 
-		if($month == null)
+		if ($month == null)
 			$month = $this->currentMonth;
 
 		$daysInMonths = $this->_daysInMonth($month, $year);
@@ -206,7 +206,7 @@ class Calendar {
 		$monthStartingDay = date('N', strtotime($year . '-' . $month . '-01'));
 		$monthEndingDay = date('N', strtotime($year . '-' . $month . '-' . $daysInMonths));
 
-		if($monthEndingDay < $monthStartingDay)
+		if ($monthEndingDay < $monthStartingDay)
 			$numOfweeks++;
 
 		return $numOfweeks;
@@ -214,10 +214,10 @@ class Calendar {
 
 	private function _daysInMonth($month=null, $year=null)
 	{
-		if($year == null)
+		if ($year == null)
 			$year = $this->currentYear;
 
-		if($month == null)
+		if ($month == null)
 			$month = $this->currentMonth;
 
 		return date('t', strtotime($year . '-' . $month . '-01'));

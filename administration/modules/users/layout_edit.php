@@ -6,7 +6,7 @@
 			<p><?= __('here can you add a new user') ?></p>
 		#else:
 			<?php
-			if($profileEdit)
+			if ($profileEdit)
 				echo '<p>' . __('here can you edit your profile') . '</p>';
 			else
 				echo '<p>' . __('here can you edit the user') . '</p>';

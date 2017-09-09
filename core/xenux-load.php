@@ -14,13 +14,13 @@ header('Content-Type: text/html, charset=utf-8');
 include_once(__DIR__  .'/config/path.php');
 
 /** enable Error-Reporting, if Debugging Mode enabled. Else use server default settings */
-if(defined('DEBUG') && DEBUG == true && $_SERVER['HTTP_HOST'] == 'localhost')
+if (defined('DEBUG') && DEBUG == true && $_SERVER['HTTP_HOST'] == 'localhost')
 {
 	error_reporting(E_ALL);
 }
 
 /** go to the Xenux-Installer, if config-file doesn't exists */
-if(!file_exists(PATH_MAIN."/xenux-conf.php"))
+if (!file_exists(PATH_MAIN."/xenux-conf.php"))
 {
 	header("Location: ".URL_MAIN."/install/");
 }

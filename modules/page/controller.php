@@ -13,7 +13,7 @@ class pageController extends AbstractController
 	{
 		$this->pageID = preg_replace("/[^0-9]/", '', @$this->url[1]);
 
-		if(!empty($this->pageID))
+		if (!empty($this->pageID))
 		{
 			$this->pageView($this->pageID);
 		}
@@ -48,9 +48,9 @@ class pageController extends AbstractController
 				'[>]users' => ['sites.author_id' => 'users.id']
 			]
 		]);
-		if($page)
+		if ($page)
 		{
-			if(($page->public || $showIsPrivate) || $app->user->isLogin())
+			if (($page->public || $showIsPrivate) || $app->user->isLogin())
 			{
 				$template = new template(PATH_MAIN."/modules/".$this->modulename."/layout.php",
 				[
@@ -68,11 +68,11 @@ class pageController extends AbstractController
 
 				/* next and prev url */
 				$app->canonical_URL = getPageLink($page->site_id, $page->title);
-				if($prev = $this->_getPrevSite($page->parent_id, $page->sortindex))
+				if ($prev = $this->_getPrevSite($page->parent_id, $page->sortindex))
 				{
 					$app->prev_URL = getPageLink($prev->id, $prev->title);
 				}
-				if($next = $this->_getNextSite($page->parent_id, $page->sortindex))
+				if ($next = $this->_getNextSite($page->parent_id, $page->sortindex))
 				{
 					$app->next_URL = getPageLink($next->id, $next->title);
 				}
@@ -97,25 +97,25 @@ class pageController extends AbstractController
 	{
 		global $app, $XenuxDB;
 
-		if($page->parent_id == 0)
+		if ($page->parent_id == 0)
 			return false;
 
 		$prev = $this->_getPrevSite($page->parent_id, $page->sortindex);
 		$next = $this->_getNextSite($page->parent_id, $page->sortindex);
 
-		if($prev || $next)
+		if ($prev || $next)
 		{
 			$template = new template(PATH_MAIN."/templates/".$app->template."/_prevNextNavi.php");
 
 			$template->setIfCondition("prev",	$prev);
-			if($prev)
+			if ($prev)
 			{
 				$template->setVar("prev|title",	$prev->title);
 				$template->setVar("prev|url",	getPageLink($prev->id, $prev->title));
 			}
 
 			$template->setIfCondition("next",	$next);
-			if($next)
+			if ($next)
 			{
 				$template->setVar("next|title",	$next->title);
 				$template->setVar("next|url",	getPageLink($next->id, $next->title));

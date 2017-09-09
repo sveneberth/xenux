@@ -1,13 +1,5 @@
-<script src="{{TEMPLATE_PATH}}/js/jquery.mjs.nestedSortable.js"></script>
 <script>
-	var url = window.location.href;
-	var title = document.title;
-	var newUrl = url.substring(0, url.indexOf('?')) + window.location.hash;
-	// replace new url
-	if(window.history.replaceState) {
-		window.history.replaceState(null, null, newUrl);
-	}
-
+	// #TODO: move in external file
 	$(function() {
 		$(".menu_order > ul").nestedSortable({
 			listType: 'ul',
@@ -57,10 +49,10 @@
 		});
 	});
 	function toggleClasses() {
-		//FIXME: works not smoothly
+		// #FIXME: works not smoothly
 		console.log('toggleClasses');
 		$('li').each(function(index) {
-			if($('>ul',this).length == 0 || $('>ul',this).is(':empty'))
+			if ($('>ul',this).length == 0 || $('>ul',this).is(':empty'))
 			{
 				$('div > .disclose',this).addClass('disable');
 				$(this).removeClass('collapsed').removeClass('expanded');
@@ -103,7 +95,7 @@
 			},
 			success: function(response) {
 				console.log(response);
-				if(response.success == true) {
+				if (response.success == true) {
 					$('#list_' + id).fadeOut(300, function() {
 						$(this).remove();
 					});

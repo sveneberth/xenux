@@ -67,7 +67,7 @@ class LoginController extends AbstractController
 	{
 		global $app, $XenuxDB;
 
-		if($task == 'logout')
+		if ($task == 'logout')
 		{
 			$app->user->setLogout();
 			$template->setIfCondition("logout", true);
@@ -98,25 +98,25 @@ class LoginController extends AbstractController
 		$loginform = new form($formFields);
 		$loginform->disableRequiredInfo();
 
-		if($loginform->isSend() && $loginform->isValid())
+		if ($loginform->isSend() && $loginform->isValid())
 		{
 			$data = $loginform->getInput();
 
 			$userFound = $app->user->getUserByUsername($data['username']);
 
-			if($userFound)
+			if ($userFound)
 			{
-				if($app->user->checkPassword($data['password']))
+				if ($app->user->checkPassword($data['password']))
 				{
 					$userInfo = $app->user->userInfo;
 
-					if(parse_bool($userInfo->confirmed) !== true)
+					if (parse_bool($userInfo->confirmed) !== true)
 					{
 						$template->setVar("message",  '<p>' . __('not confirmed') . '</p>');
 						return false;
 					}
 
-					if(is_null($userInfo->lastlogin_date) && is_null($userInfo->lastlogin_ip) && is_null($userInfo->session_fingerprint))
+					if (is_null($userInfo->lastlogin_date) && is_null($userInfo->lastlogin_ip) && is_null($userInfo->session_fingerprint))
 					{
 						// first login
 						$token = generateRandomString();
@@ -134,7 +134,7 @@ class LoginController extends AbstractController
 
 					$app->user->setLogin();
 
-					if(isset($_GET['redirectTo']) && !empty($_GET['redirectTo'])):
+					if (isset($_GET['redirectTo']) && !empty($_GET['redirectTo'])):
 						header('Location: '.URL_ADMIN.'/'.$_GET['redirectTo']);
 					else:
 						header('Location: '.URL_ADMIN);
@@ -214,18 +214,18 @@ class LoginController extends AbstractController
 		$registerform = new form($formFields);
 		$registerform->disableRequiredInfo();
 
-		if($registerform->isSend() && $registerform->isValid())
+		if ($registerform->isSend() && $registerform->isValid())
 		{
 			$data = $registerform->getInput();
 
 			$userFoundByUsername	= $app->user->getUserByUsername($data['username']);
 			$userFoundByEmail		= $app->user->getUserByEmail($data['email']);
 
-			if(!$userFoundByUsername) // check if user exits
+			if (!$userFoundByUsername) // check if user exits
 			{
-				if(!$userFoundByEmail) // check if email used
+				if (!$userFoundByEmail) // check if email used
 				{
-					if($data['password'] == $data['passwordAgain'])
+					if ($data['password'] == $data['passwordAgain'])
 					{
 						$token = generateRandomString();
 
@@ -237,7 +237,7 @@ class LoginController extends AbstractController
 							'password'  => $app->user->createPasswordHash($data['password']),
 							'verifykey' => $token
 						]);
-						if($return !== false)
+						if ($return !== false)
 						{
 							// user added successfull
 							$confirmlink = URL_ADMIN . '/login/?task=confirm&id=' . $return . '&token=' . $token;
@@ -253,7 +253,7 @@ class LoginController extends AbstractController
 <a href="'.$confirmlink.'">'.$confirmlink.'</a></p>
 <p>Solltest Du Dich nicht auf ' . URL_MAIN . ' registriert haben, ignoriere diese Mail bitte.</p>';
 
-							if(!$mail->send())
+							if (!$mail->send())
 							{
 								$template->setVar("message", '<p>Die Nachricht konnte nicht versendet werden.</p>');
 							}
@@ -315,13 +315,13 @@ class LoginController extends AbstractController
 		$forgotusernameform = new form($formFields);
 		$forgotusernameform->disableRequiredInfo();
 
-		if($forgotusernameform->isSend() && $forgotusernameform->isValid())
+		if ($forgotusernameform->isSend() && $forgotusernameform->isValid())
 		{
 			$data = $forgotusernameform->getInput();
 
 			$userFoundByEmail		= $app->user->getUserByEmail($data['email']);
 
-			if($userFoundByEmail) // check if user exists
+			if ($userFoundByEmail) // check if user exists
 			{
 				$userinfo = $app->user->userInfo;
 
@@ -335,7 +335,7 @@ class LoginController extends AbstractController
 Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: ' . $userinfo->username . '
 <p>Solltest Du die Zusendung des Benuzernamens nicht angefordert haben, ignoriere diese Mail bitte.</p>';
 
-				if(!$mail->send())
+				if (!$mail->send())
 				{
 					$template->setVar("message", '<p>Die Nachricht konnte nicht versendet werden.</p>');
 				}
@@ -375,13 +375,13 @@ Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: '
 		$forgotpasswordform = new form($formFields);
 		$forgotpasswordform->disableRequiredInfo();
 
-		if($forgotpasswordform->isSend() && $forgotpasswordform->isValid())
+		if ($forgotpasswordform->isSend() && $forgotpasswordform->isValid())
 		{
 			$data = $forgotpasswordform->getInput();
 
 			$userFoundByUsername = $app->user->getUserByUsername($data['username']);
 
-			if($userFoundByUsername) // check if user exists
+			if ($userFoundByUsername) // check if user exists
 			{
 				$userinfo = $app->user->userInfo;
 				if (empty($userinfo->password)) // user has not set his password
@@ -397,7 +397,7 @@ Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: '
 				[
 					'id' => $userinfo->id
 				]);
-				if(!$result)
+				if (!$result)
 				{
 					$template->setVar("message", 'something went wrong -.-');
 					return false;
@@ -417,7 +417,7 @@ Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: '
 		zurückgesetzt werden.</p>
 <p>Solltest Du die Zurücksetzung des Passworts nicht angefordert haben, ignoriere diese Mail bitte.</p>';
 
-				if(!$mail->send())
+				if (!$mail->send())
 				{
 					$template->setVar("message", '<p>Die Nachricht konnte nicht versendet werden.</p>');
 				}
@@ -441,7 +441,7 @@ Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: '
 	{
 		global $app, $XenuxDB;
 
-		if(!isset($_GET['id']) || !isset($_GET['token']))
+		if (!isset($_GET['id']) || !isset($_GET['token']))
 		{
 			$template->setVar("message", "<p>Es trat ein Fehler auf... Stellen sie sicher, das der Link stimmt und aktuell ist!<p>");
 			return false;
@@ -458,7 +458,7 @@ Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: '
 				]
 			]
 		]);
-		if($userfound)
+		if ($userfound)
 		{
 			$userinfo = $app->user->getUserInfo($userfound->id);
 
@@ -486,11 +486,11 @@ Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: '
 			$forgotpasswordform = new form($formFields);
 			$forgotpasswordform->disableRequiredInfo();
 
-			if($forgotpasswordform->isSend() && $forgotpasswordform->isValid())
+			if ($forgotpasswordform->isSend() && $forgotpasswordform->isValid())
 			{
 				$data = $forgotpasswordform->getInput();
 
-				if($data['password'] == $data['passwordAgain'])
+				if ($data['password'] == $data['passwordAgain'])
 				{
 					$return = $XenuxDB->Update('users', [
 						'verifykey' => NULL,
@@ -500,7 +500,7 @@ Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: '
 						'id' => $userinfo->id
 					]);
 
-					if($return)
+					if ($return)
 					{
 						$template->setVar("message", "<p>Das Passwort wurde erfolgreich zurückgesetzt!</p>");
 						$template->setVar("form",  '');
@@ -529,7 +529,7 @@ Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: '
 	{
 		global $app, $XenuxDB;
 
-		if(!isset($_GET['id']) || !isset($_GET['token']))
+		if (!isset($_GET['id']) || !isset($_GET['token']))
 		{
 			$template->setVar("message", "<p>Es trat ein Fehler auf... Stellen sie sicher, das der Link stimmt und aktuell ist!<p>");
 			return false;
@@ -546,7 +546,7 @@ Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: '
 				]
 			]
 		]);
-		if($userfound)
+		if ($userfound)
 		{
 			$userinfo = $app->user->getUserInfo($userfound->id);
 
@@ -574,11 +574,11 @@ Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: '
 			$forgotpasswordform = new form($formFields);
 			$forgotpasswordform->disableRequiredInfo();
 
-			if($forgotpasswordform->isSend() && $forgotpasswordform->isValid())
+			if ($forgotpasswordform->isSend() && $forgotpasswordform->isValid())
 			{
 				$data = $forgotpasswordform->getInput();
 
-				if($data['password'] == $data['passwordAgain'])
+				if ($data['password'] == $data['passwordAgain'])
 				{
 					$return = $XenuxDB->Update('users', [
 						'verifykey' => NULL,
@@ -588,7 +588,7 @@ Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: '
 						'id' => $userinfo->id
 					]);
 
-					if($return)
+					if ($return)
 					{
 						$mail = new mailer;
 						$mail->setSender(XENUX_MAIL);
@@ -627,7 +627,7 @@ Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: '
 	{
 		global $app, $XenuxDB;
 
-		if(!isset($_GET['id']) || !isset($_GET['token']))
+		if (!isset($_GET['id']) || !isset($_GET['token']))
 		{
 			$template->setVar("message", "<p>Es trat ein Fehler auf... Stellen sie sicher, das der Link stimmt und aktuell ist!<p>");
 			return false;
@@ -644,7 +644,7 @@ Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: '
 				]
 			]
 		]);
-		if($user)
+		if ($user)
 		{
 			$app->user->userInfo->id = $user->id;
 
@@ -656,7 +656,7 @@ Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: '
 				'id' => $user->id
 			]);
 
-			if($return)
+			if ($return)
 			{
 				$template->setIfCondition("confirmSucessful", true);
 				$app->user->setLogin();

@@ -45,7 +45,7 @@ class postsController extends AbstractController
 
 		if ($posts)
 		{
-			foreach($posts as $post)
+			foreach ($posts as $post)
 			{
 				$template = new template(PATH_MAIN . '/modules/' . $this->modulename . '/layout_list.php');
 
