@@ -66,5 +66,8 @@
 				<span class="author" data-label="<?= __('author') ?>"></span>
 			</div>
 		</div>
+		<div class="ajax-loader hide">
+			<?php echo embedSVG(PATH_ADMIN . '/template/images/spinner.svg'); ?>
+		</div>
 	</section>
 </div>

@@ -76,8 +76,9 @@ $(function() {
 		$('.actions > button').removeClass('disabled');
 	});
 	$('body').on('click', '.explorer .item.ui-selected .filename:not(:has(input))', function(e) {
-		var ID = $(this).parent().attr('id');
+		var ID       = $(this).parent().attr('id');
 		var filename = $(this).parent().data('filename');
+		var ext      = $(this).parent().data('ext');
 		console.log(ID, filename);
 
 		// remove other inputs, has no effect on new input - its only tidier
@@ -86,7 +87,7 @@ $(function() {
 			$(this).text(filename);
 		});
 
-		$(this).html('<input class="rename-input" type="text" value="' + escapeHtml(filename) + '">');
+		$(this).html('<input class="rename-input" type="text" value="' + escapeHtml(filename) + '">&nbsp;' + escapeHtml(ext));
 	});
 	$('body').on('click', '.breadcrumb .treeitem', function() {
 		var ID = $(this).attr('id');
@@ -557,7 +558,8 @@ function fileinfo(id) {
 }
 function dir_list(folder) {
 	$('.explorer').html('');
-	$('body').css('cursor', 'wait').append('<div class="ajax-loader"></div>');
+	$('body').css('cursor', 'wait');
+	$('.ajax-loader').show();
 	$('.explorer').attr('data-folder-id', folder);
 	setbreadcrumb(folder);
 	defaultDisabled.forEach(function(val) {
@@ -578,7 +580,8 @@ function dir_list(folder) {
 				var rows = '';
 				$.each(response.data, function(key, entry) { // as dataset
 					var filename = escapeHtml(entry.filename);
-					rows += '<div class="item ' + entry.type + '" id="' + entry.id + '" data-filename="' + filename + '">';
+					var ext = entry.type == 'file' ? '.' + escapeHtml(entry.file_extension) : '';
+					rows += '<div class="item ' + entry.type + '" id="' + entry.id + '" data-filename="' + filename + '" data-ext="' + ext + '">';
 					if(entry.type == 'folder') {
 						rows += '<img src="' + imageURL + 'folder.svg" class="image">';
 					} else {
@@ -589,12 +592,58 @@ function dir_list(folder) {
 							rows += '<img src="' + imageURL + 'document.svg" class="image">';
 						}
 					}
-					rows += '<span class="file filename">' + filename + '</span>';
+					rows += '<span class="file filename">' + filename + ext + '</span>';
 					rows += '</div>';
 				});
 				$('.explorer').html(rows);
-				$('.ajax-loader').remove();
+				$('.ajax-loader').hide();
 				$('body').css('cursor', '');
+
+				$('.explorer .item').draggable({
+					handle: '.image, .filename',
+					start: function(e, ui) {
+						if(!$(this).hasClass('ui-selected')) {
+							$(this).addClass('ui-selected');
+						}
+					},
+					drag: function(e, ui) {
+						$('.ui-selected').not(this).css({top: ui.position.top, left: ui.position.left});
+					},
+					stop: function(e, ui) {
+						$('.ui-selected').animate({top:0, left:0}); // revert to origin position
+					}
+				});
+				$('.explorer .item.folder').droppable({
+					drop: function(e, ui) {
+						var target = $(this).attr('id');
+						$('.ui-selected').each(function() {
+							var id = $(this).attr('id');
+							move(id, target)
+						});
+					},
+					start: function(e, ui) {
+						console.log('s', e, ui);
+					},
+					drag: function(e, ui) {
+						console.log('d', e, ui);
+					},
+				});
+				/*
+					#FIXME: drop in breadcrumb doesnt work
+					it works only with helper: 'clone' in .draggable()
+					and only by the direct selected item
+
+					$('.breadcrumb .treeitem').droppable({
+						drop: function(e, ui) {
+							console.log(e, ui);
+							var target = $(this).attr('id');
+							$('.ui-selected').each(function() {
+								var id = $(this).attr('id');
+								move(id, target)
+							});
+						}
+					});
+				*/
 			}
 		},
 		error: function(xhr, textStatus, errorThrown){

@@ -254,89 +254,96 @@ class app
 	{
 		global $app, $XenuxDB;
 
-		$ID = $XenuxDB->escapeString(explode('-', $param)[0]);
+		try {
+			$ID = $XenuxDB->escapeString(explode('-', $param)[0]);
 
-		preg_match_all('/-([a-z]?)([0-9]*)/', $param, $optionMatches, PREG_SET_ORDER);
+			preg_match_all('/-([a-z]?)([0-9]*)/', $param, $optionMatches, PREG_SET_ORDER);
 
-		$options = array();
-		foreach ($optionMatches as $match)
-		{
-			$options[$match[1]] = $match[2];
-		}
-
-		$file = $XenuxDB->getEntry('files', [
-					'where' => [
-						'AND' => [
-							'type' => 'file',
-							'id' => $ID
-						]
-					]
-				]);
-		if ($file)
-		{
-			$lastModified = mysql2date('D, d M Y H:i:s', $file->lastModified);
-			$typeCategory = substr($file->mime_type, 0, strpos($file->mime_type, "/"));
-
-			header("Content-Disposition: ".(isset($options['d']) ? 'attachment' : 'inline')."; filename=\"{$file->filename}.{$file->file_extension}\"");
-			header("Cache-Control: public, max-age=3600");
-			header("Last-Modified: {$lastModified} GMT");
-
-			if ($typeCategory == 'image' && $file->mime_type != "image/svg+xml" && (isset($options['c']) || isset($options['r']) || isset($options['s'])))
+			$options = array();
+			foreach ($optionMatches as $match)
 			{
-				$image = imagecreatefromstring($file->data);
+				$options[$match[1]] = $match[2];
+			}
 
-				if (isset($options['r']) && is_numeric($options['r']))
-					$image = imagerotate($image, 360-$options['r'], imageColorAllocateAlpha($image, 0, 0, 0, 127));
+			$file = $XenuxDB->getEntry('files', [
+						'where' => [
+							'AND' => [
+								'type' => 'file',
+								'id' => $ID
+							]
+						]
+					]);
+			if ($file)
+			{
+				$lastModified = mysql2date('D, d M Y H:i:s', $file->lastModified);
+				$typeCategory = substr($file->mime_type, 0, strpos($file->mime_type, "/"));
 
-				$x = imagesx($image);
-				$y = imagesy($image);
+				header("Content-Disposition: ".(isset($options['d']) ? 'attachment' : 'inline')."; filename=\"{$file->filename}.{$file->file_extension}\"");
+				header("Cache-Control: public, max-age=3600");
+				header("Last-Modified: {$lastModified} GMT");
 
-				if (isset($options['s']))
-					$options['s'] = $options['s'] > $x ? $x : $options['s'];
-
-				if (isset($options['c']))
+				if ($typeCategory == 'image' && $file->mime_type != "image/svg+xml" && (isset($options['c']) || isset($options['r']) || isset($options['s'])))
 				{
-					$desired_height	= $desired_width = isset($options['s']) && is_numeric($options['s']) ? $options['s'] : $y;
+					$image = imagecreatefromstring($file->data);
+
+					if (isset($options['r']) && is_numeric($options['r']))
+						$image = imagerotate($image, 360-$options['r'], imageColorAllocateAlpha($image, 0, 0, 0, 127));
+
+					$x = imagesx($image);
+					$y = imagesy($image);
+
+					if (isset($options['s']))
+						$options['s'] = $options['s'] > $x ? $x : $options['s'];
+
+					if (isset($options['c']))
+					{
+						$desired_height	= $desired_width = isset($options['s']) && is_numeric($options['s']) ? $options['s'] : $y;
+					}
+					else
+					{
+						$desired_width = (isset($options['s']) && is_numeric($options['s'])) ? $options['s'] : $x;
+						$desired_height = $y / $x * $desired_width;
+					}
+
+					$new = imagecreatetruecolor($desired_width, $desired_height);
+					imagealphablending($new, FALSE);
+					imagesavealpha($new, TRUE);
+					imagecopyresampled($new, $image, 0, 0, 0, 0, $desired_width, $desired_height, $x, $y);
+					imagedestroy($image);
+
+					if ($file->mime_type == "image/jpeg")
+					{
+			#			header("Content-type: image/jpeg");
+						imagejpeg($new);
+					}
+					elseif ($file->mime_type == "image/gif")
+					{
+						header("Content-type: image/gif");
+						imagegif($new);
+					}
+					else
+					{
+						header("Content-type: image/png");
+						imagepng($new);
+					}
 				}
 				else
 				{
-					$desired_width = (isset($options['s']) && is_numeric($options['s'])) ? $options['s'] : $x;
-					$desired_height = $y / $x * $desired_width;
-				}
-
-				$new = imagecreatetruecolor($desired_width, $desired_height);
-				imagealphablending($new, FALSE);
-				imagesavealpha($new, TRUE);
-				imagecopyresampled($new, $image, 0, 0, 0, 0, $desired_width, $desired_height, $x, $y);
-				imagedestroy($image);
-
-				if ($file->mime_type == "image/jpeg")
-				{
-					header("Content-type: image/jpeg");
-					imagejpeg($new);
-				}
-				elseif ($file->mime_type == "image/gif")
-				{
-					header("Content-type: image/gif");
-					imagegif($new);
-				}
-				else
-				{
-					header("Content-type: image/png");
-					imagepng($new);
+					header("Content-type: {$file->mime_type}");
+					echo $file->data;
 				}
 			}
 			else
 			{
-				header("Content-type: {$file->mime_type}");
-				echo $file->data;
+				ErrorPage::view(404);
+				if (defined('DEBUG') && DEBUG == true)
+					log::writeLog('404 - Request file "'.$param.'" not found');
 			}
+
 		}
-		else
+		catch (Exception $e)
 		{
-			ErrorPage::view(404);
-			if (defined('DEBUG') && DEBUG == true)
-				log::writeLog('404 - Request file "'.$param.'" not found');
+			log::setPHPError($e);
 		}
 	}
 }

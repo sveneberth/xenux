@@ -243,8 +243,9 @@ class pluginmanagerController extends AbstractController
 		{
 			$templatehelper = new pluginhelper('template');
 
-			$uploadfile	= $templatehelper->tmppath . basename($_FILES['file']['name']); // uploadfile
-			$ext		= end((explode(".",  $_FILES["file"]["name"]))); // extension
+			$uploadfile = $templatehelper->tmppath . basename($_FILES['file']['name']); // uploadfile
+			#$ext       = end((explode(".",  $_FILES["file"]["name"]))); // extension
+			$ext        = pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION);
 
 			if ($ext == 'zip')
 			{
@@ -313,7 +314,11 @@ class pluginmanagerController extends AbstractController
 					$templatehelper = new pluginhelper('template', false);
 					$templatehelper->name($_GET['removeTemplate']);
 
-					if ($templatehelper->uninstall())
+					if ($app->getOption('template') == $_GET['removeTemplate']) // template in useage
+					{
+						$this->template->setVar("messages", '<p class="box-shadow info-message error">'.__('removing failed, template in usage').'</p>');
+					}
+					elseif ($templatehelper->uninstall())
 					{
 						$this->template->setVar("messages", '<p class="box-shadow info-message ok">'.__('removedSuccessful').'</p>');
 					}

@@ -129,7 +129,7 @@
 					}
 				}
 ?>
-"*"
+{#
 					<li class="active"><a href="#">Home</a></li>
 					<li><a href="#about">About</a></li>
 					<li><a href="#contact">Contact</a></li>
@@ -145,7 +145,7 @@
 							<li><a href="#">One more separated link</a></li>
 						</ul>
 					</li>
-"*"
+#}
 				</ul>
 			</div><!--/.nav-collapse -->
 		</div>
@@ -189,32 +189,32 @@
 					}
 				?>
 
-				<aside class="news">
-					<h5><?= __('news_Pl') ?></h5>
+				<aside class="posts">
+					<h5><?= __('posts') ?></h5>
 					<ul>
 						<?php
-							// get news (only public news)
-							$newsList = $XenuxDB->getList('news', [
+							// get post (only published posts)
+							$posts = $XenuxDB->getList('posts', [
 								'limit' => 3,
 								'order' => 'create_date DESC',
 								'where' => [
-									'public' => true
+									'status' => 'publish'
 								]
 							]);
-							if ($newsList)
+							if ($posts)
 							{
-								foreach ($newsList as $news)
+								foreach ($posts as $post)
 								{
-									echo '<li><a href="{{URL_MAIN}}/news/view/'.getPreparedLink($news->id, $news->title).'">'.$news->title.'</a></li>';
+									echo '<li><a href="{{URL_MAIN}}/posts/view/'.getPreparedLink($post->id, $post->title).'">'.$post->title.'</a></li>';
 								}
 							}
 							else
 							{
-								echo "<p style=\"margin:5px 0;\">" . __("noNews") . "</p>";
+								echo "<p style=\"margin:5px 0;\">" . __("noposts") . "</p>";
 							}
 						?>
 					</ul>
-					<a style="display:inline-block;margin-top:5px;" href="{{URL_MAIN}}/news/list"><?= __("showAllNews") ?></a>
+					<a style="display:inline-block;margin-top:5px;" href="{{URL_MAIN}}/posts/list"><?= __("showAllPosts") ?></a>
 				</aside>
 
 				<aside class="events">
@@ -222,19 +222,19 @@
 					<ul>
 						<?php
 							// get events (only public events)
-							$eventList = $XenuxDB->getList('events', [
+							$events = $XenuxDB->getList('events', [
 								'limit' => 3,
 								'order' => 'start_date DESC',
 								'where' => [
 									'AND' => [
 										'##start_date[>=]' => 'CURDATE()',
-										'public' => true
+										'status' => 'publish'
 									]
 								]
 							]);
-							if ($eventList)
+							if ($events)
 							{
-								foreach ($eventList as $event)
+								foreach ($events as $event)
 								{
 									echo '<li><a href="{{URL_MAIN}}/event/view/'.getPreparedLink($event->id, $event->title).'">'.$event->title.'</a></li>';
 								}

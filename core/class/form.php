@@ -37,7 +37,7 @@ class form
 
 		foreach($this->fields as $name => $props)
 		{
-			if (in_array(['html', 'file'], $props['type'])) // those types has no value
+			if (in_array($props['type'], ['html', 'file'])) // those types has no value
 				continue;
 
 			$value = isset($data[$name]) ? $data[$name] : null;

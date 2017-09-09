@@ -4,6 +4,24 @@
 @svgHoverColor: #157EFB;
 @breadcrumb: #2C6DD2;
 
+// center
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.centerX {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+.centerY {
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
 .actions {
   background: #eee;
   padding: 15px;
@@ -170,15 +188,7 @@
   transition: .5s linear all;
 }
 .ajax-loader {
-  position: fixed;
-  top: 40%;
-  left: 48%;
-  height: 50px;
-  width: 50px;
-  z-index: 100;
-  background-position: center;
-  background-size: 100%;
-  background-image: url('{{TEMPLATE_PATH}}/images/ajax-loader.gif');
+  .center;
 }
 #feedback {
   font-size: 1.4em;

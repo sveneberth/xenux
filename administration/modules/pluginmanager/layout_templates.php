@@ -17,7 +17,9 @@
 			$installed_templates = json_decode($app->getOption('installed_templates'));
 			foreach ((array) $installed_templates as $name)
 			{
-				echo $name . '<a style="float: right;" href="' . URL_ADMIN . '/pluginmanager/templates?removeTemplate=' . $name . '">X</a><br>';
+				echo $name . '<a style="float: right;" href="' .
+					URL_ADMIN . '/pluginmanager/templates?removeTemplate=' . $name . '">' .
+					embedSVG(PATH_ADMIN . '/template/images/trash.svg') . '</a><br>';
 			}
 		?>
 	</section>

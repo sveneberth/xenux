@@ -90,7 +90,6 @@ class template
 	*/
 	private function replaceComments($content)
 	{
-		$content = preg_replace('/\"\*\"(.*?)\"\*\"/s', '', $content); // old style
 		return preg_replace('/\{\#(.*?)\#\}/s', '', $content);
 	}
 

@@ -2,10 +2,10 @@
 // include Xenux-Loader
 include_once(dirname(dirname(dirname(__DIR__))) . "/core/xenux-load.php");
 
-if(!(defined('DEBUG') && DEBUG == true))
+if (!(defined('DEBUG') && DEBUG == true))
 	error_reporting(0);
 
-if(!$app->user->isLogin())
+if (!$app->user->isLogin())
 	ErrorPage::view(404);
 
 $return = array();
@@ -15,7 +15,7 @@ $return['status'] = 0;
 switch(@$_REQUEST['task'])
 {
 	case 'upload':
-		if(isset($_REQUEST['parent_folder']))
+		if (isset($_REQUEST['parent_folder']))
 		{
 			$return['success'] = true;
 
@@ -54,7 +54,7 @@ switch(@$_REQUEST['task'])
 					'parent_folder_id' => $parent_folder,
 					'author_id'        => $app->user->userInfo->id
 				]);
-				if($result === false)
+				if ($result === false)
 				{
 					$return['success'] = false;
 					break;
@@ -68,7 +68,7 @@ switch(@$_REQUEST['task'])
 		}
 		break;
 	case 'create_folder':
-		if(isset($_REQUEST['folder_name']) && isset($_REQUEST['parent_folder']))
+		if (isset($_REQUEST['folder_name']) && isset($_REQUEST['parent_folder']))
 		{
 			$return['success'] = true;
 
@@ -80,9 +80,10 @@ switch(@$_REQUEST['task'])
 				'filename'         => $folder_name,
 				'lastModified'     => date("Y-m-d H:i:s"),
 				'parent_folder_id' => $parent_folder,
+				'author_id'        => $app->user->userInfo->id
 			]);
 
-			if($result === false)
+			if ($result === false)
 				$return['success'] = false;
 		}
 		else
@@ -92,7 +93,7 @@ switch(@$_REQUEST['task'])
 		}
 		break;
 	case 'dir_list':
-		if(isset($_REQUEST['folder']))
+		if (isset($_REQUEST['folder']))
 		{
 			$folder = $_REQUEST['folder'];
 
@@ -106,6 +107,7 @@ switch(@$_REQUEST['task'])
 						'id',
 						'type',
 						'filename',
+						'file_extension',
 						'mime_type'
 					],
 					'where' => [
@@ -114,7 +116,7 @@ switch(@$_REQUEST['task'])
 					'order' => 'filename ASC'
 				]);
 
-				if($result !== false)
+				if ($result !== false)
 				{
 					$return['data']    = $result;
 					$return['success'] = true;
@@ -140,7 +142,7 @@ switch(@$_REQUEST['task'])
 		}
 		break;
 	case 'breadcrumb':
-		if(isset($_REQUEST['folder']))
+		if (isset($_REQUEST['folder']))
 		{
 			$return['success'] = true;
 			$return['status'] = 200;
@@ -148,7 +150,7 @@ switch(@$_REQUEST['task'])
 			$folder = $_REQUEST['folder'];
 
 			$breadcrumb = array();
-			while($folder != 0)
+			while ($folder != 0)
 			{
 				$row = $XenuxDB->getEntry('files', [
 					'columns' => [
@@ -163,9 +165,9 @@ switch(@$_REQUEST['task'])
 				]);
 
 
-				if($row === false || $row === null)
+				if ($row === false || $row === null)
 				{
-					if($row === null) {
+					if ($row === null) {
 						$return['message'] = 'folder not found';
 						$return['status']  = 404;
 					}
@@ -189,7 +191,7 @@ switch(@$_REQUEST['task'])
 		}
 		break;
 	case 'getFileInfo':
-		if(isset($_REQUEST['id']))
+		if (isset($_REQUEST['id']))
 		{
 			$return['success'] = true;
 
@@ -213,7 +215,7 @@ switch(@$_REQUEST['task'])
 				]
 			]);
 
-			if($row)
+			if ($row)
 			{
 				$return['data'] = $row;
 			}
@@ -229,11 +231,11 @@ switch(@$_REQUEST['task'])
 		}
 		break;
 	case 'remove':
-		if(isset($_REQUEST['id']))
+		if (isset($_REQUEST['id']))
 		{
 			$id = $_REQUEST['id'];
 
-			if($id == 0)
+			if ($id == 0)
 			{
 				$XenuxDB->clearTable('files');
 				break;
@@ -244,7 +246,7 @@ switch(@$_REQUEST['task'])
 					'id' => $id
 				]
 			]);
-			if($num == 0)
+			if ($num == 0)
 			{
 				$return['errmsg']  = "to remove file doesn't exist";
 				$return['success'] = false;
@@ -267,12 +269,12 @@ switch(@$_REQUEST['task'])
 				]
 			]);
 
-			if($row->type == 'folder')
+			if ($row->type == 'folder')
 			{
 				$arrFolder = array();
 				$arrFolder[] = $id;
 
-				while(!empty($arrFolder))
+				while (!empty($arrFolder))
 				{
 					$arrTemp = $arrFolder;
 					$arrFolder = array();
@@ -287,7 +289,7 @@ switch(@$_REQUEST['task'])
 
 						foreach ($results as $result)
 						{
-							if($result->type == 'folder')
+							if ($result->type == 'folder')
 							{
 								$arrFolder[] = $result->id;
 							}
@@ -309,12 +311,12 @@ switch(@$_REQUEST['task'])
 		}
 		break;
 	case 'move':
-		if(isset($_REQUEST['id']) && isset($_REQUEST['to']))
+		if (isset($_REQUEST['id']) && isset($_REQUEST['to']))
 		{
 			$id = $_REQUEST['id'];
 			$to = $_REQUEST['to'];
 
-			if($id == $to)
+			if ($id == $to)
 			{
 				$return['message'] = "can't move folder in self";
 				$return['success'] = false;
@@ -335,7 +337,7 @@ switch(@$_REQUEST['task'])
 		}
 		break;
 	case 'rename':
-		if(isset($_REQUEST['id']) && isset($_REQUEST['newName']))
+		if (isset($_REQUEST['id']) && isset($_REQUEST['newName']))
 		{
 			$id      = $_REQUEST['id'];
 			$newName = $_REQUEST['newName'];
@@ -347,7 +349,7 @@ switch(@$_REQUEST['task'])
 			[
 				'id' => $id
 			]);
-			if($result === false)
+			if ($result === false)
 				$return['success'] = false;
 		}
 		else
@@ -365,7 +367,7 @@ switch(@$_REQUEST['task'])
 		$arrFolder   = array();
 		$arrFolder[] = $id;
 
-		while(!empty($arrFolder))
+		while (!empty($arrFolder))
 		{
 			$arrTemp = $arrFolder;
 			$arrFolder = array();
@@ -400,7 +402,7 @@ switch(@$_REQUEST['task'])
 		{
 			$folder = $val;
 			$breadcrumb = array();
-			while($folder != 0)
+			while ($folder != 0)
 			{
 				$row = $XenuxDB->getEntry('files', [
 					'columns' => [
