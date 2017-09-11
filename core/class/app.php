@@ -288,14 +288,13 @@ class app
 				if ($file->type == 'file')
 					{
 					$lastModified = mysql2date('D, d M Y H:i:s', $file->lastModified);
-					$typeCategory = substr($file->mime_type, 0, strpos($file->mime_type, "/"));
 
 					header("Content-Disposition: ".(isset($options['d']) ? 'attachment' : 'inline')."; filename=\"{$file->filename}.{$file->file_extension}\"");
 					header("Cache-Control: public, max-age=3600");
 					header("Last-Modified: {$lastModified} GMT");
-					header("Content-Length: " . $file->size);
+					header("Content-Length: {$file->size}");
 
-					if ($typeCategory == 'image' && $file->mime_type != "image/svg+xml" && (isset($options['c']) || isset($options['r']) || isset($options['s'])))
+					if (in_array($file->mime_type, ['image/jpeg', 'image/gif', 'image/png']) && (isset($options['c']) || isset($options['r']) || isset($options['s'])))
 					{
 						$image = imagecreatefromstring($file->data);
 
@@ -324,19 +323,19 @@ class app
 						imagecopyresampled($new, $image, 0, 0, 0, 0, $desired_width, $desired_height, $x, $y);
 						imagedestroy($image);
 
-						if ($file->mime_type == "image/jpeg")
+						if ($file->mime_type == 'image/jpeg')
 						{
-							header("Content-type: image/jpeg");
+							header('Content-type: image/jpeg');
 							imagejpeg($new);
 						}
-						elseif ($file->mime_type == "image/gif")
+						elseif ($file->mime_type == 'image/gif')
 						{
-							header("Content-type: image/gif");
+							header('Content-type: image/gif');
 							imagegif($new);
 						}
 						else
 						{
-							header("Content-type: image/png");
+							header('Content-type: image/png');
 							imagepng($new);
 						}
 					}
