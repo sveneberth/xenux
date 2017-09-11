@@ -356,7 +356,7 @@ function full_copy ($source, $target)
 {
 	if (is_dir($source))
 	{
-		@mkdir($target);
+		create_folder($target);
 
 		$d = dir($source);
 
@@ -485,5 +485,5 @@ function embedSVG($file)
 function create_folder($path)
 {
 	if (!file_exists($path)) // create folder, if doesn't exists
-		return mkdir($path, null, true);
+		return mkdir($path, 0777, true);
 }

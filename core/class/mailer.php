@@ -139,8 +139,7 @@ class mailer
 
 	private function debugMail()
 	{
-		if (!file_exists(PATH_MAIN . $this->debugPath))
-			mkdir(PATH_MAIN . $this->debugPath);
+		create_folder(PATH_MAIN . $this->debugPath);
 
 		$this->push_header('To: ' . $this->getTo());
 		$this->push_header('Subject: ' . $this->escapeUTF8($this->subject));

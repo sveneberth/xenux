@@ -32,12 +32,11 @@ class log
 			$msg = json_encode($msg);
 		}
 
-		$msg = date("[d-M-Y H:i:s]")." ".$msg."\r\n";
+		$msg = date('[d-M-Y H:i:s]') . ' ' . $msg . "\r\n";
 
-		if (!file_exists(PATH_MAIN."/logs/"))
-			mkdir(PATH_MAIN."/logs/");
+		create_folder(PATH_MAIN . '/logs/');
 
-		$handle = fopen(PATH_MAIN."/logs/".date("Y-m-d").".log", "a");
+		$handle = fopen(PATH_MAIN . '/logs/' . date('Y-m-d') . '.log', 'a');
 		fwrite($handle, $msg);
 		fclose($handle);
 	}

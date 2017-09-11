@@ -399,7 +399,8 @@ class app
 											$breadcrumb[] = $row->filename;
 										}
 										$breadcrumb = array_reverse($breadcrumb);
-										$path = implode('/', $breadcrumb) . '/';
+										$path  = implode('/', $breadcrumb);
+										$path .= $path == '' ? '' : '/';
 
 										$zip->addFromString($path . $result->filename . '.' . $result->file_extension, $result->data);
 									}
