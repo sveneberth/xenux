@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%files` (
   `file_extension` varchar(300) DEFAULT NULL,
   `data` longblob,
   `filename` varchar(200) DEFAULT NULL,
-  `size` bigint(20) NOT NULL COMMENT 'size in byte',
+  `size` bigint(20) DEFAULT NULL COMMENT 'size in byte',
   `lastModified` timestamp NULL DEFAULT NULL,
   `parent_folder_id` int(10) NOT NULL,
   `author_id` int(11) NOT NULL
