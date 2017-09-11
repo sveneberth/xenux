@@ -646,7 +646,7 @@ Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: '
 		]);
 		if ($user)
 		{
-			$app->user->userInfo->id = $user->id;
+			$app->user->userInfo->id = $user->id; #FIXME Warning: Creating default object from empty value in /administration/modules/login/controller.php on line 649
 
 			$return = $XenuxDB->Update('users', [
 				'verifykey' => NULL,

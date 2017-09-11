@@ -2,12 +2,13 @@
 require_once(PATH_MAIN . '/core/libs/html2text/Html2Text.php');
 require_once(PATH_MAIN . '/core/libs/html2text/Html2TextException.php');
 
+#TDOD: add function addAttachment
+
 class mailer
 {
 	public $debugPath =  '/mails/';
 	public $charset = 'UTF-8';
 	public $lang = 'de';
-	public $LE = "\n";
 
 	private $to = array();
 	private $header = array();
@@ -55,7 +56,7 @@ class mailer
 
 	public function setSubject($value)
 	{
-		$this->subject = trim(str_replace(array("\r", "\n"), '', $value));
+		$this->subject = trim(str_replace(["\r", "\n"], '', $value));
 	}
 
 	public function push_header($value)
@@ -81,11 +82,10 @@ class mailer
 	private function buildHeader()
 	{
 		$this->push_header('MIME-Version: 1.0');
-		$this->push_header('Content-type: text/html; charset=' . $this->charset);
 		$this->push_header('From: ' . (!$this->is_null($this->fromName) ? $this->fromName : '') . (!$this->is_null($this->from) ? ($this->is_null($this->fromName) ? $this->from : ' <' . $this->from . '>') : ''));
 		$this->push_header('Reply-To: ' . (!$this->is_null($this->replyToName) ? $this->replyToName : '') . (!$this->is_null($this->replyTo) ? ($this->is_null($this->replyToName) ? $this->replyTo : ' <' . $this->replyTo . '>') : ''));
 		$this->push_header('X-Mailer: XENUX ' . XENUX_VERSION . ' MAILER');
-		$this->push_header('Content-Type: multipart/alternative;boundary=' . $this->boundary);
+		$this->push_header('Content-Type: multipart/alternative;boundary="' . $this->boundary . '"');
 	}
 
 	private function buildMail()
@@ -103,15 +103,17 @@ class mailer
 </html>';
 
 		$mail  = "\n\n--" . $this->boundary . "\n";
-		$mail .= 'Content-type: text/plain;charset=' . $this->charset . "\n\n";
+		$mail .= 'Content-type: text/plain;charset=' . $this->charset . "\n";
+		$mail .= "Content-Transfer-Encoding: quoted-printable\n\n";
 		$mail .= $mailPlain;
 		$mail .= "\n\n--" . $this->boundary . "\n";
-		$mail .= 'Content-type: text/html;charset=' . $this->charset . "\n\n";
+		$mail .= 'Content-type: text/html;charset=' . $this->charset . "\n";
+		$mail .= "Content-Transfer-Encoding: quoted-printable\n\n";
 		$mail .= $mailHTML;
 		$mail .= "\n\n--" . $this->boundary . '--';
 
-		$mail = str_replace(["\r\n", "\r", "\n"], $this->LE, $mail); // Line Endings
-		$mail = wordwrap($mail, 80); // Use 80 characters wide lines
+		$mail = str_replace(["\r\n", "\r", "\n"], "\n", $mail); // Line Endings
+		$mail = chunk_split($mail, 76); // Use 76 characters wide lines
 
 		$this->mail = $mail;
 	}

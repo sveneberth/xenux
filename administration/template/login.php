@@ -14,7 +14,7 @@
 	<!-- <link rel="shortcut icon" href="{{TEMPLATE_PATH}}/img/favicon.png"> -->
 
 	<!-- css -->
-	<link rel="stylesheet" type="text/css" href="{{TEMPLATE_PATH}}/css/login.css" media="all">
+	<link rel="stylesheet"  href="{{TEMPLATE_PATH}}/css/login.css" media="all">
 </head>
 <body id="top">
 	#if(logout):
