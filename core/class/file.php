@@ -9,7 +9,6 @@
  * -r		: rotate an image clockwise
  */
 
- #FIXME: <{{URL_MAIN}}/file/> download root - but should throw an error
  #FIXME: folder download only allowed as admin (user is login)
 
 class file
