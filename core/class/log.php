@@ -17,7 +17,7 @@ class log
 	}
 
 	public static function debug($str) {
-		if (!(defined('DEBUG') && DEBUG == true)) // debug only in debug mode
+		if (!DEBUG_MODE) // debug only in debug mode
 			return false;
 
 		$msg = sprintf("[DEBUG] %s", $str);

@@ -2,7 +2,7 @@
 // include Xenux-Loader
 include_once(dirname(dirname(dirname(__DIR__))) . "/core/xenux-load.php");
 
-if (!(defined('DEBUG') && DEBUG == true))
+if (!DEBUG_MODE)
 	error_reporting(0);
 
 if (!$app->user->isLogin())

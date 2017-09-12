@@ -8,6 +8,7 @@ class searchController extends AbstractController
 		parent::__construct($url);
 
 		global $XenuxDB;
+		// escape string here manually because of the direct query below
 		$this->searchString = $XenuxDB->escapeString(@$_GET['q']);
 	}
 

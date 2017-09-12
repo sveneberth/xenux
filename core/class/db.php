@@ -16,7 +16,7 @@ class db
 
 				self::$db->query("SET NAMES 'utf8';"); // define database as utf-8
 
-				log::writeLog("### connection to database successful ###");
+				log::debug("### connection to database successful ###");
 			}
 			catch (Exception $e)
 			{

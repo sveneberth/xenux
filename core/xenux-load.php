@@ -25,16 +25,16 @@ if (!file_exists(PATH_MAIN."/xenux-conf.php"))
 	header("Location: ".URL_MAIN."/install/");
 }
 
+/** include Config of Xenux */
+include_once(PATH_MAIN.'/xenux-conf.php');
+
 /** include vars */
 include_once(PATH_MAIN.'/core/config/vars.php');
 
-// include Config of Xenux
-include_once(PATH_MAIN.'/xenux-conf.php');
-
-// include stuff
+/** include helper functions **/
 include_once(PATH_MAIN.'/core/inc/functions.php'); // include functions
 
-// include classes
+/** include classes */
 include_once(PATH_MAIN.'/core/class/log.php');
 include_once(PATH_MAIN.'/core/class/db.php');
 include_once(PATH_MAIN.'/core/class/XenuxDB.php');
@@ -47,6 +47,7 @@ include_once(PATH_MAIN.'/core/class/form.php');
 include_once(PATH_MAIN.'/core/class/mailer.php');
 include_once(PATH_MAIN.'/core/class/ErrorPage.php');
 include_once(PATH_MAIN.'/core/class/pluginhelper.php');
+include_once(PATH_MAIN.'/core/class/file.php');
 
 /** divider for a new page call */
 //if (defined('DEBUG') && DEBUG == true) #FIXME if final

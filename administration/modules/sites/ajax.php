@@ -1,8 +1,8 @@
 <?php
 // include Xenux-Loader
-include_once(dirname(dirname(dirname(__DIR__))) . "/core/xenux-load.php");
+include_once(dirname(dirname(dirname(__DIR__))) . '/core/xenux-load.php');
 
-if (!(defined('DEBUG') && DEBUG == true))
+if (!DEBUG_MODE)
 	error_reporting(0);
 
 if (!$app->user->isLogin())
@@ -22,9 +22,9 @@ switch($_REQUEST['task'])
 			if ($key == 0)
 				continue;
 
-			$item_id		= $XenuxDB->escapeString($val['item_id']);
-			$parent_id		= $XenuxDB->escapeString($val['parent_id']);
-			$sortindex		= $XenuxDB->escapeString($val['left']);
+			$item_id   = $val['item_id'];
+			$parent_id = $val['parent_id'];
+			$sortindex = $val['left'];
 
 			$return['success'] = $XenuxDB->Update('sites', [
 				'parent_id' => $parent_id,
@@ -35,8 +35,8 @@ switch($_REQUEST['task'])
 			]) !== false;
 		}
 		break;
-	case "site_edit_remove":
-		$item_id	= $XenuxDB->escapeString($_REQUEST['item_id']);
+	case 'site_edit_remove':
+		$item_id = $_REQUEST['item_id'];
 
 		$return['success'] = $XenuxDB->Update('sites', [
 			'parent_id' => 0

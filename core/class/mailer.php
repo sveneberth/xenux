@@ -131,7 +131,7 @@ class mailer
 			implode("\n", $this->header)
 		);
 
-		if (defined('DEBUG') && DEBUG == true)
+		if (DEBUG_MODE)
 			$this->debugMail();
 
 		return $result;
