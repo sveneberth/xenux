@@ -17,6 +17,13 @@ $(function() {
 		e.preventDefault();
 	});
 
+	$('body').on('click', '.explorer-file-remove-btn', function(e) {
+		var name  = $(this).data('for');
+		$('#' + name).val(0);
+
+		e.preventDefault();
+	});
+
 	$('body').on('click', '.explorer .item', function(e) {
 		var name = $('.explorer').attr('id').replace('explorer-', '');
 		var id   = $(this).attr('id');

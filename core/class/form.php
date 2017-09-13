@@ -81,6 +81,8 @@ class form
 
 	public function isValid()
 	{
+		global $XenuxDB, $app;
+
 		foreach ($this->fields as $name => $props)
 		{
 			if ($props['type'] == 'html')
@@ -129,10 +131,36 @@ class form
 						}
 						break;
 					case 'number':
-					case 'cloud-file':
 						if (!is_numeric($this->data[$name]))
 						{
 							$this->setErrorMsg(__('only number in field', $props['label']));
+							$this->setFieldInvalid($name);
+						}
+						break;
+					case 'cloud-file':
+						$props['allowedTypes'] = isset($props['allowedTypes']) ? $props['allowedTypes'] : '*';
+						if (is_string($props['allowedTypes'])) $props['allowedTypes'] = [$props['allowedTypes']];
+
+						$result = $XenuxDB->getEntry('files', [
+							'columns' => [
+								'type',
+								'mime_type'
+							],
+							'where' => [
+								'id' => $this->data[$name]
+							]
+						]);
+
+						$typeCategory = explode('/', @$result->mime_type)[0];
+
+						var_dump($props);
+						if (!is_numeric($this->data[$name]) || @$result->type != 'file' || (
+							(
+								!in_array(@$result->mime_type, $props['allowedTypes']) ||
+								!in_array($typeCategory . '/*', $props['allowedTypes'])
+							) && !in_array('*', $props['allowedTypes'])))
+						{
+							$this->setErrorMsg(__('file not allowed in field', $props['label']));
 							$this->setFieldInvalid($name);
 						}
 						break;

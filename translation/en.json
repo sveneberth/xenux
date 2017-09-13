@@ -69,9 +69,11 @@
     "please fill in a valid date": "Please fill in field \"%1\" a valid date!",
     "please fill in a valid time": "please fill in field \"%1\" a valid time!",
     "only number in field": "Only numbers are allowed in field \"%1\"!",
+    "file not allowed in field": "File in field \"%1\" is not allowed!",
     "with a star marked fields are mandatory fields": "All with a star marked fields are mandatory fields.",
     "you cannot change this value": "You cannot change this value.",
     "select file": "Select file",
+    "remove file": "remove file",
 
     "yes":"Yes",
     "no":"No",
