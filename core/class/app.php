@@ -200,6 +200,7 @@ class app
 			}
 			else
 			{
+				header('HTTP/1.1 404 Not Found');
 				throw new Exception("404 - controller \"$this->site\" not found");
 			}
 		}
@@ -213,7 +214,8 @@ class app
 
 	public function addCSS($file)
 	{
-		$this->cssfiles[] = $file;
+		if (!in_array($file, $this->cssfiles))
+			$this->cssfiles[] = $file;
 	}
 
 	public function getCSS()
@@ -229,7 +231,8 @@ class app
 
 	public function addJS($file)
 	{
-		$this->jsfiles[] = $file;
+		if (!in_array($file, $this->jsfiles))
+			$this->jsfiles[] = $file;
 	}
 
 	public function getJS()

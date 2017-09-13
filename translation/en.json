@@ -56,7 +56,7 @@
     "sitemap":"Sitemap",
     "contact":"Contact",
     "imprint":"Imprint",
-    "administration":"administration",
+    "administration":"Administration",
     "homepage":"Homepage",
 
     "If you dont want to change the password, leave the fields blank":"If you don't want to change the password, leave the fields blank",
@@ -71,6 +71,7 @@
     "only number in field": "Only numbers are allowed in field \"%1\"!",
     "with a star marked fields are mandatory fields": "All with a star marked fields are mandatory fields.",
     "you cannot change this value": "You cannot change this value.",
+    "select file": "Select file",
 
     "yes":"Yes",
     "no":"No",

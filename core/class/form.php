@@ -9,7 +9,6 @@ class form
 	private $method;
 	private $error_msg = array();
 	private $requiredInfo = true;
-	private $useWYSIWYG = false;
 
 	public function __construct(array $fields, $class=null, $id=null, $action=null, $method='post')
 	{
@@ -77,9 +76,6 @@ class form
 
 		$formTemplate->setIfCondition('requiredInfo', $this->requiredInfo);
 
-		if ($this->useWYSIWYG)
-			$app->addJS(URL_ADMIN . "/wysiwyg/ckeditor.js");
-
 		return $formTemplate->render();
 	}
 
@@ -133,6 +129,7 @@ class form
 						}
 						break;
 					case 'number':
+					case 'cloud-file':
 						if (!is_numeric($this->data[$name]))
 						{
 							$this->setErrorMsg(__('only number in field', $props['label']));
@@ -263,7 +260,7 @@ class form
 			case 'wysiwyg':
 				$fieldTemplate->setVar('class', $class . ' ckeditor');
 				$fieldTemplate->setVar('value', htmlentities($value, ENT_SUBSTITUTE, "UTF-8"));
-				$this->useWYSIWYG = true;
+				$app->addJS(URL_ADMIN . '/wysiwyg/ckeditor.js');
 				return $fieldTemplate->render($this->getFormTemplateURL('_form_textarea.php'));
 				break;
 			case 'select':
@@ -325,8 +322,13 @@ class form
 				$fieldTemplate->setIfCondition('multiple', $props['multiple']);
 				return $fieldTemplate->render($this->getFormTemplateURL('_form_file_upload.php'));
 				break;
-			case 'thumbnail':
-				return $fieldTemplate->render($this->getFormTemplateURL('_form_thumnail.php'));
+			case 'cloud-file':
+				$props['allowedTypes'] = isset($props['allowedTypes']) ? $props['allowedTypes'] : '*';
+				if (is_string($props['allowedTypes'])) $props['allowedTypes'] = [$props['allowedTypes']];
+				$app->addCSS(URL_ADMIN . '/modules/cloud/explorer.min.css');
+				$app->addJS(URL_ADMIN . '/modules/cloud/explorer.js');
+				$fieldTemplate->setVar('allowedTypes', json_encode($props['allowedTypes']));
+				return $fieldTemplate->render($this->getFormTemplateURL('_form_cloud-file.php'));
 				break;
 			case 'submit':
 				return $fieldTemplate->render($this->getFormTemplateURL('_form_submit.php'));

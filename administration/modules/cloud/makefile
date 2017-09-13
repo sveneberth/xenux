@@ -1,5 +1,10 @@
-LESS = lessc cloud.less
+TOOL         = lessc
+
+CLOUDLESS    = $(TOOL) cloud.less
+EXPLORERLESS = $(TOOL) explorer.less
 
 default:
-	$(LESS) cloud.css
-	$(LESS) cloud.min.css --clean-css
+	$(CLOUDLESS) cloud.css
+	$(CLOUDLESS) cloud.min.css --clean-css
+	$(EXPLORERLESS) explorer.css
+	$(EXPLORERLESS) explorer.min.css --clean-css

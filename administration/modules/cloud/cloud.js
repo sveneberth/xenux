@@ -11,7 +11,7 @@ $(function() {
 
 	var url = window.location.href;
 	var folderID = url.substr(url.indexOf("/cloud/") + 7);
-	if(isInt(folderID)) {
+	if (isInt(folderID)) {
 		dir_list(folderID); // load folder
 	} else {
 		dir_list(0); // load root
@@ -69,7 +69,7 @@ $(function() {
 
 	// click events
 	$('body').on('click', '.explorer .item', function(e) {
-		if(!e.ctrlKey) { // if ctrl is pressed don't unselect the other items
+		if (!e.ctrlKey) { // if ctrl is pressed don't unselect the other items
 			$('.explorer .item').removeClass('ui-selected');
 		}
 		$(this).toggleClass('ui-selected');
@@ -102,7 +102,7 @@ $(function() {
 	});
 	$(document).click(function(e) {
 		var container = $('.popup-editor, #info-popup');
-		if(
+		if (
 			!$('#contextmenu > *').is(e.target) &&
 			!$('.actions > button.rename, .actions > button.rename *').is(e.target) &&
 			!container.is(e.target) && container.has(e.target).length === 0
@@ -184,7 +184,7 @@ $(function() {
 		var id			= $('#contextmenu').data('targetID');
 		var targetType	= $('#contextmenu').data('targetType');
 
-		if(targetType == 'file') {
+		if (targetType == 'file') {
 			OpenInNewTab(baseurl + '/file/' + id);
 		} else {
 			dir_list(id);
@@ -226,7 +226,7 @@ $(function() {
 			},
 			success: function(response) {
 				console.log(response);
-				if(response.success == true) {
+				if (response.success == true) {
 					var options = '';
 					for(key in response.data) { // as dataset
 						options += '<option value="' + key + '">' + response.data[key] + '</option>';
@@ -248,7 +248,7 @@ $(function() {
 
 	// action events
 	$('.actions > button.remove').click(function() {
-		if($('.explorer > .item.ui-selected').length == 0) {
+		if ($('.explorer > .item.ui-selected').length == 0) {
 			console.error('no item selected');
 			return false;
 		}
@@ -258,7 +258,7 @@ $(function() {
 		});
 	});
 	$('.actions > button.move').click(function() {
-		if($('.explorer > .item.ui-selected').length == 0) {
+		if ($('.explorer > .item.ui-selected').length == 0) {
 			console.error('no item selected');
 			return false;
 		}
@@ -272,7 +272,7 @@ $(function() {
 			},
 			success: function(response) {
 				console.log(response);
-				if(response.success == true) {
+				if (response.success == true) {
 					var options = '';
 					for(key in response.data) { // as dataset,
 						options += '<option value="' + key + '">' + response.data[key] + '</option>';
@@ -289,7 +289,7 @@ $(function() {
 		});
 	});
 	$('.actions > button.rename').click(function() {
-		if($('.explorer > .item.ui-selected').length == 0) {
+		if ($('.explorer > .item.ui-selected').length == 0) {
 			console.error('no item selected');
 			return false;
 		}
@@ -310,12 +310,12 @@ $(function() {
 		$('.popup-editor.move-target').hide();
 	});
 	$('body').on('keyup', '.popup-editor.rename > input[type="text"]', function(event) {
-		if(event.keyCode == 13) {
+		if (event.keyCode == 13) {
 			$('.popup-editor.rename > input[type="button"]').trigger('click');
 		}
 	});
 	$('body').on('keyup', '.explorer .item.ui-selected .filename .rename-input', function(event) {
-		if(event.keyCode == 13) {
+		if (event.keyCode == 13) {
 			var ID = $(this).parent().parent().attr('id');
 			var filename = $(this).val();
 			console.log(ID, filename);
@@ -383,13 +383,13 @@ function upload(files) {
 			var xhr = new window.XMLHttpRequest();
 			xhr.upload.addEventListener('progress', function(evt) {
 				console.log('Number of this Upload: ' + thisUpload);
-				if(evt.lengthComputable) {
+				if (evt.lengthComputable) {
 					var percentComplete = evt.loaded / evt.total;
 					percentComplete=parseInt(percentComplete*100);
 					console.log(percentComplete);
 					$('.upload-progress > progress.upload[data-upload-num="' + thisUpload + '"]').attr('value', percentComplete);
 
-					if(percentComplete === 100) {
+					if (percentComplete === 100) {
 						notifyMe(
 							'Upload abgeschlossen',
 							'Der Upload in die Xenux-Cloud wurde erfolgreich abgeschlossen',
@@ -491,7 +491,7 @@ function rename(id, newName) {
 }
 function getFolder() {
 	var folder = $('.explorer').attr('data-folder-id');
-	if(isInt(folder)) {
+	if (isInt(folder)) {
 		return folder;
 	} else {
 		return 0; // 0 == root
@@ -509,11 +509,11 @@ function setbreadcrumb(folder) {
 		success: function(response) {
 			console.log(response);
 			var rows = '<span class="treeitem" id="0">root</span>';
-			if(response.success == true) {
+			if (response.success == true) {
 				response.data.forEach(function(entry) { // as dataset
 					rows += '<span class="treeitem" id="' + entry.id + '">' + entry.filename + '</span>';
 				});
-			} else if(response.status == 404) {
+			} else if (response.status == 404) {
 				$('.explorer').html("Error 404 - Item Not Found");
 			}
 			$('.breadcrumb').html(rows);
@@ -537,7 +537,7 @@ function fileinfo(id) {
 		},
 		success: function(response) {
 			console.log(response);
-			if(response.success == true) {
+			if (response.success == true) {
 				console.log(response.data);
 				$('#info-popup span.filename').text(response.data.filename);
 				$('#info-popup span.size').text(FileSizeConvert(response.data.size));
@@ -573,17 +573,17 @@ function dir_list(folder) {
 		},
 		success: function(response) {
 			console.log(response);
-			if(response.success == true) {
+			if (response.success == true) {
 				var rows = '';
 				$.each(response.data, function(key, entry) { // as dataset
 					var filename = escapeHtml(entry.filename);
 					var ext = entry.type == 'file' ? '.' + escapeHtml(entry.file_extension) : '';
 					rows += '<div class="item ' + entry.type + '" id="' + entry.id + '" data-filename="' + filename + '" data-ext="' + ext + '">';
-					if(entry.type == 'folder') {
+					if (entry.type == 'folder') {
 						rows += '<img src="' + imageURL + 'folder.svg" class="image">';
 					} else {
 						var typeCategory = entry.mime_type.substr(0, entry.mime_type.search('/'));
-						if(typeCategory == 'image') {
+						if (typeCategory == 'image') {
 							rows += '<img src="' + baseurl + '/file/' + entry.id + '-' + encodeURI(entry.filename) + '-s32-c" class="image">';
 						} else {
 							rows += '<img src="' + imageURL + 'document.svg" class="image">';
@@ -599,7 +599,7 @@ function dir_list(folder) {
 				$('.explorer .item').draggable({
 					handle: '.image, .filename',
 					start: function(e, ui) {
-						if(!$(this).hasClass('ui-selected')) {
+						if (!$(this).hasClass('ui-selected')) {
 							$(this).addClass('ui-selected');
 						}
 					},

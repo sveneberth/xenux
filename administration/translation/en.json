@@ -38,6 +38,7 @@
     "title":"title",
     "createDate":"createdate",
     "author":"author",
+    "image":"image",
     "ID":"ID"
   }
 }

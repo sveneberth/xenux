@@ -216,6 +216,14 @@ class postsController extends AbstractController
 				'value'    => @$post->title,
 				'class'    => 'full_page'
 			),
+			'thumbnail' => array
+			(
+				'type'      => 'cloud-file',
+				'required'  => false,
+				'label'     => __('image'),
+				'value'     => @$post->thumbnail_id,
+				'allowedTypes' => 'image/*'
+			),
 			'text' => array
 			(
 				'type'      => 'wysiwyg',
@@ -223,13 +231,6 @@ class postsController extends AbstractController
 				'label'     => __('desc'),
 				'value'     => @$post->text,
 				'showLabel' => false
-			),
-			'thumbnail' => array
-			(
-				'type'      => 'thumbnail',
-				'required'  => false,
-				'label'     => __('image'),
-				'value'     => @$post->thumbnail_id
 			),
 			'status' => array
 			(

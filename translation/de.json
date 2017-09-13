@@ -72,6 +72,7 @@
     "only number in field": "Es dürfen nur Zahlen im Feld \"%1\" verwendet werden!",
     "with a star marked fields are mandatory fields": "Alle mit einem Stern (*) gekennzeichnete Felder sind Pflichtfelder.",
     "you cannot change this value": "Du kannst diesen Wert nicht ändern",
+    "select file": "Datei auswählen",
 
     "yes":"Ja",
     "no":"Nein",
