@@ -81,7 +81,7 @@ class form
 
 	public function isValid()
 	{
-		global $XenuxDB, $app;
+		global $XenuxDB;
 
 		foreach ($this->fields as $name => $props)
 		{
@@ -153,7 +153,6 @@ class form
 
 						$typeCategory = explode('/', @$result->mime_type)[0];
 
-						var_dump($props);
 						if (!is_numeric($this->data[$name]) || @$result->type != 'file' || (
 							(
 								!in_array(@$result->mime_type, $props['allowedTypes']) ||
