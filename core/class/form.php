@@ -154,10 +154,9 @@ class form
 						$typeCategory = explode('/', @$result->mime_type)[0];
 
 						if (!is_numeric($this->data[$name]) || @$result->type != 'file' || (
-							(
-								!in_array(@$result->mime_type, $props['allowedTypes']) ||
-								!in_array($typeCategory . '/*', $props['allowedTypes'])
-							) && !in_array('*', $props['allowedTypes'])))
+							!in_array(@$result->mime_type, $props['allowedTypes']) &&
+							!in_array($typeCategory . '/*', $props['allowedTypes']) &&
+							!in_array('*', $props['allowedTypes'])))
 						{
 							$this->setErrorMsg(__('file not allowed in field', $props['label']));
 							$this->setFieldInvalid($name);
