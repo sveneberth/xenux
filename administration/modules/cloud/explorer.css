@@ -4,6 +4,7 @@
   height: 200px;
   border: 1px solid #ccc;
 }
+input[value=""] ~ .explorer-preview-img,
 input[value="0"] ~ .explorer-preview-img {
   display: none;
 }
