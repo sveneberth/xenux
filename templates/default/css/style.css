@@ -754,10 +754,30 @@ div.sitenavi > a.sitenavi.active {
 .box.margin-right {
 	margin-right: 2%;
 }
+.box a:not(.read-more),
+.box a:not(.read-more):link,
+.box a:not(.read-more):visited,
+.box a:not(.read-more):hover,
+.box a:not(.read-more):focus {
+  color: inherit;
+  text-decoration: inherit;
+}
 .box .headline {
-	margin: 0;
-	font-weight: bold;
-	font-size: 1.2em;
+  margin: 0;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+.box .headline:hover,
+.box .headline:focus {
+  color: #666;
+}
+.box .thumbnail-img {
+  float: left;
+  height: auto;
+  width: 200px;
+}
+.box.hasThumbnail .post-list-body {
+  margin-left: 215px;
 }
 .box .meta-info {
 	color: #666;
@@ -765,7 +785,7 @@ div.sitenavi > a.sitenavi.active {
 	display: block;
 	margin-bottom: 10px;
 }
-.box > a {
+.box .read-more {
 	display: inline-block;
 	margin-top: 10px;
 }

@@ -224,6 +224,13 @@ class postsController extends AbstractController
 				'value'     => @$post->text,
 				'showLabel' => false
 			),
+			'thumbnail' => array
+			(
+				'type'      => 'thumbnail',
+				'required'  => false,
+				'label'     => __('image'),
+				'value'     => @$post->thumbnail_id
+			),
 			'status' => array
 			(
 				'type'     => 'select',
@@ -282,16 +289,18 @@ class postsController extends AbstractController
 		{
 			$data = $form->getInput();
 
-			$title  = $data['title'];
-			$text   = $data['text'];
-			$status = in_array($data['status'], ['publish', 'draft', 'trash']) ? $data['status'] : 'draft';
-			$author = $app->user->userInfo->id;
+			$title     = $data['title'];
+			$thumbnail = $data['thumbnail'];
+			$text      = $data['text'];
+			$status    = in_array($data['status'], ['publish', 'draft', 'trash']) ? $data['status'] : 'draft';
+			$author    = $app->user->userInfo->id;
 
 			if ($new)
 			{
 				#TODO: add thumbnail
 				$post = $XenuxDB->Insert('posts', [
 					'title'             => $title,
+					'thumbnail_id'      => $thumbnail,
 					'text'              => $text,
 					'status'            => $status,
 					'author_id'         => $author,
@@ -314,6 +323,7 @@ class postsController extends AbstractController
 				// update it
 				$return = $XenuxDB->Update('posts', [
 					'title'             => $title,
+					'thumbnail_id'      => $thumbnail,
 					'text'              => $text,
 					'status'            => $status,
 					'lastModified_date' => date('Y-m-d H:i:s')

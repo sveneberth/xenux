@@ -54,13 +54,12 @@ class pageController extends AbstractController
 			{
 				$template = new template(PATH_MAIN."/modules/".$this->modulename."/layout.php",
 				[
-					'author'	=> $page->username,
-					'date'		=> mysql2date('d.m.Y', $page->create_date),
-					'time'		=> mysql2date('H.i', $page->create_date)
+					'author' => $page->username,
+					'date'   => mysql2date('d.m.Y', $page->create_date),
+					'time'   => mysql2date('H.i', $page->create_date)
 				]);
 
 				$template->setVar("page_content", $page->text);
-				$template->setVar("page_title", $page->title);
 
 				$template->setIfCondition("show_meta_info", parse_bool($app->getOption('sites_show_meta_info')));
 
@@ -83,6 +82,7 @@ class pageController extends AbstractController
 			}
 			else
 			{
+				header('HTTP/1.1 401 Unauthorized');
 				throw new Exception("Page not public");
 			}
 		}
@@ -107,18 +107,18 @@ class pageController extends AbstractController
 		{
 			$template = new template(PATH_MAIN."/templates/".$app->template."/_prevNextNavi.php");
 
-			$template->setIfCondition("prev",	$prev);
+			$template->setIfCondition("prev", $prev);
 			if ($prev)
 			{
-				$template->setVar("prev|title",	$prev->title);
-				$template->setVar("prev|url",	getPageLink($prev->id, $prev->title));
+				$template->setVar("prev|title", $prev->title);
+				$template->setVar("prev|url",   getPageLink($prev->id, $prev->title));
 			}
 
-			$template->setIfCondition("next",	$next);
+			$template->setIfCondition("next", $next);
 			if ($next)
 			{
-				$template->setVar("next|title",	$next->title);
-				$template->setVar("next|url",	getPageLink($next->id, $next->title));
+				$template->setVar("next|title", $next->title);
+				$template->setVar("next|url",   getPageLink($next->id, $next->title));
 			}
 
 			return $template->render();
@@ -138,9 +138,9 @@ class pageController extends AbstractController
 			'order' => 'sortindex DESC',
 			'where' => [
 				'AND' => [
-					'sortindex[<]'	=> $sortindex,
-					'parent_id'		=> $parent_id,
-					'public'		=> true,
+					'sortindex[<]' => $sortindex,
+					'parent_id'    => $parent_id,
+					'public'       => true,
 				]
 			]
 		]);
@@ -160,9 +160,9 @@ class pageController extends AbstractController
 			'order' => 'sortindex ASC',
 			'where' => [
 				'AND' => [
-					'sortindex[>]'	=> $sortindex,
-					'parent_id'		=> $parent_id,
-					'public'		=> true,
+					'sortindex[>]' => $sortindex,
+					'parent_id'    => $parent_id,
+					'public'       => true,
 				]
 			]
 		]);

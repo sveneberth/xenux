@@ -1,7 +1,3 @@
-<div class="page-header">
-	<h1>{{username}}</h1>
-</div>
-
 <div class="profile layout2">
 #if(realname_show_profile):
 	<div class="row">
@@ -46,6 +42,7 @@
 </div>
 
 <style>
+{# #FIXME: move #}
 .profile {
 }
 .profile > .row {

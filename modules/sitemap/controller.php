@@ -1,13 +1,6 @@
 <?php
 class sitemapController extends AbstractController
 {
-	private $searchString;
-
-	public function __construct($url)
-	{
-		parent::__construct($url);
-	}
-
 	public function run()
 	{
 		$this->loadSitemap();
@@ -21,8 +14,6 @@ class sitemapController extends AbstractController
 	private function loadSitemap()
 	{
 		global $XenuxDB;
-
-		echo "<h1 class=\"page-headline\">" . __("sitemap") . "</h1>";
 
 		echo "<ul class=\"sitemap\">";
 

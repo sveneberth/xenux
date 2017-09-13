@@ -293,6 +293,9 @@ if ($sites)
 		</div>
 
 		<main>
+			<div class="page-header">
+				<h1 class="page-headline">{{headlinePrefix}}{{headline}}{{headlineSuffix}}</h1>
+			</div>
 			{{page_content}}
 		</main>
 

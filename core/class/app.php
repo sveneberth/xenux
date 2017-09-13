@@ -88,6 +88,9 @@ class app
 
 			$template->setVar("homepage_name", $this->getOption('hp_name'));
 			$template->setVar("page_title", $this->page_name);
+			$template->setVar("headline", $this->page_name);
+			$template->setVar("headlinePrefix", $this->headlinePrefix);
+			$template->setVar("headlineSuffix", $this->headlineSuffix);
 
 			$template->setVar("canonical_URL", $this->site=='home' ? URL_MAIN : (is_null($this->canonical_URL) ? $this->siteurl : $this->canonical_URL) );
 			$template->setIfCondition("prev_URL", !is_null($this->prev_URL) && $this->site != 'home');
@@ -204,7 +207,7 @@ class app
 		{
 			log::setPHPError($e);
 			$this->page_name = "Error";
-			return '<h1>Error</h1><p class="box-shadow info-message error">' . $e->getMessage() . '</p>';
+			return '<p class="box-shadow info-message error">' . $e->getMessage() . '</p>';
 		}
 	}
 

@@ -154,7 +154,12 @@
 	<!-- Begin page content -->
 	<div class="container">
 		<div class="row">
-			<div class="col-md-10">{{page_content}}</div>
+			<div class="col-md-10">
+				<div class="page-header">
+					<h1 class="page-headline">{{headlinePrefix}}{{headline}}{{headlineSuffix}}</h1>
+				</div>
+				{{page_content}}
+			</div>
 			<div class="col-md-2 sitebar">
 				<aside class="search">
 					<h5><?= __('search') ?></h5>
@@ -221,7 +226,7 @@
 					<h5><?= __('events') ?></h5>
 					<ul>
 						<?php
-							// get events (only public events)
+							// get events (only public events which will start in future)
 							$events = $XenuxDB->getList('events', [
 								'limit' => 3,
 								'order' => 'start_date DESC',
@@ -320,7 +325,7 @@
 			}
 		}
 	</script>
-	<script src="{{TEMPLATE_PATH}}/js/functions.js"></script>
+	{# <script src="{{TEMPLATE_PATH}}/js/functions.js"></script> #}
 	<script src="{{TEMPLATE_PATH}}/js/script.js"></script>
 </body>
 </html>

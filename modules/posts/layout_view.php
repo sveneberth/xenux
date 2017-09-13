@@ -1,8 +1,9 @@
-<span class="meta-info">{{post_createDate}}</span>
-<div class="page-header">
-	<h1>{{post_title}}</h1>
-</div>
+#if(show_meta_info):
+<span class="meta-info"><?= __('writtenInfo', $author, $date, $time) ?></span>
+#endif
+<img class="thumbnail-img" src="{{post_imageURL}}" title="{{post_imageTitle}}" alt="{{post_imageTitle}}">
 {{post_content}}
+
 <br>
 <br>
 <a href="{{URL_MAIN}}/posts/list">&raquo;<?= __('gotoPostList') ?></a>

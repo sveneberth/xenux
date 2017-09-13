@@ -15,8 +15,6 @@ class searchController extends AbstractController
 	public function run()
 	{
 
-		echo '<div class="page-header"><h1>' . __('search') . '</h1></div>';
-
 		echo
 "<style>
 	.float {

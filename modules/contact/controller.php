@@ -3,11 +3,6 @@ include_once(PATH_MAIN."/modules/page/controller.php");
 
 class contactController extends pageController
 {
-	public function __construct($url)
-	{
-		parent::__construct($url);
-	}
-
 	public function run()
 	{
 		global $app;
@@ -19,6 +14,7 @@ class contactController extends pageController
 		return true;
 	}
 
+	#TODO: move contactform in this controller?!
 	private function getContactForm()
 	{
 		$template = new template(PATH_MAIN."/modules/contact/contactform.php");

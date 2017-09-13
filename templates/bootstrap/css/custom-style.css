@@ -40,10 +40,10 @@ input[type=radio] + label {
 	margin-right: 15px;
 	font-size: 13px;
 	line-height: inherit;
-}  
+}
 input[type=radio] {
 	display: none;
-}  
+}
 input[type=radio] + label:before {
 	content: "";
 	display: inline-block;
@@ -56,14 +56,14 @@ input[type=radio] + label:before {
 	background-color: #999;
 	box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
 	border-radius: 8px;
-}  
+}
 input[type=radio]:checked + label:before {
 	content: "\2022";
 	color: #f3f3f3;
 	font-size: 30px;
 	text-align: center;
 	line-height: 18px;
-} 
+}
 textarea {
 	height: 150px;
 }
@@ -210,27 +210,47 @@ footer  .links {
 	border: 1px solid #ccc;
 	padding: 10px;
 	/*box-shadow: 0 0 5px 0px #aaa;*/
-	overflow: auto;	
+	overflow: auto;
 	margin: 0 0 1em 0;
 	box-sizing: border-box;
 }
 .box.margin-right {
 	margin-right: 2%;
 }
+.box a:not(.read-more),
+.box a:not(.read-more):link,
+.box a:not(.read-more):visited,
+.box a:not(.read-more):hover,
+.box a:not(.read-more):focus {
+  color: inherit;
+  text-decoration: inherit;
+}
 .box .headline {
-	margin: 0;
-	font-weight: bold;
-	font-size: 1.2em;
+  margin: 0;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+.box .headline:hover,
+.box .headline:focus {
+  color: #666;
+}
+.box .thumbnail-img {
+  float: left;
+  height: auto;
+  width: 200px;
+}
+.box.hasThumbnail .post-list-body {
+  margin-left: 215px;
 }
 .box .meta-info {
-	color: #666;
-	font-size: .8em;
-	display: block;
-	margin-bottom: 5px;
+  color: #666;
+  font-size: .8em;
+  display: block;
+  margin-bottom: 10px;
 }
-.box > a {
-	display: inline-block;
-	margin-top: 5px;
+.box .read-more {
+  display: inline-block;
+  margin-top: 10px;
 }
 
 .one-column-box {
@@ -283,7 +303,7 @@ div.sitenavi > a.sitenavi.active {
 	list-style: none;
 }
 .calendar .calendar_header {
-	line-height: 40px;	
+	line-height: 40px;
 	height: 40px;
 	vertical-align: middle;
 	left: 0;

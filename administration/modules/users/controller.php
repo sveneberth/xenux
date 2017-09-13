@@ -63,7 +63,7 @@ class usersController extends AbstractController
 
 		$template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout_home.php");
 
-
+		#FIXME: removed user remains as author in pages/post/etc. This sucks
 		if (isset($_GET['remove']) && is_numeric($_GET['remove']) && !empty($_GET['remove']))
 		{
 			$XenuxDB->delete('users', [

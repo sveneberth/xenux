@@ -217,28 +217,32 @@ class form
 	{
 		global $app;
 
-		$props['type']			= isset($props['type'])			? $props['type']		: 'text';
-		$props['class']			= isset($props['class'])		? $props['class']		: '';
-		$props['style']			= isset($props['style'])		? $props['style']		: '';
-		$props['value']			= isset($props['value'])		? $props['value']		: '';
-		$props['label']			= isset($props['label'])		? $props['label']		: '';
-		$props['checked']		= isset($props['checked'])		? $props['checked']		: false;
-		$props['required']		= isset($props['required'])		? $props['required']	: false;
-		$props['showLabel']		= isset($props['showLabel'])	? $props['showLabel']	: true;
-		$props['label'] = (isset($props['label:before']) ? $props['label:before'].' ' : '') . $props['label'] . (isset($props['label:after']) ? ''.$props['label:after'] : '');
+		$props['type']      = isset($props['type'])         ? $props['type']             : 'text';
+		$props['class']     = isset($props['class'])        ? $props['class']            : '';
+		$props['style']     = isset($props['style'])        ? $props['style']            : '';
+		$props['value']     = isset($props['value'])        ? $props['value']            : '';
+		$props['label']     = isset($props['label'])        ? $props['label']            : '';
+		$props['checked']   = isset($props['checked'])      ? $props['checked']          : false;
+		$props['required']  = isset($props['required'])     ? $props['required']         : false;
+		$props['showLabel'] = isset($props['showLabel'])    ? $props['showLabel']        : true;
+		$props['label']     = isset($props['label'])        ? $props['label']            : '';
 
-		$class = $props['class'] . (isset($props['validInput']) && $props['validInput'] == false ? ' wrong' : '');
-		$value = isset($this->data[$fieldname]) ? $this->data[$fieldname] : $props['value'];
+		$class  = $props['class'] . (isset($props['validInput']) && $props['validInput'] == false ? ' wrong' : '');
+		$value  = isset($this->data[$fieldname]) ? $this->data[$fieldname] : $props['value'];
+		$label  = isset($props['label:before']) ? $props['label:before'] . ' ' : '';
+		$label .= $props['label'];
+		$label .= isset($props['label:after'])  ? ' '.$props['label:after'] : '';
+		$label .= $this->isRequired($props['required'] && $this->requiredInfo == true) ? ' ('.__('required').')' : '';
 
 		$fieldTemplate = new template();
 
-		$fieldTemplate->setVar('class',		$class);
-		$fieldTemplate->setVar('style',		$props['style']);
-		$fieldTemplate->setVar('label',		$props['label'] . ($this->isRequired($props['required'] && $this->requiredInfo == true) ? ' ('.__('required').')'  : ''));
-		$fieldTemplate->setVar('name',		$fieldname);
+		$fieldTemplate->setVar('class', $class);
+		$fieldTemplate->setVar('style', $props['style']);
+		$fieldTemplate->setVar('label', $props['label']);
+		$fieldTemplate->setVar('name', $fieldname);
 		if ($props['type'] != 'file')
-			$fieldTemplate->setVar('value',		$value);
-		$fieldTemplate->setVar('required',	$this->isRequired($props['required']));
+			$fieldTemplate->setVar('value', $value);
+		$fieldTemplate->setVar('required', $this->isRequired($props['required']));
 
 		$fieldTemplate->setIfCondition('showLabel',	$props['showLabel']);
 
@@ -320,6 +324,9 @@ class form
 				$props['multiple'] = isset($props['multiple']) ? $props['multiple'] : false;
 				$fieldTemplate->setIfCondition('multiple', $props['multiple']);
 				return $fieldTemplate->render($this->getFormTemplateURL('_form_file_upload.php'));
+				break;
+			case 'thumbnail':
+				return $fieldTemplate->render($this->getFormTemplateURL('_form_thumnail.php'));
 				break;
 			case 'submit':
 				return $fieldTemplate->render($this->getFormTemplateURL('_form_submit.php'));

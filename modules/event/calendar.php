@@ -1,22 +1,22 @@
 <?php
 class Calendar {
 
-	private $dayLabels		= array("Mon","Tue","Wed","Thu","Fri","Sat","Sun");
+	private $dayLabels       = array("Mon","Tue","Wed","Thu","Fri","Sat","Sun");
 
-	private $preMonth		= 0;
-	private $preYear		= 0;
-	private $daysInPreMonth	= 0;
+	private $preMonth        = 0;
+	private $preYear         = 0;
+	private $daysInPreMonth  = 0;
 
-	private $currentYear	= 0;
-	private $currentMonth	= 0;
-	private $currentDay		= 0;
-	private $currentDate	= null;
+	private $currentYear     = 0;
+	private $currentMonth    = 0;
+	private $currentDay      = 0;
+	private $currentDate     = null;
 
-	private $nextMonth		= 0;
-	private $nextYear		= 0;
-	private $daysInNextMonth= 0;
+	private $nextMonth       = 0;
+	private $nextYear        = 0;
+	private $daysInNextMonth = 0;
 
-	private $daysInMonth	= 0;
+	private $daysInMonth     = 0;
 
 
 	public function __construct()
@@ -27,22 +27,22 @@ class Calendar {
 	{
 		global $app;
 
-		$year	= (isset($_GET['year'])		&& preg_match("/[0-9]/", $_GET['year']))	? $_GET['year']		: date("Y");
-		$month	= (isset($_GET['month'])	&& preg_match("/[0-9]/", $_GET['month']))	? $_GET['month']	: date("m");
+		$year	= (isset($_GET['year'])  && preg_match("/[0-9]/", $_GET['year']))  ? $_GET['year']  : date("Y");
+		$month	= (isset($_GET['month']) && preg_match("/[0-9]/", $_GET['month'])) ? $_GET['month'] : date("m");
 
 		$this->currentDate = strtotime($year . '-' . $month . '-1'); // get date as unixtime
 
-		$this->currentYear	= date("Y", $this->currentDate); // use to get year in 4 digits
-		$this->currentMonth	= date("m", $this->currentDate);
+		$this->currentYear  = date("Y", $this->currentDate); // use to get year in 4 digits
+		$this->currentMonth = date("m", $this->currentDate);
 
-		$this->nextMonth	= $this->currentMonth == 12	? 1 : intval($this->currentMonth)+1;
-		$this->nextYear		= $this->currentMonth == 12	? intval($this->currentYear)+1 : $this->currentYear;
-		$this->preMonth		= $this->currentMonth == 1	? 12 : intval($this->currentMonth)-1;
-		$this->preYear		= $this->currentMonth == 1	? intval($this->currentYear)-1 : $this->currentYear;
+		$this->nextMonth = $this->currentMonth == 12	? 1 : intval($this->currentMonth)+1;
+		$this->nextYear  = $this->currentMonth == 12	? intval($this->currentYear)+1 : $this->currentYear;
+		$this->preMonth  = $this->currentMonth == 1	? 12 : intval($this->currentMonth)-1;
+		$this->preYear   = $this->currentMonth == 1	? intval($this->currentYear)-1 : $this->currentYear;
 
-		$this->daysInPreMonth 	= $this->_daysInMonth($this->preMonth, $this->preYear);
-		$this->daysInMonth		= $this->_daysInMonth($this->currentMonth, $this->currentYear);
-		$this->daysInNextMonth	= $this->_daysInMonth($this->nextMonth, $this->nextYear);
+		$this->daysInPreMonth  = $this->_daysInMonth($this->preMonth, $this->preYear);
+		$this->daysInMonth     = $this->_daysInMonth($this->currentMonth, $this->currentYear);
+		$this->daysInNextMonth = $this->_daysInMonth($this->nextMonth, $this->nextYear);
 
 
 		$weeksInMonth = $this->_weeksInMonth($month, $year);
@@ -84,8 +84,8 @@ class Calendar {
 
 		$additionalClass = '';
 
-		$today_day = date("d");
-		$today_mon = date("m");
+		$today_day  = date("d");
+		$today_mon  = date("m");
 		$today_year = date("Y");
 
 		// first day of this month in this week (1-7)
@@ -129,8 +129,8 @@ class Calendar {
 		$events = $XenuxDB->getList('events', [
 			'where' => [
 				'AND' => [
-					'start_date[<=]'	=> "{$this->currentYear}-{$month}-{$cellContent} 23:59:59",
-					'end_date[>=]'	=> "{$this->currentYear}-{$month}-{$cellContent} 00:00:00",
+					'start_date[<=]' => "{$this->currentYear}-{$month}-{$cellContent} 23:59:59",
+					'end_date[>=]'   => "{$this->currentYear}-{$month}-{$cellContent} 00:00:00",
 				]
 			],
 			'order' => 'start_date ASC'
@@ -204,7 +204,7 @@ class Calendar {
 		$numOfweeks = ($daysInMonths %7 == 0 ? 0 : 1) + intval($daysInMonths / 7);
 
 		$monthStartingDay = date('N', strtotime($year . '-' . $month . '-01'));
-		$monthEndingDay = date('N', strtotime($year . '-' . $month . '-' . $daysInMonths));
+		$monthEndingDay   = date('N', strtotime($year . '-' . $month . '-' . $daysInMonths));
 
 		if ($monthEndingDay < $monthStartingDay)
 			$numOfweeks++;
