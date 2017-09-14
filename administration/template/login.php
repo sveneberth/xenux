@@ -10,10 +10,10 @@
 
 	<!-- http://xenux.bplaced.net -->
 	<meta name="generator" content="Xenux v{{XENUX_VERSION}} - das kostenlose CMS">
-	<link rel="shortcut icon" href="{{TEMPLATE_URL}}/images/favicon_48.png">
+	<link rel="shortcut icon" href="{{URL_TEMPLATE}}/images/favicon_48.png">
 
 	<!-- css -->
-	<link rel="stylesheet" href="{{TEMPLATE_URL}}/css/login.css" media="all">
+	<link rel="stylesheet" href="{{URL_TEMPLATE}}/css/login.css" media="all">
 </head>
 <body id="top">
 	#if(logout):

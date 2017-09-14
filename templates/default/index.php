@@ -16,21 +16,21 @@
 	<!-- http://xenux.bplaced.net -->
 	<meta name="generator" content="Xenux v{{XENUX_VERSION}} - das kostenlose CMS">
 
-	<link rel="shortcut icon" href="{{TEMPLATE_URL}}/img/favicon_48.png">
+	<link rel="shortcut icon" href="{{URL_TEMPLATE}}/img/favicon_48.png">
 
 	<!-- css -->
-	<link rel="stylesheet" href="{{TEMPLATE_URL}}/css/style.css" media="all">
+	<link rel="stylesheet" href="{{URL_TEMPLATE}}/css/style.css" media="all">
 
 	<!-- jquery + plugins -->
-	<script src="{{TEMPLATE_URL}}/js/jquery-2.1.1.min.js"></script>
-	<script src="{{TEMPLATE_URL}}/js/jquery-migrate-1.2.1.min.js"></script>
-	<script src="{{TEMPLATE_URL}}/js/jquery-ui.min.js"></script>
-	<script src="{{TEMPLATE_URL}}/js/jquery.ui.touch-punch.min.js"></script>
-	<script src="{{TEMPLATE_URL}}/js/jquery.mousewheel.js"></script>
+	<script src="{{URL_TEMPLATE}}/js/jquery-2.1.1.min.js"></script>
+	<script src="{{URL_TEMPLATE}}/js/jquery-migrate-1.2.1.min.js"></script>
+	<script src="{{URL_TEMPLATE}}/js/jquery-ui.min.js"></script>
+	<script src="{{URL_TEMPLATE}}/js/jquery.ui.touch-punch.min.js"></script>
+	<script src="{{URL_TEMPLATE}}/js/jquery.mousewheel.js"></script>
 
 	<!-- fancybox -->
-	<script src="{{TEMPLATE_URL}}/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
-	<link rel="stylesheet" href="{{TEMPLATE_URL}}/fancybox/jquery.fancybox.css?v=2.1.5" media="screen">
+	<script src="{{URL_TEMPLATE}}/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+	<link rel="stylesheet" href="{{URL_TEMPLATE}}/fancybox/jquery.fancybox.css?v=2.1.5" media="screen">
 
 	<!-- search -->
 	<link rel="search" type="application/opensearchdescription+xml" title="Xenux Suche" href="{{URL_MAIN}}/search.xml.php">
@@ -51,8 +51,8 @@
 			}
 		}
 	</script>
-	<script src="{{TEMPLATE_URL}}/js/functions.js"></script>
-	<script src="{{TEMPLATE_URL}}/js/script.js"></script>
+	<script src="{{URL_TEMPLATE}}/js/functions.js"></script>
+	<script src="{{URL_TEMPLATE}}/js/script.js"></script>
 
 	<noscript>
 		<style>
@@ -67,7 +67,7 @@
 		<header>
 			<a href="javascript:openmobilemenu();" class="menu-icon"></a>
 			<a class="logo" href="{{URL_MAIN}}">
-				<?= embedSVG(TEMPLATE_PATH . '/img/xenux_logo.svg'); ?>
+				<?= embedSVG(PATH_TEMPLATE . '/img/xenux_logo.svg'); ?>
 			</a>
 			<ul class="topmenu mobilemenu">
 				<li><a href="{{URL_MAIN}}/administration/login"><?= __('login') ?></a></li>

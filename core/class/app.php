@@ -77,9 +77,9 @@ class app
 			$template->setVar("page_content", $this->getPageContent());
 
 			$template->setVar("SITE_PATH", $this->siteurl);
-			$template->setVar("TEMPLATE_URL", URL_MAIN.'/templates/'.$this->template);
-			define("TEMPLATE_PATH", PATH_MAIN.'/templates/'.$this->template);
-			define("TEMPLATE_URL", URL_MAIN.'/templates/'.$this->template);
+			$template->setVar("URL_TEMPLATE", URL_MAIN.'/templates/'.$this->template);
+			define("PATH_TEMPLATE", PATH_MAIN.'/templates/'.$this->template);
+			define("URL_TEMPLATE", URL_MAIN.'/templates/'.$this->template);
 
 			$template->setVar("CSS-FILES", $this->getCSS());
 			$template->setVar("JS-FILES", $this->getJS());
@@ -139,7 +139,7 @@ class app
 			$template->setVar("page_content", $this->getPageContent(true));
 
 			$template->setVar("SITE_PATH", URL_ADMIN.'/'.implode('/', $this->url));
-			$template->setVar("TEMPLATE_URL", URL_MAIN.'/administration/template');
+			$template->setVar("URL_TEMPLATE", URL_MAIN.'/administration/template');
 
 			$template->setVar("meta_author", $this->getOption('meta_author'));
 			$template->setVar("meta_desc", $this->getOption('meta_desc'));

@@ -18,17 +18,17 @@
 	<!-- http://xenux.bplaced.net -->
 	<meta name="generator" content="Xenux v{{XENUX_VERSION}} - das kostenlose CMS">
 
-	<link rel="shortcut icon" href="{{TEMPLATE_URL}}/img/favicon_48.png">
+	<link rel="shortcut icon" href="{{URL_TEMPLATE}}/img/favicon_48.png">
 
 	<!-- Bootstrap core CSS -->
-	<link href="{{TEMPLATE_URL}}/css/bootstrap.min.css" rel="stylesheet">
+	<link href="{{URL_TEMPLATE}}/css/bootstrap.min.css" rel="stylesheet">
 
 	<!-- Custom styles for this template -->
-	<link href="{{TEMPLATE_URL}}/css/sticky-footer-navbar.css" rel="stylesheet">
-	<link href="{{TEMPLATE_URL}}/css/custom-style.css" rel="stylesheet">
+	<link href="{{URL_TEMPLATE}}/css/sticky-footer-navbar.css" rel="stylesheet">
+	<link href="{{URL_TEMPLATE}}/css/custom-style.css" rel="stylesheet">
 
 	<!-- fancybox -->
-	<link rel="stylesheet" type="text/css" href="{{TEMPLATE_URL}}/fancybox/jquery.fancybox.css?v=2.1.5" media="screen">
+	<link rel="stylesheet" type="text/css" href="{{URL_TEMPLATE}}/fancybox/jquery.fancybox.css?v=2.1.5" media="screen">
 
 	<!-- links -->
 	<link rel="canonical" href="{{canonical_URL}}">
@@ -297,21 +297,21 @@
 	================================================== -->
 
 	<!-- jquery + plugins -->
-	<script src="{{TEMPLATE_URL}}/js/jquery-2.1.1.min.js"></script>
-	<script src="{{TEMPLATE_URL}}/js/jquery-migrate-1.2.1.min.js"></script>
-	<script src="{{TEMPLATE_URL}}/js/jquery-ui.min.js"></script>
-	<script src="{{TEMPLATE_URL}}/js/jquery.ui.touch-punch.min.js"></script>
-	<script src="{{TEMPLATE_URL}}/js/jquery.cookie.js"></script>
-	<script src="{{TEMPLATE_URL}}/js/jquery.mousewheel.js"></script>
+	<script src="{{URL_TEMPLATE}}/js/jquery-2.1.1.min.js"></script>
+	<script src="{{URL_TEMPLATE}}/js/jquery-migrate-1.2.1.min.js"></script>
+	<script src="{{URL_TEMPLATE}}/js/jquery-ui.min.js"></script>
+	<script src="{{URL_TEMPLATE}}/js/jquery.ui.touch-punch.min.js"></script>
+	<script src="{{URL_TEMPLATE}}/js/jquery.cookie.js"></script>
+	<script src="{{URL_TEMPLATE}}/js/jquery.mousewheel.js"></script>
 
 	<!-- Bootstrap core JavaScript -->
-	<script src="{{TEMPLATE_URL}}/js/bootstrap.min.js"></script>
+	<script src="{{URL_TEMPLATE}}/js/bootstrap.min.js"></script>
 
 	<!-- fancybox -->
-	<script src="{{TEMPLATE_URL}}/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+	<script src="{{URL_TEMPLATE}}/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
 
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-	<script src="{{TEMPLATE_URL}}/js/ie10-viewport-bug-workaround.js"></script>
+	<script src="{{URL_TEMPLATE}}/js/ie10-viewport-bug-workaround.js"></script>
 
 	<!-- scripts -->
 	<script>
@@ -325,7 +325,7 @@
 			}
 		}
 	</script>
-	{# <script src="{{TEMPLATE_URL}}/js/functions.js"></script> #}
-	<script src="{{TEMPLATE_URL}}/js/script.js"></script>
+	{# <script src="{{URL_TEMPLATE}}/js/functions.js"></script> #}
+	<script src="{{URL_TEMPLATE}}/js/script.js"></script>
 </body>
 </html>

@@ -11,23 +11,23 @@
 
 	<!-- http://xenux.bplaced.net -->
 	<meta name="generator" content="Xenux v{{XENUX_VERSION}} - das kostenlose CMS">
-	<link rel="shortcut icon" href="{{TEMPLATE_URL}}/images/favicon_48.png">
+	<link rel="shortcut icon" href="{{URL_TEMPLATE}}/images/favicon_48.png">
 
 	<!-- css -->
-	<link rel="stylesheet" href="{{TEMPLATE_URL}}/css/style.min.css" media="all">
-	{# <!-- <link rel="stylesheet" type="text/css" href="{{TEMPLATE_URL}}/css/jquery-ui.css" media="all"> --> #}
+	<link rel="stylesheet" href="{{URL_TEMPLATE}}/css/style.min.css" media="all">
+	{# <!-- <link rel="stylesheet" type="text/css" href="{{URL_TEMPLATE}}/css/jquery-ui.css" media="all"> --> #}
 	{{CSS-FILES}}
 
 	<!-- jquery + plugins -->
-	<script src="{{TEMPLATE_URL}}/js/jquery-3.1.1.min.js"></script>
-	{#<script src="{{TEMPLATE_URL}}/js/jquery-migrate-1.2.1.min.js"></script>#}
-	<script src="{{TEMPLATE_URL}}/js/jquery-ui.min.js"></script>
-	<script src="{{TEMPLATE_URL}}/js/jquery.ui.touch-punch.min.js"></script>
-	<script src="{{TEMPLATE_URL}}/js/jquery.mousewheel.js"></script>
+	<script src="{{URL_TEMPLATE}}/js/jquery-3.1.1.min.js"></script>
+	{#<script src="{{URL_TEMPLATE}}/js/jquery-migrate-1.2.1.min.js"></script>#}
+	<script src="{{URL_TEMPLATE}}/js/jquery-ui.min.js"></script>
+	<script src="{{URL_TEMPLATE}}/js/jquery.ui.touch-punch.min.js"></script>
+	<script src="{{URL_TEMPLATE}}/js/jquery.mousewheel.js"></script>
 
 	<!-- scripts -->
-	<script src="{{TEMPLATE_URL}}/js/functions.js"></script>
-	<script src="{{TEMPLATE_URL}}/js/script.js"></script>
+	<script src="{{URL_TEMPLATE}}/js/functions.js"></script>
+	<script src="{{URL_TEMPLATE}}/js/script.js"></script>
 	<script src="http://tablesorter.com/__jquery.tablesorter.min.js"></script>
 	{{JS-FILES}}
 </head>
@@ -49,7 +49,7 @@
 		<div class="profile">
 			<?= __('helloUser', $user->userInfo->username) ?>
 			<div class="profile-sub">
-				<img class="profile-image" src="{{TEMPLATE_URL}}/images/profile.svg">
+				<img class="profile-image" src="{{URL_TEMPLATE}}/images/profile.svg">
 
 				<a class="profile-button" href="{{URL_ADMIN}}/users/profile">Profil</a>
 				<a class="logout-button" href="{{URL_ADMIN}}/login?task=logout">Logout</a>
