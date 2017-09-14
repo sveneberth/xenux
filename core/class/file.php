@@ -9,8 +9,6 @@
  * -r		: rotate an image clockwise
  */
 
- #FIXME: folder download only allowed as admin (user is login)
-
 class file
 {
 	private $urlPart;
@@ -45,7 +43,7 @@ class file
 
 	private function render()
 	{
-		global $XenuxDB;
+		global $app, $XenuxDB;
 
 		if ($this->fileID == 0)
 		{
@@ -72,7 +70,16 @@ class file
 			}
 			elseif ($this->file->type == 'folder')
 			{
-				$this->renderFolder();
+				// allow download only for admins
+				if ($app->user->isLogin())
+				{
+					$this->renderFolder();
+				}
+				else
+				{
+					log::debug('401 - not allowed to download folder <"'.$this->fileID.'">');
+					ErrorPage::view(401);
+				}
 			}
 			else
 			{

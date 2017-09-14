@@ -19,15 +19,15 @@ class app
 
 	public function __construct($url)
 	{
-		$this->user		= new User;
+		$this->user = new User;
 
 		$this->setTemplate($this->getOption('template'));
 		if (isset($_GET['useTemplate']) && full($_GET['useTemplate']) && DEBUG_MODE)
 			$this->setTemplate($_GET['useTemplate']);
 
-		$url			= strtolower($url);
-		$this->siteurl	= URL_MAIN.'/'.$url;
-		$this->url		= explode('/', $url);
+		$url           = strtolower($url);
+		$this->siteurl = URL_MAIN.'/'.$url;
+		$this->url     = explode('/', $url);
 
 		if (isset($_GET['lang']))
 		{

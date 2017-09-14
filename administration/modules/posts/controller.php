@@ -298,7 +298,6 @@ class postsController extends AbstractController
 
 			if ($new)
 			{
-				#TODO: add thumbnail
 				$post = $XenuxDB->Insert('posts', [
 					'title'             => $title,
 					'thumbnail_id'      => $thumbnail,
