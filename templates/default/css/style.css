@@ -246,11 +246,11 @@ header {
 	width: 80%;
 	margin: 0 auto;
 }
-header .logo  img {
-	height: 50px;
-	max-width: 100px;
-	float: left;
-	margin: 0 10px 0 0;
+header .logo .xenux-logo {
+  float: left;
+  height: 40px;
+  margin: 5px 10px 0 0;
+  width: auto;
 }
 header:after {
 	display: block;
