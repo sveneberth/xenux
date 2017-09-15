@@ -58,16 +58,15 @@ class ressource
 		{
 			if (pathinfo($this->file, PATHINFO_EXTENSION) == $this->type)
 			{
-				$template = new template($this->file);
-
-				echo $template->render();
-
 				$filesize  = filesize($this->file);
 				$filemtime = date('D, d M Y H:i:s', filemtime($this->file));
 
 				header("Last-Modified: {$filemtime} GMT");
-				header("Content-Length: {$filesize}");
+				//header("Content-Length: {$filesize}"); #FIXME: doesnt work with changes of templating
 				header("Content-type: {$this->mimetype}");
+
+				$template = new template($this->file);
+				echo $template->render();
 			}
 			else
 			{

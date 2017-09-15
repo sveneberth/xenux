@@ -1,28 +1,33 @@
 {
-	"info":
-	{
-		"author": "Sven Eberth"
-	},
-	"translations":
-	{
-		"cloud":"Xenux Cloud",
+  "info":
+  {
+    "author": "Sven Eberth"
+  },
+  "translations":
+  {
+    "cloud":"Xenux Cloud",
 
-		"filename":"Dateiname",
-		"mimetype":"MIME-Type",
-		"size":"Größe",
-		"lastModified":"zuletzt geändert",
-		"author":"Autor",
-		"open":"Öffnen",
-		"download":"Downloaden",
-		"move":"Verschieben",
-		"move to":"Verschieben nach",
-		"rename":"Unbenennen",
-		"rename to":"Unbenennen nach",
-		"remove":"Löschen",
-		"properties":"Eigenschaften",
-		"drag files to uplaod here":"Dateien zum hochladen hier ablegen",
-		"create folder":"Ordner erstellen",
-		"upload":"hochladen",
-		"file":"Datei"
-	}
+    "filename":"Dateiname",
+    "mimetype":"MIME-Type",
+    "size":"Größe",
+    "lastModified":"zuletzt geändert",
+    "author":"Autor",
+    "open":"Öffnen",
+    "download":"Downloaden",
+    "move":"Verschieben",
+    "move to":"Verschieben nach",
+    "rename":"Unbenennen",
+    "rename to":"Unbenennen nach",
+    "remove":"Löschen",
+    "properties":"Eigenschaften",
+    "drag files to uplaod here":"Dateien zum hochladen hier ablegen",
+    "create folder":"Ordner erstellen",
+    "upload":"hochladen",
+    "file":"Datei",
+
+    "uploading":"Hochladen",
+    "upload completed":"Upload abgeschlossen",
+    "upload completed long":"Der Upload in die Xenux-Cloud wurde erfolgreich abgeschlossen!",
+    "empty folder":"Leerer Ordner"
+  }
 }

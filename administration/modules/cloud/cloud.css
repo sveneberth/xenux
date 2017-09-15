@@ -156,10 +156,10 @@
   width: 100%;
 }
 .upload-progress > progress.uploading:before {
-  content: 'hochladen - ' attr(value) '%';
+  content: '<?= __("uploading") ?> - ' attr(value) '%';
 }
 .upload-progress > progress[value="100"]:before {
-  content: 'hochladen abgeschlossen';
+  content: '<?= __("upload completed") ?>';
 }
 .upload-progress > progress[value]::-webkit-progress-value {
   transition: .5s linear all;

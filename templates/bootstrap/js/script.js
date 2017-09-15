@@ -2,7 +2,6 @@
 * open fancybox for images in .container
 */
 var gallery = [];
-var pictureTranslation = XENUX.translation.pictureXofY;
 $(document).ready(function ($) {
 	var numImages = $(".container img")
 					.filter(function() {
@@ -13,7 +12,7 @@ $(document).ready(function ($) {
 		if($(this).parent().prop("tagName") == 'A') return true;
 		gallery[i] = {
 			href: ($(this).hasClass('cloud-image') && !empty($(this).attr("data-src"))) ? $(this).attr("data-src") : $(this).attr("src"),
-			title: pictureTranslation.replace('x', i+1).replace('y', numImages)
+			title: '<?= __('picture x of y', "' + (i+1) + '", "' + numImages + '") ?>'
 		};
 		$(this).bind("click", function () {
 			$.fancybox(gallery, {
@@ -32,13 +31,13 @@ $(document).ready(function ($) {
 * calendar equal hight
 */
 $(document).ready(function(){
-	$('.calendar ul.calendar_dates li.week-line').each(function(){  
+	$('.calendar ul.calendar_dates li.week-line').each(function(){
 		var highestBox = 0;
 
 		$('li.calendar_day', this).each(function() {
 			var height = $(this).outerHeight();
 			if(height > highestBox)
-				highestBox = height; 
+				highestBox = height;
 		});
 
 		$('li.calendar_day',this).css('height',highestBox);
@@ -75,7 +74,7 @@ $(function() {
 	$(".language-selector")
 	.iconselectmenu({
 		change: function( event, data ) {
-			window.location.href = XENUX.path.sitepath+'?lang=' + $(this).val();
+			window.location.href = '?lang=' + $(this).val();
 		}
 	})
 	.iconselectmenu( "menuWidget")

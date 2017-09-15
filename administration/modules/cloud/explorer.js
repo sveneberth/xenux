@@ -31,7 +31,7 @@ $(function() {
 
 		if (type == 'file') {
 			$('#' + name).val(id)
-			$('.explorer-preview-img[data-for="' + name + '"]').attr('src', baseurl + '/file/' + id + '-s100');
+			$('.explorer-preview-img[data-for="' + name + '"]').attr('src', '{{MAIN_URL}}/file/' + id + '-s100');
 			$('#explorer-' + name).hide();
 		} else {
 			xenuxcloud.loadbrowser(id);
@@ -49,7 +49,7 @@ $(function() {
 	var xenuxcloud = {
 		loadbrowser: function(folderID) {
 			$.ajax({
-				url: baseurl + '/administration/modules/cloud/ajax.php',
+				url: '{{ADMIN_URL}}/modules/cloud/ajax.php',
 				type: 'POST',
 				dataType: 'json',
 				data: {
@@ -69,12 +69,12 @@ $(function() {
 							{
 								rows += '<div class="item ' + entry.type + '" id="' + entry.id + '" data-type="' + entry.type + '">';
 								if (entry.type == 'folder') {
-									rows += '<img src="' + baseurl + '/administration/modules/cloud/folder.svg" class="image center has-space">';
+									rows += '<img src="' + '{{ADMIN_URL}}/modules/cloud/folder.svg" class="image center has-space">';
 								} else {
 									if (typeCategory == 'image') {
-										rows += '<img src="' + baseurl + '/file/' + entry.id + '-' + encodeURI(entry.filename) + '-s100-c" class="image is-img center">';
+										rows += '<img src="' + '{{MAIN_URL}}/file/' + entry.id + '-' + encodeURI(entry.filename) + '-s100-c" class="image is-img center">';
 									} else {
-										rows += '<img src="' + baseurl + '/administration/modules/cloud/document.svg" class="image center has-space">';
+										rows += '<img src="' + '{{ADMIN_URL}}/modules/cloud/document.svg" class="image center has-space">';
 									}
 								}
 								rows += '<div class="file filename">' + filename + ext + '</div>';
@@ -82,7 +82,7 @@ $(function() {
 							}
 
 						});
-						$('.explorer .browser').html(empty(rows) ? 'leerer Ordner' : rows);
+						$('.explorer .browser').html(empty(rows) ? '<?= __('empty folder') ?>' : rows);
 					}
 				}
 			});
@@ -90,7 +90,7 @@ $(function() {
 
 		setbreadcrumb: function (id) {
 			$.ajax({
-				url: baseurl + '/administration/modules/cloud/ajax.php',
+				url: '{{ADMIN_URL}}/modules/cloud/ajax.php',
 				type: 'POST',
 				dataType: 'json',
 				data: {

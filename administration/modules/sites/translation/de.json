@@ -1,30 +1,30 @@
 {
-	"info":
-	{
-		"author": "Sven Eberth"
-	},
-	"translations":
-	{
-		"sites":"Seiten",
-		"home":"alle Seiten",
+  "info":
+  {
+    "author": "Sven Eberth"
+  },
+  "translations":
+  {
+    "sites":"Seiten",
+    "home":"alle Seiten",
 
 
-		"here can you add a new site":"Hier kannst du eine neue Seite anlegen.",
-		"here can you edit the site":"Hier kannst du die Seite bearbeiten.",
+    "here can you add a new site":"Hier kannst du eine neue Seite anlegen.",
+    "here can you edit the site":"Hier kannst du die Seite bearbeiten.",
 
-		"by dragging the pages you can change the menu order":"Durch verschieben der Seiten kannst du die Menüanordnung ändern.",
-		"note that in an unpublished site, respective undersites are not listed in the menu":"Bitte beachte, dass bei einer <b>nicht veröffentlichten</b> Seite jeweilige Unterseiten <b>nicht</b> im Menü aufgelistet werden.",
+    "by dragging the pages you can change the menu order":"Durch verschieben der Seiten kannst du die Menüanordnung ändern.",
+    "note that in an unpublished site, respective undersites are not listed in the menu":"Bitte beachte, dass bei einer <b>nicht veröffentlichten</b> Seite jeweilige Unterseiten <b>nicht</b> im Menü aufgelistet werden.",
 
-		"deleteSite":"Seite löschen",
-		"click to edit site":"Klicken, um die Seite zu bearbeiten",
+    "deleteSite":"Seite löschen",
+    "click to edit site":"Klicken, um die Seite zu bearbeiten",
 
-		"pageContent":"Seiteninhalt",
-		"sitePublic":"Seite veröffentlicht",
+    "pageContent":"Seiteninhalt",
+    "sitePublic":"Seite veröffentlicht",
 
-		"selectAsHomePage":"als Home-Seite auswählen",
-		"selectAsContactPage":"als Kontakt-Seite auswählen",
-		"selectAsImprintPage":"als Impressum-Seite auswählen",
+    "selectAsHomePage":"als Home-Seite auswählen",
+    "selectAsContactPage":"als Kontakt-Seite auswählen",
+    "selectAsImprintPage":"als Impressum-Seite auswählen",
 
     "are you sure to delete this file?": "Bist du dir sicher diese Seite zu löschen? Das Löschen kann nicht rückgängig gemacht werden!"
-	}
+  }
 }

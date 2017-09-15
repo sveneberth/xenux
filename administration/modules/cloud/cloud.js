@@ -1,17 +1,11 @@
-
-/* ##############################################
-/* Cloud
-/* ############################################*/
-var ajaxURL, imageURL;
+var ajaxURL = '{{ADMIN_URL}}/modules/cloud/ajax.php';
+var imageURL = '{{ADMIN_URL}}/modules/cloud/';
 var requestType = 'GET';
 var defaultDisabled = ['remove', 'move', 'rename'];
 
 $(function() {
-	ajaxURL = baseurl + '/administration/modules/cloud/ajax.php';
-	imageURL = baseurl + '/administration/modules/cloud/';
-
 	var url = window.location.href;
-	var folderID = url.substr(url.indexOf("/cloud/") + 7);
+	var folderID = url.substr(url.indexOf(/cloud/) + 7);
 	if (isInt(folderID)) {
 		dir_list(folderID); // load folder
 	} else {
@@ -35,13 +29,13 @@ $(function() {
 	// history event
 	window.addEventListener('popstate', function(e) {
 		var state = e.state;
-		console.log("my state: %s", state);
+		console.log('my state: %s', state);
 		if (state == null) {
 			dir_list(0);
-			document.title = 'root \u2013 Xenux Cloud';
+			document.title = 'root \u2013 <?= __('cloud') ?>';
 		} else {
 			dir_list(state.id);
-			document.title = state.title + ' \u2013 Xenux Cloud';
+			document.title = state.title + ' \u2013 <?= __('cloud') ?>';
 		}
 	})
 
@@ -96,8 +90,8 @@ $(function() {
 
 		console.info('switched to folder: %s:%s', ID, filename);
 
-		history.pushState({id: ID, title: filename}, null, baseurl + '/administration/cloud/' + ID);
-		document.title = filename + ' \u2013 Xenux Cloud';
+		history.pushState({id: ID, title: filename}, null, '{{ADMIN_URL}}/cloud/' + ID);
+		document.title = filename + ' \u2013 <?= __('cloud') ?>';
 
 		dir_list(ID);
 	});
@@ -121,8 +115,8 @@ $(function() {
 
 		console.info('switched to folder: %s:%s', ID, filename);
 
-		history.pushState({id: ID, title: filename}, null, baseurl + '/administration/cloud/' + ID);
-		document.title = filename + ' \u2013 Xenux Cloud';
+		history.pushState({id: ID, title: filename}, null, '{{ADMIN_URL}}/cloud/' + ID);
+		document.title = filename + ' \u2013 <?= __('cloud') ?>';
 
 		dir_list(ID);
 	});
@@ -131,7 +125,7 @@ $(function() {
 		var filename = $(this).data('filename');
 		console.info('opened file: ' + ID);
 
-		window.open(baseurl + '/file/' + ID + '-' + encodeURI(filename),'File','width=800,height=600,location=0,menubar=0,scrollbars=0,status=0,toolbar=0,resizable=0');
+		window.open('{{MAIN_URL}}/file/' + ID + '-' + encodeURI(filename),'File','width=800,height=600,location=0,menubar=0,scrollbars=0,status=0,toolbar=0,resizable=0');
 	});
 
 
@@ -186,7 +180,7 @@ $(function() {
 		var targetType	= $('#contextmenu').data('targetType');
 
 		if (targetType == 'file') {
-			openInNewTab(baseurl + '/file/' + id);
+			openInNewTab('{{MAIN_URL}}/file/' + id);
 		} else {
 			dir_list(id);
 		}
@@ -196,7 +190,7 @@ $(function() {
 		var id         = $('#contextmenu').data('targetID');
 		var targetType = $('#contextmenu').data('targetType');
 
-		openInNewTab(baseurl + '/file/' + id + '-d');
+		openInNewTab('{{MAIN_URL}}/file/' + id + '-d');
 
 		$('#contextmenu').hide();
 	});
@@ -392,8 +386,8 @@ function upload(files) {
 
 					if (percentComplete === 100) {
 						notifyMe(
-							'Upload abgeschlossen',
-							'Der Upload in die Xenux-Cloud wurde erfolgreich abgeschlossen',
+							'<?= __('upload completed') ?>',
+							'<?= __('upload completed long') ?>',
 							function() {
 								window.open().close()
 								window.focus()
@@ -415,7 +409,7 @@ function upload(files) {
 			return xhr;
 		},
 		url: ajaxURL + '?task=upload&parent_folder=' + getFolder(),
-		type: "POST",
+		type: 'POST',
 		dataType: 'json',
 		data: FileData,
 		processData: false,
@@ -515,7 +509,7 @@ function setbreadcrumb(folder) {
 					rows += '<span class="treeitem" id="' + entry.id + '">' + entry.filename + '</span>';
 				});
 			} else if (response.status == 404) {
-				$('.explorer').html("Error 404 - Item Not Found");
+				$('.explorer').html('<?= __('error') ?> 404 - <?= __('error404msg') ?>');
 			}
 			$('.breadcrumb').html(rows);
 		},
@@ -585,7 +579,7 @@ function dir_list(folder) {
 					} else {
 						var typeCategory = entry.mime_type.substr(0, entry.mime_type.search('/'));
 						if (typeCategory == 'image') {
-							rows += '<img src="' + baseurl + '/file/' + entry.id + '-' + encodeURI(entry.filename) + '-s32-c" class="image">';
+							rows += '<img src="' + '{{MAIN_URL}}/file/' + entry.id + '-' + encodeURI(entry.filename) + '-s32-c" class="image">';
 						} else {
 							rows += '<img src="' + imageURL + 'document.svg" class="image">';
 						}

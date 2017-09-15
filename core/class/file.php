@@ -115,7 +115,6 @@ class file
 			"; filename=\"{$this->file->filename}.{$this->file->file_extension}\"");
 		header("Cache-Control: public, max-age=3600");
 		header("Last-Modified: {$lastModified} GMT");
-		header("Content-Length: {$this->file->size}");
 
 		if (
 			in_array($this->file->mime_type, ['image/jpeg', 'image/gif', 'image/png'])
@@ -167,6 +166,7 @@ class file
 		}
 		else
 		{
+			header("Content-Length: {$this->file->size}"); // content length works only with uncompressed files
 			header("Content-type: {$this->file->mime_type}");
 			echo $this->file->data;
 		}

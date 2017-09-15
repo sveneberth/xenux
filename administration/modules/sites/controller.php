@@ -63,7 +63,7 @@ class sitesController extends AbstractController
 		echo $template->render();
 
 		$app->addJS(ADMIN_URL . '/modules/' . $this->modulename . '/jquery.mjs.nestedSortable.js');
-		$app->addJS(ADMIN_URL . '/modules/' . $this->modulename . '/sites.js');
+		$app->addJS(MAIN_URL . '/js/administration/modules/' . $this->modulename . '/sites.js');
 		$app->addCSS(ADMIN_URL . '/modules/' . $this->modulename . '/sites.min.css');
 		$this->page_name = __('home');
 	}

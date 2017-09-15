@@ -1,4 +1,5 @@
 <?php
+#TODO: default templates in self
 class Calendar {
 
 	private $dayLabels       = array("Mon","Tue","Wed","Thu","Fri","Sat","Sun");

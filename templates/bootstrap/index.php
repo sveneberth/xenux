@@ -164,8 +164,8 @@
 				<aside class="search">
 					<h5><?= __('search') ?></h5>
 					<form action="{{MAIN_URL}}/search/" method="GET">
-						<input type="search" class="search-input" name="q" placeholder="<?= __("search") ?>" value="">
-						<input type="submit" class="search-submit" value="<?= __("search") ?>">
+						<input type="search" class="search-input" name="q" placeholder="<?= __('search') ?>" value="">
+						<input type="submit" class="search-submit" value="<?= __('search') ?>">
 					</form>
 				</aside>
 				<?php
@@ -215,11 +215,11 @@
 							}
 							else
 							{
-								echo "<p style=\"margin:5px 0;\">" . __("noposts") . "</p>";
+								echo "<p style=\"margin:5px 0;\">" . __('noPosts') . "</p>";
 							}
 						?>
 					</ul>
-					<a style="display:inline-block;margin-top:5px;" href="{{MAIN_URL}}/posts/list"><?= __("showAllPosts") ?></a>
+					<a style="display:inline-block;margin-top:5px;" href="{{MAIN_URL}}/posts/list"><?= __('showAllPosts') ?></a>
 				</aside>
 
 				<aside class="events">
@@ -246,11 +246,11 @@
 							}
 							else
 							{
-								echo "<p style=\"margin:5px 0;\">" . __("noEvents") . "</p>";
+								echo "<p style=\"margin:5px 0;\">" . __('noEvents') . "</p>";
 							}
 						?>
 					</ul>
-					<a style="display:inline-block;margin-top:5px;" href="{{MAIN_URL}}/event/calendar"><?= __("gotoEventCalendar") ?></a>
+					<a style="display:inline-block;margin-top:5px;" href="{{MAIN_URL}}/event/calendar"><?= __('gotoEventCalendar') ?></a>
 				</aside>
 				<aside>
 					<h5>Change language</h5>
@@ -314,17 +314,7 @@
 	<script src="{{TEMPLATE_URL}}/js/ie10-viewport-bug-workaround.js"></script>
 
 	<!-- scripts -->
-	<script>
-		var XENUX = {
-			translation: {
-				pictureXofY: '<?= __('picture x of y') ?>'
-			},
-			path: {
-				baseurl: '{{MAIN_URL}}',
-				sitepath: '{{SITE_URL}}'
-			}
-		}
-	</script>
-	<script src="{{TEMPLATE_URL}}/js/script.js"></script>
+	<script src="{{MAIN_URL}}/core/static/js/xenux.min.js"></script>
+	<script src="{{MAIN_URL}}/js/templates/bootstrap/js/script.js"></script>
 </body>
 </html>

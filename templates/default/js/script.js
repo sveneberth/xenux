@@ -33,7 +33,7 @@ $(window).resize(function() { // resize window
 	}
 });
 
-$(document).ready(function () { // after DOM load
+$(function() {
 	if($(window).width() <= 600) {
 		$(".topmenu.mainmenu li").has("ul").children("a").append("<span></span>");
 		$(".topmenu.mainmenu").css('min-height', $(document).height() - 50);
@@ -67,8 +67,7 @@ $(window).scroll(function () {
 * open fancybox for images in main
 */
 var gallery = [];
-var pictureTranslation = XENUX.translation.pictureXofY;
-$(document).ready(function ($) {
+$(function() {
 	var numImages = $("main img")
 					.filter(function() {
 						return ($(this).parent().prop("tagName") != 'A');
@@ -78,7 +77,7 @@ $(document).ready(function ($) {
 		if($(this).parent().prop("tagName") == 'A') return true;
 		gallery[i] = {
 			href: ($(this).hasClass('cloud-image') && !empty($(this).attr("data-src"))) ? $(this).attr("data-src") : $(this).attr("src"),
-			title: pictureTranslation.replace('x', i+1).replace('y', numImages)
+			title: '<?= __('picture x of y', "' + (i+1) + '", "' + numImages + '") ?>'
 		};
 		$(this).bind("click", function () {
 			$.fancybox(gallery, {
@@ -96,7 +95,7 @@ $(document).ready(function ($) {
 /**
 * calendar equal hight
 */
-$(document).ready(function(){
+$(function() {
 	$('.calendar ul.calendar_dates li.week-line').each(function(){
 		var highestBox = 0;
 
@@ -114,7 +113,7 @@ $(document).ready(function(){
 /**
 * language selector
 */
-$(document).ready(function() {
+$(function() {
 	$.widget( "custom.iconselectmenu", $.ui.selectmenu, {
 		_renderItem: function(ul, item) {
 			var li = $("<li>", {
@@ -135,4 +134,14 @@ $(document).ready(function() {
 			return li.appendTo(ul);
 		}
 	});
-});
+
+
+	$(".language-selector")
+	.iconselectmenu({
+		change: function( event, data ) {
+			window.location.href = '?lang=' + $(this).val();
+		}
+	})
+	.iconselectmenu( "menuWidget")
+	.addClass('language-selector-menu');
+})

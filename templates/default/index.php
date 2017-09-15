@@ -40,19 +40,6 @@
 	#if(prev_URL):<link rel="prev" href="{{prev_URL}}">#endif
 	#if(next_URL):<link rel="next" href="{{next_URL}}">#endif
 
-	<!-- scripts -->
-	<script>
-		var XENUX = {
-			translation: {
-				pictureXofY: '<?= __('picture x of y') ?>'
-			},
-			path: {
-				baseurl: '{{MAIN_URL}}'
-			}
-		}
-	</script>
-	<script src="{{TEMPLATE_URL}}/js/script.js"></script>
-
 	<noscript>
 		<style>
 			.sb-search {width: 100%;}
@@ -138,7 +125,7 @@ if ($sites)
 					<li class="search">
 						<div id="sb-search" class="sb-search">
 							<form action="{{MAIN_URL}}/search/" method="GET">
-								<input onkeyup="$('.sb-search-submit').css('z-index', ($(this).val() == '' ? 11 : 99));" type="search" class="sb-search-input" name="q" placeholder="<?= __("search") ?>" value="">
+								<input onkeyup="$('.sb-search-submit').css('z-index', ($(this).val() == '' ? 11 : 99));" type="search" class="sb-search-input" name="q" placeholder="<?= __('search') ?>" value="">
 								<input type="submit" class="sb-search-submit" value="">
 								<span onclick="$('div#sb-search').toggleClass('sb-search-open');$('.sb-search-input').focus();" class="sb-icon-search"></span>
 							</form>
@@ -156,7 +143,7 @@ if ($sites)
 		<noscript>
 			<div class="warning-noscript">
 				<div>
-					<?= __("noscript-message") ?>
+					<?= __('noscript-message') ?>
 				</div>
 			</div>
 		</noscript>
@@ -181,16 +168,16 @@ if ($sites)
 										<span class="title">' . $post->title . '</span>
 										<span class="date">' . pretty_date($post->create_date) . '</span>' .
 										shortstr(strip_tags($post->text), 50) . '<br>
-										<a href="{{MAIN_URL}}/posts/view/' . getPreparedLink($post->id, $post->title) . '">&raquo;' . __('showpost') . '</a>
+										<a href="{{MAIN_URL}}/posts/view/' . getPreparedLink($post->id, $post->title) . '">&raquo;' . __('showPost') . '</a>
 									</li>';
 						}
 					}
 					else
 					{
-						echo '<p style="margin:5px 0;">' . __('noPost') . '</p>';
+						echo '<p style="margin:5px 0;">' . __('noPosts') . '</p>';
 					}
 				?>
-				<a href="{{MAIN_URL}}/posts/list"><?= __("showAllPosts") ?></a>
+				<a href="{{MAIN_URL}}/posts/list"><?= __('showAllPosts') ?></a>
 			</ul>
 
 
@@ -227,20 +214,20 @@ if ($sites)
 
 
 			<div>
-				<h3><?= __("login") ?>:</h3>
+				<h3><?= __('login') ?>:</h3>
 <?php
 				if (!$user->isLogin())
 				{
 ?>
 				<form action="{{ADMIN_URL}}/login" method="POST">
-					<input type="text" name="username" placeholder="<?= __("username") ?>">
-					<input type="password" name="password" placeholder="<?= __("password") ?>">
-					<input style="margin: 5px 0;" type="submit" value="<?= __("login") ?>">
+					<input type="text" name="username" placeholder="<?= __('username') ?>">
+					<input type="password" name="password" placeholder="<?= __('password') ?>">
+					<input style="margin: 5px 0;" type="submit" value="<?= __('login') ?>">
 
-					<a href="{{ADMIN_URL}}/login?task=forgotpassword"><?= __("forgotPassword") ?>?</a><br>
-					<a href="{{ADMIN_URL}}/login?task=forgotusername"><?= __("forgotUsername") ?>?</a><br>
+					<a href="{{ADMIN_URL}}/login?task=forgotpassword"><?= __('forgotPassword') ?>?</a><br>
+					<a href="{{ADMIN_URL}}/login?task=forgotusername"><?= __('forgotUsername') ?>?</a><br>
 					<?php if (parse_bool($app->getOption('users_can_register'))): ?>
-						<a href="{{ADMIN_URL}}/login?task=register"><?= __("register") ?></a>
+						<a href="{{ADMIN_URL}}/login?task=register"><?= __('register') ?></a>
 					<?php endif; ?>
 				</form>
 <?php
@@ -248,9 +235,9 @@ if ($sites)
 				else
 				{
 ?>
-				<?= __("successLogin", $user->userInfo->firstname) ?>!<br>
+				<?= __('successLogin', $user->userInfo->firstname) ?>!<br>
 				<a href="{{ADMIN_URL}}">&raquo;<?= __('go to administration') ?></a><br>
-				<a href="{{ADMIN_URL}}/login?task=logout"><?= __("logout") ?></a>
+				<a href="{{ADMIN_URL}}/login?task=logout"><?= __('logout') ?></a>
 <?php
 				}
 ?>
@@ -272,18 +259,6 @@ if ($sites)
 								}
 							?>
 						</select>
-						<script>
-							$(function() {
-								$(".language-selector")
-								.iconselectmenu({
-									change: function( event, data ) {
-										window.location.href = '{{SITE_URL}}?lang=' + $(this).val();
-									}
-								})
-								.iconselectmenu( "menuWidget")
-								.addClass('language-selector-menu');
-							})
-						</script>
 						<?php
 					endif;
 				?>
@@ -311,5 +286,9 @@ if ($sites)
 		</footer>
 
 	</div>
+
+	<!-- scripts -->
+	<script src="{{MAIN_URL}}/core/static/js/xenux.min.js"></script>
+	<script src="{{MAIN_URL}}/js/templates/default/js/script.js"></script>
 </body>
 </html>

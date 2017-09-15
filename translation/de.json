@@ -20,7 +20,7 @@
     "readPost":"Beitrag lesen",
     "showPost":"Beitrag anzeigen",
     "showAllPosts":"alle Beiträge anzeigen",
-    "noPosty":"keine Beiträge vorhanden!",
+    "noPost":"keine Beiträge vorhanden!",
     "gotoPostList":"Zur Beitrags Übersicht",
 
     "event":"Termin",
@@ -82,7 +82,7 @@
     "page":"Seite",
     "writtenInfo":"Verfasst von <a title=\"zum Autoren-Profil\" href=\"{{MAIN_URL}}/user/view/%1\">%1</a> am %2 um %3 Uhr.",
     "newestSites":"neuste Seiten",
-    "picture x of y": "Bild x von y",
+    "picture x of y": "Bild %1 von %2",
 
     "### function:pretty_date ###":"",
     "ago": "vor %1",

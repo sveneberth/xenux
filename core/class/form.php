@@ -352,7 +352,8 @@ class form
 				$props['allowedTypes'] = isset($props['allowedTypes']) ? $props['allowedTypes'] : '*';
 				if (is_string($props['allowedTypes'])) $props['allowedTypes'] = [$props['allowedTypes']];
 				$app->addCSS(ADMIN_URL . '/modules/cloud/explorer.min.css');
-				$app->addJS(ADMIN_URL . '/modules/cloud/explorer.js');
+				$app->addJS(MAIN_URL . '/js/administration/modules/cloud/explorer.js');
+				$app->addJS(MAIN_URL . '/core/static/js/xenux.min.js');
 				$fieldTemplate->setVar('allowedTypes', json_encode($props['allowedTypes']));
 				return $fieldTemplate->render($this->getFormTemplateURL('_form_cloud-file.php'));
 				break;

@@ -81,7 +81,7 @@
     "page":"page",
     "writtenInfo":"written by <a title=\"go to author-profile\" href=\"{{MAIN_URL}}/user/view/%1\">%1</a> on %2 at %3 o'clock.",
     "newestSites":"newest sites",
-    "picture x of y": "Picture x of y",
+    "picture x of y": "Picture %1 of %2",
 
     "### function:pretty_date ###":"",
     "ago": "%1 ago",
