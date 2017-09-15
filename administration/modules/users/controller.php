@@ -107,6 +107,8 @@ class usersController extends AbstractController
 
 		echo $template->render();
 
+		$app->addJS(URL_TEMPLATE . '/js/jquery.tablesorter.min.js');
+		$app->addJS(URL_ADMIN . '/modules/' . $this->modulename . '/script.js');
 		$this->page_name = __('home');
 		$this->headlineSuffix = '<a class="btn-new" href="{{URL_ADMIN}}/users/new">' . __('new') . '</a>';
 	}

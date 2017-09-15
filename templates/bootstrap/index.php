@@ -325,7 +325,6 @@
 			}
 		}
 	</script>
-	{# <script src="{{URL_TEMPLATE}}/js/functions.js"></script> #}
 	<script src="{{URL_TEMPLATE}}/js/script.js"></script>
 </body>
 </html>

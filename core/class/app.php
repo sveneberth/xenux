@@ -71,6 +71,8 @@ class app
 		{
 			// append translations
 			translator::appendTranslations(PATH_MAIN."/templates/".$this->template."/translation/");
+			define("PATH_TEMPLATE", PATH_MAIN.'/templates/'.$this->template);
+			define("URL_TEMPLATE", URL_MAIN.'/templates/'.$this->template);
 
 			$template = new template(PATH_MAIN."/templates/".$this->template."/index.php");
 
@@ -78,8 +80,6 @@ class app
 
 			$template->setVar("SITE_PATH", $this->siteurl);
 			$template->setVar("URL_TEMPLATE", URL_MAIN.'/templates/'.$this->template);
-			define("PATH_TEMPLATE", PATH_MAIN.'/templates/'.$this->template);
-			define("URL_TEMPLATE", URL_MAIN.'/templates/'.$this->template);
 
 			$template->setVar("CSS-FILES", $this->getCSS());
 			$template->setVar("JS-FILES", $this->getJS());
@@ -108,6 +108,9 @@ class app
 	{
 		$this->site = $this->url[0];
 
+		define("PATH_TEMPLATE", PATH_ADMIN . '/template');
+		define("URL_TEMPLATE", URL_ADMIN . '/template');
+
 		// append translations
 		translator::appendTranslations(PATH_ADMIN . '/translation/');
 
@@ -134,12 +137,13 @@ class app
 				return false;
 			}
 
+
 			$template = new template(PATH_ADMIN."/template/index.php");
 
 			$template->setVar("page_content", $this->getPageContent(true));
 
-			$template->setVar("SITE_PATH", URL_ADMIN.'/'.implode('/', $this->url));
-			$template->setVar("URL_TEMPLATE", URL_MAIN.'/administration/template');
+			$template->setVar("SITE_PATH", URL_ADMIN . '/' . implode('/', $this->url));
+			$template->setVar("URL_TEMPLATE", URL_ADMIN . '/template');
 
 			$template->setVar("meta_author", $this->getOption('meta_author'));
 			$template->setVar("meta_desc", $this->getOption('meta_desc'));

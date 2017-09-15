@@ -1,3 +1,4 @@
+
 /* ##############################################
 /* Cloud
 /* ############################################*/
@@ -185,7 +186,7 @@ $(function() {
 		var targetType	= $('#contextmenu').data('targetType');
 
 		if (targetType == 'file') {
-			OpenInNewTab(baseurl + '/file/' + id);
+			openInNewTab(baseurl + '/file/' + id);
 		} else {
 			dir_list(id);
 		}
@@ -195,7 +196,7 @@ $(function() {
 		var id         = $('#contextmenu').data('targetID');
 		var targetType = $('#contextmenu').data('targetType');
 
-		OpenInNewTab(baseurl + '/file/' + id + '-d');
+		openInNewTab(baseurl + '/file/' + id + '-d');
 
 		$('#contextmenu').hide();
 	});

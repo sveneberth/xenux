@@ -15,20 +15,17 @@
 
 	<!-- css -->
 	<link rel="stylesheet" href="{{URL_TEMPLATE}}/css/style.min.css" media="all">
-	{# <!-- <link rel="stylesheet" type="text/css" href="{{URL_TEMPLATE}}/css/jquery-ui.css" media="all"> --> #}
 	{{CSS-FILES}}
 
 	<!-- jquery + plugins -->
 	<script src="{{URL_TEMPLATE}}/js/jquery-3.1.1.min.js"></script>
-	{#<script src="{{URL_TEMPLATE}}/js/jquery-migrate-1.2.1.min.js"></script>#}
 	<script src="{{URL_TEMPLATE}}/js/jquery-ui.min.js"></script>
 	<script src="{{URL_TEMPLATE}}/js/jquery.ui.touch-punch.min.js"></script>
 	<script src="{{URL_TEMPLATE}}/js/jquery.mousewheel.js"></script>
 
 	<!-- scripts -->
-	<script src="{{URL_TEMPLATE}}/js/functions.js"></script>
+	<script src="{{URL_MAIN}}/core/static/js/xenux.min.js"></script>
 	<script src="{{URL_TEMPLATE}}/js/script.js"></script>
-	<script src="http://tablesorter.com/__jquery.tablesorter.min.js"></script>
 	{{JS-FILES}}
 </head>
 <body id="top">
