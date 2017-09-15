@@ -48,6 +48,7 @@ include_once(MAIN_PATH.'/core/class/mailer.php');
 include_once(MAIN_PATH.'/core/class/ErrorPage.php');
 include_once(MAIN_PATH.'/core/class/pluginhelper.php');
 include_once(MAIN_PATH.'/core/class/file.php');
+include_once(MAIN_PATH.'/core/class/ressource.php');
 
 /** divider for a new page call */
 //if (defined('DEBUG') && DEBUG == true) #FIXME if final

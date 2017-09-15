@@ -67,6 +67,14 @@ class app
 		{
 			new file(@$this->url);
 		}
+		elseif ($this->site == 'js')
+		{
+			new ressource(@$this->url, 'js');
+		}
+		elseif ($this->site == 'css')
+		{
+			new ressource(@$this->url, 'css');
+		}
 		else
 		{
 			// append translations

@@ -11,10 +11,10 @@
 
 		"here can you add a new site":"Here can you add a new site.",
 		"here can you edit the site":"Here can you edit the site.",
-		
+
 		"by dragging the pages you can change the menu order":"By dragging the pages you can change the menu order.",
 		"note that in an unpublished site, respective undersites are not listed in the menu":"Note that in an <b>unpublished site</b>, respective undersites are <b>not</b> listed in the menu.",
-		
+
 		"deleteSite":"delete site",
 		"click to edit site":"Click, to edit site",
 
@@ -23,6 +23,8 @@
 
 		"selectAsHomePage":"select as home-page",
 		"selectAsContactPage":"select as contact-page",
-		"selectAsImprintPage":"select as imprint-page"
+		"selectAsImprintPage":"select as imprint-page",
+
+    "are you sure to delete this file?": "Are you sure to delete this file? You can't undo this action!"
 	}
 }
