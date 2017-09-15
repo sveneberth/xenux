@@ -5,6 +5,7 @@ $if_port	= ($_SERVER['SERVER_PORT'] != '80' && $_SERVER['SERVER_PORT'] != '443')
 $dir		= str_replace('core/config', '', str_replace('\\', '/', __DIR__));
 $dir		= rtrim($dir, '/');
 $doc_root	= str_replace('\\', '/', $_SERVER['DOCUMENT_ROOT']);
+$doc_root	= rtrim($doc_root, '/');
 
 $subdir		= str_replace($doc_root, '', $dir);
 
