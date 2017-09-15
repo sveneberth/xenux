@@ -74,7 +74,7 @@ class sitemapController extends AbstractController
 		}
 
 		// posts
-		echo '<li><a href="{{URL_MAIN}}/posts/list">' . __("posts") . '</a>';
+		echo '<li><a href="{{MAIN_URL}}/posts/list">' . __("posts") . '</a>';
 		$posts = $XenuxDB->getList('posts', [
 			'columns' => [
 				'id',
@@ -87,14 +87,14 @@ class sitemapController extends AbstractController
 			echo "<ul>";
 			foreach ($posts as $post)
 			{
-				echo '<li><a href="{{URL_MAIN}}/posts/view/' . getPreparedLink($post->id, $post->title) . '">' . $post->title .'</a></li>';
+				echo '<li><a href="{{MAIN_URL}}/posts/view/' . getPreparedLink($post->id, $post->title) . '">' . $post->title .'</a></li>';
 			}
 			echo "</ul>";
 		}
 		echo "</li>";
 
 		// events
-		echo '<li><a href="{{URL_MAIN}}/event/calendar">' . __("events") . '</a>';
+		echo '<li><a href="{{MAIN_URL}}/event/calendar">' . __("events") . '</a>';
 		$events = $XenuxDB->getList('events', [
 			'columns' => [
 				'id',
@@ -107,17 +107,17 @@ class sitemapController extends AbstractController
 			echo "<ul>";
 			foreach ($events as $event)
 			{
-				echo '<li><a href="{{URL_MAIN}}/event/view/' . getPreparedLink($event->id, $event->title) . '">' . $event->title .'</a></li>';
+				echo '<li><a href="{{MAIN_URL}}/event/view/' . getPreparedLink($event->id, $event->title) . '">' . $event->title .'</a></li>';
 			}
 			echo "</ul>";
 		}
 		echo "</li>";
 
 		// static sites
-		echo '<li><a href="{{URL_MAIN}}/sitemap">' . __("sitemap") . '</a></li>';
-		echo '<li><a href="{{URL_MAIN}}/search">' . __("search") . '</a></li>';
-		echo '<li><a href="{{URL_MAIN}}/contact">' . __("contact") . '</a></li>';
-		echo '<li><a href="{{URL_MAIN}}/imprint">' . __("imprint") . '</a></li>';
+		echo '<li><a href="{{MAIN_URL}}/sitemap">' . __("sitemap") . '</a></li>';
+		echo '<li><a href="{{MAIN_URL}}/search">' . __("search") . '</a></li>';
+		echo '<li><a href="{{MAIN_URL}}/contact">' . __("contact") . '</a></li>';
+		echo '<li><a href="{{MAIN_URL}}/imprint">' . __("imprint") . '</a></li>';
 
 		echo "</ul>";
 	}
@@ -151,12 +151,12 @@ class sitemapController extends AbstractController
 
 		$buffer = ob_get_clean();
 
-		$fileExists = file_exists(PATH_MAIN.'/'.'sitemap.xml');
+		$fileExists = file_exists(MAIN_PATH.'/'.'sitemap.xml');
 
-		if (file_exists(PATH_MAIN.'/'.'sitemap.xml'))
+		if (file_exists(MAIN_PATH.'/'.'sitemap.xml'))
 		{
 			// file exists
-			$fileData = file_get_contents(PATH_MAIN.'/'.'sitemap.xml');
+			$fileData = file_get_contents(MAIN_PATH.'/'.'sitemap.xml');
 
 			if ($fileData != $buffer || $overwrite)
 			{
@@ -169,7 +169,7 @@ class sitemapController extends AbstractController
 		}
 	}
 
-	private function writeXMLFileData($data, $filePath = PATH_MAIN.'/'.'sitemap.xml')
+	private function writeXMLFileData($data, $filePath = MAIN_PATH.'/'.'sitemap.xml')
 	{
 		$file = fopen($filePath, "w")
 			or die("something went wrong ...");

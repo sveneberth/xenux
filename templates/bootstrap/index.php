@@ -18,17 +18,17 @@
 	<!-- http://xenux.bplaced.net -->
 	<meta name="generator" content="Xenux v{{XENUX_VERSION}} - das kostenlose CMS">
 
-	<link rel="shortcut icon" href="{{URL_TEMPLATE}}/img/favicon_48.png">
+	<link rel="shortcut icon" href="{{TEMPLATE_URL}}/img/favicon_48.png">
 
 	<!-- Bootstrap core CSS -->
-	<link href="{{URL_TEMPLATE}}/css/bootstrap.min.css" rel="stylesheet">
+	<link href="{{TEMPLATE_URL}}/css/bootstrap.min.css" rel="stylesheet">
 
 	<!-- Custom styles for this template -->
-	<link href="{{URL_TEMPLATE}}/css/sticky-footer-navbar.css" rel="stylesheet">
-	<link href="{{URL_TEMPLATE}}/css/custom-style.css" rel="stylesheet">
+	<link href="{{TEMPLATE_URL}}/css/sticky-footer-navbar.css" rel="stylesheet">
+	<link href="{{TEMPLATE_URL}}/css/custom-style.css" rel="stylesheet">
 
 	<!-- fancybox -->
-	<link rel="stylesheet" type="text/css" href="{{URL_TEMPLATE}}/fancybox/jquery.fancybox.css?v=2.1.5" media="screen">
+	<link rel="stylesheet" type="text/css" href="{{TEMPLATE_URL}}/fancybox/jquery.fancybox.css?v=2.1.5" media="screen">
 
 	<!-- links -->
 	<link rel="canonical" href="{{canonical_URL}}">
@@ -54,7 +54,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="{{URL_MAIN}}">{{homepage_name}}</a>
+				<a class="navbar-brand" href="{{MAIN_URL}}">{{homepage_name}}</a>
 			</div>
 			<div id="navbar" class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
@@ -163,7 +163,7 @@
 			<div class="col-md-2 sitebar">
 				<aside class="search">
 					<h5><?= __('search') ?></h5>
-					<form action="{{URL_MAIN}}/search/" method="GET">
+					<form action="{{MAIN_URL}}/search/" method="GET">
 						<input type="search" class="search-input" name="q" placeholder="<?= __("search") ?>" value="">
 						<input type="submit" class="search-submit" value="<?= __("search") ?>">
 					</form>
@@ -210,7 +210,7 @@
 							{
 								foreach ($posts as $post)
 								{
-									echo '<li><a href="{{URL_MAIN}}/posts/view/'.getPreparedLink($post->id, $post->title).'">'.$post->title.'</a></li>';
+									echo '<li><a href="{{MAIN_URL}}/posts/view/'.getPreparedLink($post->id, $post->title).'">'.$post->title.'</a></li>';
 								}
 							}
 							else
@@ -219,7 +219,7 @@
 							}
 						?>
 					</ul>
-					<a style="display:inline-block;margin-top:5px;" href="{{URL_MAIN}}/posts/list"><?= __("showAllPosts") ?></a>
+					<a style="display:inline-block;margin-top:5px;" href="{{MAIN_URL}}/posts/list"><?= __("showAllPosts") ?></a>
 				</aside>
 
 				<aside class="events">
@@ -241,7 +241,7 @@
 							{
 								foreach ($events as $event)
 								{
-									echo '<li><a href="{{URL_MAIN}}/event/view/'.getPreparedLink($event->id, $event->title).'">'.$event->title.'</a></li>';
+									echo '<li><a href="{{MAIN_URL}}/event/view/'.getPreparedLink($event->id, $event->title).'">'.$event->title.'</a></li>';
 								}
 							}
 							else
@@ -250,7 +250,7 @@
 							}
 						?>
 					</ul>
-					<a style="display:inline-block;margin-top:5px;" href="{{URL_MAIN}}/event/calendar"><?= __("gotoEventCalendar") ?></a>
+					<a style="display:inline-block;margin-top:5px;" href="{{MAIN_URL}}/event/calendar"><?= __("gotoEventCalendar") ?></a>
 				</aside>
 				<aside>
 					<h5>Change language</h5>
@@ -258,12 +258,12 @@
 						$langs = translator::getLanguages();
 						if (count((array)$langs) > 1):
 							?>
-							<select onchange="window.location.href = '{{SITE_PATH}}?lang=' + $(this).val();" class="language-selector">
+							<select onchange="window.location.href = '{{SITE_URL}}?lang=' + $(this).val();" class="language-selector">
 								<option disabled="disabled" data-option-class="label" data-style="background-image:none;">Select Language</option>
 								<?php
 									foreach ($langs as $short => $options)
 									{
-										echo '<option value="' . $short . '" data-style="background-image: url(\''.URL_MAIN. $options->flag.'\');" ' . ($short == translator::getLanguage() ? 'selected' : '') . ' >' . $options->label . '</option>';
+										echo '<option value="' . $short . '" data-style="background-image: url(\''.MAIN_URL. $options->flag.'\');" ' . ($short == translator::getLanguage() ? 'selected' : '') . ' >' . $options->label . '</option>';
 									}
 								?>
 							</select>
@@ -281,11 +281,11 @@
 				powered by <a target="_blank" href="<?= XENUX_URL_HP ?>">Xenux</a>
 
 				<div class="links">
-					<a href="{{URL_MAIN}}/sitemap"><?= __('sitemap') ?></a>
-					<a href="{{URL_MAIN}}/administration"><?= __('administration') ?></a>
+					<a href="{{MAIN_URL}}/sitemap"><?= __('sitemap') ?></a>
+					<a href="{{MAIN_URL}}/administration"><?= __('administration') ?></a>
 
-					<a href="{{URL_MAIN}}/contact"><?= __('contact') ?></a>
-					<a href="{{URL_MAIN}}/imprint"><?= __('imprint') ?></a>
+					<a href="{{MAIN_URL}}/contact"><?= __('contact') ?></a>
+					<a href="{{MAIN_URL}}/imprint"><?= __('imprint') ?></a>
 				</div>
 			</div>
 
@@ -297,21 +297,21 @@
 	================================================== -->
 
 	<!-- jquery + plugins -->
-	<script src="{{URL_TEMPLATE}}/js/jquery-2.1.1.min.js"></script>
-	<script src="{{URL_TEMPLATE}}/js/jquery-migrate-1.2.1.min.js"></script>
-	<script src="{{URL_TEMPLATE}}/js/jquery-ui.min.js"></script>
-	<script src="{{URL_TEMPLATE}}/js/jquery.ui.touch-punch.min.js"></script>
-	<script src="{{URL_TEMPLATE}}/js/jquery.cookie.js"></script>
-	<script src="{{URL_TEMPLATE}}/js/jquery.mousewheel.js"></script>
+	<script src="{{TEMPLATE_URL}}/js/jquery-2.1.1.min.js"></script>
+	<script src="{{TEMPLATE_URL}}/js/jquery-migrate-1.2.1.min.js"></script>
+	<script src="{{TEMPLATE_URL}}/js/jquery-ui.min.js"></script>
+	<script src="{{TEMPLATE_URL}}/js/jquery.ui.touch-punch.min.js"></script>
+	<script src="{{TEMPLATE_URL}}/js/jquery.cookie.js"></script>
+	<script src="{{TEMPLATE_URL}}/js/jquery.mousewheel.js"></script>
 
 	<!-- Bootstrap core JavaScript -->
-	<script src="{{URL_TEMPLATE}}/js/bootstrap.min.js"></script>
+	<script src="{{TEMPLATE_URL}}/js/bootstrap.min.js"></script>
 
 	<!-- fancybox -->
-	<script src="{{URL_TEMPLATE}}/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+	<script src="{{TEMPLATE_URL}}/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
 
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-	<script src="{{URL_TEMPLATE}}/js/ie10-viewport-bug-workaround.js"></script>
+	<script src="{{TEMPLATE_URL}}/js/ie10-viewport-bug-workaround.js"></script>
 
 	<!-- scripts -->
 	<script>
@@ -320,11 +320,11 @@
 				pictureXofY: '<?= __('picture x of y') ?>'
 			},
 			path: {
-				baseurl: '{{URL_MAIN}}',
-				sitepath: '{{SITE_PATH}}'
+				baseurl: '{{MAIN_URL}}',
+				sitepath: '{{SITE_URL}}'
 			}
 		}
 	</script>
-	<script src="{{URL_TEMPLATE}}/js/script.js"></script>
+	<script src="{{TEMPLATE_URL}}/js/script.js"></script>
 </body>
 </html>

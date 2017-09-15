@@ -1,5 +1,5 @@
 <?php
-include_once(PATH_MAIN."/modules/page/controller.php");
+include_once(MAIN_PATH."/modules/page/controller.php");
 
 
 class imprintController extends pageController

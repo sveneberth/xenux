@@ -6,4 +6,4 @@
 
 <br>
 <br>
-<a href="{{URL_MAIN}}/posts/list">&raquo;<?= __('gotoPostList') ?></a>
+<a href="{{MAIN_URL}}/posts/list">&raquo;<?= __('gotoPostList') ?></a>

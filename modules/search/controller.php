@@ -118,7 +118,7 @@ class searchController extends AbstractController
 		{
 			foreach ($matches as $match)
 			{
-				$template = new template(PATH_MAIN."/modules/".$this->modulename."/layout.php");
+				$template = new template(MAIN_PATH."/modules/".$this->modulename."/layout.php");
 
 				$template->setVar("page_content", shortstr(str_replace("&nbsp;", "", strip_tags($match->text)), 300));
 				$template->setVar("page_title", $match->title);

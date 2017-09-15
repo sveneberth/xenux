@@ -67,7 +67,7 @@
 			</div>
 		</div>
 		<div class="ajax-loader hide">
-			<?php echo embedSVG(PATH_ADMIN . '/template/images/spinner.svg'); ?>
+			<?php echo embedSVG(ADMIN_PATH . '/template/images/spinner.svg'); ?>
 		</div>
 	</section>
 </div>

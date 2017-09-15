@@ -10,7 +10,7 @@ class usersController extends AbstractController
 		parent::__construct($url);
 
 		if (!isset($this->url[1]) || empty($this->url[1]))
-			header("Location: ".URL_ADMIN.'/'.$this->modulename.'/home');
+			header("Location: ".ADMIN_URL.'/'.$this->modulename.'/home');
 	}
 
 	public function run()
@@ -18,7 +18,7 @@ class usersController extends AbstractController
 		global $XenuxDB, $app;
 
 		// append translations
-		translator::appendTranslations(PATH_ADMIN . '/modules/'.$this->modulename.'/translation/');
+		translator::appendTranslations(ADMIN_PATH . '/modules/'.$this->modulename.'/translation/');
 
 		if (@$this->url[1] == "home")
 		{
@@ -33,7 +33,7 @@ class usersController extends AbstractController
 			}
 			else
 			{
-				#header("Location: ".URL_ADMIN.'/'.$this->modulename.'/home');
+				#header("Location: ".ADMIN_URL.'/'.$this->modulename.'/home');
 				throw new Exception(__('isWrong', 'users ID'));
 			}
 		}
@@ -61,7 +61,7 @@ class usersController extends AbstractController
 	{
 		global $app, $XenuxDB;
 
-		$template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout_home.php");
+		$template = new template(ADMIN_PATH."/modules/".$this->modulename."/layout_home.php");
 
 		#FIXME: removed user remains as author in pages/post/etc. This sucks
 		if (isset($_GET['remove']) && is_numeric($_GET['remove']) && !empty($_GET['remove']))
@@ -107,10 +107,10 @@ class usersController extends AbstractController
 
 		echo $template->render();
 
-		$app->addJS(URL_TEMPLATE . '/js/jquery.tablesorter.min.js');
-		$app->addJS(URL_ADMIN . '/modules/' . $this->modulename . '/script.js');
+		$app->addJS(TEMPLATE_URL . '/js/jquery.tablesorter.min.js');
+		$app->addJS(ADMIN_URL . '/modules/' . $this->modulename . '/script.js');
 		$this->page_name = __('home');
-		$this->headlineSuffix = '<a class="btn-new" href="{{URL_ADMIN}}/users/new">' . __('new') . '</a>';
+		$this->headlineSuffix = '<a class="btn-new" href="{{ADMIN_URL}}/users/new">' . __('new') . '</a>';
 	}
 
 	private function getUserTable()
@@ -131,13 +131,13 @@ class usersController extends AbstractController
 	<td class="column-select"><input type="checkbox" name="item[]" value="' . $user->id . '"></td>
 	<td class="column-id">' . $user->id . '</td>
 	<td class="column-text">
-		<a class="edit" href="{{URL_ADMIN}}/users/edit/' . $user->id . '" title="' . __('click to edit user') . '">' . $user->username . '</a>
+		<a class="edit" href="{{ADMIN_URL}}/users/edit/' . $user->id . '" title="' . __('click to edit user') . '">' . $user->username . '</a>
 	</td>
 	<td class="column-text">' . $user->firstname . '</td>
 	<td class="column-text">' . $user->lastname . '</td>
 	<td class="column-actions">
-		<a class="view-btn" target="_blank" href="{{URL_MAIN}}/user/view/' . urlencode($user->username) . '">' . __('view') . '</a>
-		<a href="{{URL_ADMIN}}/users/home/?remove=' . $user->id . '" title="' . __('delete') . '" class="remove-btn">
+		<a class="view-btn" target="_blank" href="{{MAIN_URL}}/user/view/' . urlencode($user->username) . '">' . __('view') . '</a>
+		<a href="{{ADMIN_URL}}/users/home/?remove=' . $user->id . '" title="' . __('delete') . '" class="remove-btn">
 			<svg xmlns="http://www.w3.org/2000/svg" height="32px" version="1.1" viewBox="0 0 32 32" width="32px">
 				 <path fill-rule="evenodd" d="M21.333 3.556h4.741V4.74H5.926V3.556h4.74V2.37c0-1.318 1.06-2.37 2.368-2.37h5.932a2.37 2.37 0 0 1 2.367 2.37v1.186zM5.926 5.926v22.517A3.55 3.55 0 0 0 9.482 32h13.036a3.556 3.556 0 0 0 3.556-3.557V5.926H5.926zm4.74 3.555v18.963h1.186V9.481h-1.185zm4.741 0v18.963h1.186V9.481h-1.186zm4.741 0v18.963h1.185V9.481h-1.185zm-7.107-8.296c-.657 0-1.19.526-1.19 1.185v1.186h8.297V2.37c0-.654-.519-1.185-1.189-1.185h-5.918z"/>
 			</svg>
@@ -153,7 +153,7 @@ class usersController extends AbstractController
 
 	private function userEdit($new=false)
 	{
-		$template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout_edit.php", [
+		$template = new template(ADMIN_PATH."/modules/".$this->modulename."/layout_edit.php", [
 			"profileEdit" => @$this->url[1] == "profile"
 		]);
 
@@ -307,7 +307,7 @@ class usersController extends AbstractController
 
 		if ($form->isSend() && isset($form->getInput()['cancel']))
 		{
-			header('Location: '.URL_ADMIN.'/users/home');
+			header('Location: '.ADMIN_URL.'/users/home');
 			return false;
 		}
 
@@ -367,7 +367,7 @@ class usersController extends AbstractController
 
 				if (is_numeric($user) && $user != 0)
 				{
-					$url = URL_ADMIN . '/login?task=setpassword&amp;id=' . $user . '&amp;token=' . $token;
+					$url = ADMIN_URL . '/login?task=setpassword&amp;id=' . $user . '&amp;token=' . $token;
 
 					$mail = new mailer;
 					$mail->setSender(XENUX_MAIL);
@@ -375,7 +375,7 @@ class usersController extends AbstractController
 					$mail->addAdress($data['email'], $data['firstname'] . $data['lastname']);
 					$mail->setSubject('Benutzeraccount erstellt');
 					$mail->setMessage('Hallo!<br>
-<p>Es wurde für dich auf <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> ein Benutzeraccount angelegt.</p>
+<p>Es wurde für dich auf <a href="' . MAIN_URL . '">' . MAIN_URL . '</a> ein Benutzeraccount angelegt.</p>
 <p>Benutzername: ' .  $username . '</p>
 <p>Unter der folgenden Adresse kannst du dein Passwort festlegen:<br>
 <a href="' . $url . '">' . $url . '</a></p>');
@@ -448,11 +448,11 @@ class usersController extends AbstractController
 
 				if (isset($data['submit_close']))
 				{
-					header('Location: '.URL_ADMIN.'/users/home?savingSuccess=true');
+					header('Location: '.ADMIN_URL.'/users/home?savingSuccess=true');
 					return false;
 				}
 
-				header('Location: '.URL_ADMIN.'/users/edit/'.$this->editUserID.'?savingSuccess=true');
+				header('Location: '.ADMIN_URL.'/users/edit/'.$this->editUserID.'?savingSuccess=true');
 			}
 			else
 			{
@@ -461,11 +461,11 @@ class usersController extends AbstractController
 
 				if (isset($data['submit_close']) || $new)
 				{
-					header('Location: '.URL_ADMIN.'/users/home?savingSuccess=false');
+					header('Location: '.ADMIN_URL.'/users/home?savingSuccess=false');
 					return false;
 				}
 
-				header('Location: '.URL_ADMIN.'/users/edit/'.$this->editUserID.'?savingSuccess=false');
+				header('Location: '.ADMIN_URL.'/users/edit/'.$this->editUserID.'?savingSuccess=false');
 			}
 		}
 		return $form->getForm();

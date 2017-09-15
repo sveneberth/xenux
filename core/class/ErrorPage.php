@@ -9,7 +9,7 @@ class ErrorPage
 
 	public static function get($statuscode = 404, $msg = null, $redirect = null)
 	{
-		$template = new template(PATH_MAIN . "/core/template/error.php");
+		$template = new template(MAIN_PATH . "/core/template/error.php");
 		$template->setVar('errorcode', $statuscode);
 
 		switch ($statuscode)

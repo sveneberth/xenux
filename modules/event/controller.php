@@ -9,7 +9,7 @@ class eventController extends AbstractController
 	public function run()
 	{
 		// append translations
-		translator::appendTranslations(PATH_MAIN . '/modules/event/translation/');
+		translator::appendTranslations(MAIN_PATH . '/modules/event/translation/');
 
 		if (@$this->url[1] == "calendar")
 		{
@@ -32,7 +32,7 @@ class eventController extends AbstractController
 	{
 		global $XenuxDB;
 
-		include_once(PATH_MAIN."/modules/".$this->modulename.'/calendar.php');
+		include_once(MAIN_PATH."/modules/".$this->modulename.'/calendar.php');
 
 		$calendar = new Calendar();
 		$calendar->render();
@@ -55,7 +55,7 @@ class eventController extends AbstractController
 
 		if ($event)
 		{
-			$template = new template(PATH_MAIN."/modules/".$this->modulename."/layout_view.php");
+			$template = new template(MAIN_PATH."/modules/".$this->modulename."/layout_view.php");
 
 			$template->setVar("event_content", $event->text);
 			$template->setVar("event_start", mysql2date("d.m.Y H:i", $event->start_date));
@@ -64,7 +64,7 @@ class eventController extends AbstractController
 			echo $template->render();
 
 			$this->page_name = $event->title;
-			$app->canonical_URL = URL_MAIN . '/' . getPreparedLink($event->id, $event->title);
+			$app->canonical_URL = MAIN_URL . '/' . getPreparedLink($event->id, $event->title);
 		}
 		else
 		{

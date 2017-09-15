@@ -57,13 +57,13 @@ class Calendar {
 					$daysOfWeek .= $this->_showDay($week * 7 + $day, $day);
 				}
 
-				$template = new template(PATH_MAIN."/templates/".$app->template."/_calendar_week.php");
+				$template = new template(MAIN_PATH."/templates/".$app->template."/_calendar_week.php");
 				$template->setVar("daysOfWeek", $daysOfWeek);
 				$weeks .= $template->render();
 			}
 
 
-		$template = new template(PATH_MAIN."/templates/".$app->template."/_calendar_layout.php");
+		$template = new template(MAIN_PATH."/templates/".$app->template."/_calendar_layout.php");
 
 		$template->setVar("prevUrlParam", "month=" . sprintf('%02d', $this->preMonth) . "&year=" . $this->preYear);
 		$template->setVar("nextUrlParam", "month=" . sprintf('%02d', $this->nextMonth) . "&year=" . $this->nextYear);
@@ -139,7 +139,7 @@ class Calendar {
 		{
 			foreach ($events as $event)
 			{
-				$template = new template(PATH_MAIN."/templates/".$app->template."/_calendar_day_dates.php");
+				$template = new template(MAIN_PATH."/templates/".$app->template."/_calendar_day_dates.php");
 
 				if (mysql2date("Y-m-d", $event->start_date) == mysql2date("Y-m-d", $event->end_date)) // event only one day long
 				{
@@ -167,7 +167,7 @@ class Calendar {
 		}
 
 
-		$template = new template(PATH_MAIN."/templates/".$app->template."/_calendar_day.php");
+		$template = new template(MAIN_PATH."/templates/".$app->template."/_calendar_day.php");
 		$template->setVar("day", $cellContent);
 		$template->setVar("additionalClass", $additionalClass);
 		$template->setVar("dates", $dates);
@@ -183,7 +183,7 @@ class Calendar {
 
 		foreach ($this->dayLabels as $index => $label)
 		{
-			$template = new template(PATH_MAIN."/templates/".$app->template."/_calendar_label.php");
+			$template = new template(MAIN_PATH."/templates/".$app->template."/_calendar_label.php");
 			$template->setVar("label", __($label));
 			$labels .= $template->render();
 		}

@@ -44,13 +44,13 @@ class translator
 		}
 	}
 
-	public static function getTranslationFile($lang, $path=PATH_MAIN."/translation/")
+	public static function getTranslationFile($lang, $path=MAIN_PATH."/translation/")
 	{
 		return
 			json_decode(file_get_contents($path . $lang . '.json'));
 	}
 
-	private static function getTranslations($lang, $path=PATH_MAIN."/translation/")
+	private static function getTranslations($lang, $path=MAIN_PATH."/translation/")
 	{
 		return
 			(array) self::getTranslationFile($lang, $path)->translations;
@@ -77,7 +77,7 @@ class translator
 		return false;
 	}
 
-	private function translationExists($lang, $path=PATH_MAIN.'/translation/')
+	private function translationExists($lang, $path=MAIN_PATH.'/translation/')
 	{
 		return
 			file_exists($path . $lang . '.json') &&
@@ -85,7 +85,7 @@ class translator
 			isset(self::getLanguages()[$lang]);
 	}
 
-	public function getLanguages($path=PATH_MAIN.'/translation/')
+	public function getLanguages($path=MAIN_PATH.'/translation/')
 	{
 		$languages = array();
 

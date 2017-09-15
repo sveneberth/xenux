@@ -47,10 +47,10 @@ class template
 
 	private function setDefaultVars()
 	{
-		$this->setVar("URL_MAIN", URL_MAIN);
-		$this->setVar("URL_ADMIN", URL_ADMIN);
-		$this->setVar("PATH_MAIN", PATH_MAIN);
-		$this->setVar("PATH_ADMIN", PATH_ADMIN);
+		$this->setVar("MAIN_URL", MAIN_URL);
+		$this->setVar("ADMIN_URL", ADMIN_URL);
+		$this->setVar("MAIN_PATH", MAIN_PATH);
+		$this->setVar("ADMIN_PATH", ADMIN_PATH);
 		$this->setVar("XENUX_VERSION", XENUX_VERSION);
 	}
 

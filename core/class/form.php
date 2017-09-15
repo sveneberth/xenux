@@ -286,7 +286,7 @@ class form
 			case 'wysiwyg':
 				$fieldTemplate->setVar('class', $class . ' ckeditor');
 				$fieldTemplate->setVar('value', htmlentities($value, ENT_SUBSTITUTE, "UTF-8"));
-				$app->addJS(URL_ADMIN . '/wysiwyg/ckeditor.js');
+				$app->addJS(ADMIN_URL . '/wysiwyg/ckeditor.js');
 				return $fieldTemplate->render($this->getFormTemplateURL('_form_textarea.php'));
 				break;
 			case 'select':
@@ -351,8 +351,8 @@ class form
 			case 'cloud-file':
 				$props['allowedTypes'] = isset($props['allowedTypes']) ? $props['allowedTypes'] : '*';
 				if (is_string($props['allowedTypes'])) $props['allowedTypes'] = [$props['allowedTypes']];
-				$app->addCSS(URL_ADMIN . '/modules/cloud/explorer.min.css');
-				$app->addJS(URL_ADMIN . '/modules/cloud/explorer.js');
+				$app->addCSS(ADMIN_URL . '/modules/cloud/explorer.min.css');
+				$app->addJS(ADMIN_URL . '/modules/cloud/explorer.js');
 				$fieldTemplate->setVar('allowedTypes', json_encode($props['allowedTypes']));
 				return $fieldTemplate->render($this->getFormTemplateURL('_form_cloud-file.php'));
 				break;
@@ -437,9 +437,9 @@ class form
 	{
 		global $app;
 
-		if (file_exists(PATH_MAIN . '/templates/' . $app->getOption('template') . '/form/' . $formname))
-			return PATH_MAIN . '/templates/' . $app->getOption('template') . '/form/' . $formname;
+		if (file_exists(MAIN_PATH . '/templates/' . $app->getOption('template') . '/form/' . $formname))
+			return MAIN_PATH . '/templates/' . $app->getOption('template') . '/form/' . $formname;
 
-		return PATH_MAIN . '/core/template/form/' . $formname;
+		return MAIN_PATH . '/core/template/form/' . $formname;
 	}
 }

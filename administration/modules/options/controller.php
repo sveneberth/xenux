@@ -6,7 +6,7 @@ class optionsController extends AbstractController
 		parent::__construct($url);
 
 		if (!isset($this->url[1]) || empty($this->url[1]))
-			header("Location: ".URL_ADMIN.'/'.$this->modulename.'/basic');
+			header("Location: ".ADMIN_URL.'/'.$this->modulename.'/basic');
 	}
 
 	public function run()
@@ -14,9 +14,9 @@ class optionsController extends AbstractController
 		global $XenuxDB, $app;
 
 		// append translations
-		translator::appendTranslations(PATH_ADMIN . '/modules/'.$this->modulename.'/translation/');
+		translator::appendTranslations(ADMIN_PATH . '/modules/'.$this->modulename.'/translation/');
 
-		$template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout.php");
+		$template = new template(ADMIN_PATH."/modules/".$this->modulename."/layout.php");
 
 		$template->setVar("messages", '');
 
@@ -162,11 +162,11 @@ class optionsController extends AbstractController
 
 			if ($success)
 			{
-				header('Location: '.URL_ADMIN.'/options/basic/?savingSuccess=true');
+				header('Location: '.ADMIN_URL.'/options/basic/?savingSuccess=true');
 			}
 			else
 			{
-				header('Location: '.URL_ADMIN.'/options/basic/?savingSuccess=false');
+				header('Location: '.ADMIN_URL.'/options/basic/?savingSuccess=false');
 			}
 
 		}
@@ -219,11 +219,11 @@ class optionsController extends AbstractController
 
 			if ($success)
 			{
-				header('Location: '.URL_ADMIN.'/options/sites/?savingSuccess=true');
+				header('Location: '.ADMIN_URL.'/options/sites/?savingSuccess=true');
 			}
 			else
 			{
-				header('Location: '.URL_ADMIN.'/options/sites/?savingSuccess=false');
+				header('Location: '.ADMIN_URL.'/options/sites/?savingSuccess=false');
 			}
 
 		}

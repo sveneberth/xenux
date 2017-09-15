@@ -1,6 +1,6 @@
 <?php
-require_once(PATH_MAIN . '/core/libs/html2text/Html2Text.php');
-require_once(PATH_MAIN . '/core/libs/html2text/Html2TextException.php');
+require_once(MAIN_PATH . '/core/libs/html2text/Html2Text.php');
+require_once(MAIN_PATH . '/core/libs/html2text/Html2TextException.php');
 
 #TDOD: add function addAttachment
 
@@ -139,14 +139,14 @@ class mailer
 
 	private function debugMail()
 	{
-		create_folder(PATH_MAIN . $this->debugPath);
+		create_folder(MAIN_PATH . $this->debugPath);
 
 		$this->push_header('To: ' . $this->getTo());
 		$this->push_header('Subject: ' . $this->escapeUTF8($this->subject));
 
 		$txt = implode("\n", $this->header) . "\n" . $this->mail;
 
-		$handle = fopen(PATH_MAIN . $this->debugPath . 'mail-' . date("Y-m-d-H-i-s") . '.txt', 'w');
+		$handle = fopen(MAIN_PATH . $this->debugPath . 'mail-' . date("Y-m-d-H-i-s") . '.txt', 'w');
 		fwrite($handle, $txt);
 		fclose($handle);
 	}

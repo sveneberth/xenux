@@ -18,8 +18,8 @@
 			foreach ((array) $installed_templates as $name)
 			{
 				echo $name . '<a style="float: right;" href="' .
-					URL_ADMIN . '/pluginmanager/templates?removeTemplate=' . $name . '">' .
-					embedSVG(PATH_ADMIN . '/template/images/trash.svg') . '</a><br>';
+					ADMIN_URL . '/pluginmanager/templates?removeTemplate=' . $name . '">' .
+					embedSVG(ADMIN_PATH . '/template/images/trash.svg') . '</a><br>';
 			}
 		?>
 	</section>

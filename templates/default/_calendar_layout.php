@@ -1,10 +1,10 @@
 <div class="calendar">
 	<div class="calendar_header">
-		<a class="calendar-menu-button prev" href="{{SITE_PATH}}?{{prevUrlParam}}"><?= __('prevMonth') ?></a>
+		<a class="calendar-menu-button prev" href="{{SITE_URL}}?{{prevUrlParam}}"><?= __('prevMonth') ?></a>
 
 		<span class="calendar_title">{{year}} {{month}}</span>
 
-		<a class="calendar-menu-button next" href="{{SITE_PATH}}?{{nextUrlParam}}"><?= __('nextMonth') ?></a>
+		<a class="calendar-menu-button next" href="{{SITE_URL}}?{{nextUrlParam}}"><?= __('nextMonth') ?></a>
 	</div>
 
 	<div class="calendar_content">

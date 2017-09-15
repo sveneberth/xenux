@@ -26,13 +26,13 @@ class app
 			$this->setTemplate($_GET['useTemplate']);
 
 		$url           = strtolower($url);
-		$this->siteurl = URL_MAIN.'/'.$url;
+		$this->siteurl = MAIN_URL.'/'.$url; #TODO: diff $this->siteurl and REQUEST_URL, need both?
 		$this->url     = explode('/', $url);
 
 		if (isset($_GET['lang']))
 		{
 			translator::setLanguage($_GET['lang']);
-			header("Location: " . URL_REQUEST);
+			header("Location: " . REQUEST_URL);
 		}
 	}
 
@@ -70,16 +70,16 @@ class app
 		else
 		{
 			// append translations
-			translator::appendTranslations(PATH_MAIN."/templates/".$this->template."/translation/");
-			define("PATH_TEMPLATE", PATH_MAIN.'/templates/'.$this->template);
-			define("URL_TEMPLATE", URL_MAIN.'/templates/'.$this->template);
+			translator::appendTranslations(MAIN_PATH."/templates/".$this->template."/translation/");
+			define("TEMPLATE_PATH", MAIN_PATH.'/templates/'.$this->template);
+			define("TEMPLATE_URL", MAIN_URL.'/templates/'.$this->template);
 
-			$template = new template(PATH_MAIN."/templates/".$this->template."/index.php");
+			$template = new template(MAIN_PATH."/templates/".$this->template."/index.php");
 
 			$template->setVar("page_content", $this->getPageContent());
 
-			$template->setVar("SITE_PATH", $this->siteurl);
-			$template->setVar("URL_TEMPLATE", URL_MAIN.'/templates/'.$this->template);
+			$template->setVar("SITE_URL", $this->siteurl);
+			$template->setVar("TEMPLATE_URL", MAIN_URL.'/templates/'.$this->template);
 
 			$template->setVar("CSS-FILES", $this->getCSS());
 			$template->setVar("JS-FILES", $this->getJS());
@@ -94,7 +94,7 @@ class app
 			$template->setVar("headlinePrefix", $this->headlinePrefix);
 			$template->setVar("headlineSuffix", $this->headlineSuffix);
 
-			$template->setVar("canonical_URL", $this->site=='home' ? URL_MAIN : (is_null($this->canonical_URL) ? $this->siteurl : $this->canonical_URL) );
+			$template->setVar("canonical_URL", $this->site=='home' ? MAIN_URL : (is_null($this->canonical_URL) ? $this->siteurl : $this->canonical_URL) );
 			$template->setIfCondition("prev_URL", !is_null($this->prev_URL) && $this->site != 'home');
 			$template->setVar("prev_URL", $this->prev_URL);
 			$template->setIfCondition("next_URL", !is_null($this->next_URL) && $this->site != 'home');
@@ -108,15 +108,15 @@ class app
 	{
 		$this->site = $this->url[0];
 
-		define("PATH_TEMPLATE", PATH_ADMIN . '/template');
-		define("URL_TEMPLATE", URL_ADMIN . '/template');
+		define("TEMPLATE_PATH", ADMIN_PATH . '/template');
+		define("TEMPLATE_URL", ADMIN_URL . '/template');
 
 		// append translations
-		translator::appendTranslations(PATH_ADMIN . '/translation/');
+		translator::appendTranslations(ADMIN_PATH . '/translation/');
 
 		if ($this->site == 'login' || $this->site == 'logout')
 		{
-			if (inludeExists(PATH_ADMIN."/modules/login/controller.php"))
+			if (inludeExists(ADMIN_PATH."/modules/login/controller.php"))
 			{
 				$controller = new loginController($this->url);
 
@@ -133,17 +133,17 @@ class app
 		{
 			if (empty($this->site))
 			{
-				header('Location: '.URL_ADMIN.'/dashboard/home');
+				header('Location: '.ADMIN_URL.'/dashboard/home');
 				return false;
 			}
 
 
-			$template = new template(PATH_ADMIN."/template/index.php");
+			$template = new template(ADMIN_PATH."/template/index.php");
 
 			$template->setVar("page_content", $this->getPageContent(true));
 
-			$template->setVar("SITE_PATH", URL_ADMIN . '/' . implode('/', $this->url));
-			$template->setVar("URL_TEMPLATE", URL_ADMIN . '/template');
+			$template->setVar("SITE_URL", ADMIN_URL . '/' . implode('/', $this->url));
+			$template->setVar("TEMPLATE_URL", ADMIN_URL . '/template');
 
 			$template->setVar("meta_author", $this->getOption('meta_author'));
 			$template->setVar("meta_desc", $this->getOption('meta_desc'));
@@ -163,7 +163,7 @@ class app
 		else
 		{
 			global $_get_params;
-			header('Location: '.URL_MAIN.'/administration/login'.(!empty($this->url[0]) ? '?redirectTo='.implode('/', $this->url) : '').'?'.$_get_params);
+			header('Location: '.MAIN_URL.'/administration/login'.(!empty($this->url[0]) ? '?redirectTo='.implode('/', $this->url) : '').'?'.$_get_params);
 		}
 	}
 
@@ -171,10 +171,10 @@ class app
 	{
 		$return = Array();
 
-		$modules = array_filter(glob(PATH_ADMIN.'/modules/*'), 'is_dir');
+		$modules = array_filter(glob(ADMIN_PATH.'/modules/*'), 'is_dir');
 		foreach ($modules as $module)
 		{
-			$module = str_replace(PATH_ADMIN.'/modules/', '', $module);
+			$module = str_replace(ADMIN_PATH.'/modules/', '', $module);
 
 			if (($module == 'login' || $module == 'dashboard') && $all == false)
 				continue;
@@ -189,7 +189,7 @@ class app
 	{
 		try
 		{
-			if (inludeExists(($administration ? PATH_ADMIN : PATH_MAIN)."/modules/".$this->site."/controller.php"))
+			if (inludeExists(($administration ? ADMIN_PATH : MAIN_PATH)."/modules/".$this->site."/controller.php"))
 			{
 				$classname = $this->site."Controller";
 				$controller = new $classname($this->url);

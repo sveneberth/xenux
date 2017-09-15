@@ -6,7 +6,7 @@ class pluginmanagerController extends AbstractController
 		parent::__construct($url);
 
 		if (!isset($this->url[1]) || empty($this->url[1]))
-			header("Location: ".URL_ADMIN.'/'.$this->modulename.'/modules');
+			header("Location: ".ADMIN_URL.'/'.$this->modulename.'/modules');
 	}
 
 	public function run()
@@ -14,7 +14,7 @@ class pluginmanagerController extends AbstractController
 		global $XenuxDB, $app;
 
 		// append translations
-		translator::appendTranslations(PATH_ADMIN . '/modules/'.$this->modulename.'/translation/');
+		translator::appendTranslations(ADMIN_PATH . '/modules/'.$this->modulename.'/translation/');
 
 		if (@$this->url[1] == "modules")
 		{
@@ -36,7 +36,7 @@ class pluginmanagerController extends AbstractController
 	{
 		global $app, $XenuxDB;
 
-		$this->template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout_modules.php");
+		$this->template = new template(ADMIN_PATH."/modules/".$this->modulename."/layout_modules.php");
 		$this->template->setVar("messages", '');
 		$this->template->setVar("upload_form", $this->getModulesUploadForm());
 
@@ -170,7 +170,7 @@ class pluginmanagerController extends AbstractController
 
 					if ($modulehelper->uninstall())
 					{
-						include_once(PATH_MAIN . '/modules/' . $_GET['removeModule'] . '/uninstall.php'); // run uninstaller
+						include_once(MAIN_PATH . '/modules/' . $_GET['removeModule'] . '/uninstall.php'); // run uninstaller
 						$this->template->setVar("messages", '<p class="box-shadow info-message ok">'.__('removedSuccessful').'</p>');
 					}
 					else
@@ -189,7 +189,7 @@ class pluginmanagerController extends AbstractController
 			else
 			{
 				// show confirmation
-				$this->template->setVar("messages", '<p class="box-shadow info-message warning">'.__('shure to remove?').'<br><a class="btn" href="' . URL_ADMIN . '/pluginmanager/modules?removeModule=' . $_GET['removeModule'] . '&confirmed=true">' . __('yes') . '</a></p>');
+				$this->template->setVar("messages", '<p class="box-shadow info-message warning">'.__('shure to remove?').'<br><a class="btn" href="' . ADMIN_URL . '/pluginmanager/modules?removeModule=' . $_GET['removeModule'] . '&confirmed=true">' . __('yes') . '</a></p>');
 			}
 		}
 	}
@@ -199,7 +199,7 @@ class pluginmanagerController extends AbstractController
 	{
 		global $app, $XenuxDB;
 
-		$this->template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout_templates.php");
+		$this->template = new template(ADMIN_PATH."/modules/".$this->modulename."/layout_templates.php");
 		$this->template->setVar("messages", '');
 		$this->template->setVar("upload_form", $this->getTemplatesUploadForm());
 
@@ -337,7 +337,7 @@ class pluginmanagerController extends AbstractController
 			else
 			{
 				// show confirmation
-				$this->template->setVar("messages", '<p class="box-shadow info-message warning">'.__('shure to remove?').'<br><a class="btn" href="' . URL_ADMIN . '/pluginmanager/templates?removeTemplate=' . $_GET['removeTemplate'] . '&confirmed=true">' . __('yes') . '</a></p>');
+				$this->template->setVar("messages", '<p class="box-shadow info-message warning">'.__('shure to remove?').'<br><a class="btn" href="' . ADMIN_URL . '/pluginmanager/templates?removeTemplate=' . $_GET['removeTemplate'] . '&confirmed=true">' . __('yes') . '</a></p>');
 			}
 		}
 	}

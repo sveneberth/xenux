@@ -246,7 +246,7 @@ function getPreparedLink($id, $title='')
 }
 function getPageLink($id, $title='')
 {
-	return URL_MAIN."/page/" . getPreparedLink($id, $title);
+	return MAIN_URL."/page/" . getPreparedLink($id, $title);
 }
 
 
@@ -303,7 +303,7 @@ function getMenuBarMultiSites ($absolutenumber, $start, $amount)
 			$return .= "\t<a class=\"sitenavi";
 			if ($limit == $start)
 				$return .= " active";
-			$return .= "\" title=\"".__('page')." $thissite\" href=\"{{SITE_PATH}}?";
+			$return .= "\" title=\"".__('page')." $thissite\" href=\"{{SITE_URL}}?";
 			foreach ($_GET as $key => $value)
 			{
 				if ($key != 'url' && $key != 'start' && $key != 'amount')

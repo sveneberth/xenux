@@ -34,9 +34,9 @@ class log
 
 		$msg = date('[d-M-Y H:i:s]') . ' ' . $msg . "\r\n";
 
-		create_folder(PATH_MAIN . '/logs/');
+		create_folder(MAIN_PATH . '/logs/');
 
-		$handle = fopen(PATH_MAIN . '/logs/' . date('Y-m-d') . '.log', 'a');
+		$handle = fopen(MAIN_PATH . '/logs/' . date('Y-m-d') . '.log', 'a');
 		fwrite($handle, $msg);
 		fclose($handle);
 	}

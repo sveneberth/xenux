@@ -4,9 +4,9 @@ class pluginhelper
 	private $type;
 	private $name;
 	public $tmppath;
-	private $modulepath = PATH_MAIN . '/modules/';
-	private $moduleadminpath = PATH_ADMIN . '/modules/';
-	private $templatepath = PATH_MAIN . '/templates/';
+	private $modulepath = MAIN_PATH . '/modules/';
+	private $moduleadminpath = ADMIN_PATH . '/modules/';
+	private $templatepath = MAIN_PATH . '/templates/';
 	private $hp_offline;
 
 
@@ -16,7 +16,7 @@ class pluginhelper
 
 		$this->type = $type;
 
-		$this->tmppath = PATH_MAIN . '/tmp/' . generateRandomString(6) . '/';
+		$this->tmppath = MAIN_PATH . '/tmp/' . generateRandomString(6) . '/';
 
 		if ($needTMP)
 			create_folder($this->tmppath);

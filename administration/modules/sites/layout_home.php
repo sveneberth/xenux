@@ -69,7 +69,7 @@
 		console.log(array);
 
 		$.ajax({
-			url: '{{URL_ADMIN}}/modules/sites/ajax.php',
+			url: '{{ADMIN_URL}}/modules/sites/ajax.php',
 			type: 'POST',
 			dataType: 'json',
 			data: {
@@ -86,7 +86,7 @@
 	}
 	function remove(id) {
 		$.ajax({
-			url: '{{URL_ADMIN}}/modules/sites/ajax.php',
+			url: '{{ADMIN_URL}}/modules/sites/ajax.php',
 			type: 'POST',
 			dataType: 'json',
 			data: {

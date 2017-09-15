@@ -55,7 +55,7 @@ class postsController extends AbstractController
 		{
 			foreach ($posts as $post)
 			{
-				$template = new template(PATH_MAIN . '/modules/' . $this->modulename . '/layout_list.php');
+				$template = new template(MAIN_PATH . '/modules/' . $this->modulename . '/layout_list.php');
 
 				$template->setVar('post_content', shortstr(strip_tags($post->text), 400, 500));
 				$template->setVar('post_author', $post->username);
@@ -63,7 +63,7 @@ class postsController extends AbstractController
 				$template->setVar('post_title_url', urlencode($post->title));
 				$template->setVar('post_createDate', pretty_date($post->create_date));
 				$template->setVar('post_ID', $post->post_id);
-				$template->setVar('post_imageURL', URL_MAIN . "/file/{$post->file_id}-" . urlencode($post->filename));
+				$template->setVar('post_imageURL', MAIN_URL . "/file/{$post->file_id}-" . urlencode($post->filename));
 				$template->setVar('post_imageTitle', $post->filename);
 
 				$template->setIfCondition('hasThumbnail', !is_null($post->file_id));
@@ -111,7 +111,7 @@ class postsController extends AbstractController
 
 		if ($post)
 		{
-			$template = new template(PATH_MAIN . '/modules/' . $this->modulename . '/layout_view.php',
+			$template = new template(MAIN_PATH . '/modules/' . $this->modulename . '/layout_view.php',
 			[
 				'author' => $post->username,
 				'date'   => mysql2date('d.m.Y', $post->create_date),
@@ -119,7 +119,7 @@ class postsController extends AbstractController
 			]);
 
 			$template->setVar('post_content', $post->text);
-			$template->setVar('post_imageURL', URL_MAIN . "/file/{$post->file_id}-" . urlencode($post->filename));
+			$template->setVar('post_imageURL', MAIN_URL . "/file/{$post->file_id}-" . urlencode($post->filename));
 			$template->setVar('post_imageTitle', $post->filename);
 
 			$template->setIfCondition("show_meta_info", parse_bool($app->getOption('sites_show_meta_info')));
@@ -127,7 +127,7 @@ class postsController extends AbstractController
 			echo $template->render();
 
 			$this->page_name = $post->title;
-			$app->canonical_URL = URL_MAIN . '/' . getPreparedLink($post->post_id, $post->title);
+			$app->canonical_URL = MAIN_URL . '/' . getPreparedLink($post->post_id, $post->title);
 		}
 		else
 		{

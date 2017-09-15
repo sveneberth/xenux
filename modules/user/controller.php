@@ -11,7 +11,7 @@ class userController extends AbstractController
 	public function run()
 	{
 		// append translations
-		translator::appendTranslations(PATH_MAIN . '/modules/user/translation/');
+		translator::appendTranslations(MAIN_PATH . '/modules/user/translation/');
 
 		if (@$this->url[1] == "view")
 		{
@@ -42,7 +42,7 @@ class userController extends AbstractController
 		]);
 		if ($user)
 		{
-			$template = new template(PATH_MAIN."/modules/".$this->modulename."/layout.php",
+			$template = new template(MAIN_PATH."/modules/".$this->modulename."/layout.php",
 			[
 				'socialmedia_links' => $user->social_media
 			]);

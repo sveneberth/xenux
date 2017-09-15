@@ -16,24 +16,24 @@
 	<!-- http://xenux.bplaced.net -->
 	<meta name="generator" content="Xenux v{{XENUX_VERSION}} - das kostenlose CMS">
 
-	<link rel="shortcut icon" href="{{URL_TEMPLATE}}/img/favicon_48.png">
+	<link rel="shortcut icon" href="{{TEMPLATE_URL}}/img/favicon_48.png">
 
 	<!-- css -->
-	<link rel="stylesheet" href="{{URL_TEMPLATE}}/css/style.css" media="all">
+	<link rel="stylesheet" href="{{TEMPLATE_URL}}/css/style.css" media="all">
 
 	<!-- jquery + plugins -->
-	<script src="{{URL_TEMPLATE}}/js/jquery-2.1.1.min.js"></script>
-	<script src="{{URL_TEMPLATE}}/js/jquery-migrate-1.2.1.min.js"></script>
-	<script src="{{URL_TEMPLATE}}/js/jquery-ui.min.js"></script>
-	<script src="{{URL_TEMPLATE}}/js/jquery.ui.touch-punch.min.js"></script>
-	<script src="{{URL_TEMPLATE}}/js/jquery.mousewheel.js"></script>
+	<script src="{{TEMPLATE_URL}}/js/jquery-2.1.1.min.js"></script>
+	<script src="{{TEMPLATE_URL}}/js/jquery-migrate-1.2.1.min.js"></script>
+	<script src="{{TEMPLATE_URL}}/js/jquery-ui.min.js"></script>
+	<script src="{{TEMPLATE_URL}}/js/jquery.ui.touch-punch.min.js"></script>
+	<script src="{{TEMPLATE_URL}}/js/jquery.mousewheel.js"></script>
 
 	<!-- fancybox -->
-	<script src="{{URL_TEMPLATE}}/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
-	<link rel="stylesheet" href="{{URL_TEMPLATE}}/fancybox/jquery.fancybox.css?v=2.1.5" media="screen">
+	<script src="{{TEMPLATE_URL}}/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+	<link rel="stylesheet" href="{{TEMPLATE_URL}}/fancybox/jquery.fancybox.css?v=2.1.5" media="screen">
 
 	<!-- search -->
-	<link rel="search" type="application/opensearchdescription+xml" title="Xenux Suche" href="{{URL_MAIN}}/search.xml.php">
+	<link rel="search" type="application/opensearchdescription+xml" title="Xenux Suche" href="{{MAIN_URL}}/search.xml.php">
 
 	<!-- links -->
 	<link rel="canonical" href="{{canonical_URL}}">
@@ -47,11 +47,11 @@
 				pictureXofY: '<?= __('picture x of y') ?>'
 			},
 			path: {
-				baseurl: '{{URL_MAIN}}'
+				baseurl: '{{MAIN_URL}}'
 			}
 		}
 	</script>
-	<script src="{{URL_TEMPLATE}}/js/script.js"></script>
+	<script src="{{TEMPLATE_URL}}/js/script.js"></script>
 
 	<noscript>
 		<style>
@@ -65,11 +65,11 @@
 	<div class="headWrapper">
 		<header>
 			<a href="javascript:openmobilemenu();" class="menu-icon"></a>
-			<a class="logo" href="{{URL_MAIN}}">
-				<?= embedSVG(PATH_TEMPLATE . '/img/xenux_logo.svg'); ?>
+			<a class="logo" href="{{MAIN_URL}}">
+				<?= embedSVG(TEMPLATE_PATH . '/img/xenux_logo.svg'); ?>
 			</a>
 			<ul class="topmenu mobilemenu">
-				<li><a href="{{URL_MAIN}}/administration/login"><?= __('login') ?></a></li>
+				<li><a href="{{MAIN_URL}}/administration/login"><?= __('login') ?></a></li>
 			</ul>
 			<nobr>
 				<ul class="topmenu mainmenu">
@@ -137,16 +137,16 @@ if ($sites)
 ?>
 					<li class="search">
 						<div id="sb-search" class="sb-search">
-							<form action="{{URL_MAIN}}/search/" method="GET">
+							<form action="{{MAIN_URL}}/search/" method="GET">
 								<input onkeyup="$('.sb-search-submit').css('z-index', ($(this).val() == '' ? 11 : 99));" type="search" class="sb-search-input" name="q" placeholder="<?= __("search") ?>" value="">
 								<input type="submit" class="sb-search-submit" value="">
 								<span onclick="$('div#sb-search').toggleClass('sb-search-open');$('.sb-search-input').focus();" class="sb-icon-search"></span>
 							</form>
 						</div>
 					</li>
-					<li class="mobilemenu"><a href="{{URL_MAIN}}/news/list"><?= __('posts') ?></a></li>
-					<li class="mobilemenu"><a href="{{URL_MAIN}}/event/calendar"><?= __('events') ?></a></li>
-					<li class="mobilemenu"><a href="{{URL_MAIN}}/search"><?= __('search') ?></a></li>
+					<li class="mobilemenu"><a href="{{MAIN_URL}}/news/list"><?= __('posts') ?></a></li>
+					<li class="mobilemenu"><a href="{{MAIN_URL}}/event/calendar"><?= __('events') ?></a></li>
+					<li class="mobilemenu"><a href="{{MAIN_URL}}/search"><?= __('search') ?></a></li>
 				</ul>
 			</nobr>
 		</header>
@@ -181,7 +181,7 @@ if ($sites)
 										<span class="title">' . $post->title . '</span>
 										<span class="date">' . pretty_date($post->create_date) . '</span>' .
 										shortstr(strip_tags($post->text), 50) . '<br>
-										<a href="{{URL_MAIN}}/posts/view/' . getPreparedLink($post->id, $post->title) . '">&raquo;' . __('showpost') . '</a>
+										<a href="{{MAIN_URL}}/posts/view/' . getPreparedLink($post->id, $post->title) . '">&raquo;' . __('showpost') . '</a>
 									</li>';
 						}
 					}
@@ -190,7 +190,7 @@ if ($sites)
 						echo '<p style="margin:5px 0;">' . __('noPost') . '</p>';
 					}
 				?>
-				<a href="{{URL_MAIN}}/posts/list"><?= __("showAllPosts") ?></a>
+				<a href="{{MAIN_URL}}/posts/list"><?= __("showAllPosts") ?></a>
 			</ul>
 
 
@@ -213,7 +213,7 @@ if ($sites)
 										<span class="title">' . $event->title . '</span>
 										<span class="date">' . mysql2date('d.m.Y H:i', $event->start_date) . '</span>' .
 										shortstr(strip_tags($event->text), 50) . '<br>
-										<a href="{{URL_MAIN}}/event/view/' . getPreparedLink($event->id, $event->title) . '">&raquo;' . __('showEvent') . '</a>
+										<a href="{{MAIN_URL}}/event/view/' . getPreparedLink($event->id, $event->title) . '">&raquo;' . __('showEvent') . '</a>
 									</li>';
 						}
 					}
@@ -222,7 +222,7 @@ if ($sites)
 						echo '<p style="margin:5px 0;">' . __('noEvents') . '</p>';
 					}
 					?>
-					<a href="{{URL_MAIN}}/event/calendar"><?= __('gotoEventCalendar') ?></a>
+					<a href="{{MAIN_URL}}/event/calendar"><?= __('gotoEventCalendar') ?></a>
 			</ul>
 
 
@@ -232,15 +232,15 @@ if ($sites)
 				if (!$user->isLogin())
 				{
 ?>
-				<form action="{{URL_ADMIN}}/login" method="POST">
+				<form action="{{ADMIN_URL}}/login" method="POST">
 					<input type="text" name="username" placeholder="<?= __("username") ?>">
 					<input type="password" name="password" placeholder="<?= __("password") ?>">
 					<input style="margin: 5px 0;" type="submit" value="<?= __("login") ?>">
 
-					<a href="{{URL_ADMIN}}/login?task=forgotpassword"><?= __("forgotPassword") ?>?</a><br>
-					<a href="{{URL_ADMIN}}/login?task=forgotusername"><?= __("forgotUsername") ?>?</a><br>
+					<a href="{{ADMIN_URL}}/login?task=forgotpassword"><?= __("forgotPassword") ?>?</a><br>
+					<a href="{{ADMIN_URL}}/login?task=forgotusername"><?= __("forgotUsername") ?>?</a><br>
 					<?php if (parse_bool($app->getOption('users_can_register'))): ?>
-						<a href="{{URL_ADMIN}}/login?task=register"><?= __("register") ?></a>
+						<a href="{{ADMIN_URL}}/login?task=register"><?= __("register") ?></a>
 					<?php endif; ?>
 				</form>
 <?php
@@ -249,8 +249,8 @@ if ($sites)
 				{
 ?>
 				<?= __("successLogin", $user->userInfo->firstname) ?>!<br>
-				<a href="{{URL_ADMIN}}">&raquo;<?= __('go to administration') ?></a><br>
-				<a href="{{URL_ADMIN}}/login?task=logout"><?= __("logout") ?></a>
+				<a href="{{ADMIN_URL}}">&raquo;<?= __('go to administration') ?></a><br>
+				<a href="{{ADMIN_URL}}/login?task=logout"><?= __("logout") ?></a>
 <?php
 				}
 ?>
@@ -263,12 +263,12 @@ if ($sites)
 					$langs = translator::getLanguages();
 					if (count((array)$langs) > 1):
 						?>
-						<select onchange="window.location.href = '{{SITE_PATH}}?lang=' + $(this).val();" class="language-selector">
+						<select onchange="window.location.href = '{{SITE_URL}}?lang=' + $(this).val();" class="language-selector">
 							<option disabled="disabled" data-option-class="label" data-style="background-image:none;">Select Language</option>
 							<?php
 								foreach ($langs as $short => $options)
 								{
-									echo '<option value="' . $short . '" data-style="background-image: url(\''.URL_MAIN. $options->flag.'\');" ' . ($short == translator::getLanguage() ? 'selected' : '') . ' >' . $options->label . '</option>';
+									echo '<option value="' . $short . '" data-style="background-image: url(\''.MAIN_URL. $options->flag.'\');" ' . ($short == translator::getLanguage() ? 'selected' : '') . ' >' . $options->label . '</option>';
 								}
 							?>
 						</select>
@@ -277,7 +277,7 @@ if ($sites)
 								$(".language-selector")
 								.iconselectmenu({
 									change: function( event, data ) {
-										window.location.href = '{{SITE_PATH}}?lang=' + $(this).val();
+										window.location.href = '{{SITE_URL}}?lang=' + $(this).val();
 									}
 								})
 								.iconselectmenu( "menuWidget")
@@ -302,11 +302,11 @@ if ($sites)
 			powered by <a target="_blank" href="<?= XENUX_URL_HP ?>">Xenux</a>
 
 			<div class="links">
-				<a href="{{URL_MAIN}}/sitemap"><?= __('sitemap') ?></a>
-				<a href="{{URL_MAIN}}/administration"><?= __('administration') ?></a>
+				<a href="{{MAIN_URL}}/sitemap"><?= __('sitemap') ?></a>
+				<a href="{{MAIN_URL}}/administration"><?= __('administration') ?></a>
 
-				<a href="{{URL_MAIN}}/contact"><?= __('contact') ?></a>
-				<a href="{{URL_MAIN}}/imprint"><?= __('imprint') ?></a>
+				<a href="{{MAIN_URL}}/contact"><?= __('contact') ?></a>
+				<a href="{{MAIN_URL}}/imprint"><?= __('imprint') ?></a>
 			</div>
 		</footer>
 

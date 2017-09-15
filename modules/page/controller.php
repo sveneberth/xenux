@@ -52,7 +52,7 @@ class pageController extends AbstractController
 		{
 			if (($page->public || $showIsPrivate) || $app->user->isLogin())
 			{
-				$template = new template(PATH_MAIN."/modules/".$this->modulename."/layout.php",
+				$template = new template(MAIN_PATH."/modules/".$this->modulename."/layout.php",
 				[
 					'author' => $page->username,
 					'date'   => mysql2date('d.m.Y', $page->create_date),
@@ -105,7 +105,7 @@ class pageController extends AbstractController
 
 		if ($prev || $next)
 		{
-			$template = new template(PATH_MAIN."/templates/".$app->template."/_prevNextNavi.php");
+			$template = new template(MAIN_PATH."/templates/".$app->template."/_prevNextNavi.php");
 
 			$template->setIfCondition("prev", $prev);
 			if ($prev)

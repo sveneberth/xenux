@@ -1,7 +1,7 @@
 <?php
 /**
  * class file (a part of the Xenux-Cloud)
- * request: {{URL_MAIN}}/file/FILE-ID{flags}
+ * request: {{MAIN_URL}}/file/FILE-ID{flags}
  * flags:
  *  -s(int)	: set the width for an image
  * -c		: get a square images
@@ -176,7 +176,7 @@ class file
 	{
 		global $XenuxDB;
 
-		$tmppath = PATH_MAIN . '/tmp/' . generateRandomString(10) . '/';
+		$tmppath = MAIN_PATH . '/tmp/' . generateRandomString(10) . '/';
 		create_folder($tmppath);
 
 		$zip = new ZipArchive();

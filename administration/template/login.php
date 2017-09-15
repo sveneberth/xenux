@@ -10,10 +10,10 @@
 
 	<!-- http://xenux.bplaced.net -->
 	<meta name="generator" content="Xenux v{{XENUX_VERSION}} - das kostenlose CMS">
-	<link rel="shortcut icon" href="{{URL_TEMPLATE}}/images/favicon_48.png">
+	<link rel="shortcut icon" href="{{TEMPLATE_URL}}/images/favicon_48.png">
 
 	<!-- css -->
-	<link rel="stylesheet" href="{{URL_TEMPLATE}}/css/login.css" media="all">
+	<link rel="stylesheet" href="{{TEMPLATE_URL}}/css/login.css" media="all">
 </head>
 <body id="top">
 	#if(logout):
@@ -31,11 +31,11 @@
 
 			</div>
 			<p class="center forgot">
-				<a class="forgotusername" href="{{URL_ADMIN}}/login?task=forgotusername"><?= __("forgotUsername") ?>?</a> |
-				<a class="forgotpassword" href="{{URL_ADMIN}}/login?task=forgotpassword"><?= __("forgotPassword") ?>?</a>
+				<a class="forgotusername" href="{{ADMIN_URL}}/login?task=forgotusername"><?= __("forgotUsername") ?>?</a> |
+				<a class="forgotpassword" href="{{ADMIN_URL}}/login?task=forgotpassword"><?= __("forgotPassword") ?>?</a>
 			</p>
 			<?php if(parse_bool($app->getOption('users_can_register'))): ?>
-				<a class="center register" href="{{URL_ADMIN}}/login?task=register"><?= __('register') ?></a>
+				<a class="center register" href="{{ADMIN_URL}}/login?task=register"><?= __('register') ?></a>
 			<?php endif; ?>
 		<?php endif; ?>
 
@@ -47,7 +47,7 @@
 				{{message}}
 				{{form}}
 			</div>
-			<a class="center login" href="{{URL_ADMIN}}/login"><?= __('login') ?></a>
+			<a class="center login" href="{{ADMIN_URL}}/login"><?= __('login') ?></a>
 		<?php endif; ?>
 
 
@@ -59,7 +59,7 @@
 				{{message}}
 				{{form}}
 			</div>
-			<a class="center login" href="{{URL_ADMIN}}/login"><?= __('login') ?></a>
+			<a class="center login" href="{{ADMIN_URL}}/login"><?= __('login') ?></a>
 		<?php endif; ?>
 
 
@@ -72,7 +72,7 @@
 				{{message}}
 				{{form}}
 			</div>
-			<a class="center login" href="{{URL_ADMIN}}/login"><?= __('login') ?></a>
+			<a class="center login" href="{{ADMIN_URL}}/login"><?= __('login') ?></a>
 		<?php endif; ?>
 
 
@@ -85,7 +85,7 @@
 				{{message}}
 				{{form}}
 			</div>
-			<a class="center login" href="{{URL_ADMIN}}/login"><?= __('login') ?></a>
+			<a class="center login" href="{{ADMIN_URL}}/login"><?= __('login') ?></a>
 		<?php endif; ?>
 
 		<?php if($action == 'setpassword'): ?>
@@ -97,7 +97,7 @@
 				{{message}}
 				{{form}}
 			</div>
-			<a class="center login" href="{{URL_ADMIN}}/login"><?= __('login') ?></a>
+			<a class="center login" href="{{ADMIN_URL}}/login"><?= __('login') ?></a>
 		<?php endif; ?>
 
 		<?php if($action == 'confirm'): ?>

@@ -8,7 +8,7 @@ class eventsController extends AbstractController
 		parent::__construct($url);
 
 		if (!isset($this->url[1]) || empty($this->url[1]))
-			header("Location: ".URL_ADMIN.'/'.$this->modulename.'/home');
+			header("Location: ".ADMIN_URL.'/'.$this->modulename.'/home');
 	}
 
 	public function run()
@@ -16,7 +16,7 @@ class eventsController extends AbstractController
 		global $XenuxDB, $app;
 
 		// append translations
-		translator::appendTranslations(PATH_ADMIN . '/modules/'.$this->modulename.'/translation/');
+		translator::appendTranslations(ADMIN_PATH . '/modules/'.$this->modulename.'/translation/');
 
 		if (@$this->url[1] == "home")
 		{
@@ -50,7 +50,7 @@ class eventsController extends AbstractController
 	{
 		global $app, $XenuxDB;
 
-		$template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout_home.php");
+		$template = new template(ADMIN_PATH."/modules/".$this->modulename."/layout_home.php");
 		$template->setVar("messages", '');
 
 		// #TODO: merge action and remove in every module/list
@@ -117,10 +117,10 @@ class eventsController extends AbstractController
 
 		echo $template->render();
 
-		$app->addJS(URL_TEMPLATE . '/js/jquery.tablesorter.min.js');
-		$app->addJS(URL_ADMIN . '/modules/' . $this->modulename . '/script.js');
+		$app->addJS(TEMPLATE_URL . '/js/jquery.tablesorter.min.js');
+		$app->addJS(ADMIN_URL . '/modules/' . $this->modulename . '/script.js');
 		$this->page_name = __('home');
-		$this->headlineSuffix = '<a class="btn-new" href="{{URL_ADMIN}}/events/new">' . __('new') . '</a>';
+		$this->headlineSuffix = '<a class="btn-new" href="{{ADMIN_URL}}/events/new">' . __('new') . '</a>';
 	}
 
 	private function getEventTable($filter)
@@ -144,15 +144,15 @@ class eventsController extends AbstractController
 	<td class="column-select"><input type="checkbox" name="item[]" value="' . $event->id . '"></td>
 	<td class="column-id">' . $event->id . '</td>
 	<td class="column-title">
-		<a class="edit" href="{{URL_ADMIN}}/events/edit/' . $event->id . '" title="' . __('click to edit event') . '">' . $event->title . '</a>
+		<a class="edit" href="{{ADMIN_URL}}/events/edit/' . $event->id . '" title="' . __('click to edit event') . '">' . $event->title . '</a>
 	</td>
 	<td class="column-date">' . $event->create_date . '</td>
 	<td class="column-date">' . $event->start_date . '</td>
 	<td class="column-date">' . $event->end_date . '</td>
 	<td class="column-actions">
-		<a class="view-btn" target="_blank" href="{{URL_MAIN}}/event/view/' . getPreparedLink($event->id, $event->title) . '">' . __('view') . '</a>
-		<a href="{{URL_ADMIN}}/events/home/?remove=' . $event->id . '" title="' . __('delete') . '" class="remove-btn">
-			' . embedSVG(PATH_ADMIN . '/template/images/trash.svg') . '
+		<a class="view-btn" target="_blank" href="{{MAIN_URL}}/event/view/' . getPreparedLink($event->id, $event->title) . '">' . __('view') . '</a>
+		<a href="{{ADMIN_URL}}/events/home/?remove=' . $event->id . '" title="' . __('delete') . '" class="remove-btn">
+			' . embedSVG(ADMIN_PATH . '/template/images/trash.svg') . '
 		</a>
 	</td>
 </tr>';
@@ -165,7 +165,7 @@ class eventsController extends AbstractController
 
 	private function eventEdit($new=false)
 	{
-		$template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout_edit.php");
+		$template = new template(ADMIN_PATH."/modules/".$this->modulename."/layout_edit.php");
 
 		$template->setVar("messages", '');
 		$template->setVar("form", $this->getEditForm($template, $new));
@@ -297,7 +297,7 @@ class eventsController extends AbstractController
 
 		if ($form->isSend() && isset($form->getInput()['cancel']))
 		{
-			header('Location: '.URL_ADMIN.'/evens/home');
+			header('Location: '.ADMIN_URL.'/evens/home');
 			return false;
 		}
 
@@ -356,11 +356,11 @@ class eventsController extends AbstractController
 
 				if (isset($data['submit_close']))
 				{
-					header('Location: '.URL_ADMIN.'/events/home?savingSuccess=true');
+					header('Location: '.ADMIN_URL.'/events/home?savingSuccess=true');
 					return false;
 				}
 
-				header('Location: '.URL_ADMIN.'/events/edit/' . $this->editID . '?savingSuccess=true');
+				header('Location: '.ADMIN_URL.'/events/edit/' . $this->editID . '?savingSuccess=true');
 			}
 			else
 			{
@@ -369,11 +369,11 @@ class eventsController extends AbstractController
 
 				if (isset($data['submit_close']) || $new)
 				{
-					header('Location: '.URL_ADMIN.'/events/home?savingSuccess=false');
+					header('Location: '.ADMIN_URL.'/events/home?savingSuccess=false');
 					return false;
 				}
 
-				header('Location: '.URL_ADMIN.'/events/edit/' . $this->editID . '?savingSuccess=false');
+				header('Location: '.ADMIN_URL.'/events/edit/' . $this->editID . '?savingSuccess=false');
 			}
 		}
 		return $form->getForm();

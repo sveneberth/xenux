@@ -20,34 +20,34 @@ if (defined('DEBUG') && DEBUG == true && $_SERVER['HTTP_HOST'] == 'localhost')
 }
 
 /** go to the Xenux-Installer, if config-file doesn't exists */
-if (!file_exists(PATH_MAIN."/xenux-conf.php"))
+if (!file_exists(MAIN_PATH."/xenux-conf.php"))
 {
-	header("Location: ".URL_MAIN."/install/");
+	header("Location: ".MAIN_URL."/install/");
 }
 
 /** include Config of Xenux */
-include_once(PATH_MAIN.'/xenux-conf.php');
+include_once(MAIN_PATH.'/xenux-conf.php');
 
 /** include vars */
-include_once(PATH_MAIN.'/core/config/vars.php');
+include_once(MAIN_PATH.'/core/config/vars.php');
 
 /** include helper functions **/
-include_once(PATH_MAIN.'/core/inc/functions.php'); // include functions
+include_once(MAIN_PATH.'/core/inc/functions.php'); // include functions
 
 /** include classes */
-include_once(PATH_MAIN.'/core/class/log.php');
-include_once(PATH_MAIN.'/core/class/db.php');
-include_once(PATH_MAIN.'/core/class/XenuxDB.php');
-include_once(PATH_MAIN.'/core/class/app.php');
-include_once(PATH_MAIN.'/core/class/translator.php');
-include_once(PATH_MAIN.'/core/class/template.php');
-include_once(PATH_MAIN.'/core/class/controller.abstract.php');
-include_once(PATH_MAIN.'/core/class/user.php');
-include_once(PATH_MAIN.'/core/class/form.php');
-include_once(PATH_MAIN.'/core/class/mailer.php');
-include_once(PATH_MAIN.'/core/class/ErrorPage.php');
-include_once(PATH_MAIN.'/core/class/pluginhelper.php');
-include_once(PATH_MAIN.'/core/class/file.php');
+include_once(MAIN_PATH.'/core/class/log.php');
+include_once(MAIN_PATH.'/core/class/db.php');
+include_once(MAIN_PATH.'/core/class/XenuxDB.php');
+include_once(MAIN_PATH.'/core/class/app.php');
+include_once(MAIN_PATH.'/core/class/translator.php');
+include_once(MAIN_PATH.'/core/class/template.php');
+include_once(MAIN_PATH.'/core/class/controller.abstract.php');
+include_once(MAIN_PATH.'/core/class/user.php');
+include_once(MAIN_PATH.'/core/class/form.php');
+include_once(MAIN_PATH.'/core/class/mailer.php');
+include_once(MAIN_PATH.'/core/class/ErrorPage.php');
+include_once(MAIN_PATH.'/core/class/pluginhelper.php');
+include_once(MAIN_PATH.'/core/class/file.php');
 
 /** divider for a new page call */
 //if (defined('DEBUG') && DEBUG == true) #FIXME if final

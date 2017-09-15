@@ -46,7 +46,7 @@ if ($contactform->isSend() && $contactform->isValid())
 	$contactmailer->setSender( $data['email'], $data['name'] );
 	$contactmailer->setSubject( 'Kontaktformular von ' . $app->getOption('hp_name') );
 	$contactmailer->setMessage( 'Hallo!<br>
-Es hat ihnen jemand auf der Homepage <a href="'.URL_MAIN.'">'.URL_MAIN.'</a> eine Nachricht geschickt!<br><br>
+Es hat ihnen jemand auf der Homepage <a href="'.MAIN_URL.'">'.MAIN_URL.'</a> eine Nachricht geschickt!<br><br>
 <p>
 <b>Absender</b><br>
 Name: $post->name<br>

@@ -1,5 +1,5 @@
 <?php
-include_once(PATH_MAIN."/modules/page/controller.php");
+include_once(MAIN_PATH."/modules/page/controller.php");
 
 class contactController extends pageController
 {
@@ -17,7 +17,7 @@ class contactController extends pageController
 	#TODO: move contactform in this controller?!
 	private function getContactForm()
 	{
-		$template = new template(PATH_MAIN."/modules/contact/contactform.php");
+		$template = new template(MAIN_PATH."/modules/contact/contactform.php");
 
 		return $template->render();
 	}

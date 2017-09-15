@@ -9,5 +9,5 @@
 	<Description><?= $app->getOption('meta_desc') ?></Description>
 	<InputEncoding>UTF-8</InputEncoding>
 	<Language>*</Language>
-	<Url type="text/html" template="<?= URL_MAIN ?>/search?q={searchTerms}"/>
+	<Url type="text/html" template="<?= MAIN_URL ?>/search?q={searchTerms}"/>
 </OpenSearchDescription><?php $XenuxDB->closeConnection(); ?>

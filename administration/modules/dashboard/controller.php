@@ -6,7 +6,7 @@ class dashboardController extends AbstractController
 		parent::__construct($url);
 
 		if (!isset($this->url[1]) || empty($this->url[1]))
-			header("Location: ".URL_ADMIN.'/'.$this->modulename.'/home');
+			header("Location: ".ADMIN_URL.'/'.$this->modulename.'/home');
 	}
 
 	public function run()
@@ -14,9 +14,9 @@ class dashboardController extends AbstractController
 		global $XenuxDB, $app;
 
 		// append translations
-		translator::appendTranslations(PATH_ADMIN . '/modules/'.$this->modulename.'/translation/');
+		translator::appendTranslations(ADMIN_PATH . '/modules/'.$this->modulename.'/translation/');
 
-		$template = new template(PATH_ADMIN."/modules/".$this->modulename."/layout.php");
+		$template = new template(ADMIN_PATH."/modules/".$this->modulename."/layout.php");
 
 		$template->setVar("count_users", $this->_getCountUsers());
 		$template->setVar("count_active_users", $this->_getCountActiveUsers());

@@ -18,10 +18,10 @@ class LoginController extends AbstractController
 			) ? 'login' : $task;
 
 
-		$template = new template(PATH_ADMIN."/template/login.php", ['action'=>$action]);
+		$template = new template(ADMIN_PATH."/template/login.php", ['action'=>$action]);
 
-		$template->setVar("SITE_PATH",  URL_ADMIN.'/login');
-		$template->setVar("URL_TEMPLATE", URL_ADMIN.'/template');
+		$template->setVar("SITE_URL",  ADMIN_URL.'/login');
+		$template->setVar("TEMPLATE_URL", ADMIN_URL.'/template');
 		$template->setVar("homepage_name", $app->getOption('hp_name'));
 		$template->setVar("message", '');
 		$template->setVar("form", '');
@@ -128,16 +128,16 @@ class LoginController extends AbstractController
 							'id' => $userInfo->id
 						]);
 
-						header('Location: '.URL_ADMIN.'/login?task=firstLogin&id=' . $userInfo->id . '&token=' . $token . (isset($_GET['redirectTo']) ? '&redirectTo='.$_GET['redirectTo'] : ''));
+						header('Location: '.ADMIN_URL.'/login?task=firstLogin&id=' . $userInfo->id . '&token=' . $token . (isset($_GET['redirectTo']) ? '&redirectTo='.$_GET['redirectTo'] : ''));
 						return false;
 					}
 
 					$app->user->setLogin();
 
 					if (isset($_GET['redirectTo']) && !empty($_GET['redirectTo'])):
-						header('Location: '.URL_ADMIN.'/'.$_GET['redirectTo']);
+						header('Location: '.ADMIN_URL.'/'.$_GET['redirectTo']);
 					else:
-						header('Location: '.URL_ADMIN);
+						header('Location: '.ADMIN_URL);
 					endif;
 				}
 				else
@@ -240,7 +240,7 @@ class LoginController extends AbstractController
 						if ($return !== false)
 						{
 							// user added successfull
-							$confirmlink = URL_ADMIN . '/login/?task=confirm&id=' . $return . '&token=' . $token;
+							$confirmlink = ADMIN_URL . '/login/?task=confirm&id=' . $return . '&token=' . $token;
 
 							$mail = new mailer;
 							$mail->setSender(XENUX_MAIL);
@@ -249,9 +249,9 @@ class LoginController extends AbstractController
 							$mail->subject = 'Registrierung auf "' . $app->getOption('hp_name') . '" bestätigen';
 							$mail->body =
 '<p>Hallo ' . $data['username'] . '!</p>
-<p>Um deine Registrierung auf ' . URL_MAIN . ' abzuschließen klicke bitte auf den folgenden Link oder kopiere ihn in die Adressleiste deines Browsers:<br>
+<p>Um deine Registrierung auf ' . MAIN_URL . ' abzuschließen klicke bitte auf den folgenden Link oder kopiere ihn in die Adressleiste deines Browsers:<br>
 <a href="'.$confirmlink.'">'.$confirmlink.'</a></p>
-<p>Solltest Du Dich nicht auf ' . URL_MAIN . ' registriert haben, ignoriere diese Mail bitte.</p>';
+<p>Solltest Du Dich nicht auf ' . MAIN_URL . ' registriert haben, ignoriere diese Mail bitte.</p>';
 
 							if (!$mail->send())
 							{
@@ -332,7 +332,7 @@ class LoginController extends AbstractController
 				$mail->subject = 'Benutzername vergessen';
 				$mail->body =
 'Hallo!<br>
-Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: ' . $userinfo->username . '
+Dein Benutzername für <a href="' . MAIN_URL . '">' . MAIN_URL . '</a> lautet: ' . $userinfo->username . '
 <p>Solltest Du die Zusendung des Benuzernamens nicht angefordert haben, ignoriere diese Mail bitte.</p>';
 
 				if (!$mail->send())
@@ -403,7 +403,7 @@ Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: '
 					return false;
 				}
 
-				$url = URL_ADMIN . '/login?task=resetpassword&amp;id=' . $userinfo->id . '&amp;token=' . $token;
+				$url = ADMIN_URL . '/login?task=resetpassword&amp;id=' . $userinfo->id . '&amp;token=' . $token;
 
 				$mail = new mailer;
 				$mail->setSender(XENUX_MAIL);
@@ -596,13 +596,13 @@ Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: '
 						$mail->addAdress($userinfo->email, $userinfo->firstname . $userinfo->lastname);
 						$mail->setSubject('Passort gespeichert');
 						$mail->setMessage('Hallo' . $username . '!<br>
-	<p>Dein Passwort für deinen Benutzeraccount auf <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> wurde erogreich gespeichert.</p>');
+	<p>Dein Passwort für deinen Benutzeraccount auf <a href="' . MAIN_URL . '">' . MAIN_URL . '</a> wurde erogreich gespeichert.</p>');
 						$mail->send();
 
 						$template->setVar("message", "<p>Das Passwort wurde erfolgreich gespeichert!</p>");
 						$app->user->setLogin();
 
-						header('Location: ' . URL_ADMIN . (isset($_GET['redirectTo']) ? $_GET['redirectTo'] : ''));
+						header('Location: ' . ADMIN_URL . (isset($_GET['redirectTo']) ? $_GET['redirectTo'] : ''));
 					}
 					else
 					{
@@ -660,7 +660,7 @@ Dein Benutzername für <a href="' . URL_MAIN . '">' . URL_MAIN . '</a> lautet: '
 			{
 				$template->setIfCondition("confirmSucessful", true);
 				$app->user->setLogin();
-				header('Refresh:5; url=' . URL_ADMIN, true, 303);
+				header('Refresh:5; url=' . ADMIN_URL, true, 303);
 			}
 		}
 		else

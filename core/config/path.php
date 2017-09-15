@@ -19,8 +19,8 @@ foreach ($_GET as $key => $value)
 $_folder_dir = str_replace(array($subdir, @$_GET['url']), '', str_replace('\\', '/', $_SERVER['REQUEST_URI']));
 $_folder_dir = substr($_folder_dir, 0, stripos($_folder_dir, '?'));
 
-define('PATH_MAIN',		$dir);
-define('PATH_ADMIN',	$dir.'/administration');
-define('URL_MAIN',		$url);
-define('URL_ADMIN',		$url.'/administration');
-define('URL_REQUEST',	$protocol . '://' .$_SERVER['HTTP_HOST'] . $if_port . substr($_SERVER['REQUEST_URI'], 0, stripos($_SERVER['REQUEST_URI'], '?')));
+define('MAIN_PATH',		$dir);
+define('ADMIN_PATH',	$dir.'/administration');
+define('MAIN_URL',		$url);
+define('ADMIN_URL',		$url.'/administration');
+define('REQUEST_URL',	$protocol . '://' .$_SERVER['HTTP_HOST'] . $if_port . substr($_SERVER['REQUEST_URI'], 0, stripos($_SERVER['REQUEST_URI'], '?')));
