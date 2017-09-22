@@ -113,7 +113,7 @@ class mailer
 		$mail .= "\n\n--" . $this->boundary . '--';
 
 		$mail = str_replace(["\r\n", "\r", "\n"], "\n", $mail); // Line Endings
-		$mail = chunk_split($mail, 76); // Use 76 characters wide lines
+		$mail = wordwrap($mail, 76, "\n", true); // Use 76 characters wide lines
 
 		$this->mail = $mail;
 	}

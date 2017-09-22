@@ -2,7 +2,6 @@
 class XenuxDB
 {
 	private $db;
-	private $lastQuerys	= null;
 	private $querys		= array();
 
 	private $columnQuote = "`";

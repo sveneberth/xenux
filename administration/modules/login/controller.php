@@ -67,6 +67,11 @@ class LoginController extends AbstractController
 	{
 		global $app, $XenuxDB;
 
+		if ($app->user->isLogin())
+		{
+			header('Location: ' . ADMIN_URL, true, 303);
+		}
+
 		if ($task == 'logout')
 		{
 			$app->user->setLogout();
@@ -240,7 +245,7 @@ class LoginController extends AbstractController
 						if ($return !== false)
 						{
 							// user added successfull
-							$confirmlink = ADMIN_URL . '/login/?task=confirm&id=' . $return . '&token=' . $token;
+							$confirmlink = ADMIN_URL . '/login/?task=confirm&amp;id=' . $return . '&amp;token=' . $token;
 
 							$mail = new mailer;
 							$mail->setSender(XENUX_MAIL);
@@ -646,7 +651,7 @@ Dein Benutzername für <a href="' . MAIN_URL . '">' . MAIN_URL . '</a> lautet: '
 		]);
 		if ($user)
 		{
-			$app->user->userInfo->id = $user->id; #FIXME Warning: Creating default object from empty value in /administration/modules/login/controller.php on line 649
+			@$app->user->userInfo->id = $user->id;
 
 			$return = $XenuxDB->Update('users', [
 				'verifykey' => NULL,
