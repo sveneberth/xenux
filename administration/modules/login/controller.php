@@ -20,7 +20,6 @@ class LoginController extends AbstractController
 
 		$template = new template(ADMIN_PATH."/template/login.php", ['action'=>$action]);
 
-		$template->setVar("SITE_URL",  ADMIN_URL.'/login');
 		$template->setVar("TEMPLATE_URL", ADMIN_URL.'/template');
 		$template->setVar("homepage_name", $app->getOption('hp_name'));
 		$template->setVar("message", '');

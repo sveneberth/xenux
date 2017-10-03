@@ -245,7 +245,7 @@ if ($sites)
 					$langs = translator::getLanguages();
 					if (count((array)$langs) > 1):
 						?>
-						<select onchange="window.location.href = '{{SITE_URL}}?lang=' + $(this).val();" class="language-selector">
+						<select onchange="window.location.href = '{{REQUEST_URL}}?lang=' + $(this).val();" class="language-selector">
 							<option disabled="disabled" data-option-class="label" data-style="background-image:none;">Select Language</option>
 							<?php
 								foreach ($langs as $short => $options)

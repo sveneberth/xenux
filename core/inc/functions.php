@@ -303,7 +303,7 @@ function getMenuBarMultiSites ($absolutenumber, $start, $amount)
 			$return .= "\t<a class=\"sitenavi";
 			if ($limit == $start)
 				$return .= " active";
-			$return .= "\" title=\"".__('page')." $thissite\" href=\"{{SITE_URL}}?";
+			$return .= "\" title=\"".__('page')." $thissite\" href=\"{{REQUEST_URL}}?";
 			foreach ($_GET as $key => $value)
 			{
 				if ($key != 'url' && $key != 'start' && $key != 'amount')
