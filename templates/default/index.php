@@ -65,10 +65,8 @@
 $sites = $XenuxDB->getList('sites', [
 			'order' => 'sortindex ASC',
 			'where' => [
-				#DEBUG 'AND' => [
-					'parent_id' => 0,
-					'public' => true
-				#DEBUG],
+				'parent_id' => 0,
+				'public' => true
 			],
 		]);
 if ($sites)
@@ -81,10 +79,8 @@ if ($sites)
 		$subsites = $XenuxDB->getList('sites', [
 			'order' => 'sortindex ASC',
 			'where' => [
-				'AND' => [
-					'parent_id' => $site->id,
-					'public' => true
-				]
+				'parent_id' => $site->id,
+				'public' => true
 			],
 		]);
 		if ($subsites)
@@ -98,10 +94,8 @@ if ($sites)
 				$subsubsites = $XenuxDB->getList('sites', [
 					'order' => 'sortindex ASC',
 					'where' => [
-						'AND' => [
-							'parent_id' => $subsite->id,
-							'public' => true
-						]
+						'parent_id' => $subsite->id,
+						'public' => true
 					],
 				]);
 				if ($subsubsites)
@@ -189,7 +183,8 @@ if ($sites)
 						'limit' => 3,
 						'order' => 'start_date DESC',
 						'where' => [
-							'##start_date[>=]' => 'CURDATE()'
+							'##start_date[>=]' => 'CURDATE()',
+							'status' => 'publish'
 						]
 					]);
 					if ($eventList)
