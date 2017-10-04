@@ -90,7 +90,7 @@ class mailer
 
 	private function buildMail()
 	{
-		$mailPlain = Html2Text\Html2Text::convert($this->body);
+		$mailPlain = @Html2Text\Html2Text::convert($this->body);
 		$mailHTML = '<!DOCTYPE html>
 <html lang="' . $this->lang . '">
 	<head>

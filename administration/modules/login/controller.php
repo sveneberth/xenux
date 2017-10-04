@@ -251,7 +251,7 @@ class loginController extends AbstractController
 							$mail->setMessage(
 								'<p>' . __('helloUser', $data['username']) . '!</p>' .
 								'<p>' . __('open link to confirm registration', MAIN_URL) . '<br>' .
-								'<a href="' . $confirmlink . '">' . $confirmlink . '</a></p>' .
+								'<a href="' . str_replace('&amp;', '&', $confirmlink) . '">' . $confirmlink . '</a></p>' .
 								'<p>' . __('not registered by self', MAIN_URL) . '</p>'
 							);
 
@@ -418,7 +418,7 @@ class loginController extends AbstractController
 				$mail->setMessage(
 					'<p>' . __('helloUser', $userinfo->username) . '</p>' .
 					'<p>' . __('your requested forgotPassword', date('d.m.Y'), date('H:i'), $_SERVER['REMOTE_ADDR']) .
-					__('password reset url', $url) . '</p>
+					' ' . __('password reset url', str_replace('&amp;', '&', $url), $url) . '</p>
 					<p>' . __('ignore forgotPassword mail') . '</p>'
 				);
 
