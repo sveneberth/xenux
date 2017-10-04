@@ -147,8 +147,8 @@ $(function() {
 		$('.explorer > .item')	.removeClass('ui-selected');
 		$(target)				.addClass('ui-selected');
 
-		var id       = $(target).attr('id');
-		var type     = $(target).hasClass('file') ? 'file' : 'folder';
+		var id   = $(target).attr('id');
+		var type = $(target).hasClass('file') ? 'file' : 'folder';
 
 		$('#contextmenu').data('targetID',       id);
 		$('#contextmenu').data('targetType',     type);

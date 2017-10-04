@@ -1,5 +1,5 @@
 <?php
-class LoginController extends AbstractController
+class loginController extends AbstractController
 {
 	public function run()
 	{

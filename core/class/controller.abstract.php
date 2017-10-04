@@ -9,7 +9,7 @@ abstract class AbstractController {
 
 	public function __construct($url)
 	{
-		$this->modulename = str_replace('Controller', '', get_called_class());
+		$this->modulename = strtolower(str_replace('Controller', '', get_called_class()));
 		$this->url = $url;
 	}
 }
