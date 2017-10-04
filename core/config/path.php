@@ -8,12 +8,12 @@ $doc_root    = str_replace('\\', '/', $_SERVER['DOCUMENT_ROOT']);
 $doc_root    = rtrim($doc_root, '/');
 $subdir      = trim(str_replace($doc_root, '', $dir), '/');
 
-$url         = $protocol . '://' . $_SERVER['HTTP_HOST'] . $port . '/' . $subdir;
-$request_url = $protocol . '://' . $_SERVER['HTTP_HOST'] . $port . '/' . trim((
+$url         = trim($protocol . '://' . $_SERVER['HTTP_HOST'] . $port . '/' . $subdir, '/');
+$request_url = trim($protocol . '://' . $_SERVER['HTTP_HOST'] . $port . '/' . trim((
 	stripos($_SERVER['REQUEST_URI'], '?') > -1 ? // have get params?
 		substr($_SERVER['REQUEST_URI'], 0, stripos($_SERVER['REQUEST_URI'], '?')) : // use string before ?
 		$_SERVER['REQUEST_URI'] // use whole string
-	), '/');
+	), '/'), '/');
 
 $_get_params = '';
 foreach ($_GET as $key => $value)
