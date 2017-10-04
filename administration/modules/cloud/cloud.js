@@ -147,12 +147,11 @@ $(function() {
 		$('.explorer > .item')	.removeClass('ui-selected');
 		$(target)				.addClass('ui-selected');
 
-		var id   = $(target).attr('id');
-		var type = $(target).hasClass('file') ? 'file' : 'folder';
+		var id       = $(target).attr('id');
+		var type     = $(target).hasClass('file') ? 'file' : 'folder';
 
-		$('#contextmenu').data('targetID',   id);
-		$('#contextmenu').data('targetType', type);
-
+		$('#contextmenu').data('targetID',       id);
+		$('#contextmenu').data('targetType',     type);
 
 		x = e.clientX+contextmenuWidth	> $(window).width() 	? e.clientX-contextmenuWidth	: e.clientX;
 		y = e.clientY+contextmenuHeight	> $(window).height()	? e.clientY-contextmenuHeight	: e.clientY;
@@ -176,21 +175,23 @@ $(function() {
 		$('#contextmenu').hide();
 	});
 	$('#contextmenu > .open').click(function() {
-		var id			= $('#contextmenu').data('targetID');
-		var targetType	= $('#contextmenu').data('targetType');
+		var id       = $('#contextmenu').data('targetID');
+		var type     = $('#contextmenu').data('targetType');
+		var filename = $('.explorer > .item#' + id).data('filename');
 
-		if (targetType == 'file') {
-			openInNewTab('{{MAIN_URL}}/file/' + id);
+		if (type == 'file') {
+			openInNewTab('{{MAIN_URL}}/file/' + id + '-' + encodeURI(filename));
 		} else {
 			dir_list(id);
 		}
 		$('#contextmenu').hide();
 	});
 	$('#contextmenu > .download').click(function() {
-		var id         = $('#contextmenu').data('targetID');
-		var targetType = $('#contextmenu').data('targetType');
+		var id       = $('#contextmenu').data('targetID');
+		var type     = $('#contextmenu').data('targetType');
+		var filename = $('.explorer > .item#' + id).data('filename');
 
-		openInNewTab('{{MAIN_URL}}/file/' + id + '-d');
+		openInNewTab('{{MAIN_URL}}/file/' + id + '-' + encodeURI(filename) + '-d');
 
 		$('#contextmenu').hide();
 	});
@@ -201,8 +202,8 @@ $(function() {
 		$('#contextmenu').hide();
 	});
 	$('#contextmenu > .rename').click(function() {
-		var id = $('#contextmenu').data('targetID');
-		var filename = $('.explorer > .item#' + id).attr('data-filename');
+		var id       = $('#contextmenu').data('targetID');
+		var filename = $('.explorer > .item#' + id).data('filename');
 
 		$('.rename > input[type="text"]').val(filename);
 		$('.rename').show();
@@ -290,7 +291,7 @@ $(function() {
 		}
 
 		var firstSelObj = $('.explorer > .item.ui-selected').eq(0);
-		var filename = firstSelObj.attr('data-filename');
+		var filename = firstSelObj.data('filename');
 
 		$('.rename').show();
 		$('.rename > input[type="text"]').val(filename);
@@ -485,7 +486,7 @@ function rename(id, newName) {
 	console.log(id, newName);
 }
 function getFolder() {
-	var folder = $('.explorer').attr('data-folder-id');
+	var folder = $('.explorer').data('folder-id');
 	if (isInt(folder)) {
 		return folder;
 	} else {
@@ -552,7 +553,7 @@ function dir_list(folder) {
 	$('.explorer').html('');
 	$('body').css('cursor', 'wait');
 	$('.ajax-loader').show();
-	$('.explorer').attr('data-folder-id', folder);
+	$('.explorer').data('folder-id', folder);
 	setbreadcrumb(folder);
 	defaultDisabled.forEach(function(val) {
 		$('.actions > button.' + val).addClass('disabled');
