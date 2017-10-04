@@ -32,10 +32,10 @@ $(function() {
 		console.log('my state: %s', state);
 		if (state == null) {
 			dir_list(0);
-			document.title = 'root \u2013 <?= __('cloud') ?>';
+			document.title = 'root \u2013 <?= addslashes(__('cloud')) ?>';
 		} else {
 			dir_list(state.id);
-			document.title = state.title + ' \u2013 <?= __('cloud') ?>';
+			document.title = state.title + ' \u2013 <?= addslashes(__('cloud')) ?>';
 		}
 	})
 
@@ -91,7 +91,7 @@ $(function() {
 		console.info('switched to folder: %s:%s', ID, filename);
 
 		history.pushState({id: ID, title: filename}, null, '{{ADMIN_URL}}/cloud/' + ID);
-		document.title = filename + ' \u2013 <?= __('cloud') ?>';
+		document.title = filename + ' \u2013 <?= addslashes(__('cloud')) ?>';
 
 		dir_list(ID);
 	});
@@ -116,7 +116,7 @@ $(function() {
 		console.info('switched to folder: %s:%s', ID, filename);
 
 		history.pushState({id: ID, title: filename}, null, '{{ADMIN_URL}}/cloud/' + ID);
-		document.title = filename + ' \u2013 <?= __('cloud') ?>';
+		document.title = filename + ' \u2013 <?= addslashes(__('cloud')) ?>';
 
 		dir_list(ID);
 	});
@@ -386,8 +386,8 @@ function upload(files) {
 
 					if (percentComplete === 100) {
 						notifyMe(
-							'<?= __('upload completed') ?>',
-							'<?= __('upload completed long') ?>',
+							'<?= addslashes(__('upload completed')) ?>',
+							'<?= addslashes(__('upload completed long')) ?>',
 							function() {
 								window.open().close()
 								window.focus()
@@ -509,7 +509,7 @@ function setbreadcrumb(folder) {
 					rows += '<span class="treeitem" id="' + entry.id + '">' + entry.filename + '</span>';
 				});
 			} else if (response.status == 404) {
-				$('.explorer').html('<?= __('error') ?> 404 - <?= __('error404msg') ?>');
+				$('.explorer').html('<?= addslashes(__('error')) ?> 404 - <?= addslashes(__('error404msg')) ?>');
 			}
 			$('.breadcrumb').html(rows);
 		},
