@@ -9,7 +9,8 @@ class user
 	{
 		$this->session = @$_SESSION['_LOGIN'];
 
-		if ($this->isLogin()) {
+		if ($this->isLogin())
+		{
 			$this->userInfo	= $this->getUserInfo($this->session['userID']);
 		}
 	}
@@ -157,7 +158,9 @@ class user
 		$_SESSION['_LOGIN'] = '';
 		$this->session = @$_SESSION['_LOGIN'];
 
-		$this->clearSessionFingerprint($this->userInfo->id);
+		if ($this->isLogin())
+			$this->clearSessionFingerprint($this->userInfo->id);
+
 		return true;
 	}
 

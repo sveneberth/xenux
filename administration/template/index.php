@@ -32,7 +32,7 @@
 	<noscript>
 		<div class="warning-noscript">
 			<div>
-				<?= __("noscript-message") ?>
+				<?= __('noscript-message') ?>
 			</div>
 		</div>
 		<style>
@@ -83,30 +83,30 @@
 				$modules = $app->getAdminModule();
 				foreach ($modules as $module) // for module in modules
 				{
-					if (is_dir_empty(ADMIN_PATH."/modules/".$module) || $module == 'dashboard') // skip an empty folder and dashboard
+					// skip an empty folder and dashboard
+					if (is_dir_empty(ADMIN_PATH . '/modules/' . $module) || $module == 'dashboard')
 						continue;
 
-
-					if (file_exists(ADMIN_PATH.'/modules/'.$module.'/menu.json')) // if module-menu-file exist
+					// if module-menu-file exist
+					if (file_exists(ADMIN_PATH . '/modules/' . $module . '/menu.json'))
 					{
 						// append translations
-						translator::appendTranslations(ADMIN_PATH."/modules/".$module."/translation/");
-						$filecontent = file_get_contents(ADMIN_PATH.'/modules/'.$module.'/menu.json');
+						translator::appendTranslations(ADMIN_PATH . '/modules/' . $module . '/translation/');
+						$filecontent = file_get_contents(ADMIN_PATH . '/modules/' . $module . '/menu.json');
 
-						if ($json = is_json($filecontent, true)) // if file is a valid json-file
+						// if file is a valid json-file
+						if ($json = is_json($filecontent, true))
 						{
-							$headline = __($json->headline);
-
-							echo '<li class="'.($app->url[0] == $module ? 'active open' : '').'">';
-							echo '<a href="'.(isset($json->links) ? '#' : ADMIN_URL.'/'.$module).'">' . __($headline) . "</a>\n";
+							echo '<li class="' . ($app->url[0] == $module ? 'active open' : '') . '">';
+							echo '<a href="' . (isset($json->links) ? '#' : ADMIN_URL . '/' . $module) . '">' . __($json->headline) . "</a>\n";
 
 							if (isset($json->links))
 							{
-								echo '<ul style="'.($app->url[0] == $module ? '' : 'display:none')."\">\n";
+								echo '<ul style="' . ($app->url[0] == $module ? '' : 'display:none')."\">\n";
 
 								foreach ($json->links as $label => $link)
 								{
-									echo "\t".'<li class="'.($app->url[0] == $module && $app->url[1]==str_replace('/','',$link) ? 'active' : '').'"><a href="'.ADMIN_URL.'/'.$module.$link.'">'.__($label).'</a></li>'."\n";
+									echo "\t" . '<li class="' . ($app->url[0] == $module && $app->url[1]==str_replace('/','',$link) ? 'active' : '') . '"><a href="' . ADMIN_URL . '/' . $module.$link . '">' . __($label) . '</a></li>' . "\n";
 								}
 
 								echo "</ul>\n";
@@ -121,7 +121,7 @@
 					}
 					else
 					{
-						echo "menufile doesn't exists";
+						echo 'menufile for <' . $module . '> doesn\'t exists';
 					}
 				}
 			?>

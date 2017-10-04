@@ -16,7 +16,10 @@ class translator
 		$translations = self::$translations;
 
 		if (!isset($translations[$str]))
+		{
+			log::debug('No translation in <' . self::getLanguage() . '> available for <' . $str . '>');
 			return $str;
+		}
 
 		$args = func_get_args(); // get arguments
 		unset($args[0]); // unset varname

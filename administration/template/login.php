@@ -1,4 +1,3 @@
-{# #TODO: translation #}
 <!DOCTYPE html>
 <html lang="<?= translator::getLanguage() ?>">
 <head>
@@ -6,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="robots" content="noindex, follow, noarchive">
 
-	<title>Login>{{page_name}} | {{homepage_name}} Backend</title>
+	<title>{{page_name}} &ndash; Xenux Backend</title>
 
 	<!-- http://xenux.bplaced.net -->
 	<meta name="generator" content="Xenux v{{XENUX_VERSION}} - das kostenlose CMS">
@@ -17,7 +16,7 @@
 </head>
 <body id="top">
 	#if(logout):
-		<p class="logout-message box-shadow">Du hast dich erfolgreich ausgeloggt!</p>
+		<p class="logout-message box-shadow"><?= __('logout successful') ?></p>
 	#endif
 
 	<div class="login-wrapper">
@@ -31,8 +30,8 @@
 
 			</div>
 			<p class="center forgot">
-				<a class="forgotusername" href="{{ADMIN_URL}}/login?task=forgotusername"><?= __("forgotUsername") ?>?</a> |
-				<a class="forgotpassword" href="{{ADMIN_URL}}/login?task=forgotpassword"><?= __("forgotPassword") ?>?</a>
+				<a class="forgotusername" href="{{ADMIN_URL}}/login?task=forgotusername"><?= __('forgotUsername') ?>?</a> |
+				<a class="forgotpassword" href="{{ADMIN_URL}}/login?task=forgotpassword"><?= __('forgotPassword') ?>?</a>
 			</p>
 			<?php if(parse_bool($app->getOption('users_can_register'))): ?>
 				<a class="center register" href="{{ADMIN_URL}}/login?task=register"><?= __('register') ?></a>
@@ -55,7 +54,7 @@
 			<div class="login-box box-shadow">
 				<h2>{{page_name}}</h2>
 
-				<p class="info">Falls du deinen Benutzernamen vergessen kannst, kannst du ihn hier an die Registrierte E-Mail-Adresse schicken.</p>
+				<p class="info"><?= __('forgotUsername info') ?></p>
 				{{message}}
 				{{form}}
 			</div>
@@ -67,7 +66,7 @@
 			<div class="login-box box-shadow">
 				<h2>{{page_name}}</h2>
 
-				<p class="info">Falls du deinen Passwort vergessen hast, kannst du es über einen Link aus der gesendeten E-Mail zurücksetzten.</p>
+				<p class="info"><?= __('forgotPassword info') ?></p>
 
 				{{message}}
 				{{form}}
@@ -80,7 +79,7 @@
 			<div class="login-box box-shadow">
 				<h2>{{page_name}}</h2>
 
-				<p class="info">hier passwort zurücksetzten.</p>
+				<p class="info"><?= __('forgotPassword action info') ?></p>
 
 				{{message}}
 				{{form}}
@@ -92,7 +91,7 @@
 			<div class="login-box box-shadow">
 				<h2>{{page_name}}</h2>
 
-				<p class="info">Du musst zu erst dein Passwort festlegen!</p>
+				<p class="info"><?= __('setPassword info') ?></p>
 
 				{{message}}
 				{{form}}
@@ -105,9 +104,9 @@
 				<h2>{{page_name}}</h2>
 
 				#if(confirmSucessful):
-					<p class="info">Dein Account wurde erfolgreich bestätigt. Du wirst nun automatisch weitergeleitet.</p>
+					<p class="info"><?= __('account confirmation successful') ?></p>
 				#else:
-					<p class="info">failed...</p>
+					<p class="info"><?= __('account confirmation failed') ?></p>
 				#endif
 				{{message}}
 				{{form}}

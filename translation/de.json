@@ -115,6 +115,8 @@
     "evening": "abends",
     "a year and a half": "eineinhalb Jahren",
 
-    "gotoPage":"gehe zur Seite"
+    "gotoPage":"gehe zur Seite",
+
+    "message couldnt sent": "Die Nachricht konnte nicht versendet werden."
   }
 }

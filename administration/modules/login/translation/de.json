@@ -1,0 +1,36 @@
+{
+  "info":
+  {
+    "author": "Sven Eberth"
+  },
+  "translations":
+  {
+    "registrationClosed":"Es ist dir nicht erlaubt, dich zu regstieren. Bitte wende dich an den Administrator",
+    "confirm registration on":"Registrierung auf \"%1\" bestätigen",
+    "open link to confirm registration":"Um deine Registrierung auf <a href=\"%1\">%1</a> abzuschließen klicke bitte auf den folgenden Link oder kopiere ihn in die Adressleiste deines Browsers:",
+    "not registered by self":"Solltest Du Dich nicht auf <a href=\"%1\">%1</a> registriert haben, ignoriere diese Mail bitte.",
+    "please confirm registration":"Bitte bestätige nun deine Registrierung über den Link in der dir soeben zugesendeten E-Mail.",
+    "username for is":"Dein Benutzername für <a href=\"%1\">%1</a> lautet: %2",
+    "ignore forgotUsername mail":"Solltest Du die Zusendung des Benuzernamens nicht angefordert haben, ignoriere diese Mail bitte.",
+    "username sent to email":"Dein Benutzername wurde dir soeben per E-Mail zugeschickt!",
+    "clouldnt match account with email":"Es konnte keinem Account die E-Mail-Adresse <i>%1</i> zugeordnet werden!",
+    "your requested forgotPassword":"Du hast am %1 um %2 von der IP-Adresse %3 eine Passwortrücksetzung angefordert.",
+    "password reset url":"Das Passwort kann unter der URL<br><a href=\"%1\">%1</a><br>zurückgesetzt werden",
+    "ignore forgotPassword mail":"Solltest Du die Zurücksetzung des Passworts nicht angefordert haben, ignoriere diese Mail bitte.",
+    "password reset sent to mail":"Bitte öffne nun in der dir soeben zu gesendeten E-Mail den Link, um das Passwort zurückzusetzen!",
+    "clouldnt match account with username":"Es konnte keinem Account der Benutzername <i>%1</i> zugeordnet werden!</p>",
+    "error occurred, please review validity of link":"Es trat ein Fehler auf... Stellen sie sicher, das der Link stimmt und aktuell ist!",
+    "passsword reset successful":"Das Passwort wurde erfolgreich zurückgesetzt!",
+    "entered passwords not equal":"Die eingegeben Passwörter sind nicht identisch!",
+    "saved password":"Passwort gespeichert",
+    "saved passswor msg mail":"Dein Passwort für deinen Benutzeraccount auf <a href=\"%1\">%1</a> wurde erfolgreich gespeichert.",
+    "saved passswor msg":"Das Passwort wurde erfolgreich gespeichert!",
+
+    "logout successful":"Du hast dich erfolgreich ausgeloggt!",
+    "forgotUsername info":"Falls du deinen Benutzernamen vergessen kannst, kannst du ihn hier an die registrierte E-Mail-Adresse schicken.",
+    "forgotPassword info":"Falls du deinen Passwort vergessen hast, kannst du es über einen Link aus der gesendeten E-Mail zurücksetzten.",
+    "forgotPassword action info":"Hier kannst du ein neues Passwort für deinen Account festlegen.",
+    "setPassword info":"Du musst zuerst dein Passwort festlegen!",
+    "account confirmation successful":"Es trat ein Fehler auf. Dein Account konnte nicht bestätigt werden. Stellen sie sicher, das der Link stimmt und aktuell ist!"
+  }
+}

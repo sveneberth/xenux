@@ -1,15 +1,12 @@
 <?php
-#TODO: translation
 class LoginController extends AbstractController
 {
-	public function __construct($url)
-	{
-		parent::__construct($url);
-	}
-
 	public function run()
 	{
 		global $XenuxDB, $app;
+
+		// append translations
+		translator::appendTranslations(ADMIN_PATH . '/modules/' . $this->modulename . '/translation/');
 
 		$task = isset($_GET['task']) ? $_GET['task'] : '';
 
@@ -18,41 +15,41 @@ class LoginController extends AbstractController
 			) ? 'login' : $task;
 
 
-		$template = new template(ADMIN_PATH."/template/login.php", ['action'=>$action]);
+		$template = new template(ADMIN_PATH . '/template/login.php', ['action'=>$action]);
 
-		$template->setVar("TEMPLATE_URL", ADMIN_URL.'/template');
-		$template->setVar("homepage_name", $app->getOption('hp_name'));
-		$template->setVar("message", '');
-		$template->setVar("form", '');
+		$template->setVar('TEMPLATE_URL', ADMIN_URL . '/template');
+		$template->setVar('homepage_name', $app->getOption('hp_name'));
+		$template->setVar('message', '');
+		$template->setVar('form', '');
 
 		switch ($action) {
 			case 'register':
 				$this->registerAction($template);
-				$template->setVar("page_name", __('register'));
+				$template->setVar('page_name', __('register'));
 				break;
 			case 'forgotusername':
 				$this->forgotusernameAction($template);
-				$template->setVar("page_name", __('forgotusername'));
+				$template->setVar('page_name', __('forgotUsername'));
 				break;
 			case 'forgotpassword':
 				$this->forgotpasswordAction($template);
-				$template->setVar("page_name", __('forgotpassword'));
+				$template->setVar('page_name', __('forgotPassword'));
 				break;
 			case 'resetpassword':
 				$this->resetpasswordAction($template);
-				$template->setVar("page_name", __('resetpassword'));
+				$template->setVar('page_name', __('resetpassword'));
 				break;
 			case 'setpassword':
 				$this->setPasswordAction($template);
-				$template->setVar("page_name", __('setpassword'));
+				$template->setVar('page_name', __('setpassword'));
 				break;
 			case 'confirm':
 				$this->confirmAction($template);
-				$template->setVar("page_name", __('confirm'));
+				$template->setVar('page_name', __('confirm'));
 				break;
 			case 'login':
 			default:
-				$template->setVar("page_name", __('login'));
+				$template->setVar('page_name', __('login'));
 				$this->loginAction($template, $task);
 				break;
 		};
@@ -66,7 +63,7 @@ class LoginController extends AbstractController
 	{
 		global $app, $XenuxDB;
 
-		if ($app->user->isLogin())
+		if ($app->user->isLogin() && $task != 'logout')
 		{
 			header('Location: ' . ADMIN_URL, true, 303);
 		}
@@ -74,7 +71,7 @@ class LoginController extends AbstractController
 		if ($task == 'logout')
 		{
 			$app->user->setLogout();
-			$template->setIfCondition("logout", true);
+			$template->setIfCondition('logout', true);
 		}
 
 		$formFields = array
@@ -116,7 +113,7 @@ class LoginController extends AbstractController
 
 					if (parse_bool($userInfo->confirmed) !== true)
 					{
-						$template->setVar("message",  '<p>' . __('not confirmed') . '</p>');
+						$template->setVar('message', '<p>' . __('not confirmed') . '</p>');
 						return false;
 					}
 
@@ -132,32 +129,32 @@ class LoginController extends AbstractController
 							'id' => $userInfo->id
 						]);
 
-						header('Location: '.ADMIN_URL.'/login?task=firstLogin&id=' . $userInfo->id . '&token=' . $token . (isset($_GET['redirectTo']) ? '&redirectTo='.$_GET['redirectTo'] : ''));
+						header('Location: ' . ADMIN_URL . '/login?task=firstLogin&id=' . $userInfo->id . '&token=' . $token . (isset($_GET['redirectTo']) ? '&redirectTo=' . $_GET['redirectTo'] : ''));
 						return false;
 					}
 
 					$app->user->setLogin();
 
 					if (isset($_GET['redirectTo']) && !empty($_GET['redirectTo'])):
-						header('Location: '.ADMIN_URL.'/'.$_GET['redirectTo']);
+						header('Location: ' . ADMIN_URL . '/' . $_GET['redirectTo']);
 					else:
-						header('Location: '.ADMIN_URL);
+						header('Location: ' . ADMIN_URL);
 					endif;
 				}
 				else
 				{
-					$loginform->setErrorMsg('password wrong');
+					$loginform->setErrorMsg(__('password wrong'));
 					$loginform->setFieldInvalid('password');
 				}
 			}
 			else
 			{
-				$loginform->setErrorMsg('username wrong');
+				$loginform->setErrorMsg(__('username wrong'));
 				$loginform->setFieldInvalid('username');
 			}
 		}
 
-		$template->setVar("form",  $loginform->getForm());
+		$template->setVar('form',  $loginform->getForm());
 	}
 
 	private function registerAction(&$template)
@@ -166,7 +163,7 @@ class LoginController extends AbstractController
 
 		if (!parse_bool($app->getOption('users_can_register')))
 		{
-			$template->setVar("message", '<p class="info">Es ist dir nicht erlaubt, dich zu regstieren. Bitte wende dich an den Administrator</p>');
+			$template->setVar('message', '<p class="info">' . __('registrationClosed') . '</p>');
 			return false;
 		}
 
@@ -250,51 +247,53 @@ class LoginController extends AbstractController
 							$mail->setSender(XENUX_MAIL);
 							$mail->setReplyTo($app->getOption('admin_email'));
 							$mail->addAdress($data['email'], $data['username']);
-							$mail->subject = 'Registrierung auf "' . $app->getOption('hp_name') . '" bestätigen';
-							$mail->body =
-'<p>Hallo ' . $data['username'] . '!</p>
-<p>Um deine Registrierung auf ' . MAIN_URL . ' abzuschließen klicke bitte auf den folgenden Link oder kopiere ihn in die Adressleiste deines Browsers:<br>
-<a href="'.$confirmlink.'">'.$confirmlink.'</a></p>
-<p>Solltest Du Dich nicht auf ' . MAIN_URL . ' registriert haben, ignoriere diese Mail bitte.</p>';
+							$mail->setSubject(__('confirm registration on', $app->getOption('hp_name')));
+							$mail->setMessage(
+								'<p>' . __('helloUser', $data['username']) . '!</p>' .
+								'<p>' . __('open link to confirm registration', MAIN_URL) . '<br>' .
+								'<a href="' . $confirmlink . '">' . $confirmlink . '</a></p>' .
+								'<p>' . __('not registered by self', MAIN_URL) . '</p>'
+							);
 
 							if (!$mail->send())
 							{
-								$template->setVar("message", '<p>Die Nachricht konnte nicht versendet werden.</p>');
+								$template->setVar('message', '<p>' . __('message couldnt sent') . '</p>');
 							}
 							else
 							{
-								$template->setVar("message", '<p>Bitte bestätige nun deine Registrierung über den Link in der dir soeben zugesendeten E-Mail.</p>');
+								$template->setVar('message', '<p>' . __('please confirm registration') . '</p>');
 							}
 
 							return false;
 						}
 						else
 						{
-							$template->setVar("message", 'something went wrong -.-');
+							log::setPHPError('something went wrong -.-');
+							ErrorPage::view(500);
 						}
 
 					}
 					else
 					{
-						$registerform->setErrorMsg('passwords not equal');
+						$registerform->setErrorMsg(__('passwords not equal'));
 						$registerform->setFieldInvalid('passwordAgain');
 					}
 				}
 				else
 				{
-					$registerform->setErrorMsg('email exists');
+					$registerform->setErrorMsg(__('email exists'));
 					$registerform->setFieldInvalid('email');
 				}
 			}
 			else
 			{
 
-				$registerform->setErrorMsg('username exists');
+				$registerform->setErrorMsg(__('username exists'));
 				$registerform->setFieldInvalid('username');
 			}
 		}
 
-		$template->setVar("form",  $registerform->getForm());
+		$template->setVar('form',  $registerform->getForm());
 	}
 
 	private function forgotusernameAction(&$template)
@@ -323,7 +322,7 @@ class LoginController extends AbstractController
 		{
 			$data = $forgotusernameform->getInput();
 
-			$userFoundByEmail		= $app->user->getUserByEmail($data['email']);
+			$userFoundByEmail = $app->user->getUserByEmail($data['email']);
 
 			if ($userFoundByEmail) // check if user exists
 			{
@@ -333,28 +332,29 @@ class LoginController extends AbstractController
 				$mail->setSender(XENUX_MAIL);
 				$mail->setReplyTo($app->getOption('admin_email'));
 				$mail->addAdress($userinfo->email, $userinfo->username);
-				$mail->subject = 'Benutzername vergessen';
-				$mail->body =
-'Hallo!<br>
-Dein Benutzername für <a href="' . MAIN_URL . '">' . MAIN_URL . '</a> lautet: ' . $userinfo->username . '
-<p>Solltest Du die Zusendung des Benuzernamens nicht angefordert haben, ignoriere diese Mail bitte.</p>';
+				$mail->setSubject(__('forgotUsername'));
+				$mail->setMessage(
+					'<p>' . __('hello!') . '</p>' .
+					'<p>' . __('username for is', MAIN_URL, $userinfo->username) . '</p>' .
+					'<p>' . __('ignore forgotUsername mail') . '</p>'
+				);
 
 				if (!$mail->send())
 				{
-					$template->setVar("message", '<p>Die Nachricht konnte nicht versendet werden.</p>');
+					$template->setVar('message', '<p>' . __('message couldnt sent') . '</p>');
 				}
 				else
 				{
-					$template->setVar("message",  '<p>Dein Benutzername wurde dir soeben per E-Mail zugeschickt!</p>');
+					$template->setVar('message', '<p>' . __('username sent to email') . '</p>');
 				}
 			}
 			else
 			{
-				$template->setVar("message",  '<p>Es konnte keinem Account die E-Mail-Adresse <i>'.$data['email'].'</i> zugeordnet werden!</p>');
+				$template->setVar('message', '<p>' . __('clouldnt match account with email', $data['email']) . '</p>');
 			}
 		}
 
-		$template->setVar("form",  $forgotusernameform->getForm());
+		$template->setVar('form',  $forgotusernameform->getForm());
 	}
 
 	private function forgotpasswordAction(&$template)
@@ -390,12 +390,12 @@ Dein Benutzername für <a href="' . MAIN_URL . '">' . MAIN_URL . '</a> lautet: '
 				$userinfo = $app->user->userInfo;
 				if (empty($userinfo->password)) // user has not set his password
 				{
-					$template->setVar("message", 'please set your first password');
+					$template->setVar('message', __('please set your first password'));
 					return false;
 				}
 				$token = generateRandomString();
 
-				$result = $XenuxDB->Update("users", [
+				$result = $XenuxDB->Update('users', [
 					'verifykey' => $token
 				],
 				[
@@ -403,7 +403,8 @@ Dein Benutzername für <a href="' . MAIN_URL . '">' . MAIN_URL . '</a> lautet: '
 				]);
 				if (!$result)
 				{
-					$template->setVar("message", 'something went wrong -.-');
+					log::setPHPError('something went wrong -.-');
+					ErrorPage::view(500);
 					return false;
 				}
 
@@ -413,32 +414,30 @@ Dein Benutzername für <a href="' . MAIN_URL . '">' . MAIN_URL . '</a> lautet: '
 				$mail->setSender(XENUX_MAIL);
 				$mail->setReplyTo($app->getOption('admin_email'));
 				$mail->addAdress($userinfo->email, $userinfo->username);
-				$mail->subject = 'Passwort vergessen';
-				$mail->body =
-'Hallo ' . $userinfo->username . '!<br>
-<p>Du hast am ' . date("d.m.Y") . ' um ' . date("H:i") . ' von der IP-Adresse ' . $_SERVER['REMOTE_ADDR'] . ' eine Passwortrücksetzung angefordert. Das Passwort kann unter der URL<br>
-<a href="' . $url . '">' . $url . '</a><br>
-		zurückgesetzt werden.</p>
-<p>Solltest Du die Zurücksetzung des Passworts nicht angefordert haben, ignoriere diese Mail bitte.</p>';
+				$mail->setSubject(__('forgotPassword'));
+				$mail->setMessage(
+					'<p>' . __('helloUser', $userinfo->username) . '</p>' .
+					'<p>' . __('your requested forgotPassword', date('d.m.Y'), date('H:i'), $_SERVER['REMOTE_ADDR']) .
+					__('password reset url', $url) . '</p>
+					<p>' . __('ignore forgotPassword mail') . '</p>'
+				);
 
 				if (!$mail->send())
 				{
-					$template->setVar("message", '<p>Die Nachricht konnte nicht versendet werden.</p>');
+					$template->setVar('message', '<p>' . __('message couldnt sent') . '</p>');
 				}
 				else
 				{
-					$template->setVar("message",  '<p>Bitte öffne nun in der dir soeben zu gesendeten E-Mail den Link, um das Passwort zurückzusetzen!</p>');
+					$template->setVar('message', '<p>' . __('password reset sent to mail') . '</p>');
 				}
-
-				$template->setVar("message",  '<p>Bitte öffne nun in der dir soeben zu gesendeten E-Mail den Link, um das Passwort zurückzusetzen!</p>');
 			}
 			else
 			{
-				$template->setVar("message", '<p>Es konnte keinem Account der Benutzername <i>' . $data['username'] . '</i> zugeordnet werden!</p>');
+				$template->setVar('message', '<p>' . __('clouldnt match account with username', $data['username']) . '</p>');
 			}
 		}
 
-		$template->setVar("form",  $forgotpasswordform->getForm());
+		$template->setVar('form',  $forgotpasswordform->getForm());
 	}
 
 	private function resetpasswordAction(&$template)
@@ -447,7 +446,7 @@ Dein Benutzername für <a href="' . MAIN_URL . '">' . MAIN_URL . '</a> lautet: '
 
 		if (!isset($_GET['id']) || !isset($_GET['token']))
 		{
-			$template->setVar("message", "<p>Es trat ein Fehler auf... Stellen sie sicher, das der Link stimmt und aktuell ist!<p>");
+			ErrorPage::view(405, __('error occurred, please review validity of link'));
 			return false;
 		}
 
@@ -456,10 +455,8 @@ Dein Benutzername für <a href="' . MAIN_URL . '">' . MAIN_URL . '</a> lautet: '
 				'id'
 			],
 			'where'=> [
-				'AND' => [
-					'id' => $_GET['id'],
-					'verifykey' => $_GET['token']
-				]
+				'id' => $_GET['id'],
+				'verifykey' => $_GET['token']
 			]
 		]);
 		if ($userfound)
@@ -506,26 +503,27 @@ Dein Benutzername für <a href="' . MAIN_URL . '">' . MAIN_URL . '</a> lautet: '
 
 					if ($return)
 					{
-						$template->setVar("message", "<p>Das Passwort wurde erfolgreich zurückgesetzt!</p>");
-						$template->setVar("form",  '');
+						$template->setVar('message', '<p>' . __('passsword reset successful') . '</p>');
+						$template->setVar('form', '');
 						return false;
 					}
 					else
 					{
-						$template->setVar("message", "<p>something went wrong -.-</p>");
+						log::setPHPError('something went wrong -.-');
+						ErrorPage::view(500);
 					}
 				}
 				else
 				{
-					$template->setVar("message", "<p>Die eingegeben Passwörter sind nicht identisch!<p>");
+					$template->setVar('message', '<p>' . __('entered passwords not equal') . '<p>');
 				}
 			}
 
-			$template->setVar("form",  $forgotpasswordform->getForm());
+			$template->setVar('form',  $forgotpasswordform->getForm());
 		}
 		else
 		{
-			$template->setVar("message", "<p>Es trat ein Fehler auf... Stellen sie sicher, das der Link stimmt und aktuell ist!<p>");
+			ErrorPage::view(405, __('error occurred, please review validity of link'));
 		}
 	}
 
@@ -535,7 +533,7 @@ Dein Benutzername für <a href="' . MAIN_URL . '">' . MAIN_URL . '</a> lautet: '
 
 		if (!isset($_GET['id']) || !isset($_GET['token']))
 		{
-			$template->setVar("message", "<p>Es trat ein Fehler auf... Stellen sie sicher, das der Link stimmt und aktuell ist!<p>");
+			ErrorPage::view(405, __('error occurred, please review validity of link'));
 			return false;
 		}
 
@@ -544,10 +542,8 @@ Dein Benutzername für <a href="' . MAIN_URL . '">' . MAIN_URL . '</a> lautet: '
 				'id'
 			],
 			'where'=> [
-				'AND' => [
-					'id' => $_GET['id'],
-					'verifykey' => $_GET['token']
-				]
+				'id' => $_GET['id'],
+				'verifykey' => $_GET['token']
 			]
 		]);
 		if ($userfound)
@@ -598,32 +594,34 @@ Dein Benutzername für <a href="' . MAIN_URL . '">' . MAIN_URL . '</a> lautet: '
 						$mail->setSender(XENUX_MAIL);
 						$mail->setReplyTo($app->getOption('admin_email'));
 						$mail->addAdress($userinfo->email, $userinfo->firstname . $userinfo->lastname);
-						$mail->setSubject('Passort gespeichert');
-						$mail->setMessage('Hallo' . $username . '!<br>
-	<p>Dein Passwort für deinen Benutzeraccount auf <a href="' . MAIN_URL . '">' . MAIN_URL . '</a> wurde erogreich gespeichert.</p>');
+						$mail->setSubject(__('saved password'));
+						$mail->setMessage(
+							'<p>' . __('helloUser', $username) . '!</p>' .
+							'<p>' . __('saved password msg mail', MAIN_URL) . '</p>');
 						$mail->send();
 
-						$template->setVar("message", "<p>Das Passwort wurde erfolgreich gespeichert!</p>");
+						$template->setVar('message', '<p>' . __('saved password msg') . '</p>');
 						$app->user->setLogin();
 
 						header('Location: ' . ADMIN_URL . (isset($_GET['redirectTo']) ? $_GET['redirectTo'] : ''));
 					}
 					else
 					{
-						$template->setVar("message", "<p>something went wrong -.-</p>");
+						log::setPHPError('something went wrong -.-');
+						ErrorPage::view(500);
 					}
 				}
 				else
 				{
-					$template->setVar("message", "<p>Die eingegeben Passwörter sind nicht identisch!<p>");
+					$template->setVar('message', '<p>' . __('entered passwords not equal') . '<p>');
 				}
 			}
 
-			$template->setVar("form",  $forgotpasswordform->getForm());
+			$template->setVar('form',  $forgotpasswordform->getForm());
 		}
 		else
 		{
-			$template->setVar("message", "<p>Es trat ein Fehler auf... Stellen sie sicher, das der Link stimmt und aktuell ist!<p>");
+			ErrorPage::view(405, __('error occurred, please review validity of link'));
 		}
 	}
 
@@ -633,7 +631,7 @@ Dein Benutzername für <a href="' . MAIN_URL . '">' . MAIN_URL . '</a> lautet: '
 
 		if (!isset($_GET['id']) || !isset($_GET['token']))
 		{
-			$template->setVar("message", "<p>Es trat ein Fehler auf... Stellen sie sicher, das der Link stimmt und aktuell ist!<p>");
+			ErrorPage::view(405, __('error occurred, please review validity of link'));
 			return false;
 		}
 
@@ -642,10 +640,8 @@ Dein Benutzername für <a href="' . MAIN_URL . '">' . MAIN_URL . '</a> lautet: '
 				'id'
 			],
 			'where'=> [
-				'AND' => [
-					'id' => $_GET['id'],
-					'verifykey' => $_GET['token']
-				]
+				'id' => $_GET['id'],
+				'verifykey' => $_GET['token']
 			]
 		]);
 		if ($user)
@@ -662,14 +658,14 @@ Dein Benutzername für <a href="' . MAIN_URL . '">' . MAIN_URL . '</a> lautet: '
 
 			if ($return)
 			{
-				$template->setIfCondition("confirmSucessful", true);
+				$template->setIfCondition('confirmSucessful', true);
 				$app->user->setLogin();
 				header('Refresh:5; url=' . ADMIN_URL, true, 303);
 			}
 		}
 		else
 		{
-			$template->setVar("message", "<p>Es trat ein Fehler auf... Stellen sie sicher, das der Link stimmt und aktuell ist!<p>");
+			ErrorPage::view(405, __('error occurred, please review validity of link'));
 		}
 	}
 }
