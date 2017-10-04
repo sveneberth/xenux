@@ -1,22 +1,22 @@
 {
-	"info":
-	{
-		"author": "Sven Eberth"
-	},
-	"translations":
-	{
-		"events":"Events",
-		"home":"all events",
-		"eventPreview":"event preview",
-		"startDate":"startdate",
-		"startTime":"starttime",
-		"endDate":"enddate",
-		"endTime":"endtime",
-		"eventDesc":"event description",
-		"eventPublic":"event public",
-		"deleteEvent":"delete event",
-    "public events":"public events",
-		"here can you add a new event":"Here can you add a new event.",
-		"here can you edit the event":"Here can you edit the event."
-	}
+  "info":
+  {
+    "author": "Sven Eberth"
+  },
+  "translations":
+  {
+    "events":"Events",
+    "home":"All events",
+    "eventPreview":"Event preview",
+    "startDate":"Startdate",
+    "startTime":"Starttime",
+    "endDate":"Enddate",
+    "endTime":"Endtime",
+    "eventDesc":"Event description",
+    "eventPublic":"Event public",
+    "deleteEvent":"Delete event",
+    "public events":"Public events",
+    "here can you add a new event":"Here can you add a new event.",
+    "here can you edit the event":"Here can you edit the event."
+  }
 }

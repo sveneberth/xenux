@@ -1,22 +1,22 @@
 {
-	"info":
-	{
-		"author": "Sven Eberth"
-	},
-	"translations":
-	{
-		"events":"Termine",
-		"home":"alle Termine",
-		"eventPreview":"Termin Vorschau",
-		"startDate":"Startdatum",
-		"startTime":"Startzeit",
-		"endDate":"Enddatum",
-		"endTime":"Endzeit",
-		"eventDesc":"Termin Beschreibung",
-		"eventPublic":"Termin veröffentlicht",
-		"deleteEvent":"Termin löschen",
+  "info":
+  {
+    "author": "Sven Eberth"
+  },
+  "translations":
+  {
+    "events":"Termine",
+    "home":"alle Termine",
+    "eventPreview":"Termin Vorschau",
+    "startDate":"Startdatum",
+    "startTime":"Startzeit",
+    "endDate":"Enddatum",
+    "endTime":"Endzeit",
+    "eventDesc":"Termin Beschreibung",
+    "eventPublic":"Termin veröffentlicht",
+    "deleteEvent":"Termin löschen",
     "public events":"Öffentliche Termine",
-		"here can you add a new event":"Hier kannst du eine neuen Termin anlegen.",
-		"here can you edit the event":"Hier kannst du den Termin bearbeiten."
-	}
+    "here can you add a new event":"Hier kannst du eine neuen Termin anlegen.",
+    "here can you edit the event":"Hier kannst du den Termin bearbeiten."
+  }
 }

@@ -1,28 +1,28 @@
 {
-	"info":
-	{
-		"author": "Sven Eberth"
-	},
-	"translations":
-	{
-		"dashboard": "Dashboard",
+  "info":
+  {
+    "author": "Sven Eberth"
+  },
+  "translations":
+  {
+    "dashboard": "Dashboard",
 
-		"user statistics":"user statistics",
-		"user registered":"user registered",
-		"active today":"of them active today",
-		
-		"site statistics":"site statistics",
-		"amount sites":"number of sites",
-		"amount public":"of them public",
+    "user statistics":"user statistics",
+    "user registered":"user registered",
+    "active today":"of them active today",
 
-		"news statistics":"news statistics",
-		"amount news":"number of news",
-		"amount last week":"of them from last week",
-		
-		"cloud statistics":"cloud statistics",
-		"amount files":"number of files",
-		"amount pictures":"of them pictures",
-		"amount other files":"number of other files",
-		"total size of all files":"total size of all files"
-	}
+    "site statistics":"site statistics",
+    "amount sites":"number of sites",
+    "amount public":"of them public",
+
+    "news statistics":"news statistics",
+    "amount news":"number of news",
+    "amount last week":"of them from last week",
+
+    "cloud statistics":"cloud statistics",
+    "amount files":"number of files",
+    "amount pictures":"of them pictures",
+    "amount other files":"number of other files",
+    "total size of all files":"total size of all files"
+  }
 }

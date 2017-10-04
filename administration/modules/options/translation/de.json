@@ -1,27 +1,27 @@
 {
-	"info":
-	{
-		"author": "Sven Eberth"
-	},
-	"translations":
-	{
-		"options":"Einstellungen",
-		"basic":"System",
-		"sites":"Seiten",
+  "info":
+  {
+    "author": "Sven Eberth"
+  },
+  "translations":
+  {
+    "options":"Einstellungen",
+    "basic":"System",
+    "sites":"Seiten",
 
-		"users_can_register": "Jeder darf sich Registrieren",
-		"homepage_offline": "Homepage Offline",
-		"admin_email": "Administrator E-Mail",
-		"meta_desc": "Meta Beschreibung",
-		"meta_keys": "Meta Schlüsselwörter",
-		"meta_author": "Meta Autor",
-		"hp_name": "Hompage Name",
-		"template": "Template",
-		"default_language": "Standard Sprache",
+    "users_can_register": "Jeder darf sich Registrieren",
+    "homepage_offline": "Homepage Offline",
+    "admin_email": "Administrator E-Mail",
+    "meta_desc": "Meta Beschreibung",
+    "meta_keys": "Meta Schlüsselwörter",
+    "meta_author": "Meta Autor",
+    "hp_name": "Hompage Name",
+    "template": "Template",
+    "default_language": "Standard Sprache",
 
-		"description of the homepage for meta tags":"Beschreibung der Homepage, die in den Meta-Tags angezeigt wird",
-		"keywords of the homepage for meta tags":"Schlüsselwörter der Homepage, die in den Meta-Tags angezeigt werden",
+    "description of the homepage for meta tags":"Beschreibung der Homepage, die in den Meta-Tags angezeigt wird",
+    "keywords of the homepage for meta tags":"Schlüsselwörter der Homepage, die in den Meta-Tags angezeigt werden",
 
-		"show_meta_info": "Verfasser und Zeit auf Seite anzeigen."
-	}
+    "show_meta_info": "Verfasser und Zeit auf Seite anzeigen."
+  }
 }
