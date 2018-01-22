@@ -205,8 +205,8 @@ class form
 	{
 		global $app;
 
-		$this->error_msg = array(); // no duplicates
 		$this->isValid(); // needed to get the error messages
+		$this->error_msg = array_unique($this->error_msg); // no duplicates
 
 		$messages = '';
 		foreach ($this->error_msg as $message)
@@ -290,12 +290,12 @@ class form
 				return $fieldTemplate->render($this->getFormTemplateURL('_form_textarea.php'));
 				break;
 			case 'select':
-				$props['options'] = isset($props['options']) ? $props['options'] : '';
+				$props['options'] = isset($props['options']) ? $props['options'] : [];
 				$fieldTemplate->setVar('options', $this->getSelectOptions($props['options'], $value));
 				return $fieldTemplate->render($this->getFormTemplateURL('_form_select.php'));
 				break;
 			case 'radio':
-				$props['options'] = isset($props['options']) ? $props['options'] : '';
+				$props['options'] = isset($props['options']) ? $props['options'] : [];
 				$fieldTemplate->setVar('radios', $this->getRadioOptions($props['options'], $fieldname, $value, $class, $props['style']));
 				return $fieldTemplate->render($this->getFormTemplateURL('_form_radio_fieldset.php'));
 				break;

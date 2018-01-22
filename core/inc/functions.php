@@ -472,7 +472,10 @@ function is_dir_empty($dir)
 function embedSVG($file)
 {
 	if (!is_readable($file))
+	{
+		log::debug('Cannot find ' . $file);
 		return NULL;
+	}
 
 	return file_get_contents($file);
 }

@@ -10,7 +10,7 @@ class usersController extends AbstractController
 		parent::__construct($url);
 
 		if (!isset($this->url[1]) || empty($this->url[1]))
-			header("Location: ".ADMIN_URL.'/'.$this->modulename.'/home');
+			header('Location: '.ADMIN_URL.'/'.$this->modulename.'/home');
 	}
 
 	public function run()
@@ -20,11 +20,11 @@ class usersController extends AbstractController
 		// append translations
 		translator::appendTranslations(ADMIN_PATH . '/modules/'.$this->modulename.'/translation/');
 
-		if (@$this->url[1] == "home")
+		if (@$this->url[1] == 'home')
 		{
 			$this->userHome();
 		}
-		elseif (@$this->url[1] == "edit")
+		elseif (@$this->url[1] == 'edit')
 		{
 			if (isset($this->url[2]) && is_numeric($this->url[2]) && !empty($this->url[2]))
 			{
@@ -33,11 +33,11 @@ class usersController extends AbstractController
 			}
 			else
 			{
-				#header("Location: ".ADMIN_URL.'/'.$this->modulename.'/home');
+				#header('Location: '.ADMIN_URL.'/'.$this->modulename.'/home');
 				throw new Exception(__('isWrong', 'users ID'));
 			}
 		}
-		elseif (@$this->url[1] == "profile")
+		elseif (@$this->url[1] == 'profile')
 		{
 			$this->editUserID = $app->user->userInfo->id;
 			$this->userEdit();
@@ -45,7 +45,7 @@ class usersController extends AbstractController
 
 			$this->page_name = __('profile');
 		}
-		elseif (@$this->url[1] == "new")
+		elseif (@$this->url[1] == 'new')
 		{
 			$this->userEdit(true);
 		}
@@ -61,7 +61,7 @@ class usersController extends AbstractController
 	{
 		global $app, $XenuxDB;
 
-		$template = new template(ADMIN_PATH."/modules/".$this->modulename."/layout_home.php");
+		$template = new template(ADMIN_PATH.'/modules/'.$this->modulename.'/layout_home.php');
 
 		#FIXME: removed user remains as author in pages/post/etc. This sucks
 		if (isset($_GET['remove']) && is_numeric($_GET['remove']) && !empty($_GET['remove']))
@@ -94,8 +94,8 @@ class usersController extends AbstractController
 			}
 		}
 
-		$template->setVar("users", $this->getUserTable());
-		$template->setVar("amount", $XenuxDB->count('users'));
+		$template->setVar('users', $this->getUserTable());
+		$template->setVar('amount', $XenuxDB->count('users'));
 
 		if (isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == true)
 			$this->messages[] = '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>';
@@ -103,7 +103,7 @@ class usersController extends AbstractController
 			$this->messages[] = '<p class="box-shadow info-message error">'.__('savingFailed').'</p>';
 
 
-		$template->setVar("messages", implode("\n", $this->messages));
+		$template->setVar('messages', implode("\n", $this->messages));
 
 		echo $template->render();
 
@@ -138,9 +138,7 @@ class usersController extends AbstractController
 	<td class="column-actions">
 		<a class="view-btn" target="_blank" href="{{MAIN_URL}}/user/view/' . urlencode($user->username) . '">' . __('view') . '</a>
 		<a href="{{ADMIN_URL}}/users/home/?remove=' . $user->id . '" title="' . __('delete') . '" class="remove-btn">
-			<svg xmlns="http://www.w3.org/2000/svg" height="32px" version="1.1" viewBox="0 0 32 32" width="32px">
-				 <path fill-rule="evenodd" d="M21.333 3.556h4.741V4.74H5.926V3.556h4.74V2.37c0-1.318 1.06-2.37 2.368-2.37h5.932a2.37 2.37 0 0 1 2.367 2.37v1.186zM5.926 5.926v22.517A3.55 3.55 0 0 0 9.482 32h13.036a3.556 3.556 0 0 0 3.556-3.557V5.926H5.926zm4.74 3.555v18.963h1.186V9.481h-1.185zm4.741 0v18.963h1.186V9.481h-1.186zm4.741 0v18.963h1.185V9.481h-1.185zm-7.107-8.296c-.657 0-1.19.526-1.19 1.185v1.186h8.297V2.37c0-.654-.519-1.185-1.189-1.185h-5.918z"/>
-			</svg>
+			' . embedSVG(TEMPLATE_PATH.'/images/trash.svg') . '
 		</a>
 	</td>
 </tr>';
@@ -153,21 +151,21 @@ class usersController extends AbstractController
 
 	private function userEdit($new=false)
 	{
-		$template = new template(ADMIN_PATH."/modules/".$this->modulename."/layout_edit.php", [
-			"profileEdit" => @$this->url[1] == "profile"
+		$template = new template(ADMIN_PATH.'/modules/'.$this->modulename.'/layout_edit.php', [
+			'profileEdit' => @$this->url[1] == 'profile'
 		]);
 
-		$template->setVar("form", $this->getEditForm($template, $new));
+		$template->setVar('form', $this->getEditForm($template, $new));
 
-		$template->setIfCondition("new", $new);
-		$template->setIfCondition("profileEdit", @$this->url[1] == "profile");
+		$template->setIfCondition('new', $new);
+		$template->setIfCondition('profileEdit', @$this->url[1] == 'profile');
 
 		if (isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == true)
 			$this->messages[] = '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>';
 		if (isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == false)
 			$this->messages[] = '<p class="box-shadow info-message error">'.__('savingFailed').'</p>';
 
-		$template->setVar("messages", implode("\n", $this->messages));
+		$template->setVar('messages', implode("\n", $this->messages));
 
 		echo $template->render();
 
@@ -186,7 +184,7 @@ class usersController extends AbstractController
 			]);
 
 		if (!@$user && !$new)
-			throw new Exception("error (user 404)");
+			throw new Exception('error (user 404)');
 
 		$formFields = array
 		(
@@ -282,6 +280,7 @@ class usersController extends AbstractController
 				'label' => __('save&close'),
 				'class' => 'floating space-left'
 			),
+			#FIXME: cancel via submit doesnt work when there are required inputs
 			'cancel' => array
 			(
 				'type'  => 'submit',
@@ -383,7 +382,7 @@ class usersController extends AbstractController
 					if (!$mail->send())
 					{
 						$this->messages[] = '<p class="box-shadow info-message warning">Die Nachricht konnte nicht versendet werden.</p>';
-						$template->setVar("message", '<p>Die Nachricht konnte nicht versendet werden.</p>');
+						$template->setVar('message', '<p>Die Nachricht konnte nicht versendet werden.</p>');
 						$success = false;
 					}
 					else

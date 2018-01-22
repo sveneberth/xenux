@@ -658,7 +658,7 @@ class loginController extends AbstractController
 
 			if ($return)
 			{
-				$template->setIfCondition('confirmSucessful', true);
+				$template->setIfCondition('confirmSuccessful', true);
 				$app->user->setLogin();
 				header('Refresh:5; url=' . ADMIN_URL, true, 303);
 			}

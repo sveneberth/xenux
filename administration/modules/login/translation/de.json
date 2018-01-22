@@ -31,6 +31,6 @@
     "forgotPassword info":"Falls du deinen Passwort vergessen hast, kannst du es über einen Link aus der gesendeten E-Mail zurücksetzten.",
     "forgotPassword action info":"Hier kannst du ein neues Passwort für deinen Account festlegen.",
     "setPassword info":"Du musst zuerst dein Passwort festlegen!",
-    "account confirmation successful":"Es trat ein Fehler auf. Dein Account konnte nicht bestätigt werden. Stellen sie sicher, das der Link stimmt und aktuell ist!"
+    "account confirmation successful":"Dein Account wurde bestätigt. Du wirst weitergeleitet!"
   }
 }

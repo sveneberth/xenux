@@ -103,7 +103,7 @@
 			<div class="login-box box-shadow">
 				<h2>{{page_name}}</h2>
 
-				#if(confirmSucessful):
+				#if(confirmSuccessful):
 					<p class="info"><?= __('account confirmation successful') ?></p>
 				#else:
 					<p class="info"><?= __('account confirmation failed') ?></p>

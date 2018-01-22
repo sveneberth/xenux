@@ -6,7 +6,7 @@ class optionsController extends AbstractController
 		parent::__construct($url);
 
 		if (!isset($this->url[1]) || empty($this->url[1]))
-			header("Location: ".ADMIN_URL.'/'.$this->modulename.'/basic');
+			header('Location: '.ADMIN_URL.'/'.$this->modulename.'/basic');
 	}
 
 	public function run()
@@ -14,19 +14,23 @@ class optionsController extends AbstractController
 		global $XenuxDB, $app;
 
 		// append translations
-		translator::appendTranslations(ADMIN_PATH . '/modules/'.$this->modulename.'/translation/');
+		translator::appendTranslations(ADMIN_PATH.'/modules/'.$this->modulename.'/translation/');
 
-		$template = new template(ADMIN_PATH."/modules/".$this->modulename."/layout.php");
+		$template = new template(ADMIN_PATH.'/modules/'.$this->modulename.'/layout.php');
 
-		$template->setVar("messages", '');
+		$template->setVar('messages', '');
 
 		if ($this->url[1] == 'basic')
 		{
-			$template->setVar("form", $this->getBasicForm($template));
+			$template->setVar('form', $this->getBasicForm($template));
 		}
 		elseif ($this->url[1] == 'sites')
 		{
-			$template->setVar("form", $this->getSitesForm($template));
+			$template->setVar('form', $this->getSitesForm($template));
+		}
+		else
+		{
+			throw new Exception("404 - $this->modulename method <i>{$this->url[1]}</i> not found");
 		}
 
 		if (isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == true)
