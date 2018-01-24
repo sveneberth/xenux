@@ -51,7 +51,7 @@ class mailer
 
 	public function setMessage($value)
 	{
-		$this->body = $value;
+		$this->body = quoted_printable_encode($value);
 	}
 
 	public function setSubject($value)

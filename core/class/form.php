@@ -136,6 +136,16 @@ class form
 							$this->setErrorMsg(__('only number in field', $props['label']));
 							$this->setFieldInvalid($name);
 						}
+						if($this->data[$name] < @$props['min_number'] && full(@$props['min_number']))
+						{
+							$this->setErrorMsg(__('to low. min in field', $props['label'], @$props['min_number']));
+							$this->setFieldInvalid($name);
+						}
+						if($this->data[$name] > @$props['max_number'] && full(@$props['max_number']))
+						{
+							$this->setErrorMsg(__('to hight. max in field', $props['label'], @$props['max_number']));
+							$this->setFieldInvalid($name);
+						}
 						break;
 					case 'cloud-file':
 						$props['allowedTypes'] = isset($props['allowedTypes']) ? $props['allowedTypes'] : '*';
