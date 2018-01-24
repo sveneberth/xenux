@@ -21,11 +21,11 @@ $(function() {
 		if ($( this ).prop('checked')) {
 			$( 'td.column-select > input' ).prop('checked', 'checked');
 		} else {
-			$( 'td.column-select > input' ).removeAttr('checked');
+			$( 'td.column-select > input' ).prop('checked', false);
 		}
 	})
 	$( 'td.column-select > input' ).on('click', function() {
-		$( '.select-all-items' ).removeAttr('checked')
+		$( '.select-all-items' ).prop('checked', false);
 	})
 
 	// hint lose data
