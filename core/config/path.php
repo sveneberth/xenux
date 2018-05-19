@@ -1,6 +1,6 @@
 <?php
 $protocol    = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 'https' : 'http';
-$port        = ($_SERVER['SERVER_PORT'] != 80 && $_SERVER['SERVER_PORT'] != 403) ? ':'.$_SERVER['SERVER_PORT'] : '';
+$port        = ($_SERVER['SERVER_PORT'] != 80 && $_SERVER['SERVER_PORT'] != 443) ? ':'.$_SERVER['SERVER_PORT'] : '';
 
 $dir         = str_replace('core/config', '', str_replace('\\', '/', __DIR__));
 $dir         = rtrim($dir, '/');

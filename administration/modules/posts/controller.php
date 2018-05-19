@@ -8,7 +8,7 @@ class postsController extends AbstractController
 		parent::__construct($url);
 
 		if (!isset($this->url[1]) || empty($this->url[1]))
-			header("Location: ".ADMIN_URL.'/'.$this->modulename.'/home');
+			header('Location: '.ADMIN_URL.'/'.$this->modulename.'/home');
 	}
 
 	public function run()
@@ -16,13 +16,13 @@ class postsController extends AbstractController
 		global $XenuxDB, $app;
 
 		// append translations
-		translator::appendTranslations(ADMIN_PATH . '/modules/'.$this->modulename.'/translation/');
+		translator::appendTranslations(ADMIN_PATH.'/modules/'.$this->modulename.'/translation/');
 
-		if (@$this->url[1] == "home")
+		if (@$this->url[1] == 'home')
 		{
 			$this->postsHome();
 		}
-		elseif (@$this->url[1] == "edit")
+		elseif (@$this->url[1] == 'edit')
 		{
 			if (isset($this->url[2]) && is_numeric($this->url[2]) && !empty($this->url[2]))
 			{
@@ -34,7 +34,7 @@ class postsController extends AbstractController
 				throw new Exception(__('isWrong', 'POST ID'));
 			}
 		}
-		elseif (@$this->url[1] == "new")
+		elseif (@$this->url[1] == 'new')
 		{
 			$this->postEdit(true);
 		}
@@ -50,8 +50,8 @@ class postsController extends AbstractController
 	{
 		global $app, $XenuxDB;
 
-		$template = new template(ADMIN_PATH."/modules/".$this->modulename."/layout_home.php");
-		$template->setVar("messages", '');
+		$template = new template(ADMIN_PATH.'/modules/'.$this->modulename.'/layout_home.php');
+		$template->setVar('messages', '');
 
 		// #TODO: merge action and remove in every module/list
 		if (isset($_GET['apply-action']) && isset($_GET['action']) && in_array($_GET['action'], ['publish', 'draft', 'trash'])
@@ -174,12 +174,12 @@ class postsController extends AbstractController
 
 	private function postEdit($new=false)
 	{
-		$template = new template(ADMIN_PATH."/modules/".$this->modulename."/layout_edit.php");
+		$template = new template(ADMIN_PATH.'/modules/'.$this->modulename.'/layout_edit.php');
 
-		$template->setVar("messages", '');
-		$template->setVar("form", $this->getEditForm($template, $new));
+		$template->setVar('messages', '');
+		$template->setVar('form', $this->getEditForm($template, $new));
 
-		$template->setIfCondition("new", $new);
+		$template->setIfCondition('new', $new);
 
 		if (isset($_GET['savingSuccess']) && parse_bool($_GET['savingSuccess']) == true)
 			$template->setVar("messages", '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>');
@@ -206,7 +206,7 @@ class postsController extends AbstractController
 			]);
 
 		if (!@$post && !$new)
-			throw new Exception("error (post 404)");
+			throw new Exception('error (post 404)');
 
 		$formFields = array
 		(
@@ -338,7 +338,7 @@ class postsController extends AbstractController
 			if ($return === true)
 			{
 				log::debug('post saved successful');
-				$template->setVar("messages", '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>');
+				$template->setVar('messages', '<p class="box-shadow info-message ok">'.__('savedSuccessful').'</p>');
 
 				if (isset($data['submit_close']))
 				{
@@ -351,7 +351,7 @@ class postsController extends AbstractController
 			else
 			{
 				log::debug('post saving failed');
-				$template->setVar("messages", '<p class="box-shadow info-message error">'.__('savingFailed').'</p>');
+				$template->setVar('messages', '<p class="box-shadow info-message error">'.__('savingFailed').'</p>');
 
 				if (isset($data['submit_close']) || $new)
 				{

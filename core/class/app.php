@@ -68,13 +68,13 @@ class app
 		}
 		else
 		{
-			// append translations
-			translator::appendTranslations(MAIN_PATH . '/templates/' . $this->template . '/translation/');
-
 			define('TEMPLATE_PATH', MAIN_PATH . '/templates/' . $this->template);
 			define('TEMPLATE_URL', MAIN_URL . '/templates/' . $this->template);
 
-			$template = new template(MAIN_PATH . '/templates/' . $this->template . '/index.php');
+			// append translations
+			translator::appendTranslations(TEMPLATE_PATH . '/translation/');
+
+			$template = new template(TEMPLATE_PATH . '/index.php');
 			$template->setVar('page_content', $this->getPageContent());
 
 			$template->setVar('CSS-FILES', $this->getCSS());
