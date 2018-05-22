@@ -289,13 +289,29 @@ class XenuxDB
 		return $where_clause;
 	}
 
+
 	private function _group_clause($group)
 	{
 		$group_clause = '';
 
 		if (!empty($group))
 		{
-			$group_clause .= ' GROUP BY ' . $this->quoteColumn($group);
+
+			if (is_array($group))
+			{
+				$stack = array();
+
+				foreach ($group as $column)
+				{
+					$stack[] = $this->quoteColumn($column);
+				}
+
+				$group_clause .= ' GROUP BY ' . implode($stack, ',');
+			}
+			else
+			{
+				$group_clause .= ' GROUP BY ' . $this->quoteColumn($group);
+			}
 
 			if (isset($group['having']))
 			{
@@ -557,7 +573,7 @@ class XenuxDB
 
 		if ($result !== false)
 		{
-			return $result->fetch_object()->result;
+			return (int) $result->fetch_object()->result;
 		}
 
 		return false;
