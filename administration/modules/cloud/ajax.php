@@ -1,6 +1,6 @@
 <?php
 // include Xenux-Loader
-include_once(dirname(dirname(dirname(__DIR__))) . "/core/xenux-load.php");
+include_once(dirname(dirname(dirname(__DIR__))) . '/core/xenux-load.php');
 
 if (!DEBUG_MODE)
 	error_reporting(0);
@@ -40,7 +40,7 @@ switch(@$_REQUEST['task'])
 				}
 
 
-				$hndFile = fopen($tmpname, "r");
+				$hndFile = fopen($tmpname, 'r');
 				$data = addslashes(fread($hndFile, $size));
 
 				$result = $XenuxDB->Insert('files', [
@@ -50,7 +50,7 @@ switch(@$_REQUEST['task'])
 					'#data'            => $data,
 					'filename'         => $filename,
 					'size'             => $size,
-					'lastModified'     => date("Y-m-d H:i:s", $lastModified),
+					'lastModified'     => date('Y-m-d H:i:s', $lastModified),
 					'parent_folder_id' => $parent_folder,
 					'author_id'        => $app->user->userInfo->id
 				]);
@@ -78,7 +78,7 @@ switch(@$_REQUEST['task'])
 			$result = $XenuxDB->Insert('files', [
 				'type'             => 'folder',
 				'filename'         => $folder_name,
-				'lastModified'     => date("Y-m-d H:i:s"),
+				'lastModified'     => date('Y-m-d H:i:s'),
 				'parent_folder_id' => $parent_folder,
 				'author_id'        => $app->user->userInfo->id
 			]);
@@ -129,7 +129,7 @@ switch(@$_REQUEST['task'])
 			}
 			else
 			{
-				$return['message'] = "folder not found";
+				$return['message'] = 'folder not found';
 				$return['success'] = false;
 				$return['status']  = 404;
 			}
@@ -425,10 +425,10 @@ switch(@$_REQUEST['task'])
 
 		foreach ($return['breadcrumbs'] as $key => $val)
 		{
-			$temp = "root";
+			$temp = 'root';
 			foreach ($val as $subval)
 			{
-				$temp .= "/".$subval->filename;
+				$temp .= '/'.$subval->filename;
 			}
 			$return['data'][$key] = $temp;
 		}

@@ -4,8 +4,8 @@
  *
  * @link       http://www.xenux.bplaced.net
  * @version    2.0
- * @author     Sven Eberth <se@firemail.cc>
- * @copyright  Copyright (c) 2013 - 2017, Sven Eberth.
+ * @author     Sven Eberth <mail@sveneberth.de>
+ * @copyright  Copyright (c) 2013 - 2018, Sven Eberth.
  * @license    GNU General Public License version 3, see LICENSE
  */
 
