@@ -23,7 +23,7 @@
 
 		<?php if($action == 'login'): ?>
 			<div class="login-box box-shadow">
-				<h2>{{page_name}}</h2>
+				<h1>{{page_name}}</h1>
 
 				{{message}}
 				{{form}}
@@ -41,7 +41,7 @@
 
 		<?php if($action == 'register'): ?>
 			<div class="login-box box-shadow">
-				<h2>{{page_name}}</h2>
+				<h1>{{page_name}}</h1>
 
 				{{message}}
 				{{form}}
@@ -52,7 +52,7 @@
 
 		<?php if($action == 'forgotusername'): ?>
 			<div class="login-box box-shadow">
-				<h2>{{page_name}}</h2>
+				<h1>{{page_name}}</h1>
 
 				<p class="info"><?= __('forgotUsername info') ?></p>
 				{{message}}
@@ -64,7 +64,7 @@
 
 		<?php if($action == 'forgotpassword'): ?>
 			<div class="login-box box-shadow">
-				<h2>{{page_name}}</h2>
+				<h1>{{page_name}}</h1>
 
 				<p class="info"><?= __('forgotPassword info') ?></p>
 
@@ -77,7 +77,7 @@
 
 		<?php if($action == 'resetpassword'): ?>
 			<div class="login-box box-shadow">
-				<h2>{{page_name}}</h2>
+				<h1>{{page_name}}</h1>
 
 				<p class="info"><?= __('forgotPassword action info') ?></p>
 
@@ -89,7 +89,7 @@
 
 		<?php if($action == 'setpassword'): ?>
 			<div class="login-box box-shadow">
-				<h2>{{page_name}}</h2>
+				<h1>{{page_name}}</h1>
 
 				<p class="info"><?= __('setPassword info') ?></p>
 
@@ -101,7 +101,7 @@
 
 		<?php if($action == 'confirm'): ?>
 			<div class="login-box box-shadow">
-				<h2>{{page_name}}</h2>
+				<h1>{{page_name}}</h1>
 
 				#if(confirmSuccessful):
 					<p class="info"><?= __('account confirmation successful') ?></p>
